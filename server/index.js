@@ -17,6 +17,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(router);
 
+
 dbConnect.once('open', function () {           
     console.log('DB Connected');
 });
