@@ -18,14 +18,7 @@ app.use(bodyParser.json());
 app.use(router);
 
 
-dbConnect.once('open', function () {           
-    console.log('DB Connected');
-});
-
-dbConnect.on('error', function (err) {
-    console.log('DB ERROR : ', err);
-});
-
+dbConnect();
 
 router.get("/", (req, res) => {
     res.send({ response: "Server is up and running." }).status(200);
