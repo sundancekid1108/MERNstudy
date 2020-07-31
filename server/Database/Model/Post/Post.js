@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const PostSchema = new Schema(
@@ -33,7 +33,8 @@ const PostSchema = new Schema(
   { timestamps: true },
 );
 
-PostSchema.methods('toJSON', () => {});
+// PostSchema.methods('toJSON', () => {});s
 
-const Post = mongoose.model('post', PostSchema);
+const Post = mongoose.model('Post', PostSchema);
+
 export default Post;

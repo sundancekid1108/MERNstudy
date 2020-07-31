@@ -1,27 +1,14 @@
-const express = require('express');
+import express from 'express';
+import * as PostApi from '../../Controller/Post/PostController';
 const postRouter = express.Router();
 
-const {
-  getPostList,
-  createPost,
-  editPost,
-  deletePost,
-} = require('../../Controller/Post/PostController');
+postRouter.get('/', PostApi.getPostList);
 
-postRouter.get('/', getPostList);
+postRouter.post('/', PostApi.createPost);
 
-postRouter.post('/', createPost);
+postRouter.patch('/:id', PostApi.editPost);
 
-// postRouter.post('/', (req, res) => {
-//   res.send({ response: 'createPost test' }).status(200);
-// });
+postRouter.delete('/:id', PostApi.deletePost);
 
-postRouter.get('/upload', (req, res) => {
-  res.send({ response: 'upload' }).status(200);
-});
-
-postRouter.get('/editpost', editPost);
-
-postRouter.get('/deletepost', deletePost);
-
-module.exports = postRouter;
+// module.exports = postRouter;
+export default postRouter;

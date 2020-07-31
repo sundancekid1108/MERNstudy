@@ -1,20 +1,16 @@
-//require('dotenv').config();
 import dotenv from 'dotenv';
+import router from './router';
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import dbConnect from './Database/dbConfig';
+
 dotenv.config();
 
-const express = require('express');
-const router = require('./route');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const helmet = require('helmet');
-const morgan = require('morgan');
 const app = express();
-
-const dbConnect = require('./Database/dbConfig');
-
-// import dotenv from 'dotenv';
-// dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 

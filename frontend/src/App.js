@@ -1,8 +1,12 @@
-import React from 'react';
-import { Link, Route, BrowserRouter as Router } from "react-router-dom"
-import Feed from '../src/Components/Feed/Feed'
-import Login from '../src/Components/Login/Login'
-import SignUp from '../src/Components/SignUp/SignUp'
+import React from "../node_modules/@types/react";
+import {
+  Link,
+  Route,
+  BrowserRouter as Router,
+} from "../node_modules/react-router-dom";
+import Feed from "./Components/Feed/Feed";
+import Login from "./Components/Login/Login";
+import SignUp from "./Components/SignUp/SignUp";
 
 const App = () => {
   return (
@@ -12,6 +16,6 @@ const App = () => {
       <Route exact path="/signup" component={SignUp} />
     </Router>
   );
-}
+};
 
 export default App;

@@ -1,8 +1,10 @@
-const express = require('express');
+import express from '../../node_modules/express';
+import * as PostApi from '../../Controller/Post/PostController';
 const globalRouter = express.Router();
-const { getPostList } = require('../../Controller/Post/PostController');
 
-globalRouter.get('/', getPostList);
+globalRouter.get('/', (req, res) => {
+  res.send({ response: 'Server is on' }).status(200);
+});
 
 globalRouter.get('/join', (req, res) => {
   res.send({ response: 'join' }).status(200);
@@ -17,4 +19,4 @@ globalRouter.get('/search', (req, res) => {
   res.send({ response: 'search' }).status(200);
 });
 
-module.exports = globalRouter;
+export default globalRouter;
