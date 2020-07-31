@@ -33,14 +33,17 @@ exports.createPost = async (req, res) => {
 };
 
 //edit post
-exports.editPost = (req, res) => {
-  console.log(req.body);
-  console.log(req.params);
-  Post.updateOne({
-    _id: req.params.id,
-    title: req.body.title,
-    contents: req.body.contents,
-  })
+exports.editPost = async (req, res) => {
+  console.log(req);
+  await Post.updateOne(
+    {
+      _id: req.params.id,
+    },
+    {
+      title: req.body.title,
+      contents: req.body.contents,
+    },
+  )
     .then((result) => {
       res.json(result);
     })
