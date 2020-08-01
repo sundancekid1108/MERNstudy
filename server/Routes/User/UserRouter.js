@@ -1,8 +1,7 @@
 import express from 'express';
+import * as UserApi from '../../Controller/User/UserController';
 const userRouter = express.Router();
 
-userRouter.get('/user', (req, res) => {
-  res.send({ response: 'UserApi test.' }).status(200);
-});
+userRouter.get('/user', UserApi.getUserInfo);
 
 export default userRouter;

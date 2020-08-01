@@ -1,21 +1,34 @@
 import Post from '../../Database/Model/Post/Post';
 
-//get PostList
+//post list 받기
 exports.getPostList = async (req, res) => {
   try {
     const posts = await Post.find();
-    res.json(posts);
+    res.json(posts).status(200);
   } catch (e) {
     console.log(e);
     res.send({ response: 'getPostList Error' });
   }
 };
 
+// post detail 받기
+exports.getPostDetail = async (req, res) => {
+  const postId = req.params.id;
+  try {
+    const post = await Post.findById(postId);
+    res.json(post).status(200);
+  } catch (e) {
+    console.log(e);
+    res.send({ response: 'getPostDetail Error' });
+  }
+};
+
 //create new post
 exports.createPost = async (req, res) => {
-  console.log(req);
-  console.log(req.body);
-  console.log(req.params);
+  // console.log(req);
+  // console.log(req.body);
+  // console.log(req.params);
+
   const post = new Post({
     title: req.body.title,
     author: req.body.author,
@@ -48,7 +61,7 @@ exports.editPost = async (req, res) => {
       res.json(result);
     })
     .catch((err) => {
-      console.error(err);
+      res.json(err);
     });
 };
 

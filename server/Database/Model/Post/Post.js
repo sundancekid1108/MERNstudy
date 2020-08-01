@@ -31,6 +31,7 @@ const PostSchema = new Schema(
     },
   },
   { timestamps: true },
+  { versionKey: false },
 );
 
 // PostSchema.methods('toJSON', () => {});s

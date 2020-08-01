@@ -4,6 +4,8 @@ const postRouter = express.Router();
 
 postRouter.get('/', PostApi.getPostList);
 
+postRouter.get('/:id', PostApi.getPostDetail);
+
 postRouter.post('/', PostApi.createPost);
 
 postRouter.patch('/:id', PostApi.editPost);

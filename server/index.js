@@ -16,9 +16,27 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(cookieParser());
+
+// app.use(cookieParser(process.env.COOKIE_SECRET));
+// const sessionOption = {
+//   resave: false,
+//   saveUninitialized: false,
+//   secret: process.env.COOKIE_SECRET,
+//   cookie: {
+//     httpOnly: true,
+//     secure: false,
+//   },
+// };
+
 app.use(bodyParser.json());
 app.use(helmet());
-app.use(morgan('combined'));
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(morgan('combined'));
+} else {
+  app.use(morgan('dev'));
+}
+
 app.use(router);
 
 //Database Connect
