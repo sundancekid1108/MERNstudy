@@ -3,7 +3,7 @@ import * as PostApi from '../../Controller/Post/PostController';
 const globalRouter = express.Router();
 
 globalRouter.get('/', (req, res) => {
-  res.send({ response: 'Server is on' }).status(200);
+  res.send({ response: 'Server is running' }).status(200);
 });
 
 globalRouter.get('/join', (req, res) => {

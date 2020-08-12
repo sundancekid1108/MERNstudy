@@ -1,9 +1,11 @@
 import Post from '../../Database/Model/Post/Post';
+import mongoose from 'mongoose';
+const { ObjectId } = mongoose.Types;
 
 //post list 받기
 exports.getPostList = async (req, res) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find({}, null, { sort: { _id: -1 } });
     res.json(posts).status(200);
   } catch (e) {
     console.log(e);
@@ -11,24 +13,28 @@ exports.getPostList = async (req, res) => {
   }
 };
 
+//Post 검색
+exports.searchPost = (req, res) => {
+  res.send({ response: 'searching Post' }).status(200);
+};
+
 // post detail 받기
 exports.getPostDetail = async (req, res) => {
-  const postId = req.params.id;
   try {
-    const post = await Post.findById(postId);
+    if (!ObjectId.isValid(req.params.id)) {
+      res.json('400 bad request').status = 400;
+    }
+
+    const post = await Post.findById(req.params.id);
     res.json(post).status(200);
   } catch (e) {
     console.log(e);
-    res.send({ response: 'getPostDetail Error' });
+    res.send({ response: 'getPostDetail Error' }).status(500);
   }
 };
 
 //create new post
 exports.createPost = async (req, res) => {
-  // console.log(req);
-  // console.log(req.body);
-  // console.log(req.params);
-
   const post = new Post({
     title: req.body.title,
     author: req.body.author,
@@ -41,42 +47,52 @@ exports.createPost = async (req, res) => {
       res.json(result).status(201);
     })
     .catch((err) => {
-      res.send({ response: 'getPostList Error' });
+      res.send({ response: 'createPost Error' }).status(500);
     });
 };
 
 //edit post
 exports.editPost = async (req, res) => {
-  console.log(req);
-  await Post.updateOne(
-    {
-      _id: req.params.id,
-    },
-    {
-      title: req.body.title,
-      contents: req.body.contents,
-    },
-  )
-    .then((result) => {
-      res.json(result);
-    })
-    .catch((err) => {
-      res.json(err);
-    });
+  try {
+    if (!ObjectId.isValid(req.params.id)) {
+      res.json('400 bad request').status = 400; // Bad Request
+    }
+    const post = await Post.findByIdAndUpdate(
+      {
+        _id: req.params.id,
+      },
+      {
+        title: req.body.title,
+        contents: req.body.contents,
+      },
+    );
+
+    if (!post) {
+      res.send({ response: '404 Error' }).status(404);
+    }
+
+    res.json(post).status(200);
+  } catch (e) {
+    res.json(e);
+  }
 };
 
 //delete post
 exports.deletePost = async (req, res) => {
-  await Post.remove({ _id: req.params.id })
-    .then((result) => {
-      res.json(result).status(201);
-    })
-    .catch((err) => {
-      res.send({ response: 'delete Error' }).json(err);
+  try {
+    if (!ObjectId.isValid(req.params.id)) {
+      res.json('400 bad request').status = 400; // Bad Request
+    }
+    const post = await Post.findByIdAndDelete({
+      _id: req.params.id,
     });
-};
 
-//get post detail
-exports.viewPostDetail = (req, res) => {
-  res.send({ response: 'viewPostDetail' }).status(200);
+    if (!post) {
+      res.send({ response: '404 Error' }).status(404);
+    }
+
+    res.send({ response: 'delete Post successfully' }).status(200);
+  } catch (e) {
+    res.json(e);
+  }
 };
