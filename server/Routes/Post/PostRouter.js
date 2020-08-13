@@ -2,15 +2,15 @@ import express from 'express';
 import * as PostApi from '../../Controller/Post/PostController';
 const postRouter = express.Router();
 
-postRouter.get('/', PostApi.getPostList);
+postRouter.get('/postlist', PostApi.getPostList);
 
-postRouter.get('/:id', PostApi.getPostDetail);
+postRouter.get('/getpostdetail/:id', PostApi.getPostDetail);
 
-postRouter.post('/', PostApi.createPost);
+postRouter.post('/createpost', PostApi.createPost);
 
-postRouter.patch('/:id', PostApi.editPost);
+postRouter.patch('/editpost/:id', PostApi.editPost);
 
-postRouter.delete('/:id', PostApi.deletePost);
+postRouter.delete('/deletepost/:id', PostApi.deletePost);
 
 // module.exports = postRouter;
 export default postRouter;

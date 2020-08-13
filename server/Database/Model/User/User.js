@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import bcryptjs from 'bcryptjs';
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
@@ -15,20 +14,40 @@ const UserSchema = new Schema(
       default: '',
       unique: true,
     },
+
+    profilePic: {
+      type: String,
+      default: '',
+    },
+
     email: {
       type: String,
       required: true,
       unique: true,
       default: '',
     },
+
     password: {
       type: String,
       required: true,
     },
+
     date: {
       type: Date,
       default: Date.now,
     },
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment',
+      },
+    ],
+    posts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post',
+      },
+    ],
   },
   { timestamps: true },
   { versionKey: false },

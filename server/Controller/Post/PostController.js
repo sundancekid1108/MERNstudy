@@ -35,9 +35,10 @@ exports.getPostDetail = async (req, res) => {
 
 //create new post
 exports.createPost = async (req, res) => {
+  console.log(req.body);
   const post = new Post({
     title: req.body.title,
-    author: req.body.author,
+    creator: req.body.creator,
     contents: req.body.contents,
   });
 

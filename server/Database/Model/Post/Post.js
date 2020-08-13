@@ -8,12 +8,17 @@ const PostSchema = new Schema(
       required: true,
       default: '',
     },
-    author: {
-      type: String,
+    creator: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
     },
     contents: {
       type: String,
       required: true,
+      default: '',
+    },
+    fileURL: {
+      type: String,
       default: '',
     },
     comments: [
