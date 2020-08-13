@@ -1,8 +1,8 @@
 import React from "react";
 import { Link, Route, BrowserRouter as Router } from "react-router-dom";
-import Feed from "./Components/Feed/Feed";
-import Login from "./Components/Login/Login";
-import SignUp from "./Components/SignUp/SignUp";
+import Feed from "./Routes/Feed/Feed";
+import Login from "./Routes/Login/Login";
+import SignUp from "./Routes/SignUp/SignUp";
 
 const App = () => {
   return (

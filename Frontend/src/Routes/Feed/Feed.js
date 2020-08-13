@@ -20,7 +20,10 @@ const Feed = () => {
       <div>
         <ul>
           {postsList.map((post) => (
-            <li>{post.title}</li>
+            <div key={post._id}>
+              <li>{post.title}</li>
+              <li>{post.contents}</li>
+            </div>
           ))}
         </ul>
       </div>

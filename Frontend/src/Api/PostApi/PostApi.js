@@ -4,7 +4,7 @@ export const getPostList = api
   .get("/posts")
   .then((response) => {
     const responseData = response.data;
-    console.log("axios getPost responseData", responseData);
+    // console.log("axios getPost responseData", responseData);
     return responseData;
   })
   .catch((err) => {
