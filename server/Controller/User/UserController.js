@@ -1,5 +1,7 @@
 import User from '../../Database/Model/User/User';
 import validator from 'validator';
+import mongoose from 'mongoose';
+const { ObjectId } = mongoose.Types;
 
 //user 조회
 exports.getUserList = async (req, res) => {
@@ -66,12 +68,39 @@ exports.createUser = async (req, res) => {
         res.json(err);
       });
   } catch (err) {
-    res.json('err', err);
+    res.json('err', err).status(500);
   }
 };
 
 //user 수정
-exports.editUserInfo = (req, res) => {
+exports.editUserInfo = async (req, res) => {
+  try {
+    console.log(req.params);
+    console.log(req.body);
+    const userId = req.params.id;
+    const { name, userName, password } = req.body;
+    console.log(req.params);
+    if (!ObjectId.isValid(userId)) {
+      res.json('400 bad request').status = 400; // Bad Request
+    }
+    const user = await User.findByIdAndUpdate(
+      {
+        _id: userId,
+      },
+      {
+        name: name,
+        userName: userName,
+        password: password,
+      },
+    );
+
+    if (!user) {
+      res.send({ response: '404 Error' }).status(404);
+    }
+    res.json(user).status(200);
+  } catch (err) {
+    res.json(err).status(500);
+  }
   res.send({ response: 'editUserInfo' });
 };
 
@@ -85,7 +114,10 @@ exports.deleteUserInfo = async (req, res) => {
       res.json(res).status = 400;
     }
 
-    const userInfo = await User.findByIdAndDelete({ _id: userId });
+    const userInfo = await User.findByIdAndDelete({
+      _id: req.params.id,
+    });
+
     if (!userInfo) {
       res.send({ response: '404 Error' }).status(404);
     }

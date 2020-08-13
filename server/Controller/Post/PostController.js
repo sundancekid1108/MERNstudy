@@ -68,13 +68,15 @@ exports.editPost = async (req, res) => {
       },
     );
 
+    post.save();
+
     if (!post) {
       res.send({ response: '404 Error' }).status(404);
     }
 
     res.json(post).status(200);
-  } catch (e) {
-    res.json(e);
+  } catch (err) {
+    res.json(err).status(500);
   }
 };
 
