@@ -5,7 +5,9 @@ import Grid from "@material-ui/core/Grid";
 const SignUp = () => {
   return (
     <>
-      <div>signup</div>
+      <Container>
+        <div>signup</div>
+      </Container>
     </>
   );
 };

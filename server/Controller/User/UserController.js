@@ -34,47 +34,58 @@ exports.getUserInfo = async (req, res) => {
 };
 
 //회원가입
+// exports.createUser = async (req, res) => {
+//   try {
+//     const { username, email, password } = req.body;
+//     // Email 형식 체크
+//     validateSignInData;
+//     if (!validator.isEmail(email)) {
+//       res.json({ response: 'Email is incorrect format' });
+//       //   console.log(res);
+//     }
+
+//     const duplicateEmail = await User.findOne({ email });
+
+//     if (duplicateEmail) {
+//       res.json({ response: 'This Email is already  existed' });
+//     }
+
+//     const duplicateUserName = await User.findOne({ username });
+
+//     if (duplicateUserName) {
+//       res.json({ response: 'UserName is already existed' });
+//     }
+
+//     const user = new User({
+//       username,
+//       email,
+//       password,
+//     });
+
+//     // user 저장
+//     await user
+//       .save()
+//       .then((result) => {
+//         res.json(result).status(201);
+//       })
+//       .catch((err) => {
+//         res.json(err);
+//       });
+//   } catch (err) {
+//     res.json('err', err).status(500);
+//   }
+// };
 exports.createUser = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
-    // Email 형식 체크
+    const { errors, isValid } = validateRegisterInput(req.body);
 
-    if (!validator.isEmail(email)) {
-      res.json({ response: 'Email is incorrect format' });
-      //   console.log(res);
+    if (!isValid) {
+      return res.status(400).json(errors);
     }
-
-    const duplicateEmail = await User.findOne({ email });
-
-    if (duplicateEmail) {
-      res.json({ response: 'This Email is already  existed' });
-    }
-
-    const duplicateUserName = await User.findOne({ username });
-
-    if (duplicateUserName) {
-      res.json({ response: 'UserName is already existed' });
-    }
-    const user = new User({
-      username,
-      email,
-      password,
-    });
-
-    // user 저장
-    await user
-      .save()
-      .then((result) => {
-        res.json(result).status(201);
-      })
-      .catch((err) => {
-        res.json(err);
-      });
   } catch (err) {
-    res.json('err', err).status(500);
+    res.json(err);
   }
 };
-
 //user 수정
 exports.editUserInfo = async (req, res) => {
   try {
