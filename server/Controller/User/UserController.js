@@ -1,4 +1,6 @@
 import User from '../../Database/Model/User/User';
+import validateSignInData from '../../Middleware/Validation/signInValidation';
+import validateLoginData from '../../Middleware/Validation/loginValidation';
 import validator from 'validator';
 import mongoose from 'mongoose';
 const { ObjectId } = mongoose.Types;
@@ -10,7 +12,7 @@ exports.getUserList = async (req, res) => {
     res.json(users).status(200);
   } catch (e) {
     console.log(e);
-    res.send({ response: 'getUserList Error' });
+    res.json({ response: 'getUserList Error' });
   }
 };
 
@@ -34,31 +36,32 @@ exports.getUserInfo = async (req, res) => {
 //회원가입
 exports.createUser = async (req, res) => {
   try {
-    const { name, userName, email, password } = req.body;
+    const { username, email, password } = req.body;
     // Email 형식 체크
+
     if (!validator.isEmail(email)) {
       res.json({ response: 'Email is incorrect format' });
       //   console.log(res);
     }
 
-    const duplicateEmailUser = await User.findOne({ email });
+    const duplicateEmail = await User.findOne({ email });
 
-    if (duplicateEmailUser) {
+    if (duplicateEmail) {
       res.json({ response: 'This Email is already  existed' });
     }
 
-    const duplicateEmailUserName = await User.findOne({ userName });
+    const duplicateUserName = await User.findOne({ username });
 
-    if (duplicateEmailUserName) {
+    if (duplicateUserName) {
       res.json({ response: 'UserName is already existed' });
     }
     const user = new User({
-      name,
-      userName,
+      username,
       email,
       password,
     });
 
+    // user 저장
     await user
       .save()
       .then((result) => {
@@ -78,7 +81,7 @@ exports.editUserInfo = async (req, res) => {
     console.log(req.params);
     console.log(req.body);
     const userId = req.params.id;
-    const { name, userName, password } = req.body;
+    const { username, password } = req.body;
     console.log(req.params);
     if (!ObjectId.isValid(userId)) {
       res.json('400 bad request').status = 400; // Bad Request
@@ -88,10 +91,10 @@ exports.editUserInfo = async (req, res) => {
         _id: userId,
       },
       {
-        name: name,
-        userName: userName,
+        username: username,
         password: password,
       },
+      { multi: true, new: true },
     );
 
     if (!user) {

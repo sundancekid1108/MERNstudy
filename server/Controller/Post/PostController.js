@@ -66,9 +66,8 @@ exports.editPost = async (req, res) => {
         title: req.body.title,
         contents: req.body.contents,
       },
+      { multi: true, new: true },
     );
-
-    post.save();
 
     if (!post) {
       res.send({ response: '404 Error' }).status(404);
