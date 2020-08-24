@@ -1,8 +1,8 @@
 import User from '../../Database/Model/User/User';
-import validateSignInData from '../../Middleware/Validation/signInValidation';
-import validateLoginData from '../../Middleware/Validation/loginValidation';
+import * as validateSignInData from '../../Middleware/Validation/signInValidation';
 import validator from 'validator';
 import mongoose from 'mongoose';
+import bcryptjs from 'bcryptjs';
 const { ObjectId } = mongoose.Types;
 
 //user 조회
@@ -10,8 +10,8 @@ exports.getUserList = async (req, res) => {
   try {
     const users = await User.find({}, null, { sort: { _id: -1 } });
     res.json(users).status(200);
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
     res.json({ response: 'getUserList Error' });
   }
 };
@@ -34,57 +34,66 @@ exports.getUserInfo = async (req, res) => {
 };
 
 //회원가입
-// exports.createUser = async (req, res) => {
-//   try {
-//     const { username, email, password } = req.body;
-//     // Email 형식 체크
-//     validateSignInData;
-//     if (!validator.isEmail(email)) {
-//       res.json({ response: 'Email is incorrect format' });
-//       //   console.log(res);
-//     }
-
-//     const duplicateEmail = await User.findOne({ email });
-
-//     if (duplicateEmail) {
-//       res.json({ response: 'This Email is already  existed' });
-//     }
-
-//     const duplicateUserName = await User.findOne({ username });
-
-//     if (duplicateUserName) {
-//       res.json({ response: 'UserName is already existed' });
-//     }
-
-//     const user = new User({
-//       username,
-//       email,
-//       password,
-//     });
-
-//     // user 저장
-//     await user
-//       .save()
-//       .then((result) => {
-//         res.json(result).status(201);
-//       })
-//       .catch((err) => {
-//         res.json(err);
-//       });
-//   } catch (err) {
-//     res.json('err', err).status(500);
-//   }
-// };
 exports.createUser = async (req, res) => {
-  try {
-    const { errors, isValid } = validateRegisterInput(req.body);
+  console.log(req.body);
+  const { username, email, password1, password2 } = req.body;
 
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-  } catch (err) {
-    res.json(err);
+  const {
+    userNameErrors,
+    userNameIsValid,
+  } = validateSignInData.validateUserName(username);
+  if (!userNameIsValid) {
+    return res.status(400).json(userNameErrors);
   }
+
+  const { emailErrors, emailIsValid } = validateSignInData.validateEmail(email);
+  if (!emailIsValid) {
+    return res.status(400).json(emailErrors);
+  }
+
+  const {
+    passwordErrors,
+    passwordIsValid,
+  } = validateSignInData.validatePassword(password1, password2);
+  if (!passwordIsValid) {
+    return res.status(400).json(passwordErrors);
+  }
+
+  // Email 형식 체크
+  // if (!validator.isEmail(email)) {
+  //   res.json({ response: 'Email is incorrect format' });
+  //   //   console.log(res);
+  // }
+
+  const duplicateEmail = await User.findOne({ email });
+
+  if (duplicateEmail) {
+    console.log(duplicateEmail);
+    res.json({ response: 'This Email is already  existed' });
+  }
+
+  const duplicateUserName = await User.findOne({ username });
+
+  if (duplicateUserName) {
+    console.log(duplicateUserName);
+    res.json({ response: 'UserName is already existed' });
+  }
+
+  const user = new User({
+    username: username,
+    email: email,
+    password: password1,
+  });
+
+  // user 저장
+  user
+    .save()
+    .then((result) => {
+      res.status(201).json(result);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
 };
 //user 수정
 exports.editUserInfo = async (req, res) => {
