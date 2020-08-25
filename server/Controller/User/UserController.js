@@ -1,8 +1,8 @@
 import User from '../../Database/Model/User/User';
 import * as validateSignInData from '../../Middleware/Validation/signInValidation';
-import validator from 'validator';
+// import * as bcrypt from '../../Middleware/bcrypt';
 import mongoose from 'mongoose';
-import bcryptjs from 'bcryptjs';
+import bcrypt from 'bcryptjs';
 const { ObjectId } = mongoose.Types;
 
 //user 조회
@@ -35,9 +35,10 @@ exports.getUserInfo = async (req, res) => {
 
 //회원가입
 exports.createUser = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { username, email, password1, password2 } = req.body;
 
+  //username 검증
   const {
     userNameErrors,
     userNameIsValid,
@@ -46,11 +47,13 @@ exports.createUser = async (req, res) => {
     return res.status(400).json(userNameErrors);
   }
 
+  //Email
   const { emailErrors, emailIsValid } = validateSignInData.validateEmail(email);
   if (!emailIsValid) {
     return res.status(400).json(emailErrors);
   }
 
+  //password 검증
   const {
     passwordErrors,
     passwordIsValid,
@@ -59,42 +62,49 @@ exports.createUser = async (req, res) => {
     return res.status(400).json(passwordErrors);
   }
 
-  // Email 형식 체크
-  // if (!validator.isEmail(email)) {
-  //   res.json({ response: 'Email is incorrect format' });
-  //   //   console.log(res);
-  // }
-
+  // DB에서 중복된 email 체크
   const duplicateEmail = await User.findOne({ email });
+
+  //DB에서 중복된 username 체크
+  const duplicateUserName = await User.findOne({ username });
 
   if (duplicateEmail) {
     console.log(duplicateEmail);
     res.json({ response: 'This Email is already  existed' });
-  }
-
-  const duplicateUserName = await User.findOne({ username });
-
-  if (duplicateUserName) {
+  } else if (duplicateUserName) {
     console.log(duplicateUserName);
     res.json({ response: 'UserName is already existed' });
-  }
-
-  const user = new User({
-    username: username,
-    email: email,
-    password: password1,
-  });
-
-  // user 저장
-  user
-    .save()
-    .then((result) => {
-      res.status(201).json(result);
-    })
-    .catch((err) => {
-      res.json(err);
+  } else {
+    //중복 Email, username 체크 후 password hash하여 저장
+    const newUser = new User({
+      username: username,
+      email: email,
+      password: password1,
     });
+
+    const saltRounds = 10;
+
+    bcrypt.genSalt(saltRounds, (err, salt) => {
+      bcrypt.hash(newUser.password, salt, (err, hash) => {
+        if (err) {
+          res.json(err);
+        }
+        newUser.password = hash;
+        console.log(newUser);
+
+        newUser
+          .save()
+          .then((result) => {
+            res.status(201).json(result);
+          })
+          .catch((err) => {
+            res.json(err);
+          });
+      });
+    });
+  }
 };
+
 //user 수정
 exports.editUserInfo = async (req, res) => {
   try {
