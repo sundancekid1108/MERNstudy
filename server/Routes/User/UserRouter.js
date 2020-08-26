@@ -8,6 +8,8 @@ userRouter.get('/userlist', UserApi.getUserList);
 
 userRouter.post('/signup', UserApi.createUser);
 
+userRouter.post('/login', UserApi.postUserLogin);
+
 userRouter.patch('/edituserinfo/:id', UserApi.editUserInfo);
 
 userRouter.delete('/deleteuser/:id', UserApi.deleteUserInfo);

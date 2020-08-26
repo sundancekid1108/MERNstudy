@@ -1,5 +1,6 @@
 import User from '../../Database/Model/User/User';
 import * as validateSignInData from '../../Middleware/Validation/signInValidation';
+import * as validateLogInData from '../../Middleware/Validation/loginValidation';
 // import * as bcrypt from '../../Middleware/bcrypt';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
@@ -90,7 +91,7 @@ exports.createUser = async (req, res) => {
           res.json(err);
         }
         newUser.password = hash;
-        console.log(newUser);
+        // console.log(newUser);
 
         newUser
           .save()
@@ -158,5 +159,50 @@ exports.deleteUserInfo = async (req, res) => {
     res.send({ response: 'delete UserInfo successfully' }).status(200);
   } catch (err) {
     res.json(err);
+  }
+};
+
+//user 로그인
+exports.postUserLogin = async (req, res) => {
+  const { email, password } = req.body;
+
+  //Email 체크
+  const {
+    emailErrors,
+    emailIsValid,
+  } = await validateLogInData.validateLoginEmail(email);
+
+  if (!emailIsValid) {
+    res.status(400).json(emailErrors);
+  }
+
+  // Password체크
+  const {
+    passwordErrors,
+    passwordIsValid,
+  } = await validateLogInData.validateLoginPassword(password);
+
+  if (!passwordIsValid) {
+    res.status(400).json(passwordErrors);
+  }
+
+  //DB에서 Email 매치되는 user 없을때 에러 처리
+  const EmailMatchUser = await User.findOne({ email });
+  if (!EmailMatchUser) {
+    res.status(404).json({ response: 'There is No User' });
+  }
+
+  //비밀번호  match 확인
+  const isPasswordMatched = await bcrypt.compareSync(
+    password,
+    EmailMatchUser.password,
+  );
+
+  if (isPasswordMatched) {
+    //비밀번호 맞을때
+    res.json({ response: 'Login Success!!!' });
+  } else {
+    //비밀번호 틀릴때
+    res.json({ response: 'Login failed' });
   }
 };
