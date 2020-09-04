@@ -7,6 +7,9 @@ import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import dbConnect from './Database/dbConfig';
+import session from 'express-session';
+import passport from 'passport';
+import './Middleware/Passport/passport';
 
 dotenv.config();
 
@@ -15,26 +18,27 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
-app.use(cookieParser());
-
-// app.use(cookieParser(process.env.COOKIE_SECRET));
-// const sessionOption = {
-//   resave: false,
-//   saveUninitialized: false,
-//   secret: process.env.COOKIE_SECRET,
-//   cookie: {
-//     httpOnly: true,
-//     secure: false,
-//   },
-// };
+app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        secure: false,
+    }
+}));
 
 app.use(bodyParser.json());
 app.use(helmet());
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 if (process.env.NODE_ENV === 'production') {
-  app.use(morgan('combined'));
+    app.use(morgan('combined'));
 } else {
-  app.use(morgan('dev'));
+    app.use(morgan('dev'));
 }
 
 app.use(router);
@@ -43,5 +47,5 @@ app.use(router);
 dbConnect();
 
 app.listen(PORT, () => {
-  console.log('Server is running on Port: ' + PORT);
+    console.log('Server is running on Port: ' + PORT);
 });
