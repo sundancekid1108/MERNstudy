@@ -1,11 +1,12 @@
 import User from '../../Database/Model/User/User';
-import * as validateSignInData from '../../Middleware/Validation/signInValidation';
+import * as validateSignInData from '../../Middleware/Validation/signinValidation';
 import * as validateLogInData from '../../Middleware/Validation/loginValidation';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 dotenv.config();
+
 const {
     ObjectId
 } = mongoose.Types;
@@ -15,14 +16,14 @@ exports.getUserList = async(req, res) => {
     try {
         const users = await User.find({}, null, {
             sort: {
-                _id: -1
-            }
+                _id: -1,
+            },
         });
         res.json(users).status(200);
     } catch (err) {
         console.log(err);
         res.json({
-            response: 'getUserList Error'
+            response: 'getUserList Error',
         });
     }
 };
@@ -30,7 +31,6 @@ exports.getUserList = async(req, res) => {
 //userInfo 조회
 exports.getUserInfo = async(req, res) => {
     try {
-        console.log(req.params.id);
         const userId = req.params.id;
         if (!ObjectId.isValid(userId)) {
             res.json('400 bad request').status = 400;
@@ -40,9 +40,11 @@ exports.getUserInfo = async(req, res) => {
         res.json(user).status(200);
     } catch (err) {
         console.log(err);
-        res.send({
-            response: 'getUserInfo Error'
-        }).status(500);
+        res
+            .send({
+                response: 'getUserInfo Error',
+            })
+            .status(500);
     }
 };
 
@@ -85,23 +87,23 @@ exports.createUser = async(req, res) => {
 
     // DB에서 중복된 email 체크
     const duplicateEmail = await User.findOne({
-        email
+        email,
     });
 
     //DB에서 중복된 username 체크
     const duplicateUserName = await User.findOne({
-        username
+        username,
     });
 
     if (duplicateEmail) {
         console.log(duplicateEmail);
         res.json({
-            response: 'This Email is already  existed'
+            response: 'This Email is already  existed',
         });
     } else if (duplicateUserName) {
         console.log(duplicateUserName);
         res.json({
-            response: 'UserName is already existed'
+            response: 'UserName is already existed',
         });
     } else {
         //중복 Email, username 체크 후 password hash하여 저장
@@ -155,20 +157,22 @@ exports.editUserInfo = async(req, res) => {
             password: password,
         }, {
             multi: true,
-            new: true
+            new: true,
         }, );
 
         if (!user) {
-            res.send({
-                response: '404 Error'
-            }).status(404);
+            res
+                .send({
+                    response: '404 Error',
+                })
+                .status(404);
         }
         res.json(user).status(200);
     } catch (err) {
         res.json(err).status(500);
     }
     res.send({
-        response: 'editUserInfo'
+        response: 'editUserInfo',
     });
 };
 
@@ -187,13 +191,15 @@ exports.deleteUserInfo = async(req, res) => {
         });
 
         if (!userInfo) {
-            res.send({
-                response: '404 Error'
-            }).status(404);
+            res
+                .send({
+                    response: '404 Error',
+                })
+                .status(404);
         }
 
         res.send({
-            response: 'delete UserInfo successfully'
+            response: 'delete UserInfo successfully',
         }).status(200);
     } catch (err) {
         res.json(err);
@@ -229,12 +235,12 @@ exports.postUserLogin = async(req, res) => {
 
     //DB에서 Email 매치되는 user 없을때 에러 처리
     const isEmailMatchedUser = await User.findOne({
-        email
+        email,
     });
 
     if (!isEmailMatchedUser) {
         res.status(404).json({
-            response: 'There is No User'
+            response: 'There is No User',
         });
     }
 
@@ -245,30 +251,44 @@ exports.postUserLogin = async(req, res) => {
     );
 
     if (isEmailMatchedAndPasswordMatchedUser) {
-        // 비밀번호 맞을때 로그인 성공! 나머지 작업 처리 
+        // 비밀번호 맞을때 로그인 성공! 나머지 작업 처리
         // jwt payload 생성
+        const LoginSuccessUser = await await User.findOne({
+            email,
+        });
+        // console.log(LoginSuccessUser);
         const payload = {
-            id: isEmailMatchedAndPasswordMatchedUser.id,
-            username: isEmailMatchedAndPasswordMatchedUser.username
-        }
+            id: LoginSuccessUser.id,
+            username: LoginSuccessUser.username,
+            email: LoginSuccessUser.email,
+            isAdmin: LoginSuccessUser.isAdmin,
+        };
+
         jwt.sign(
             payload,
             process.env.JWT_SECRET_KEY, {
-                expiresIn: 3600
+                expiresIn: 36000,
             },
             (err, token) => {
+                if (err) {
+                    res.json(err)
+                    accessToken: null
+                }
                 res.status(200).json({
                     response: 'Login Success!!!',
-                    token: "Bearer " + token
+                    id: LoginSuccessUser.id,
+                    username: LoginSuccessUser.username,
+                    email: LoginSuccessUser.email,
+                    isAdmin: LoginSuccessUser.isAdmin,
+                    accessToken: token
                 });
-            }
-
-        )
-
+            },
+        );
     } else {
         //비밀번호 틀릴때
         res.status(400).json({
-            response: 'Login failed Password incorrect!!'
+            response: 'Login failed Password incorrect!!',
+            accessToken: null
         });
     }
 };

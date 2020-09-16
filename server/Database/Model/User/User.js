@@ -22,6 +22,11 @@ const UserSchema = new Schema(
       default: '',
     },
 
+    phoneNumber: {
+      type: String,
+      default: '',
+    },
+
     password: {
       type: String,
       required: true,
@@ -43,6 +48,11 @@ const UserSchema = new Schema(
         ref: 'Post',
       },
     ],
+
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
   { versionKey: false },

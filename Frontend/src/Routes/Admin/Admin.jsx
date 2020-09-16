@@ -1,6 +1,6 @@
 import React from "react";
 
-const SignUp = () => {
+const Admin = () => {
   return (
     <>
       <div>Admin</div>
