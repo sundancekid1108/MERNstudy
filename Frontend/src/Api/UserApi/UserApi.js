@@ -1,6 +1,6 @@
 import api from "../axiosApi";
 
-exports.userSignin = (username, email, password1, password2) => {
+export const userSignin = (username, email, password1, password2) => {
     api.post("/users/signup", {
         username,
         email,
@@ -14,7 +14,7 @@ exports.userSignin = (username, email, password1, password2) => {
     });
 }
 
-exports.userLogin = (email, password) => {
+export const userLogin = (email, password) => {
     api.post('/users/signin', {
         email,
         password
