@@ -29,10 +29,10 @@ exports.userLogin = (email, password) => {
     })
 }
 
-exports.logout = () => {
-    localStorage.removeItem("user");
+export const logout = () => {
+    localStorage.removeItem("userData");
 };
 
-exports.getCurrentUser = () => {
-    return JSON.parse(localStorage.getItem("user"));
+export const getCurrentUserInfo = () => {
+    return JSON.parse(localStorage.getItem("userData"));
 };
