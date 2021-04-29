@@ -14,7 +14,7 @@ export const userSignin = (username, email, password1, password2) => {
     });
 }
 
-export const userLogin = (email, password) => {
+exports.userLogin = (email, password) => {
     api.post('/users/signin', {
         email,
         password
