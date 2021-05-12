@@ -14,25 +14,23 @@ router.use('/posts', postRouter);
 router.use('/users', userRouter);
 
 //예외 처리
-router.use((req, res, next) => {
-  next({
-    status: 404,
-    message: 'Not Found',
-  });
-});
+// router.use((req, res, next) => {
+//   next({
+//     status: 404,
+//     message: 'Not Found',
+//   });
+// });
 
 router.use((err, req, res, next) => {
-  if (err.status === 404) {
-    console.log(err);
-    return res.status(404).send({ response: '404' });
-  }
+    if (err.status === 404) {
+        console.log(err);
+        return res.status(404).send({ response: '404' });
+    }
 
-  if (err.status === 500) {
-    console.log(err);
-    return res.status(500).send({ response: '500' });
-  }
-
-  next();
+    if (err.status === 500) {
+        console.log(err);
+        return res.status(500).send({ response: '500' });
+    }
 });
 
 // module.exports = router;

@@ -7,9 +7,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 dotenv.config();
 
-const {
-    ObjectId
-} = mongoose.Types;
+const { ObjectId } = mongoose.Types;
 
 //user 조회
 exports.getUserList = async(req, res) => {
@@ -19,10 +17,10 @@ exports.getUserList = async(req, res) => {
                 _id: -1,
             },
         });
-        res.json(users).status(200);
+        return res.json(users).status(200);
     } catch (err) {
         console.log(err);
-        res.json({
+        return res.json({
             response: 'getUserList Error',
         });
     }
@@ -33,14 +31,14 @@ exports.getUserInfo = async(req, res) => {
     try {
         const userId = req.params.id;
         if (!ObjectId.isValid(userId)) {
-            res.json('400 bad request').status = 400;
+            return (res.json('400 bad request').status = 400);
         }
 
         const user = await User.findById(userId);
         res.json(user).status(200);
     } catch (err) {
         console.log(err);
-        res
+        return res
             .send({
                 response: 'getUserInfo Error',
             })
@@ -51,36 +49,25 @@ exports.getUserInfo = async(req, res) => {
 //회원가입
 exports.createUser = async(req, res) => {
     // console.log(req.body);
-    const {
-        username,
-        email,
-        password1,
-        password2
-    } = req.body;
+    const { username, email, password1, password2 } = req.body;
 
     //username 검증
-    const {
-        userNameErrors,
-        userNameIsValid,
-    } = validateSignInData.validateUserName(username);
+    const { userNameErrors, userNameIsValid } =
+    validateSignInData.validateUserName(username);
     if (!userNameIsValid) {
         return res.status(400).json(userNameErrors);
     }
 
     //Email
-    const {
-        emailErrors,
-        emailIsValid
-    } = validateSignInData.validateEmail(email);
+    const { emailErrors, emailIsValid } =
+    validateSignInData.validateEmail(email);
     if (!emailIsValid) {
         return res.status(400).json(emailErrors);
     }
 
     //password 검증
-    const {
-        passwordErrors,
-        passwordIsValid,
-    } = validateSignInData.validatePassword(password1, password2);
+    const { passwordErrors, passwordIsValid } =
+    validateSignInData.validatePassword(password1, password2);
     if (!passwordIsValid) {
         return res.status(400).json(passwordErrors);
     }
@@ -97,12 +84,12 @@ exports.createUser = async(req, res) => {
 
     if (duplicateEmail) {
         console.log(duplicateEmail);
-        res.json({
+        return res.json({
             response: 'This Email is already  existed',
         });
     } else if (duplicateUserName) {
         console.log(duplicateUserName);
-        res.json({
+        return res.json({
             response: 'UserName is already existed',
         });
     } else {
@@ -118,7 +105,7 @@ exports.createUser = async(req, res) => {
         bcrypt.genSalt(saltRounds, (err, salt) => {
             bcrypt.hash(newUser.password, salt, (err, hash) => {
                 if (err) {
-                    res.json(err);
+                    return res.json(err);
                 }
                 newUser.password = hash;
                 // console.log(newUser);
@@ -126,10 +113,10 @@ exports.createUser = async(req, res) => {
                 newUser
                     .save()
                     .then((result) => {
-                        res.status(201).json(result);
+                        return res.status(201).json(result);
                     })
                     .catch((err) => {
-                        res.json(err);
+                        return res.json(err);
                     });
             });
         });
@@ -142,13 +129,10 @@ exports.editUserInfo = async(req, res) => {
         console.log(req.params);
         console.log(req.body);
         const userId = req.params.id;
-        const {
-            username,
-            password
-        } = req.body;
+        const { username, password } = req.body;
         console.log(req.params);
         if (!ObjectId.isValid(userId)) {
-            res.json('400 bad request').status = 400; // Bad Request
+            return (res.json('400 bad request').status = 400); // Bad Request
         }
         const user = await User.findByIdAndUpdate({
             _id: userId,
@@ -161,15 +145,15 @@ exports.editUserInfo = async(req, res) => {
         }, );
 
         if (!user) {
-            res
+            return res
                 .send({
                     response: '404 Error',
                 })
                 .status(404);
         }
-        res.json(user).status(200);
+        return res.json(user).status(200);
     } catch (err) {
-        res.json(err).status(500);
+        return res.json(err).status(500);
     }
     res.send({
         response: 'editUserInfo',
@@ -183,7 +167,7 @@ exports.deleteUserInfo = async(req, res) => {
         const userId = req.params.id;
         console.log(userId);
         if (!ObjectId.isValid(userId)) {
-            res.json(res).status = 400;
+            return (res.json(res).status = 400);
         }
 
         const userInfo = await User.findByIdAndDelete({
@@ -191,11 +175,9 @@ exports.deleteUserInfo = async(req, res) => {
         });
 
         if (!userInfo) {
-            res
-                .send({
-                    response: '404 Error',
-                })
-                .status(404);
+            res.send({
+                response: '404 Error',
+            }).status(404);
         }
 
         res.send({
@@ -208,29 +190,22 @@ exports.deleteUserInfo = async(req, res) => {
 
 //user 로그인
 exports.postUserLogin = async(req, res) => {
-    const {
-        email,
-        password
-    } = req.body;
+    const { email, password } = req.body;
 
     //Email 체크
-    const {
-        emailErrors,
-        emailIsValid,
-    } = await validateLogInData.validateLoginEmail(email);
+    const { emailErrors, emailIsValid } =
+    await validateLogInData.validateLoginEmail(email);
 
     if (!emailIsValid) {
-        res.status(400).json(emailErrors);
+        return res.status(400).json(emailErrors);
     }
 
     // Password체크
-    const {
-        passwordErrors,
-        passwordIsValid,
-    } = await validateLogInData.validateLoginPassword(password);
+    const { passwordErrors, passwordIsValid } =
+    await validateLogInData.validateLoginPassword(password);
 
     if (!passwordIsValid) {
-        res.status(400).json(passwordErrors);
+        return res.status(400).json(passwordErrors);
     }
 
     //DB에서 Email 매치되는 user 없을때 에러 처리
@@ -239,8 +214,8 @@ exports.postUserLogin = async(req, res) => {
     });
 
     if (!isEmailMatchedUser) {
-        res.status(404).json({
-            response: 'There is No User',
+        return res.status(404).json({
+            response: 'Check your Email and Password',
         });
     }
 
@@ -271,24 +246,24 @@ exports.postUserLogin = async(req, res) => {
             },
             (err, token) => {
                 if (err) {
-                    res.json(err)
-                    accessToken: null
+                    return res.json(err);
+                    accessToken: null;
                 }
-                res.status(200).json({
+                return res.status(200).json({
                     response: 'Login Success!!!',
                     id: LoginSuccessUser.id,
                     username: LoginSuccessUser.username,
                     email: LoginSuccessUser.email,
                     isAdmin: LoginSuccessUser.isAdmin,
-                    accessToken: token
+                    accessToken: token,
                 });
             },
         );
     } else {
         //비밀번호 틀릴때
-        res.status(400).json({
+        return res.status(400).json({
             response: 'Login failed Password incorrect!!',
-            accessToken: null
+            accessToken: null,
         });
     }
 };

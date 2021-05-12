@@ -19,15 +19,17 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: false,
-    cookie: {
-        httpOnly: true,
-        secure: false,
-    }
-}));
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET,
+        resave: true,
+        saveUninitialized: false,
+        cookie: {
+            httpOnly: true,
+            secure: false,
+        },
+    }),
+);
 
 app.use((req, res, next) => {
     // CORS에 x-access-token이 추가되었습니다. jwt로 생성된 토큰은 header의 x-access-token 항목을 통해 전달됩니다.
@@ -37,7 +39,6 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'content-type, x-access-token');
     next();
 });
-
 
 app.use(bodyParser.json());
 app.use(helmet());
