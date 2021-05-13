@@ -19,20 +19,8 @@ export const userSignin = (username, email, password1, password2) => {
 };
 
 export const userLogin = (email, password) => {
-    api
-        .post("users/auth/login", {
-            email,
-            password,
-        })
-        .then((response) => {
-            if (response.data.accessToken) {
-                localStorage.setItem("user", JSON.stringify(response.data));
-            }
-            return response.data;
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+    console.log(email);
+    console.log(password);
 };
 
 export const logout = () => {

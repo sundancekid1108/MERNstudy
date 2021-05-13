@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(2, 0, 1),
   },
 }));
 
@@ -71,13 +71,11 @@ const SignIn = (props) => {
   };
 
   const handleLogin = (e) => {
-    console.log(e.target.value);
     e.preventDefault();
     setMessage("");
     setLoading(true);
 
     userApi.userLogin(userEmail, userPassword);
-    console.log("login success");
   };
 
   return (
@@ -100,7 +98,10 @@ const SignIn = (props) => {
               margin="normal"
               required
               fullWidth
+              id="email"
+              label="Email Address"
               name="email"
+              autoComplete="email"
               value={userEmail}
               onChange={onChangeUserEmail}
               // autoFocus
@@ -111,7 +112,9 @@ const SignIn = (props) => {
               required
               fullWidth
               name="password"
+              label="Password"
               type="password"
+              id="password"
               value={userPassword}
               onChange={onChangeUserPassword}
             />
@@ -124,6 +127,15 @@ const SignIn = (props) => {
               onClick={handleLogin}
             >
               Sign In
+            </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign In with Facebook
             </Button>
             <Grid container>
               <Grid item xs>
