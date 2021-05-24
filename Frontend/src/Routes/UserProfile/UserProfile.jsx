@@ -8,8 +8,7 @@ import {
   Typography,
   Link,
 } from "@material-ui/core";
-import * as userApi from '../../Api/UserApi/UserApi';
-
+import * as userApi from "../../Api/UserApi/UserApi";
 
 const UserProfile = () => {
   const currentUserProfile = userApi.getCurrentUserInfo();
@@ -17,7 +16,6 @@ const UserProfile = () => {
     <>
       <Container>
         <Grid container justify="center" wrap="wrap">
-
           <div>UserProfile</div>
           <div>{currentUserProfile.id}</div>
           <div>{currentUserProfile.email}</div>

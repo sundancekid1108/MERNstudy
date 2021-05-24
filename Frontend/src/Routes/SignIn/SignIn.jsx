@@ -30,26 +30,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(2, 0, 1),
   },
 }));
-
-const copyRight = () => {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-};
 
 const SignIn = (props) => {
   const classes = useStyles();
@@ -70,12 +57,12 @@ const SignIn = (props) => {
     setUserPassword(userPassword);
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setMessage("");
     setLoading(true);
-
-    userApi.userLogin(userEmail, userPassword);
+    const data = await userApi.userLogin(userEmail, userPassword);
+    console.log("data :", data);
   };
 
   return (
@@ -104,7 +91,7 @@ const SignIn = (props) => {
               autoComplete="email"
               value={userEmail}
               onChange={onChangeUserEmail}
-              // autoFocus
+              autoFocus
             />
             <TextField
               variant="outlined"
