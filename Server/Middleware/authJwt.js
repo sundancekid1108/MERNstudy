@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 
-
 //토큰 검증 모듈 구현
 exports.verifyToken = async(req, res, next) => {
     // read the token from header or url
@@ -12,7 +11,7 @@ exports.verifyToken = async(req, res, next) => {
             response: 'No token provided!',
         });
     }
-
+    // token 검증
     await jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
         if (err) {
             return res.status(401).json({
@@ -22,9 +21,8 @@ exports.verifyToken = async(req, res, next) => {
             req.decoded = decoded;
             return res.status(200).json({
                 response: 'Success',
-                decoded: decoded
-            })
-
+                decoded: decoded,
+            });
         }
 
         next();

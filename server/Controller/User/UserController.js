@@ -262,7 +262,7 @@ exports.postUserLogin = async(req, res) => {
     } else {
         //비밀번호 틀릴때
         return res.status(400).json({
-            response: 'Login failed Password incorrect!!',
+            response: 'Login failed Check your Email and Password',
             accessToken: null,
         });
     }

@@ -17,6 +17,7 @@ import {
   Box,
 } from "@material-ui/core";
 import * as userApi from "../../Api/UserApi/UserApi";
+import "./Signin.css";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -45,7 +46,7 @@ const SignIn = (props) => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const onChangeUserEmail = (e) => {
     const userEmail = e.target.value;
@@ -59,10 +60,13 @@ const SignIn = (props) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setMessage("");
+    setErrorMessage("");
     setLoading(true);
-    const data = await userApi.userLogin(userEmail, userPassword);
-    console.log("data :", data);
+    const responseData = await userApi.userLogin(userEmail, userPassword);
+
+    if (!responseData.accessToken) {
+      setErrorMessage("Check your Email and Password");
+    }
   };
 
   return (
@@ -91,6 +95,7 @@ const SignIn = (props) => {
               autoComplete="email"
               value={userEmail}
               onChange={onChangeUserEmail}
+              helperText={errorMessage}
               autoFocus
             />
             <TextField
@@ -104,6 +109,7 @@ const SignIn = (props) => {
               id="password"
               value={userPassword}
               onChange={onChangeUserPassword}
+              helperText={errorMessage}
             />
             <Button
               type="submit"
