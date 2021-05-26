@@ -1,11 +1,11 @@
 import React from "react";
 import { Link, Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import Feed from "./Routes/Feed/Feed";
-import SignIn from "./Routes/SignIn/SignIn";
+import Feed from "./Views/Feed/Feed";
+import SignIn from "./Views/SignIn/SignIn";
 import SignUp from "./Routes/SignUp/SignUp";
-import Admin from "./Routes/Admin/Admin";
-import UserProfile from "./Routes/UserProfile/UserProfile";
-import NotFound from "./Routes/NotFound/NotFound";
+import Admin from "./Views/Admin/Admin";
+import UserProfile from "./Views/UserProfile/UserProfile";
+import NotFound from "./Views/NotFound/NotFound";
 import Navbar from "./Components/Navbar/Navbar";
 
 const App = () => {
