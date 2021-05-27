@@ -49,25 +49,26 @@ exports.getUserInfo = async(req, res) => {
 //회원가입
 exports.createUser = async(req, res) => {
     // console.log(req.body);
-    const { username, email, password1, password2 } = req.body;
+    const { username, email, firstname, lastname, password1, password2 } =
+    req.body;
 
     //username 검증
     const { userNameErrors, userNameIsValid } =
-    validateSignInData.validateUserName(username);
+    await validateSignInData.validateUserName(username);
     if (!userNameIsValid) {
         return res.status(400).json(userNameErrors);
     }
 
     //Email
     const { emailErrors, emailIsValid } =
-    validateSignInData.validateEmail(email);
+    await validateSignInData.validateEmail(email);
     if (!emailIsValid) {
         return res.status(400).json(emailErrors);
     }
 
     //password 검증
     const { passwordErrors, passwordIsValid } =
-    validateSignInData.validatePassword(password1, password2);
+    await validateSignInData.validatePassword(password1, password2);
     if (!passwordIsValid) {
         return res.status(400).json(passwordErrors);
     }
@@ -77,50 +78,53 @@ exports.createUser = async(req, res) => {
         email,
     });
 
+    if (duplicateEmail) {
+        return res.status(400).json({
+            response: 'This Email is already  existed',
+        });
+    }
+
     //DB에서 중복된 username 체크
     const duplicateUserName = await User.findOne({
         username,
     });
 
-    if (duplicateEmail) {
-        console.log(duplicateEmail);
-        return res.json({
-            response: 'This Email is already  existed',
-        });
-    } else if (duplicateUserName) {
-        console.log(duplicateUserName);
-        return res.json({
+    if (duplicateUserName) {
+        // console.log(duplicateUserName);
+        return res.status(400).json({
             response: 'UserName is already existed',
         });
-    } else {
-        //중복 Email, username 체크 후 password hash하여 저장
-        const newUser = new User({
-            username: username,
-            email: email,
-            password: password1,
-        });
-
-        const saltRounds = 10;
-
-        bcrypt.genSalt(saltRounds, (err, salt) => {
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-                if (err) {
-                    return res.json(err);
-                }
-                newUser.password = hash;
-                // console.log(newUser);
-
-                newUser
-                    .save()
-                    .then((result) => {
-                        return res.status(201).json(result);
-                    })
-                    .catch((err) => {
-                        return res.json(err);
-                    });
-            });
-        });
     }
+    //중복 Email, username 체크 후 password hash하여 저장
+
+    const newUser = new User({
+        username: username,
+        email: email,
+        firstname: firstname,
+        lastname: lastname,
+        password: password1,
+    });
+
+    const saltRounds = 10;
+
+    bcrypt.genSalt(saltRounds, (error, salt) => {
+        bcrypt.hash(newUser.password, salt, (error, hash) => {
+            if (error) {
+                return res.json(error);
+            }
+            newUser.password = hash;
+            // console.log(newUser);
+
+            newUser
+                .save()
+                .then((result) => {
+                    return res.status(201).json(result);
+                })
+                .catch((error) => {
+                    return res.status(400).json(error);
+                });
+        });
+    });
 };
 
 //user 수정

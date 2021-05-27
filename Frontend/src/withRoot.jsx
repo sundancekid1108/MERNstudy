@@ -1,7 +1,7 @@
 import React from "react";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import palette from "./Theme/Palette";
+import palette from "./Theme/Palette.jsx";
 
 // https://material-ui.com/customization/themes
 // MuiThemeProvider 사용

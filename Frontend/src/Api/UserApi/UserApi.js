@@ -1,20 +1,29 @@
 import api from "../axiosApi";
 
-export const userSignUp = (username, email, password1, password2) => {
-    api
+export const userSignUp = (
+    username,
+    email,
+    firstname,
+    lastname,
+    password1,
+    password2
+) => {
+    return api
         .post("/users/signup", {
-            username,
-            email,
-            password1,
-            password2,
+            username: username,
+            email: email,
+            firstname: firstname,
+            lastname: lastname,
+            password1: password1,
+            password2: password2,
         })
         .then((response) => {
-            const responseUserSigninData = response.data;
-            return responseUserSigninData;
-            // console.log(responseUserSigninData);
+            console.log("response : ", response);
+            return response;
         })
-        .catch((err) => {
-            // console.log(err);
+        .catch((error) => {
+            console.log("error : ", error);
+            return error;
         });
 };
 
@@ -39,7 +48,8 @@ export const userLogin = (email, password) => {
         })
         .catch((error) => {
             // console.log("error : ", error.response.data);
-            return error.response.data;
+
+            return error;
         });
 };
 
