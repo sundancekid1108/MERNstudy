@@ -262,7 +262,7 @@ const SignUp = ({ classes }) => {
                   )}
                   <Typography className={classes.signIn} variant="body1">
                     Have an account?{" "}
-                    <Link className={classes.signInUrl} to="/sign-in">
+                    <Link className={classes.signInUrl} to="/signin">
                       Sign In
                     </Link>
                   </Typography>
