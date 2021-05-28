@@ -92,18 +92,21 @@ const SignUp = ({ classes }) => {
       setIsLoading(false);
       setIsValid(true);
       setErrorMessage("Check the Empty Field");
+    }
+    const result = await userApi.userSignUp(
+      userName,
+      userEmail,
+      userFirstName,
+      userLastName,
+      userPassword,
+      userPassword2
+    );
+    // console.log("result : ", result);
+    // 회원가입성공했을때 넘김
+    if (result.status == 400) {
+      setErrorMessage(result.data.response);
     } else {
-      const result = await userApi.userSignUp(
-        userName,
-        userEmail,
-        userFirstName,
-        userLastName,
-        userPassword,
-        userPassword2
-      );
-      // 회원가입성공했을때 넘김
-      // history.push("/signin");
-      console.log("result : ", result);
+      history.push("/signin");
     }
   };
   return (

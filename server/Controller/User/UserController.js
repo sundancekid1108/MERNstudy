@@ -56,21 +56,21 @@ exports.createUser = async(req, res) => {
     const { userNameErrors, userNameIsValid } =
     await validateSignInData.validateUserName(username);
     if (!userNameIsValid) {
-        return res.status(400).json(userNameErrors);
+        return res.status(400).json({ response: userNameErrors.username });
     }
 
     //Email
     const { emailErrors, emailIsValid } =
     await validateSignInData.validateEmail(email);
     if (!emailIsValid) {
-        return res.status(400).json(emailErrors);
+        return res.status(400).json({ response: emailErrors.email });
     }
 
     //password 검증
     const { passwordErrors, passwordIsValid } =
     await validateSignInData.validatePassword(password1, password2);
     if (!passwordIsValid) {
-        return res.status(400).json(passwordErrors);
+        return res.status(400).json({ response: passwordErrors.password });
     }
 
     // DB에서 중복된 email 체크

@@ -18,12 +18,14 @@ export const userSignUp = (
             password2: password2,
         })
         .then((response) => {
-            console.log("response : ", response);
+            // console.log("response : ", response);
             return response;
         })
         .catch((error) => {
-            console.log("error : ", error);
-            return error;
+            // console.log("error : ", error);
+            // console.log("error!! : ", error.response);
+
+            return error.response;
         });
 };
 
@@ -47,7 +49,8 @@ export const userLogin = (email, password) => {
             return response.data;
         })
         .catch((error) => {
-            // console.log("error : ", error.response.data);
+            // console.log(error.status);
+            // console.log("error!! : ", error.response.data);
 
             return error;
         });
