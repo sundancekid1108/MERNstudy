@@ -4,11 +4,10 @@ import classNames from "classnames";
 import { withStyles } from "@material-ui/core";
 import { Input } from "@material-ui/core";
 import { Search as SearchIcon } from "@material-ui/icons";
-import styles from "./styles";
+import styles from "./Styles";
 
 const SearchInput = (props) => {
   const { classes, className, onChange, style, ...rest } = props;
-
   const rootClassName = classNames(classes.root, className);
 
   return (
@@ -32,7 +31,9 @@ SearchInput.propTypes = {
 };
 
 SearchInput.defaultProps = {
-  onChange: () => {},
+  onChange: (e) => {
+    console.log("searchinputtest");
+  },
 };
 
 export default withStyles(styles)(SearchInput);

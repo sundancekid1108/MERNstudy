@@ -18,10 +18,12 @@ exports.verifyToken = async(req, res, next) => {
                 response: 'Unauthorized! This token has a problem!',
             });
         } else {
-            req.decoded = decoded;
+            req.decodedUser = decoded;
+
+            console.log('req.decodedUser : ', req.decodedUser);
             return res.status(200).json({
-                response: 'Success',
-                decoded: decoded,
+                // response: 'Success',
+                decodedUser: req.decodedUser,
             });
         }
 

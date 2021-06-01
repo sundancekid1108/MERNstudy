@@ -14,7 +14,8 @@ import { ArrowBack as ArrowBackIcon } from "@material-ui/icons";
 import * as userApi from "../../Api/UserApi/UserApi";
 import styles from "./Styles";
 
-const SignUp = ({ classes }) => {
+const SignUp = (props) => {
+  const { classes } = props;
   const form = useRef();
   const [userEmail, setUserEmail] = useState("");
   const [userName, setUserName] = useState("");

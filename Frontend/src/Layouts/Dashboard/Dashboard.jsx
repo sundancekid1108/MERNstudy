@@ -8,16 +8,18 @@ import Sidebar from "./Components/Sidebar/Sidebar";
 
 import styles from "./Styles";
 
-const Dashboard = ({ title, children, classes }) => {
-  const [isOpen, setIsOpen] = useState("false");
+const Dashboard = (props) => {
+  const { title, children, classes } = props;
+  const [isOpen, setIsOpen] = useState(true);
 
   const handleToggleOpen = () => {
-    setIsOpen("true");
+    if (isOpen == false) {
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
   };
 
-  const handleClose = () => {
-    setIsOpen("false");
-  };
   return (
     <>
       <Topbar
@@ -30,7 +32,7 @@ const Dashboard = ({ title, children, classes }) => {
         anchor="left"
         classes={{ paper: classes.drawerPaper }}
         open={isOpen}
-        onClose={handleClose}
+        onClose={handleToggleOpen}
         variant="persistent"
       >
         <Sidebar className={classes.sidebar} />
@@ -41,6 +43,16 @@ const Dashboard = ({ title, children, classes }) => {
       </main>
     </>
   );
+};
+
+Dashboard.defaultProps = {
+  isSidebarOpen: false,
+};
+
+Dashboard.propTypes = {
+  children: PropTypes.node,
+  isSidebarOpen: PropTypes.bool,
+  title: PropTypes.string,
 };
 
 export default withStyles(styles)(Dashboard);

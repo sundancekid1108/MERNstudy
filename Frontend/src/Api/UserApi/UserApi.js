@@ -56,10 +56,25 @@ export const userLogin = (email, password) => {
         });
 };
 
-export const logout = () => {
-    localStorage.removeItem("userData");
+export const userLogout = () => {
+    console.log("RemoveToken!!");
+    localStorage.removeItem("token");
 };
 
-export const getCurrentUserInfo = () => {
-    return JSON.parse(localStorage.getItem("userData"));
+export const getUserInfo = async() => {
+    const token = localStorage.getItem("token");
+    console.log("token: ", token);
+
+    const res = await api
+        .get("/users/userinfo", {
+            headers: {
+                "x-access-token": token,
+            },
+        })
+        .catch((err) => {
+            console.log(err);
+            return err;
+        });
+    console.log("res", res);
+    return res;
 };

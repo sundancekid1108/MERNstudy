@@ -15,35 +15,30 @@ import DashboardIcon from "@material-ui/icons/DashboardOutlined";
 import PeopleIcon from "@material-ui/icons/PeopleOutlined";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasketOutlined";
 import LockOpenIcon from "@material-ui/icons/LockOpenOutlined";
+import ViewListIcon from "@material-ui/icons/ViewList";
 import TextFieldsIcon from "@material-ui/icons/TextFields";
 import ImageIcon from "@material-ui/icons/ImageOutlined";
 import InfoIcon from "@material-ui/icons/InfoOutlined";
 import AccountBoxIcon from "@material-ui/icons/AccountBoxOutlined";
 import SettingsIcon from "@material-ui/icons/SettingsOutlined";
+import PersonIcon from "@material-ui/icons/Person";
 import AvatarIMG from "../../../../Images/avatar.png";
-
+import LogoIMG from "../../../../Images/logo.png";
 import styles from "./Styles";
 
-const Sidebar = ({ classes }) => {
+const Sidebar = (props) => {
+  const { classes } = props;
   return (
     <section className={classes.root}>
       <div className={classes.logoWrapper}>
         <Link className={classes.logoLink} to="/">
-          <img
-            alt="Logo"
-            className={classes.logoImage}
-            src="/images/logos/logo.png"
-          />
+          <img alt="Logo" className={classes.logoImage} />
         </Link>
       </div>
       <Divider className={classes.logoDivider} />
       <div className={classes.profile}>
         <Link to="/account">
-          <Avatar
-            alt="George Simos"
-            className={classes.avatar}
-            src={AvatarIMG}
-          />
+          <Avatar alt=" test " className={classes.avatar} src={AvatarIMG} />
         </Link>
         <Typography className={classes.nameText} variant="h6">
           양원철
@@ -54,6 +49,21 @@ const Sidebar = ({ classes }) => {
       </div>
       <Divider className={classes.profileDivider} />
       <List component="div" disablePadding>
+        <ListItem
+          activeClassName={classes.activeListItem}
+          className={classes.listItem}
+          component={NavLink}
+          to="/feed"
+        >
+          <ListItemIcon className={classes.listItemIcon}>
+            <ViewListIcon />
+          </ListItemIcon>
+          <ListItemText
+            classes={{ primary: classes.listItemText }}
+            primary="Feed"
+          />
+        </ListItem>
+
         <ListItem
           activeClassName={classes.activeListItem}
           className={classes.listItem}
@@ -72,7 +82,7 @@ const Sidebar = ({ classes }) => {
           activeClassName={classes.activeListItem}
           className={classes.listItem}
           component={NavLink}
-          to="/users"
+          to="/userslist"
         >
           <ListItemIcon className={classes.listItemIcon}>
             <PeopleIcon />
@@ -100,7 +110,7 @@ const Sidebar = ({ classes }) => {
           activeClassName={classes.activeListItem}
           className={classes.listItem}
           component={NavLink}
-          to="/sign-in"
+          to="/signin"
         >
           <ListItemIcon className={classes.listItemIcon}>
             <LockOpenIcon />
@@ -110,34 +120,7 @@ const Sidebar = ({ classes }) => {
             primary="Authentication"
           />
         </ListItem>
-        <ListItem
-          activeClassName={classes.activeListItem}
-          className={classes.listItem}
-          component={NavLink}
-          to="/typography"
-        >
-          <ListItemIcon className={classes.listItemIcon}>
-            <TextFieldsIcon />
-          </ListItemIcon>
-          <ListItemText
-            classes={{ primary: classes.listItemText }}
-            primary="Typography"
-          />
-        </ListItem>
-        <ListItem
-          activeClassName={classes.activeListItem}
-          className={classes.listItem}
-          component={NavLink}
-          to="/icons"
-        >
-          <ListItemIcon className={classes.listItemIcon}>
-            <ImageIcon />
-          </ListItemIcon>
-          <ListItemText
-            classes={{ primary: classes.listItemText }}
-            primary="Icons and Images"
-          />
-        </ListItem>
+
         <ListItem
           activeClassName={classes.activeListItem}
           className={classes.listItem}

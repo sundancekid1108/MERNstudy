@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import * as AuthJwt from '../../Middleware/authJwt';
 dotenv.config();
 
 const { ObjectId } = mongoose.Types;
@@ -27,26 +28,36 @@ exports.getUserList = async(req, res) => {
 };
 
 //userInfo 조회
-exports.getUserInfo = async(req, res) => {
-    try {
-        const userId = req.params.id;
-        if (!ObjectId.isValid(userId)) {
-            return (res.json('400 bad request').status = 400);
-        }
+// exports.getUserInfo = async(req, res) => {
+//     try {
+//         const userId = req.params.id;
+//         if (!ObjectId.isValid(userId)) {
+//             return (res.json('400 bad request').status = 400);
+//         }
 
-        const user = await User.findById(userId);
-        res.json(user).status(200);
+//         const user = await User.findById(userId);
+//         res.json(user).status(200);
+//     } catch (err) {
+//         console.log(err);
+//         return res
+//             .send({
+//                 response: 'getUserInfo Error',
+//             })
+//             .status(500);
+//     }
+// };
+
+//현재 유저 정보 조회
+exports.getCurrentUserInfo = (req, res) => {
+    try {
+        const currentUser = req.decodedUser;
+        res.json(currentUser).status(200);
     } catch (err) {
-        console.log(err);
-        return res
-            .send({
-                response: 'getUserInfo Error',
-            })
-            .status(500);
+        res.send(err).status(500);
     }
 };
-
 //회원가입
+
 exports.createUser = async(req, res) => {
     // console.log(req.body);
     const { username, email, firstname, lastname, password1, password2 } =
@@ -237,9 +248,12 @@ exports.postUserLogin = async(req, res) => {
         });
         // console.log(LoginSuccessUser);
         const payload = {
-            id: LoginSuccessUser.id,
-            username: LoginSuccessUser.username,
-            email: LoginSuccessUser.email,
+            userId: LoginSuccessUser.id,
+            userName: LoginSuccessUser.username,
+            userPhoneNumber: LoginSuccessUser.phonenumber,
+            userFirstName: LoginSuccessUser.firstname,
+            userLastName: LoginSuccessUser.lastname,
+            userEmail: LoginSuccessUser.email,
             isAdmin: LoginSuccessUser.isAdmin,
         };
 
@@ -255,9 +269,12 @@ exports.postUserLogin = async(req, res) => {
                 }
                 return res.status(200).json({
                     response: 'Login Success!!!',
-                    id: LoginSuccessUser.id,
-                    username: LoginSuccessUser.username,
-                    email: LoginSuccessUser.email,
+                    userId: LoginSuccessUser.id,
+                    userFirstName: LoginSuccessUser.firstname,
+                    userLastName: LoginSuccessUser.lastname,
+                    userPhoneNumber: LoginSuccessUser.phoneNumber,
+                    userName: LoginSuccessUser.username,
+                    userEmail: LoginSuccessUser.email,
                     isAdmin: LoginSuccessUser.isAdmin,
                     accessToken: token,
                 });

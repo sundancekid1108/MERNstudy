@@ -13,7 +13,8 @@ import { ArrowBack as ArrowBackIcon } from "@material-ui/icons";
 import * as userApi from "../../Api/UserApi/UserApi";
 import styles from "./Styles.js";
 
-const SignIn = ({ classes }) => {
+const SignIn = (props) => {
+  const { classes } = props;
   const form = useRef();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -42,7 +43,7 @@ const SignIn = ({ classes }) => {
     setErrorMessage("");
     setIsLoading(true);
     const responseData = await userApi.userLogin(userEmail, userPassword);
-    console.log(responseData);
+    // console.log(responseData);
     if (responseData.accessToken) {
       // console.log("loginSuccess!!");
       setIsValid(false);

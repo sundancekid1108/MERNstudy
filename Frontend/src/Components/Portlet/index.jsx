@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core";
-import Paper from "../Paper";
+import Paper from "../Paper/Index";
 // Component styles
 const styles = () => ({
   root: {
@@ -27,6 +27,7 @@ const Portlet = (props) => {
     </Paper>
   );
 };
+
 Portlet.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,

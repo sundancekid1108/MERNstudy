@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core";
 import { List as ListIcon, Apps as AppsIcon } from "@material-ui/icons";
-import styles from "./styles";
+import styles from "./Styles";
 
 const DisplayMode = (props) => {
   const { classes, className, mode, onChange } = props;
@@ -37,16 +37,16 @@ const DisplayMode = (props) => {
   );
 };
 
+DisplayMode.defaultProps = {
+  mode: "grid",
+  onChange: () => {},
+};
+
 DisplayMode.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
   mode: PropTypes.oneOf(["grid", "list"]),
   onChange: PropTypes.func,
-};
-
-DisplayMode.defaultProps = {
-  mode: "grid",
-  onChange: () => {},
 };
 
 export default withStyles(styles)(DisplayMode);

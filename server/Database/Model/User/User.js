@@ -5,6 +5,7 @@ const UserSchema = new Schema({
     username: {
         type: String,
         required: true,
+        lowercase: true,
         default: '',
         unique: true,
     },
@@ -18,6 +19,7 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         unique: true,
+        lowercase: true,
         default: '',
     },
 
@@ -29,11 +31,13 @@ const UserSchema = new Schema({
     firstname: {
         type: String,
         required: true,
+        lowercase: true,
         trim: true,
     },
     lastname: {
         type: String,
         required: true,
+        lowercase: true,
         trim: true,
     },
 
