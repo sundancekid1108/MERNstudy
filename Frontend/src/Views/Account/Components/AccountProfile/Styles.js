@@ -5,7 +5,7 @@ export default (theme) => ({
     },
     info: {},
     emailText: {
-        marginTop: theme.spacing.unit,
+        marginTop: theme.spacing(1),
         color: theme.palette.text.secondary,
     },
     dateText: {

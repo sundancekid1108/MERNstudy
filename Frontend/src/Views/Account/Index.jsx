@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
 import { withStyles } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import Dashboard from "../../Layouts/Dashboard/Dashboard";
 import { AccountProfile, AccountDetails } from "./Components/Index";
 import * as userApi from "../../Api/UserApi/UserApi";
-import { Button } from "@material-ui/core";
 const styles = (theme) => ({
   root: {
     padding: theme.spacing(4),
@@ -12,23 +13,32 @@ const styles = (theme) => ({
 });
 
 const Account = (props) => {
-  const [user, setUser] = useState([]);
   const { classes } = props;
+  const [user, setUser] = useState({});
+  const history = useHistory();
 
-  useEffect(async () => {
-    const result = await userApi.getUserInfo();
-    console.log("result : ", result);
-  });
+  //유저 정보 불러오기
+  const getUserInfo = async () => {
+    const fetchedUserData = await userApi.getUserInfo();
+    // console.log("fetchedUserData", fetchedUserData);
+    // return fetchedUserData;
+    setUser(fetchedUserData);
+  };
+
+  //불러온 유저 정보 props에 저장
+  useEffect(() => {
+    getUserInfo();
+  }, []);
 
   return (
     <>
       <Dashboard title="My Account">
         <div className={classes.root}>
           <Grid container spacing={4}>
-            <Grid item lg={4} md={6} xl={4} xs={12}>
+            <Grid item lg={4} md={6} xl={5} xs={12}>
               <AccountProfile user={user} />
             </Grid>
-            <Grid item lg={8} md={6} xl={8} xs={12}>
+            <Grid item lg={8} md={6} xl={7} xs={12}>
               <AccountDetails user={user} />
             </Grid>
           </Grid>
@@ -36,6 +46,10 @@ const Account = (props) => {
       </Dashboard>
     </>
   );
+};
+
+Account.propTypes = {
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Account);

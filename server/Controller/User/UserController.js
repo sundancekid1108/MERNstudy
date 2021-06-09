@@ -18,6 +18,7 @@ exports.getUserList = async(req, res) => {
                 _id: -1,
             },
         });
+        console.log('users', users);
         return res.json(users).status(200);
     } catch (err) {
         console.log(err);
@@ -27,32 +28,19 @@ exports.getUserList = async(req, res) => {
     }
 };
 
-//userInfo 조회
-// exports.getUserInfo = async(req, res) => {
-//     try {
-//         const userId = req.params.id;
-//         if (!ObjectId.isValid(userId)) {
-//             return (res.json('400 bad request').status = 400);
-//         }
-
-//         const user = await User.findById(userId);
-//         res.json(user).status(200);
-//     } catch (err) {
-//         console.log(err);
-//         return res
-//             .send({
-//                 response: 'getUserInfo Error',
-//             })
-//             .status(500);
-//     }
-// };
-
 //현재 유저 정보 조회
-exports.getCurrentUserInfo = (req, res) => {
+exports.getCurrentUserInfo = async(req, res) => {
     try {
-        const currentUser = req.decodedUser;
-        res.json(currentUser).status(200);
+        console.log('req.decodedUser : ', req.decodedUser);
+        const userId = req.decodedUser.userId;
+        console.log(userId);
+
+        const currentuser = await User.findById(userId);
+
+        // console.log('currentuser : ', currentuser);
+        res.send(currentuser).status(200);
     } catch (err) {
+        console.log(err);
         res.send(err).status(500);
     }
 };
@@ -70,7 +58,23 @@ exports.createUser = async(req, res) => {
         return res.status(400).json({ response: userNameErrors.username });
     }
 
-    //Email
+    //firstname 검증
+    const { userFirstNameErrors, userFirstNameIsValid } =
+    await validateSignInData.validateUserFirstName(firstname);
+    if (!userFirstNameIsValid) {
+        return res
+            .status(400)
+            .json({ response: userFirstNameErrors.firstname });
+    }
+
+    //last 검증
+    const { userLastNameErrors, userLastNameIsValid } =
+    await validateSignInData.validateUserLastName(lastname);
+    if (!userLastNameIsValid) {
+        return res.status(400).json({ response: userLastNameErrors.lastname });
+    }
+
+    //Email 검증
     const { emailErrors, emailIsValid } =
     await validateSignInData.validateEmail(email);
     if (!emailIsValid) {
@@ -141,46 +145,31 @@ exports.createUser = async(req, res) => {
 //user 수정
 exports.editUserInfo = async(req, res) => {
     try {
-        console.log(req.params);
-        console.log(req.body);
-        const userId = req.params.id;
-        const { username, password } = req.body;
-        console.log(req.params);
-        if (!ObjectId.isValid(userId)) {
-            return (res.json('400 bad request').status = 400); // Bad Request
-        }
-        const user = await User.findByIdAndUpdate({
+        console.log('edituserinfo');
+        console.log('req.decodedUser : ', req.decodedUser);
+        console.log('req.body : ', req.body);
+        const { username, email, firstname, lastname, password, phonenumber } =
+        req.body;
+        const userId = req.decodedUser.userId;
+        const editedUser = await User.findByIdAndUpdate({
             _id: userId,
         }, {
             username: username,
-            password: password,
-        }, {
-            multi: true,
-            new: true,
-        }, );
+            firstname: firstname,
+            lastname: lastname,
+        }, { multi: true, new: true }, );
 
-        if (!user) {
-            return res
-                .send({
-                    response: '404 Error',
-                })
-                .status(404);
-        }
-        return res.json(user).status(200);
+        return res.json(editedUser).status(200);
     } catch (err) {
-        return res.json(err).status(500);
+        res.send(err).status(500);
     }
-    res.send({
-        response: 'editUserInfo',
-    });
 };
-
 //user 삭제
 exports.deleteUserInfo = async(req, res) => {
     try {
-        console.log(req.params.id);
-        const userId = req.params.id;
-        console.log(userId);
+        console.log('req.decodedUser : ', req.decodedUser);
+
+        const userId = req.decodedUser.userId;
         if (!ObjectId.isValid(userId)) {
             return (res.json(res).status = 400);
         }
@@ -249,18 +238,14 @@ exports.postUserLogin = async(req, res) => {
         // console.log(LoginSuccessUser);
         const payload = {
             userId: LoginSuccessUser.id,
-            userName: LoginSuccessUser.username,
-            userPhoneNumber: LoginSuccessUser.phonenumber,
-            userFirstName: LoginSuccessUser.firstname,
-            userLastName: LoginSuccessUser.lastname,
-            userEmail: LoginSuccessUser.email,
+
             isAdmin: LoginSuccessUser.isAdmin,
         };
 
         jwt.sign(
             payload,
             process.env.JWT_SECRET_KEY, {
-                expiresIn: 36000,
+                expiresIn: 360000,
             },
             (err, token) => {
                 if (err) {
@@ -270,11 +255,6 @@ exports.postUserLogin = async(req, res) => {
                 return res.status(200).json({
                     response: 'Login Success!!!',
                     userId: LoginSuccessUser.id,
-                    userFirstName: LoginSuccessUser.firstname,
-                    userLastName: LoginSuccessUser.lastname,
-                    userPhoneNumber: LoginSuccessUser.phoneNumber,
-                    userName: LoginSuccessUser.username,
-                    userEmail: LoginSuccessUser.email,
                     isAdmin: LoginSuccessUser.isAdmin,
                     accessToken: token,
                 });

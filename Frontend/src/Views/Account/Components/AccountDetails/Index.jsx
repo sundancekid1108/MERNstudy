@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
-import { Button, TextField } from "@material-ui/core";
+import {
+  Button,
+  TextField,
+  CircularProgress,
+  Typography,
+} from "@material-ui/core";
 import {
   Portlet,
   PortletHeader,
@@ -10,12 +15,75 @@ import {
   PortletContent,
   PortletFooter,
 } from "../../../../Components/Index";
+import * as userApi from "../../../../Api/UserApi/UserApi";
 
 import styles from "./Styles";
 
 const AccountDetails = (props) => {
   const { user, classes, className, ...rest } = props;
   const rootClassName = classNames(classes.root, className);
+  const form = useRef();
+  console.log("AccountDetails Props user : ", user);
+
+  const [userName, setUserName] = useState("");
+  const [userFirstName, setUserFirstName] = useState("");
+  const [userLastName, setUserLastName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userPhoneNumber, setUserPhoneNumber] = useState("");
+  const [userPassword, setUserPasword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isValid, setIsValid] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const setDefaultState = () => {
+    setUserName(user.username);
+    setUserFirstName(user.firstname);
+    setUserLastName(user.lastname);
+    setUserEmail(user.email);
+    setUserPhoneNumber(user.phonenumber);
+  };
+  useEffect(() => {
+    setDefaultState();
+  }, [user]);
+
+  const onChangeUserName = (e) => {
+    const data = e.target.value;
+    setUserName(data);
+  };
+  const onChangeUserFirstName = (e) => {
+    const data = e.target.value;
+    setUserFirstName(data);
+  };
+  const onChangeUserLastName = (e) => {
+    const data = e.target.value;
+    setUserLastName(data);
+  };
+  const onChangeUserEmail = (e) => {
+    const data = e.target.value;
+    setUserEmail(data);
+  };
+  const onChangeUserPhoneNumber = (e) => {
+    const data = e.target.value;
+    setUserPhoneNumber(data);
+  };
+  const onChangeUserPassword = (e) => {
+    const data = e.target.value;
+    setUserPasword(data);
+  };
+
+  const handleEditProfile = async (e) => {
+    e.preventDefault();
+    const result = await userApi.editUserInfo(
+      userName,
+      userFirstName,
+      userLastName,
+      userEmail,
+      userPhoneNumber,
+      userPassword
+    );
+    console.log("Account detail result : ", result);
+  };
+
   return (
     <>
       <Portlet {...rest} className={rootClassName}>
@@ -26,42 +94,33 @@ const AccountDetails = (props) => {
           />
         </PortletHeader>
         <PortletContent noPadding>
-          <form autoComplete="off" noValidate>
+          <form ref={form} onSubmit={handleEditProfile} noValidate>
             <div className={classes.field}>
               <TextField
                 className={classes.textField}
                 helperText="Please specify the username"
                 label="UserName"
                 margin="dense"
-                required
-                // value={firstname}
+                value={userName}
                 variant="outlined"
-                // onChange={(event) =>
-                //   this.handleFieldChange("firstname", event.target.value)
-                // }
+                onChange={onChangeUserName}
               />
               <TextField
                 className={classes.textField}
                 helperText="Please specify the first name"
                 label="First name"
                 margin="dense"
-                required
-                // value={firstname}
+                value={userFirstName}
                 variant="outlined"
-                // onChange={(event) =>
-                //   this.handleFieldChange("firstname", event.target.value)
-                // }
+                onChange={onChangeUserFirstName}
               />
               <TextField
                 className={classes.textField}
                 label="Last name"
                 margin="dense"
-                required
-                // value={lastname}
+                value={userLastName}
                 variant="outlined"
-                // onChange={(event) =>
-                //   this.handleFieldChange("lastname", event.target.value)
-                // }
+                onChange={onChangeUserLastName}
               />
             </div>
             <div className={classes.field}>
@@ -69,39 +128,63 @@ const AccountDetails = (props) => {
                 className={classes.textField}
                 label="Email Address"
                 margin="dense"
-                required
-                // value={email}
+                value={userEmail}
                 variant="outlined"
-                // onChange={(event) =>
-                //   this.handleFieldChange("email", event.target.value)
-                // }
+                onChange={onChangeUserEmail}
               />
               <TextField
                 className={classes.textField}
                 label="Phone Number"
                 margin="dense"
-                type="number"
-                // value={phone}
+                type="text"
+                value={userPhoneNumber}
                 variant="outlined"
-                // onChange={(event) =>
-                //   this.handleFieldChange("phone", event.target.value)
-                // }
+                onChange={onChangeUserPhoneNumber}
+              />
+
+              <TextField
+                className={classes.textField}
+                label="Password"
+                margin="dense"
+                type="password"
+                value={userPassword}
+                variant="outlined"
+                onChange={onChangeUserPassword}
               />
             </div>
           </form>
         </PortletContent>
         <PortletFooter className={classes.portletFooter}>
-          <Button
-            color="primary"
-            variant="contained"
-            // onClick={this.onUpdateUser}
-          >
-            Save details
-          </Button>
+          {/* Error Message  */}
+          {errorMessage && (
+            <Typography className={classes.errorMessage} variant="body2">
+              {errorMessage}
+            </Typography>
+          )}
+
+          {/* Loding bar */}
+          {isLoading ? (
+            <CircularProgress className={classes.progress} />
+          ) : (
+            <Button
+              color="primary"
+              variant="contained"
+              disabled={!isValid}
+              onClick={handleEditProfile}
+            >
+              EDIT PROFILE
+            </Button>
+          )}
         </PortletFooter>
       </Portlet>
     </>
   );
+};
+
+AccountDetails.propTypes = {
+  className: PropTypes.string,
+  classes: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(AccountDetails);

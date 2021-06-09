@@ -75,7 +75,8 @@ const SignUp = (props) => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-
+    // setIsLoading(true);
+    // setIsValid(false);
     if (checkValue == false) {
       //Check 버튼 확인
       setIsLoading(false);

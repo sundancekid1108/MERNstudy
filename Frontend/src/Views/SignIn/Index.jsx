@@ -18,7 +18,7 @@ const SignIn = (props) => {
   const form = useRef();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  const [isValid, setIsValid] = useState("true");
+  const [isValid, setIsValid] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();

@@ -1,14 +1,15 @@
 const Validator = require('validator');
 const isEmpty = require('is-empty');
 
+//네임 검증
 exports.validateUserName = (username) => {
     let userNameErrors = {};
     const userNameData = !isEmpty(username) ? username : '';
     if (Validator.isEmpty(userNameData)) {
-        userNameErrors.username = 'username is required';
+        userNameErrors.username = 'username field is required';
     } else if (!Validator.isLength(userNameData, { min: 3, max: 20 })) {
         userNameErrors.username =
-            'username must be at least 3 characters and under 20characters';
+            'username field must be at least 3 characters and under 20characters';
     }
     return {
         userNameErrors,
@@ -16,6 +17,39 @@ exports.validateUserName = (username) => {
     };
 };
 
+//firstname 체크
+exports.validateUserFirstName = (firstname) => {
+    let userFirstNameErrors = {};
+    const userFirstNameData = !isEmpty(firstname) ? firstname : '';
+    if (Validator.isEmpty(userFirstNameData)) {
+        userFirstNameErrors.firstname = 'This field is required';
+    } else if (!Validator.isLength(userFirstNameData, { min: 3, max: 20 })) {
+        userFirstNameErrors.firstname =
+            'firstname field must be at least 3 characters and under 20characters';
+    }
+    return {
+        userFirstNameErrors,
+        userFirstNameIsValid: isEmpty(userFirstNameErrors),
+    };
+};
+
+//firstname 체크
+exports.validateUserLastName = (lastname) => {
+    let userLastNameErrors = {};
+    const userLastNameData = !isEmpty(lastname) ? lastname : '';
+    if (Validator.isEmpty(userLastNameData)) {
+        userLastNameErrors.firstname = 'lastname field is required';
+    } else if (!Validator.isLength(userLastNameData, { min: 3, max: 20 })) {
+        userLastNameErrors.lastname =
+            'lastname field must be at least 3 characters and under 20characters';
+    }
+    return {
+        userLastNameErrors,
+        userLastNameIsValid: isEmpty(userLastNameErrors),
+    };
+};
+
+// 이메일 검증
 exports.validateEmail = (email) => {
     const emailData = !isEmpty(email) ? email : '';
     let emailErrors = {};
@@ -31,7 +65,22 @@ exports.validateEmail = (email) => {
         emailIsValid: isEmpty(emailErrors),
     };
 };
+//비밀번호 검증
+exports.validatePasswordType = (password) => {
+    let passwordTypeErrors = {};
+    const passwordData = !isEmpty(password) ? password : '';
+    if (Validator.isEmpty(passwordData)) {
+        passwordTypeErrors.password = 'Password Field is empty';
+    } else if (!Validator.isLength(passwordData, { min: 6, max: 30 })) {
+        passwordTypeErrors.password = 'Password must be at least 6 characters';
+    }
+    return {
+        passwordTypeErrors,
+        passwordTypeIsValid: isEmpty(passwordTypeErrors),
+    };
+};
 
+//회원가입 비밀번호  검증
 exports.validatePassword = (password1, password2) => {
     password1Data = !isEmpty(password1) ? password1 : '';
     password2Data = !isEmpty(password2) ? password2 : '';

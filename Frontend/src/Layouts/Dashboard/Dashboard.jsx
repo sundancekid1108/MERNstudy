@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import { Drawer } from "@material-ui/core";
-import Topbar from "./Components/Topbar/Topbar";
-import Footer from "./Components/Footer/Footer";
-import Sidebar from "./Components/Sidebar/Sidebar";
+import Topbar from "./Components/Topbar/Index";
+import Footer from "./Components/Footer/Index";
+import Sidebar from "./Components/Sidebar/Index";
 
 import styles from "./Styles";
 

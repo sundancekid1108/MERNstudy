@@ -1,5 +1,7 @@
 import api from "../axiosApi";
+import authHeader from "../authHeader";
 
+//회원가입
 export const userSignUp = (
     username,
     email,
@@ -29,9 +31,8 @@ export const userSignUp = (
         });
 };
 
+// 로그인
 export const userLogin = (email, password) => {
-    // console.log(email);
-    // console.log(password);
     return api
         .post("/users/auth/login", {
             email: email,
@@ -56,25 +57,56 @@ export const userLogin = (email, password) => {
         });
 };
 
+//로그아웃
 export const userLogout = () => {
     console.log("RemoveToken!!");
     localStorage.removeItem("token");
 };
 
+//유저 정보 받아오기
 export const getUserInfo = async() => {
-    const token = localStorage.getItem("token");
-    console.log("token: ", token);
-
-    const res = await api
-        .get("/users/userinfo", {
-            headers: {
-                "x-access-token": token,
-            },
-        })
-        .catch((err) => {
-            console.log(err);
-            return err;
+    const token = authHeader();
+    try {
+        const res = await api.get("/users/userinfo", {
+            headers: token,
         });
-    console.log("res", res);
-    return res;
+        // console.log("res : ", res);
+
+        const response = res.data;
+        return response;
+    } catch (error) {
+        // console.log(error);
+        return error;
+    }
+};
+
+//유저 정보 수정
+export const editUserInfo = async(
+    userName,
+    userEmail,
+    userFirstName,
+    userLastName,
+    userPhoneNumber,
+    userPassword
+) => {
+    // console.log("edituserinfo");
+    const token = authHeader();
+    try {
+        const res = await api.patch(
+            "/users/edituserinfo", {
+                username: userName,
+                email: userEmail,
+                firstname: userFirstName,
+                lastname: userLastName,
+                phonenumber: userPhoneNumber,
+                password: userPassword,
+            }, { headers: token }
+        );
+
+        console.log("edituserinfo res", res);
+        return res;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
 };

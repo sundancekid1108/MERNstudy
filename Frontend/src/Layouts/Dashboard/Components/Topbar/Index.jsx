@@ -25,7 +25,7 @@ const Topbar = (props) => {
 
   const handleLogOut = async () => {
     await userApi.userLogout();
-    history.push("/dashboard");
+    history.push("/signin");
   };
 
   return (

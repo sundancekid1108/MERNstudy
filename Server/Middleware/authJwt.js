@@ -19,14 +19,8 @@ exports.verifyToken = async(req, res, next) => {
             });
         } else {
             req.decodedUser = decoded;
-
-            console.log('req.decodedUser : ', req.decodedUser);
-            return res.status(200).json({
-                // response: 'Success',
-                decodedUser: req.decodedUser,
-            });
+            next();
+            // console.log('req.decodedUser : ', req.decodedUser);
         }
-
-        next();
     });
 };
