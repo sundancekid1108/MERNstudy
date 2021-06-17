@@ -10,16 +10,23 @@ dotenv.config();
 
 const { ObjectId } = mongoose.Types;
 
-//user 조회
+// Admin 유저 리스트 조회
 exports.getUserList = async(req, res) => {
     try {
-        const users = await User.find({}, null, {
-            sort: {
-                _id: -1,
-            },
-        });
-        console.log('users', users);
-        return res.json(users).status(200);
+        const isAdmin = req.decodedUser.isAdmin;
+        if (isAdmin == true) {
+            const users = await User.find({}, null, {
+                sort: {
+                    _id: -1,
+                },
+            });
+            console.log('users', users);
+            return res.json(users).status(200);
+        } else {
+            return res.json({
+                response: 'Not Admin Account',
+            });
+        }
     } catch (err) {
         console.log(err);
         return res.json({
@@ -31,17 +38,15 @@ exports.getUserList = async(req, res) => {
 //현재 유저 정보 조회
 exports.getCurrentUserInfo = async(req, res) => {
     try {
-        console.log('req.decodedUser : ', req.decodedUser);
         const userId = req.decodedUser.userId;
-        console.log(userId);
 
         const currentuser = await User.findById(userId);
 
         // console.log('currentuser : ', currentuser);
-        res.send(currentuser).status(200);
+        return res.send(currentuser).status(200);
     } catch (err) {
         console.log(err);
-        res.send(err).status(500);
+        return res.send(err).status(500);
     }
 };
 //회원가입
@@ -151,6 +156,7 @@ exports.editUserInfo = async(req, res) => {
         const { username, email, firstname, lastname, password, phonenumber } =
         req.body;
         const userId = req.decodedUser.userId;
+
         const editedUser = await User.findByIdAndUpdate({
             _id: userId,
         }, {
@@ -161,10 +167,10 @@ exports.editUserInfo = async(req, res) => {
 
         return res.json(editedUser).status(200);
     } catch (err) {
-        res.send(err).status(500);
+        return res.json(err).status(500);
     }
 };
-//user 삭제
+//회원탈퇴
 exports.deleteUserInfo = async(req, res) => {
     try {
         console.log('req.decodedUser : ', req.decodedUser);
@@ -179,16 +185,52 @@ exports.deleteUserInfo = async(req, res) => {
         });
 
         if (!userInfo) {
-            res.send({
-                response: '404 Error',
-            }).status(404);
+            return res
+                .send({
+                    response: '404 Error',
+                })
+                .status(404);
         }
 
-        res.send({
-            response: 'delete UserInfo successfully',
-        }).status(200);
+        return res
+            .send({
+                response: 'delete UserInfo successfully',
+            })
+            .status(200);
     } catch (err) {
-        res.json(err);
+        return res.json(err);
+    }
+};
+
+//Admin 회원 삭제
+exports.deleteUserById = async(req, res) => {
+    // console.log(req);
+    try {
+        const isAdminCheck = req.decodedUser.isAdmin;
+        if (isAdminCheck) {
+            const userId = req.params.id;
+            const userInfo = await User.findByIdAndDelete({
+                _id: userId,
+            });
+
+            if (!userInfo) {
+                return res
+                    .json({
+                        response: 'No User',
+                    })
+                    .status(404);
+            }
+
+            return res
+                .json({
+                    response: 'delete UserInfo successfully',
+                })
+                .status(200);
+        } else {
+            return res.json({ response: 'You Cant delete User Profiles' });
+        }
+    } catch (err) {
+        return res.json(err);
     }
 };
 

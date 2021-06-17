@@ -17,6 +17,8 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 
+app.use(morgan('combined'));
+
 app.use(
     cors({
         origin: true,
@@ -57,11 +59,11 @@ app.use(helmet());
 app.use(passport.initialize());
 app.use(passport.session());
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(morgan('combined'));
-} else {
-    app.use(morgan('dev'));
-}
+// if (process.env.NODE_ENV === 'production') {
+//app.use(morgan('combined'));
+// } else {
+//     app.use(morgan('dev'));
+// }
 
 app.use(router);
 

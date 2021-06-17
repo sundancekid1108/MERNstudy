@@ -1,26 +1,26 @@
-import React, { useState, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { withStyles } from "@material-ui/core";
+import React, { useState, useRef } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { withStyles } from '@material-ui/core';
 import {
   Grid,
   Button,
   IconButton,
   CircularProgress,
   TextField,
-  Typography,
-} from "@material-ui/core";
-import { ArrowBack as ArrowBackIcon } from "@material-ui/icons";
-import * as userApi from "../../Api/UserApi/UserApi";
-import styles from "./Styles.js";
+  Typography
+} from '@material-ui/core';
+import { ArrowBack as ArrowBackIcon } from '@material-ui/icons';
+import * as userApi from '../../Api/UserApi/UserApi';
+import styles from './Styles.js';
 
 const SignIn = (props) => {
   const { classes } = props;
   const form = useRef();
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
   const [isValid, setIsValid] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const history = useHistory();
 
   const onChangeUserEmail = (e) => {
@@ -40,18 +40,18 @@ const SignIn = (props) => {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    setErrorMessage("");
+    setErrorMessage('');
     setIsLoading(true);
     const responseData = await userApi.userLogin(userEmail, userPassword);
     // console.log(responseData);
     if (responseData.accessToken) {
       // console.log("loginSuccess!!");
       setIsValid(false);
-      history.push("/dashboard");
+      history.push('/dashboard');
     } else {
       setIsLoading(false);
       setIsValid(true);
-      setErrorMessage("Login failed, Check your Email and Password");
+      setErrorMessage('Login failed, Check your Email and Password');
     }
   };
 
@@ -88,8 +88,7 @@ const SignIn = (props) => {
                 <form
                   className={classes.form}
                   ref={form}
-                  onSubmit={handleSignIn}
-                >
+                  onSubmit={handleSignIn}>
                   <Typography className={classes.title} variant="h2">
                     Sign in
                   </Typography>
@@ -119,8 +118,7 @@ const SignIn = (props) => {
                   {errorMessage && (
                     <Typography
                       className={classes.errorMessage}
-                      variant="body2"
-                    >
+                      variant="body2">
                       {errorMessage}
                     </Typography>
                   )}
@@ -135,13 +133,12 @@ const SignIn = (props) => {
                       disabled={!isValid}
                       onClick={handleSignIn}
                       size="large"
-                      variant="contained"
-                    >
+                      variant="contained">
                       Sign in now
                     </Button>
                   )}
                   <Typography className={classes.signUp} variant="body1">
-                    Don't have an account?{" "}
+                    Don't have an account?{' '}
                     <Link className={classes.signUpUrl} to="/signup">
                       Sign up
                     </Link>

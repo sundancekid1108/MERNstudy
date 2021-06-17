@@ -21,30 +21,31 @@ import styles from "./Styles";
 
 const AccountDetails = (props) => {
   const { user, classes, className, ...rest } = props;
+  console.log("AccountDetailsUser : ", user);
   const rootClassName = classNames(classes.root, className);
-  const form = useRef();
-  console.log("AccountDetails Props user : ", user);
 
   const [userName, setUserName] = useState("");
   const [userFirstName, setUserFirstName] = useState("");
   const [userLastName, setUserLastName] = useState("");
+
   const [userEmail, setUserEmail] = useState("");
   const [userPhoneNumber, setUserPhoneNumber] = useState("");
   const [userPassword, setUserPasword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isValid, setIsValid] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const form = useRef();
 
-  const setDefaultState = () => {
-    setUserName(user.username);
-    setUserFirstName(user.firstname);
-    setUserLastName(user.lastname);
-    setUserEmail(user.email);
-    setUserPhoneNumber(user.phonenumber);
-  };
-  useEffect(() => {
-    setDefaultState();
-  }, [user]);
+  // const setDefaultState = () => {
+  //   // setUserName(user.username);
+  //   // setUserFirstName(user.firstname);
+  //   // setUserLastName(user.lastname);
+  //   // setUserEmail(user.email);
+  //   // setUserPhoneNumber(user.phonenumber);
+  // };
+  // useEffect(() => {
+  //   setDefaultState();
+  // }, [user.username]);
 
   const onChangeUserName = (e) => {
     const data = e.target.value;
@@ -75,9 +76,9 @@ const AccountDetails = (props) => {
     e.preventDefault();
     const result = await userApi.editUserInfo(
       userName,
+      userEmail,
       userFirstName,
       userLastName,
-      userEmail,
       userPhoneNumber,
       userPassword
     );
@@ -98,22 +99,25 @@ const AccountDetails = (props) => {
             <div className={classes.field}>
               <TextField
                 className={classes.textField}
-                helperText="Please specify the username"
+                // helperText="Please specify the first name"
                 label="UserName"
                 margin="dense"
+                defaultValue={user.username}
                 value={userName}
                 variant="outlined"
                 onChange={onChangeUserName}
               />
+
               <TextField
                 className={classes.textField}
-                helperText="Please specify the first name"
+                // helperText="Please specify the first name"
                 label="First name"
                 margin="dense"
                 value={userFirstName}
                 variant="outlined"
                 onChange={onChangeUserFirstName}
               />
+
               <TextField
                 className={classes.textField}
                 label="Last name"
@@ -155,13 +159,11 @@ const AccountDetails = (props) => {
           </form>
         </PortletContent>
         <PortletFooter className={classes.portletFooter}>
-          {/* Error Message  */}
           {errorMessage && (
             <Typography className={classes.errorMessage} variant="body2">
               {errorMessage}
             </Typography>
           )}
-
           {/* Loding bar */}
           {isLoading ? (
             <CircularProgress className={classes.progress} />

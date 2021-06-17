@@ -20,7 +20,7 @@ const Account = (props) => {
   //유저 정보 불러오기
   const getUserInfo = async () => {
     const fetchedUserData = await userApi.getUserInfo();
-    // console.log("fetchedUserData", fetchedUserData);
+    console.log("fetchedUserData", fetchedUserData);
     // return fetchedUserData;
     setUser(fetchedUserData);
   };
@@ -28,7 +28,8 @@ const Account = (props) => {
   //불러온 유저 정보 props에 저장
   useEffect(() => {
     getUserInfo();
-  }, []);
+    // console.log(user);
+  }, [user._id]);
 
   return (
     <>

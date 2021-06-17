@@ -1,15 +1,27 @@
-import React, { useState } from "react";
-import classNames from "classnames";
-import { withStyles } from "@material-ui/core";
-import { Button, IconButton } from "@material-ui/core";
-import { Delete as DeleteIcon } from "@material-ui/icons";
-import SearchInput from "../../../../Components/SearchInput/Index";
-import styles from "./Styles";
+import React, { useState } from 'react';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
+import { Delete as DeleteIcon } from '@material-ui/icons';
+import SearchInput from '../../../../Components/SearchInput/Index';
+import styles from './Styles';
 
 const UsersToolbar = (props) => {
-  const { classes, className, selectedUsers } = props;
-  //   const [selectedUsers, setSelectedUsers] = useState([]);
+  console.log('UserToolbar props', props);
+  const { classes, className, users, selectedUsers, deleteUser } = props;
   const rootClassName = classNames(classes.root, className);
+
+  const onDeleteUser = (e) => {
+    console.log('ondeleteUser');
+    e.preventDefault();
+    for (let i in selectedUsers) {
+      const pickedUser = selectedUsers[i];
+      const userToDelete = users.find((user) => user.username === pickedUser);
+      deleteUser(userToDelete._id);
+    }
+  };
+
   return (
     <>
       <div className={rootClassName}>
@@ -20,11 +32,10 @@ const UsersToolbar = (props) => {
           />
 
           <div>
-            {selectedUsers.length > 0 && (
+            {selectedUsers.length >= 1 && (
               <IconButton
                 className={classes.deleteButton}
-                // onClick={this.onDeleteUser}
-              >
+                onClick={onDeleteUser}>
                 <DeleteIcon />
               </IconButton>
             )}
@@ -33,6 +44,15 @@ const UsersToolbar = (props) => {
       </div>
     </>
   );
+};
+
+UsersToolbar.propTypes = {
+  className: PropTypes.string,
+  classes: PropTypes.object.isRequired,
+  selectedUsers: PropTypes.array
+};
+UsersToolbar.defaultProps = {
+  selectedUsers: []
 };
 
 export default withStyles(styles)(UsersToolbar);

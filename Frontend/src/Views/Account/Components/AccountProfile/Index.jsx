@@ -24,9 +24,9 @@ const AccountProfile = (props) => {
         <PortletContent>
           <div className={classes.details}>
             <div className={classes.info}>
-              {/* <Typography variant="h2">
+              <Typography variant="h2">
                 {user.firstname + " " + user.lastname}
-              </Typography> */}
+              </Typography>
               <Typography className={classes.emailText} variant="body1">
                 {user.username}
               </Typography>
