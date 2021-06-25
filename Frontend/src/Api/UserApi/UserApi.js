@@ -46,6 +46,7 @@ export const userLogin = (email, password) => {
                     'token',
                     JSON.stringify(response.data.accessToken)
                 );
+                localStorage.setItem('isAuthenticated', 'true');
             }
             return response.data;
         })

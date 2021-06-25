@@ -15,14 +15,16 @@ const UserList = (props) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [limit, setLimit] = useState(10);
 
-  console.log('userList props: ', props);
-  console.log('users: ', users);
-
   const getUsersList = async () => {
-    const fetchedUsersList = await userApi.getUsersList();
-    const result = fetchedUsersList;
-    console.log('result :', result);
-    setUsers(result);
+    try {
+      const fetchedUsersList = await userApi.getUsersList();
+      const result = fetchedUsersList;
+      // console.log('result :', result);
+      setUsers(result);
+    } catch (error) {
+      // console.log('error :', error);
+      setErrorMessage(error);
+    }
   };
 
   const handleSelectUser = (selectedUsers) => {
@@ -32,9 +34,9 @@ const UserList = (props) => {
   const handleDeleteUsers = async (userId) => {
     try {
       const result = await userApi.deleteUserInfoByAdmin(userId);
-      console.log('handleDeleteUsers result : ', result);
+      // console.log('handleDeleteUsers result : ', result);
       const data = users.filter((user) => user._id !== userId);
-      console.log('handleDeleteUsers', data);
+      // console.log('handleDeleteUsers', data);
       setUsers(data);
       setSelectedUsers([]);
     } catch (error) {
@@ -62,7 +64,7 @@ const UserList = (props) => {
                 <CircularProgress />
               </div>
             ) : (
-              <div></div>
+              <div />
             )}
             {/* Error */}
             {errorMessage && (

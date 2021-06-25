@@ -8,7 +8,6 @@ import SearchInput from '../../../../Components/SearchInput/Index';
 import styles from './Styles';
 
 const UsersToolbar = (props) => {
-  console.log('UserToolbar props', props);
   const { classes, className, users, selectedUsers, deleteUser } = props;
   const rootClassName = classNames(classes.root, className);
 
