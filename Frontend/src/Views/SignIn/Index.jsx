@@ -45,7 +45,7 @@ const SignIn = (props) => {
     const responseData = await userApi.userLogin(userEmail, userPassword);
     // console.log(responseData);
     if (responseData.accessToken) {
-      // console.log("loginSuccess!!");
+      console.log('loginSuccess!!');
       setIsValid(false);
       history.push('/dashboard');
     } else {

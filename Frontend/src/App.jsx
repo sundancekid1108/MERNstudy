@@ -13,7 +13,7 @@ import UserList from './Views/UserList/Index';
 import Account from './Views/Account/Index';
 import Settings from './Views/Settings/Index';
 import theme from './Theme/Index';
-import ProtectedRoute from './Routes/ProtectedRoute/Index';
+import { ProtectedRoute } from './Routes/ProtectedRoute/Index';
 import { createBrowserHistory } from 'history';
 
 const App = () => {
@@ -29,6 +29,7 @@ const App = () => {
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/admin" component={Admin} />
+
             <ProtectedRoute exact path="/userslist" component={UserList} />
             <ProtectedRoute exact path="/dashboard" component={DashboardPage} />
             <ProtectedRoute exact path="/account" component={Account} />

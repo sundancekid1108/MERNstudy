@@ -1,7 +1,10 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-const token = localStorage.getItem('jwtToken');
-const ProtectedRoute = ({ component: Component, ...rest }) => {
+
+export const ProtectedRoute = (props) => {
+  const { component: Component, ...rest } = props;
+  const token = localStorage.getItem('token');
+
   return (
     <Route
       {...rest}
@@ -9,11 +12,11 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
         token ? (
           <Component {...props} />
         ) : (
-          <Redirect to={{ pathname: '/', state: { from: props.location } }} />
+          <Redirect
+            to={{ pathname: '/signin', state: { from: props.location } }}
+          />
         )
       }
     />
   );
 };
-
-export default ProtectedRoute;

@@ -41,12 +41,10 @@ export const userLogin = (email, password) => {
         .then((response) => {
             // console.log(response.data);
             if (response.data.accessToken) {
-                // localStorage.setItem("user", JSON.stringify(response.data));
                 localStorage.setItem(
                     'token',
                     JSON.stringify(response.data.accessToken)
                 );
-                localStorage.setItem('isAuthenticated', 'true');
             }
             return response.data;
         })
@@ -60,7 +58,7 @@ export const userLogin = (email, password) => {
 
 //로그아웃
 export const userLogout = () => {
-    console.log('RemoveToken!!');
+    // console.log('RemoveToken!!');
     localStorage.removeItem('token');
 };
 
