@@ -21,3 +21,11 @@ MERN stack을 활용한 웹 사이트 생성
 ### Post
 
 - [x] Post CRUD
+
+### .env sample
+
+.env
+PORT=5000
+JWT_SECRET_KEY="key"
+MONGO_URL="dbadress"
+SESSION_SECRET="keyy"
