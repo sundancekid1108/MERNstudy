@@ -5,19 +5,28 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import * as AuthJwt from '../../Middleware/authJwt';
 dotenv.config();
 
 const { ObjectId } = mongoose.Types;
 
-//user 조회
+// Admin 유저 리스트 조회
 exports.getUserList = async(req, res) => {
     try {
-        const users = await User.find({}, null, {
-            sort: {
-                _id: -1,
-            },
-        });
-        return res.json(users).status(200);
+        const isAdmin = req.decodedUser.isAdmin;
+        if (isAdmin == true) {
+            const users = await User.find({}, null, {
+                sort: {
+                    _id: -1,
+                },
+            });
+            console.log('users', users);
+            return res.json(users).status(200);
+        } else {
+            return res.json({
+                response: 'Not Admin Account',
+            });
+        }
     } catch (err) {
         console.log(err);
         return res.json({
@@ -26,50 +35,62 @@ exports.getUserList = async(req, res) => {
     }
 };
 
-//userInfo 조회
-exports.getUserInfo = async(req, res) => {
+//현재 유저 정보 조회
+exports.getCurrentUserInfo = async(req, res) => {
     try {
-        const userId = req.params.id;
-        if (!ObjectId.isValid(userId)) {
-            return (res.json('400 bad request').status = 400);
-        }
+        const userId = req.decodedUser.userId;
 
-        const user = await User.findById(userId);
-        res.json(user).status(200);
+        const currentuser = await User.findById(userId);
+
+        // console.log('currentuser : ', currentuser);
+        return res.send(currentuser).status(200);
     } catch (err) {
         console.log(err);
-        return res
-            .send({
-                response: 'getUserInfo Error',
-            })
-            .status(500);
+        return res.send(err).status(500);
     }
 };
-
 //회원가입
+
 exports.createUser = async(req, res) => {
     // console.log(req.body);
-    const { username, email, password1, password2 } = req.body;
+    const { username, email, firstname, lastname, password1, password2 } =
+    req.body;
 
     //username 검증
     const { userNameErrors, userNameIsValid } =
-    validateSignInData.validateUserName(username);
+    await validateSignInData.validateUserName(username);
     if (!userNameIsValid) {
-        return res.status(400).json(userNameErrors);
+        return res.status(400).json({ response: userNameErrors.username });
     }
 
-    //Email
+    //firstname 검증
+    const { userFirstNameErrors, userFirstNameIsValid } =
+    await validateSignInData.validateUserFirstName(firstname);
+    if (!userFirstNameIsValid) {
+        return res
+            .status(400)
+            .json({ response: userFirstNameErrors.firstname });
+    }
+
+    //last 검증
+    const { userLastNameErrors, userLastNameIsValid } =
+    await validateSignInData.validateUserLastName(lastname);
+    if (!userLastNameIsValid) {
+        return res.status(400).json({ response: userLastNameErrors.lastname });
+    }
+
+    //Email 검증
     const { emailErrors, emailIsValid } =
-    validateSignInData.validateEmail(email);
+    await validateSignInData.validateEmail(email);
     if (!emailIsValid) {
-        return res.status(400).json(emailErrors);
+        return res.status(400).json({ response: emailErrors.email });
     }
 
     //password 검증
     const { passwordErrors, passwordIsValid } =
-    validateSignInData.validatePassword(password1, password2);
+    await validateSignInData.validatePassword(password1, password2);
     if (!passwordIsValid) {
-        return res.status(400).json(passwordErrors);
+        return res.status(400).json({ response: passwordErrors.password });
     }
 
     // DB에서 중복된 email 체크
@@ -77,95 +98,84 @@ exports.createUser = async(req, res) => {
         email,
     });
 
+    if (duplicateEmail) {
+        return res.status(400).json({
+            response: 'This Email is already  existed',
+        });
+    }
+
     //DB에서 중복된 username 체크
     const duplicateUserName = await User.findOne({
         username,
     });
 
-    if (duplicateEmail) {
-        console.log(duplicateEmail);
-        return res.json({
-            response: 'This Email is already  existed',
-        });
-    } else if (duplicateUserName) {
-        console.log(duplicateUserName);
-        return res.json({
+    if (duplicateUserName) {
+        // console.log(duplicateUserName);
+        return res.status(400).json({
             response: 'UserName is already existed',
         });
-    } else {
-        //중복 Email, username 체크 후 password hash하여 저장
-        const newUser = new User({
-            username: username,
-            email: email,
-            password: password1,
-        });
-
-        const saltRounds = 10;
-
-        bcrypt.genSalt(saltRounds, (err, salt) => {
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-                if (err) {
-                    return res.json(err);
-                }
-                newUser.password = hash;
-                // console.log(newUser);
-
-                newUser
-                    .save()
-                    .then((result) => {
-                        return res.status(201).json(result);
-                    })
-                    .catch((err) => {
-                        return res.json(err);
-                    });
-            });
-        });
     }
+    //중복 Email, username 체크 후 password hash하여 저장
+
+    const newUser = new User({
+        username: username,
+        email: email,
+        firstname: firstname,
+        lastname: lastname,
+        password: password1,
+    });
+
+    const saltRounds = 10;
+
+    bcrypt.genSalt(saltRounds, (error, salt) => {
+        bcrypt.hash(newUser.password, salt, (error, hash) => {
+            if (error) {
+                return res.json(error);
+            }
+            newUser.password = hash;
+            // console.log(newUser);
+
+            newUser
+                .save()
+                .then((result) => {
+                    return res.status(201).json(result);
+                })
+                .catch((error) => {
+                    return res.status(400).json(error);
+                });
+        });
+    });
 };
 
 //user 수정
 exports.editUserInfo = async(req, res) => {
     try {
-        console.log(req.params);
-        console.log(req.body);
-        const userId = req.params.id;
-        const { username, password } = req.body;
-        console.log(req.params);
-        if (!ObjectId.isValid(userId)) {
-            return (res.json('400 bad request').status = 400); // Bad Request
-        }
-        const user = await User.findByIdAndUpdate({
+        console.log('edituserinfo');
+        console.log('req.decodedUser : ', req.decodedUser);
+        console.log('req.body : ', req.body);
+        const { username, email, firstname, lastname, password, phonenumber } =
+        req.body;
+        const userId = req.decodedUser.userId;
+
+        const editedUser = await User.findByIdAndUpdate({
             _id: userId,
         }, {
             username: username,
-            password: password,
-        }, {
-            multi: true,
-            new: true,
-        }, );
+            firstname: firstname,
+            lastname: lastname,
+        }, { multi: true, new: true }, );
 
-        if (!user) {
-            return res
-                .send({
-                    response: '404 Error',
-                })
-                .status(404);
-        }
-        return res.json(user).status(200);
+        return res.json(editedUser).status(200);
     } catch (err) {
         return res.json(err).status(500);
     }
-    res.send({
-        response: 'editUserInfo',
-    });
 };
-
-//user 삭제
+//회원탈퇴
 exports.deleteUserInfo = async(req, res) => {
     try {
-        console.log(req.params.id);
-        const userId = req.params.id;
-        console.log(userId);
+        console.log('req.decodedUser : ', req.decodedUser);
+
+        const userId = req.decodedUser.userId;
         if (!ObjectId.isValid(userId)) {
             return (res.json(res).status = 400);
         }
@@ -175,16 +185,52 @@ exports.deleteUserInfo = async(req, res) => {
         });
 
         if (!userInfo) {
-            res.send({
-                response: '404 Error',
-            }).status(404);
+            return res
+                .send({
+                    response: '404 Error',
+                })
+                .status(404);
         }
 
-        res.send({
-            response: 'delete UserInfo successfully',
-        }).status(200);
+        return res
+            .send({
+                response: 'delete UserInfo successfully',
+            })
+            .status(200);
     } catch (err) {
-        res.json(err);
+        return res.json(err);
+    }
+};
+
+//Admin 회원 삭제
+exports.deleteUserById = async(req, res) => {
+    // console.log(req);
+    try {
+        const isAdminCheck = req.decodedUser.isAdmin;
+        if (isAdminCheck) {
+            const userId = req.params.id;
+            const userInfo = await User.findByIdAndDelete({
+                _id: userId,
+            });
+
+            if (!userInfo) {
+                return res
+                    .json({
+                        response: 'No User',
+                    })
+                    .status(404);
+            }
+
+            return res
+                .json({
+                    response: 'delete UserInfo successfully',
+                })
+                .status(200);
+        } else {
+            return res.json({ response: 'You Cant delete User Profiles' });
+        }
+    } catch (err) {
+        return res.json(err);
     }
 };
 
@@ -231,18 +277,17 @@ exports.postUserLogin = async(req, res) => {
         const LoginSuccessUser = await await User.findOne({
             email,
         });
-        // console.log(LoginSuccessUser);
+        console.log(LoginSuccessUser);
         const payload = {
-            id: LoginSuccessUser.id,
-            username: LoginSuccessUser.username,
-            email: LoginSuccessUser.email,
+            userId: LoginSuccessUser.id,
+
             isAdmin: LoginSuccessUser.isAdmin,
         };
 
         jwt.sign(
             payload,
             process.env.JWT_SECRET_KEY, {
-                expiresIn: 36000,
+                expiresIn: 360000,
             },
             (err, token) => {
                 if (err) {
@@ -250,10 +295,11 @@ exports.postUserLogin = async(req, res) => {
                     accessToken: null;
                 }
                 return res.status(200).json({
-                    response: 'Login Success!!!',
-                    id: LoginSuccessUser.id,
-                    username: LoginSuccessUser.username,
-                    email: LoginSuccessUser.email,
+                    // userId: LoginSuccessUser.id,
+                    userEmail: LoginSuccessUser.email,
+                    userName: LoginSuccessUser.username,
+                    userFirstName: LoginSuccessUser.firstname,
+                    userLastName: LoginSuccessUser.lastname,
                     isAdmin: LoginSuccessUser.isAdmin,
                     accessToken: token,
                 });
