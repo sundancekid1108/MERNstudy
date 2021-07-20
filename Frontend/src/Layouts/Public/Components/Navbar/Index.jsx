@@ -1,6 +1,6 @@
 import React from 'react';
-import { createBrowserHistory } from 'history';
-
+// import { createBrowserHistory } from 'history';
+import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { withStyles, Button } from '@material-ui/core';
 // import history from '../../../../utils/history';
@@ -10,7 +10,13 @@ import logoImg from '../../../../Images/logo.jpg';
 
 const Navbar = (props) => {
   const { classes } = props;
-  const history = createBrowserHistory();
+
+  const history = useHistory();
+
+  const onclickEvent = (e) => {
+    e.preventDefault();
+    history.push('/signin');
+  };
 
   return (
     <>
@@ -37,7 +43,8 @@ const Navbar = (props) => {
         <Button
           color="primary"
           variant="contained"
-          onClick={() => history.push('/signin')}>
+          // onClick={() => history.push('/signin')}
+          onClick={onclickEvent}>
           SignIn
         </Button>
       </nav>

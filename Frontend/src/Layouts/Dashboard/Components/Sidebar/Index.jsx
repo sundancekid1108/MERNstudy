@@ -28,7 +28,7 @@ import styles from './Styles';
 
 const Sidebar = (props) => {
   console.log('sidebar props', props);
-  const { classes } = props;
+  const { classes, user } = props;
   return (
     <section className={classes.root}>
       <div className={classes.logoWrapper}>

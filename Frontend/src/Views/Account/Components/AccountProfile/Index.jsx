@@ -9,13 +9,17 @@ import {
   PortletContent,
   PortletFooter
 } from '../../../../Components/Index';
+// import { createBrowserHistory } from 'history';
 import AvatarIMG from '../../../../Images/avatar.png';
 
 // Component styles
 import styles from './Styles';
+import { useHistory } from 'react-router-dom';
 
 const AccountProfile = (props) => {
   const { user, classes, className, ...rest } = props;
+  const history = useHistory();
+
   // console.log('Account Profile user props', user);
   const rootClassName = classNames(classes.root, className);
   return (
@@ -53,6 +57,7 @@ const AccountProfile = (props) => {
           <Button
             className={classes.uploadButton}
             color="primary"
+            onClick={() => history.push('/admin/editaccount')}
             variant="text">
             Edit Profile
           </Button>

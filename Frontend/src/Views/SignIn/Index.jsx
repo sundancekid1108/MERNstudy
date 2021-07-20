@@ -47,7 +47,7 @@ const SignIn = (props) => {
     if (responseData.accessToken) {
       console.log('loginSuccess!!');
       setIsValid(false);
-      history.push('/dashboard');
+      history.push('/admin/dashboard');
     } else {
       setIsLoading(false);
       setIsValid(true);

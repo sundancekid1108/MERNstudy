@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { withStyles } from "@material-ui/core";
+import React, { useState, useRef } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { withStyles } from '@material-ui/core';
 import {
   Button,
   Checkbox,
@@ -8,25 +8,25 @@ import {
   Grid,
   IconButton,
   TextField,
-  Typography,
-} from "@material-ui/core";
-import { ArrowBack as ArrowBackIcon } from "@material-ui/icons";
-import * as userApi from "../../Api/UserApi/UserApi";
-import styles from "./Styles";
+  Typography
+} from '@material-ui/core';
+import { ArrowBack as ArrowBackIcon } from '@material-ui/icons';
+import * as userApi from '../../Api/UserApi/UserApi';
+import styles from './Styles';
 
 const SignUp = (props) => {
   const { classes } = props;
   const form = useRef();
-  const [userEmail, setUserEmail] = useState("");
-  const [userName, setUserName] = useState("");
-  const [userFirstName, setUserFirstName] = useState("");
-  const [userLastName, setUserLastName] = useState("");
-  const [userPassword, setUserPassword] = useState("");
-  const [userPassword2, setUserPassword2] = useState("");
+  const [userEmail, setUserEmail] = useState('');
+  const [userName, setUserName] = useState('');
+  const [userFirstName, setUserFirstName] = useState('');
+  const [userLastName, setUserLastName] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+  const [userPassword2, setUserPassword2] = useState('');
   const [checkValue, setCheckValue] = useState(false);
-  const [isValid, setIsValid] = useState("true");
+  const [isValid, setIsValid] = useState('true');
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const [policyError, setPolicyError] = useState(false);
 
   const history = useHistory();
@@ -81,19 +81,19 @@ const SignUp = (props) => {
       //Check 버튼 확인
       setIsLoading(false);
       setIsValid(true);
-      setPolicyError("Check the Terms and Conditions");
+      setPolicyError('Check the Terms and Conditions');
     } else if (
-      userEmail === "" ||
-      userName === "" ||
-      userFirstName === "" ||
-      userLastName === "" ||
-      userPassword === "" ||
-      userPassword2 === ""
+      userEmail === '' ||
+      userName === '' ||
+      userFirstName === '' ||
+      userLastName === '' ||
+      userPassword === '' ||
+      userPassword2 === ''
     ) {
       //빈칸 확인
       setIsLoading(false);
       setIsValid(true);
-      setErrorMessage("Check the Empty Field");
+      setErrorMessage('Check the Empty Field');
     }
     const result = await userApi.userSignUp(
       userName,
@@ -108,7 +108,7 @@ const SignUp = (props) => {
     if (result.status == 400) {
       setErrorMessage(result.data.response);
     } else {
-      history.push("/signin");
+      history.push('/signin');
     }
   };
   return (
@@ -144,8 +144,7 @@ const SignUp = (props) => {
                 <form
                   className={classes.form}
                   ref={form}
-                  onSubmit={handleSignUp}
-                >
+                  onSubmit={handleSignUp}>
                   <Typography className={classes.title} variant="h2">
                     Create new account
                   </Typography>
@@ -222,10 +221,9 @@ const SignUp = (props) => {
                       />
                       <Typography
                         className={classes.policyText}
-                        variant="body1"
-                      >
+                        variant="body1">
                         I have read the &nbsp;
-                        <Link className={classes.policyUrl} to="#">
+                        <Link className={classes.policyUrl}>
                           Terms and Conditions
                         </Link>
                         .
@@ -234,8 +232,7 @@ const SignUp = (props) => {
                     {policyError && (
                       <Typography
                         className={classes.fieldError}
-                        variant="body2"
-                      >
+                        variant="body2">
                         {policyError}
                       </Typography>
                     )}
@@ -243,8 +240,7 @@ const SignUp = (props) => {
                   {errorMessage && (
                     <Typography
                       className={classes.errorMessage}
-                      variant="body2"
-                    >
+                      variant="body2">
                       {errorMessage}
                     </Typography>
                   )}
@@ -257,13 +253,12 @@ const SignUp = (props) => {
                       disabled={!isValid}
                       onClick={handleSignUp}
                       size="large"
-                      variant="contained"
-                    >
+                      variant="contained">
                       Sign up now
                     </Button>
                   )}
                   <Typography className={classes.signIn} variant="body1">
-                    Have an account?{" "}
+                    Have an account?{' '}
                     <Link className={classes.signInUrl} to="/signin">
                       Sign In
                     </Link>
