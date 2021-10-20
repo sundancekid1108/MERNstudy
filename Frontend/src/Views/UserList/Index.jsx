@@ -19,10 +19,10 @@ const UserList = (props) => {
     try {
       const fetchedUsersList = await userApi.getUsersList();
       const result = fetchedUsersList;
-      // console.log('result :', result);
+      console.log('result :', result);
       setUsers(result);
     } catch (error) {
-      // console.log('error :', error);
+      console.log('error :', error);
       setErrorMessage(error);
     }
   };

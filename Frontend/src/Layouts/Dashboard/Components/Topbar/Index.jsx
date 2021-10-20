@@ -8,23 +8,41 @@ import CloseIcon from '@material-ui/icons/Close';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 import * as userApi from '../../../../Api/UserApi/UserApi';
-
 import styles from './Styles';
 
+//Redux test
+import { useDispatch, useSelector } from 'react-redux';
+import * as AuthActions from '../../../../Store/Actions/AuthActions';
+import { connect } from 'react-redux';
+
 const Topbar = (props) => {
+  // console.log('topbar props', props);
   const {
     title,
     classes,
     ToolbarClasses,
     children,
     isSidebarOpen,
-    onToggleSidebar
+    onToggleSidebar,
+    logout,
+    auth
   } = props;
 
+  const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleLogOut = async () => {
-    await userApi.userLogout();
+  //Redux test
+
+  // const { user: currentUser } = useSelector((state) => state.auth);
+  // const handleLogOutTest = () => {
+  //   dispatch(userLogOut());
+  //   history.push('/signin');
+  // };
+  ///=======
+
+  const handleLogOutTest = (e) => {
+    dispatch(AuthActions.userLogOut());
+
     history.push('/signin');
   };
 
@@ -52,7 +70,10 @@ const Topbar = (props) => {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton className={classes.signOutButton} onClick={handleLogOut}>
+          <IconButton
+            className={classes.signOutButton}
+            // onClick={handleLogOut}
+            onClick={handleLogOutTest}>
             <InputIcon />
           </IconButton>
         </Toolbar>
@@ -71,7 +92,17 @@ Topbar.propTypes = {
   children: PropTypes.node,
   classes: PropTypes.object.isRequired,
   isSidebarOpen: PropTypes.bool,
-  title: PropTypes.string
+  title: PropTypes.string,
+  logout: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Topbar);
+
+// //Redux test
+// const mapStateToProps = (state) => ({
+//   auth: state.authState
+// });
+// export default withStyles(styles)(
+//   connect(mapStateToProps, { userLogOut })(Topbar)
+// );

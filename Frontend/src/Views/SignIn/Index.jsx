@@ -9,9 +9,14 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import { ArrowBack as ArrowBackIcon } from '@material-ui/icons';
 import * as userApi from '../../Api/UserApi/UserApi';
 import styles from './Styles.js';
+
+//Redux test
+import { useDispatch, useSelector } from 'react-redux';
+import * as AuthActions from '../../Store/Actions/AuthActions';
 
 const SignIn = (props) => {
   const { classes } = props;
@@ -20,7 +25,13 @@ const SignIn = (props) => {
   const [userPassword, setUserPassword] = useState('');
   const [isValid, setIsValid] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSignIn, setIsSignIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  //Redux test
+
+  const dispatch = useDispatch();
+
   const history = useHistory();
 
   const onChangeUserEmail = (e) => {
@@ -38,21 +49,21 @@ const SignIn = (props) => {
     history.goBack();
   };
 
-  const handleSignIn = async (e) => {
+  /**
+   *리액트 Hooks, Redux를 활용한 로그인 구조 개선..
+    개선 이유..
+    타 컴포넌트에서 props 사용이 어려움
+   */
+
+  const handleSignIn = (e) => {
     e.preventDefault();
-    setErrorMessage('');
-    setIsLoading(true);
-    const responseData = await userApi.userLogin(userEmail, userPassword);
-    // console.log(responseData);
-    if (responseData.accessToken) {
-      console.log('loginSuccess!!');
-      setIsValid(false);
-      history.push('/admin/dashboard');
-    } else {
-      setIsLoading(false);
-      setIsValid(true);
-      setErrorMessage('Login failed, Check your Email and Password');
-    }
+    dispatch(AuthActions.userSignIn(userEmail, userPassword))
+      .then(() => {
+        history.push('/admin/dashboard');
+      })
+      .catch(() => {
+        setErrorMessage('Login failed, Check your Email and Password');
+      });
   };
 
   return (
@@ -151,6 +162,13 @@ const SignIn = (props) => {
       </div>
     </>
   );
+};
+
+SignIn.propTypes = {
+  className: PropTypes.string,
+  classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  signin: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(SignIn);

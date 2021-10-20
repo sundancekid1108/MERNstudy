@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Link,
   Route,
@@ -20,18 +20,23 @@ import Account from './Views/Account/Index';
 import Settings from './Views/Settings/Index';
 import EditAccount from './Views/EditAccount/Index';
 import theme from './Theme/Index';
-import { ProtectedRoute } from './Routes/ProtectedRoute/Index';
-// import { createBrowserHistory } from 'history';
+import Alert from './Layouts/Alert/Index';
+import ProtectedRoute from './Routes/ProtectedRoute/Index';
+import * as AuthActions from './Store/Actions/AuthActions';
 
-const App = (props) => {
-  // const history = createBrowserHistory();
+const App = () => {
   const history = useHistory();
-  const { user, ...rest } = props;
-  console.log('appjsxuser', user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(AuthActions.getUserInfo());
+  }, []);
+
   return (
     <>
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
+        <Alert />
         <Router history={history}>
           <Switch>
             <Route exact path="/" component={LandingPage} />

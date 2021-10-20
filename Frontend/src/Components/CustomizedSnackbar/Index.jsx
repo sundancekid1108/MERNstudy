@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Snackbar from '@material-ui/core/Snackbar';
-import SnackbarContentWrapper from '../SnackbarContentWrapper';
+import SnackbarContentWrapper from '../SnackbarContentWrapper/Index';
 
-const Snackbar = (props) => {
+const CustomizedSnackbar = (props) => {
   // const [open, setOpen] = React.useState(false);
   const { isOpen, vertical, horizontal, variant, message } = props;
 
@@ -34,4 +34,4 @@ CustomizedSnackbar.propTypes = {
   variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
   message: PropTypes.string
 };
-export default Snackbar;
+export default CustomizedSnackbar;

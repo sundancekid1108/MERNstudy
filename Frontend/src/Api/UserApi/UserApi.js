@@ -44,15 +44,16 @@ export const userLogin = (email, password) => {
                     'token',
                     JSON.stringify(response.data.accessToken)
                 );
-                localStorage.setItem('user', JSON.stringify(response.data));
-                localStorage.setItem('isAdmin', JSON.stringify(response.data.isAdmin));
+                // localStorage.setItem('user', JSON.stringify(response.data));
+                // localStorage.setItem('isAdmin', JSON.stringify(response.data.isAdmin));
             }
-
+            console.log('userLogin success');
+            // console.log('response : ', response);
             return response.data;
         })
         .catch((error) => {
-            // console.log(error.status);
-            // console.log("error!! : ", error.response.data);
+            console.log(error.status);
+            console.log('error!! : ', error);
 
             return error;
         });
@@ -62,8 +63,8 @@ export const userLogin = (email, password) => {
 export const userLogout = () => {
     // console.log('RemoveToken!!');
     localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('isAdmin');
+    // localStorage.removeItem('user');
+    // localStorage.removeItem('isAdmin');
 };
 
 //유저 정보 수정

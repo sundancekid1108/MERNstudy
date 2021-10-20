@@ -1,10 +1,8 @@
 import React from 'react';
-// import { createBrowserHistory } from 'history';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { withStyles, Button } from '@material-ui/core';
-// import history from '../../../../utils/history';
-// Component styles
+
 import styles from './Styles';
 import logoImg from '../../../../Images/logo.jpg';
 

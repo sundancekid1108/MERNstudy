@@ -260,7 +260,7 @@ const SignUp = (props) => {
                   <Typography className={classes.signIn} variant="body1">
                     Have an account?{' '}
                     <Link className={classes.signInUrl} to="/signin">
-                      Sign In
+                      Sign in
                     </Link>
                   </Typography>
                 </form>

@@ -1,15 +1,15 @@
-import { createMuiTheme } from "@material-ui/core/styles";
-import palette from "./Palette.jsx";
+import { createTheme } from '@material-ui/core/styles';
+import palette from './Palette.jsx';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette,
   typography: {
-    useNextVariants: true,
+    useNextVariants: true
   },
   zIndex: {
     appBar: 1200,
-    drawer: 1100,
-  },
+    drawer: 1100
+  }
 });
 
 export default theme;
