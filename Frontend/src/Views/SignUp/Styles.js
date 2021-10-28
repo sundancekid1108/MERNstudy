@@ -132,12 +132,12 @@ export default (theme) => ({
     fieldError: {
         color: theme.palette.danger.main,
         marginBottom: theme.spacing(2),
-        marginTop: theme.spacing(1)
+        marginTop: theme.spacing()
     },
     errorMessage: {
         color: theme.palette.danger.main,
         alignText: 'center',
-        marginBottom: theme.spacing(1),
+        marginBottom: theme.spacing(),
         marginTop: theme.spacing(2)
     }
 });

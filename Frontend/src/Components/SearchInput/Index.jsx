@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import { withStyles } from "@material-ui/core";
-import { Input } from "@material-ui/core";
-import { Search as SearchIcon } from "@material-ui/icons";
-import styles from "./Styles";
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { withStyles } from '@material-ui/core';
+import { Input } from '@material-ui/core';
+import { Search as SearchIcon } from '@material-ui/icons';
+import styles from './Styles';
 
 const SearchInput = (props) => {
   const { classes, className, onChange, style, ...rest } = props;
@@ -27,13 +27,11 @@ SearchInput.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
   onChange: PropTypes.func,
-  style: PropTypes.object,
+  style: PropTypes.object
 };
 
 SearchInput.defaultProps = {
-  onChange: (e) => {
-    console.log("searchinputtest");
-  },
+  onChange: () => {}
 };
 
 export default withStyles(styles)(SearchInput);

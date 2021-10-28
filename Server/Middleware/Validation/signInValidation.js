@@ -8,8 +8,7 @@ export const validateUserName = (username) => {
     if (Validator.isEmpty(userNameData)) {
         userNameErrors.username = 'username field is required';
     } else if (!Validator.isLength(userNameData, { min: 3, max: 20 })) {
-        userNameErrors.username =
-            'username field must be at least 3 characters and under 20characters';
+        userNameErrors.username = 'username field must be at least 3 characters and under 20characters';
     }
     return {
         userNameErrors,
@@ -82,8 +81,8 @@ export const validatePasswordType = (password) => {
 
 //회원가입 비밀번호  검증
 export const validatePassword = (password1, password2) => {
-    password1Data = !isEmpty(password1) ? password1 : '';
-    password2Data = !isEmpty(password2) ? password2 : '';
+    const password1Data = !isEmpty(password1) ? password1 : '';
+    const password2Data = !isEmpty(password2) ? password2 : '';
 
     let passwordErrors = {};
 

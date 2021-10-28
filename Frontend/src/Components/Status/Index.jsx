@@ -1,45 +1,45 @@
-import React from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import { withStyles } from "@material-ui/core";
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { withStyles } from '@material-ui/core';
 
 const styles = (theme) => ({
   root: {
-    display: "inline-block",
-    borderRadius: "50%",
+    display: 'inline-block',
+    borderRadius: '50%',
     flexGrow: 0,
-    flexShrink: 0,
+    flexShrink: 0
   },
   sm: {
-    height: theme.spacing(1),
-    width: theme.spacing(1),
+    height: theme.spacing(),
+    width: theme.spacing()
   },
   md: {
     height: theme.spacing(2),
-    width: theme.spacing(2),
+    width: theme.spacing(2)
   },
   lg: {
     height: theme.spacing(3),
-    width: theme.spacing(3),
+    width: theme.spacing(3)
   },
   neutral: {
-    backgroundColor: theme.palette.common.neutral,
+    backgroundColor: theme.palette.common.neutral
   },
   primary: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.main
   },
   info: {
-    backgroundColor: theme.palette.info.main,
+    backgroundColor: theme.palette.info.main
   },
   warning: {
-    backgroundColor: theme.palette.warning.main,
+    backgroundColor: theme.palette.warning.main
   },
   danger: {
-    backgroundColor: theme.palette.danger.main,
+    backgroundColor: theme.palette.danger.main
   },
   success: {
-    backgroundColor: theme.palette.success.main,
-  },
+    backgroundColor: theme.palette.success.main
+  }
 });
 
 const Status = (props) => {
@@ -48,7 +48,7 @@ const Status = (props) => {
     {
       [classes.root]: true,
       [classes[size]]: size,
-      [classes[color]]: color,
+      [classes[color]]: color
     },
     className
   );
@@ -60,19 +60,19 @@ Status.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
   color: PropTypes.oneOf([
-    "neutral",
-    "primary",
-    "info",
-    "success",
-    "warning",
-    "danger",
+    'neutral',
+    'primary',
+    'info',
+    'success',
+    'warning',
+    'danger'
   ]),
-  size: PropTypes.oneOf(["sm", "md", "lg"]),
+  size: PropTypes.oneOf(['sm', 'md', 'lg'])
 };
 
 Status.defaultProps = {
-  size: "md",
-  color: "default",
+  size: 'md',
+  color: 'default'
 };
 
 export default withStyles(styles)(Status);

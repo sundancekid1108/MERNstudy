@@ -75,8 +75,8 @@ const SignUp = (props) => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    // setIsLoading(true);
-    // setIsValid(false);
+    setIsLoading(true);
+    setIsValid(false);
     if (checkValue == false) {
       //Check 버튼 확인
       setIsLoading(false);
@@ -91,6 +91,7 @@ const SignUp = (props) => {
       userPassword2 === ''
     ) {
       //빈칸 확인
+      setPolicyError('');
       setIsLoading(false);
       setIsValid(true);
       setErrorMessage('Check the Empty Field');
