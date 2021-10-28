@@ -106,7 +106,6 @@ dist
 .ionide
 .vscode
 
-
 # Created by https://www.toptal.com/developers/gitignore/api/node,react
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,react
 
@@ -231,3 +230,6 @@ node_modules
 psd
 thumb
 sketch
+
+Server
+Frontend
