@@ -1,29 +1,29 @@
-import React from "react";
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core";
-import { Typography } from "@material-ui/core";
+import React from 'react';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 const styles = (theme) => ({
   root: {
-    display: "flex",
-    alignItems: "center",
+    display: 'flex',
+    alignItems: 'center'
   },
   icon: {
-    fontSize: "1.3rem",
-    marginRight: theme.spacing(1),
+    fontSize: '1.3rem',
+    marginRight: theme.spacing(),
     color: theme.palette.text.secondary,
-    alignItems: "center",
-    display: "flex",
+    alignItems: 'center',
+    display: 'flex'
   },
   title: {
-    fontWeight: 500,
+    fontWeight: 500
   },
   subtitle: {
     fontWeight: 400,
-    marginLeft: theme.spacing(1),
-    color: theme.palette.text.secondary,
-  },
+    marginLeft: theme.spacing(),
+    color: theme.palette.text.secondary
+  }
 });
 
 const PortletLabel = (props) => {
@@ -55,7 +55,7 @@ PortletLabel.propTypes = {
   classes: PropTypes.object.isRequired,
   icon: PropTypes.node,
   subtitle: PropTypes.string,
-  title: PropTypes.string,
+  title: PropTypes.string
 };
 
 export default withStyles(styles)(PortletLabel);

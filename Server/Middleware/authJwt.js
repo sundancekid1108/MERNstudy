@@ -7,14 +7,14 @@ export const verifyToken = async(req, res, next) => {
 
     // token does not exist
     if (!token) {
-        res.status(403).json({
+        return res.status(403).json({
             response: 'No token provided!',
         });
     }
     // token 검증
     await jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
         if (err) {
-            res.status(401).json({
+            return res.status(401).json({
                 response: 'Unauthorized! This token has a problem!',
             });
         } else {
@@ -24,3 +24,5 @@ export const verifyToken = async(req, res, next) => {
         }
     });
 };
+
+//서버 죽는 에러 수정

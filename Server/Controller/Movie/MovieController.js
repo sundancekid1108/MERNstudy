@@ -7,12 +7,18 @@ const { ObjectId } = mongoose.Types;
 
 //createMovie(영화생성)
 export const createMovie = async(req, res) => {
-    const movieData = new Movie(req.body);
-    try {
-        await movieData.save();
-        res.status(201).json(movieData);
-    } catch (error) {
-        res.status(400).json(error);
+    const isAdmin = req.decodedUser.isAdmin;
+    if (isAdmin == false) {
+        res.status(400).json({ response: 'Unauthorized You are not Admin' });
+    } else {
+        const movieData = new Movie(req.body);
+        console.log('createMovie MovieData :', movieData);
+        try {
+            await movieData.save();
+            res.status(201).json(movieData);
+        } catch (error) {
+            res.status(400).json(error);
+        }
     }
 };
 
@@ -24,9 +30,13 @@ export const getMoviesList = async(req, res) => {
                 _id: -1,
             },
         });
-        res.satus(201).json(movieList);
-    } catch (error) {
-        res.status(400).json(error);
+        console.log('movieList', movieList);
+        res.json(movieList).status(200);
+    } catch (err) {
+        console.log(err);
+        res.json({
+            response: 'getMovieList Error',
+        });
     }
 };
 
@@ -54,9 +64,7 @@ export const updateMovieInfo = async(req, res) => {
         'description',
         'duration',
     ];
-    const isValidOperation = movieUpdates.every((update) =>
-        allowedUpdates.includes(update),
-    );
+    const isValidOperation = movieUpdates.every((update) => allowedUpdates.includes(update));
 
     if (!isValidOperation) res.status(400).send({ error: 'Invalid updates!' });
 

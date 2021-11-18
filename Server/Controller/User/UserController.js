@@ -43,54 +43,52 @@ export const getCurrentUserInfo = async(req, res) => {
         const currentuser = await User.findById(userId);
 
         // console.log('currentuser : ', currentuser);
-        res.json(currentuser).status(200);
+        return res.json(currentuser).status(200);
     } catch (err) {
         console.log(err);
-        res.json(err).status(500);
+        return res.json(err);
     }
 };
 //회원가입
 
 export const createUser = async(req, res) => {
     // console.log(req.body);
-    const { username, email, firstname, lastname, password1, password2 } =
-    req.body;
+    const { username, email, firstname, lastname, password1, password2 } = req.body;
 
     //username 검증
-    const { userNameErrors, userNameIsValid } =
-    await validateSignInData.validateUserName(username);
+    const { userNameErrors, userNameIsValid } = await validateSignInData.validateUserName(username);
     if (!userNameIsValid) {
-        res.status(400).json({ response: userNameErrors.username });
+        return res.status(400).json({ response: userNameErrors.username });
     }
 
     //firstname 검증
     const { userFirstNameErrors, userFirstNameIsValid } =
     await validateSignInData.validateUserFirstName(firstname);
     if (!userFirstNameIsValid) {
-        return res
-            .status(400)
-            .json({ response: userFirstNameErrors.firstname });
+        return res.status(400).json({ response: userFirstNameErrors.firstname });
     }
 
     //lastname 검증
-    const { userLastNameErrors, userLastNameIsValid } =
-    await validateSignInData.validateUserLastName(lastname);
+    const { userLastNameErrors, userLastNameIsValid } = await validateSignInData.validateUserLastName(
+        lastname
+    );
     if (!userLastNameIsValid) {
-        res.status(400).json({ response: userLastNameErrors.lastname });
+        return res.status(400).json({ response: userLastNameErrors.lastname });
     }
 
     //Email 검증
-    const { emailErrors, emailIsValid } =
-    await validateSignInData.validateEmail(email);
+    const { emailErrors, emailIsValid } = await validateSignInData.validateEmail(email);
     if (!emailIsValid) {
-        res.status(400).json({ response: emailErrors.email });
+        return res.status(400).json({ response: emailErrors.email });
     }
 
     //password 검증
-    const { passwordErrors, passwordIsValid } =
-    await validateSignInData.validatePassword(password1, password2);
+    const { passwordErrors, passwordIsValid } = await validateSignInData.validatePassword(
+        password1,
+        password2
+    );
     if (!passwordIsValid) {
-        res.status(400).json({ response: passwordErrors.password });
+        return res.status(400).json({ response: passwordErrors.password });
     }
 
     // DB에서 중복된 email 체크
@@ -99,7 +97,7 @@ export const createUser = async(req, res) => {
     });
 
     if (duplicateEmail) {
-        res.status(400).json({
+        return res.status(400).json({
             response: 'This Email is already  existed',
         });
     }
@@ -111,7 +109,7 @@ export const createUser = async(req, res) => {
 
     if (duplicateUserName) {
         // console.log(duplicateUserName);
-        res.status(400).json({
+        return res.status(400).json({
             response: 'UserName is already existed',
         });
     }
@@ -153,8 +151,7 @@ export const updateUserInfo = async(req, res) => {
         console.log('updateuserinfo');
         console.log('req.decodedUser : ', req.decodedUser);
         console.log('req.body : ', req.body);
-        const { username, email, firstname, lastname, password, phonenumber } =
-        req.body;
+        const { username, email, firstname, lastname, password, phonenumber } = req.body;
         const userId = req.decodedUser.userId;
 
         const updateUser = await User.findByIdAndUpdate({
@@ -163,7 +160,7 @@ export const updateUserInfo = async(req, res) => {
             username: username,
             firstname: firstname,
             lastname: lastname,
-        }, { multi: true, new: true }, );
+        }, { multi: true, new: true });
 
         res.json(updateUser).status(200);
     } catch (err) {
@@ -239,16 +236,16 @@ export const postUserLogin = async(req, res) => {
     const { email, password } = req.body;
 
     //Email 체크
-    const { emailErrors, emailIsValid } =
-    await validateLogInData.validateLoginEmail(email);
+    const { emailErrors, emailIsValid } = await validateLogInData.validateLoginEmail(email);
 
     if (!emailIsValid) {
         res.status(400).json(emailErrors);
     }
 
     // Password체크
-    const { passwordErrors, passwordIsValid } =
-    await validateLogInData.validateLoginPassword(password);
+    const { passwordErrors, passwordIsValid } = await validateLogInData.validateLoginPassword(
+        password
+    );
 
     if (!passwordIsValid) {
         res.status(400).json(passwordErrors);
@@ -268,7 +265,7 @@ export const postUserLogin = async(req, res) => {
     //비밀번호  match 확인
     const isEmailMatchedAndPasswordMatchedUser = await bcrypt.compareSync(
         password,
-        isEmailMatchedUser.password,
+        isEmailMatchedUser.password
     );
 
     if (isEmailMatchedAndPasswordMatchedUser) {
@@ -303,7 +300,7 @@ export const postUserLogin = async(req, res) => {
                     isAdmin: LoginSuccessUser.isAdmin,
                     accessToken: token,
                 });
-            },
+            }
         );
     } else {
         //비밀번호 틀릴때

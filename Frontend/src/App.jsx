@@ -19,7 +19,7 @@ import UserList from './Views/UserList/Index';
 import Account from './Views/Account/Index';
 import Settings from './Views/Settings/Index';
 import UpdateAccount from './Views/UpdateAccount/Index';
-
+import MovieList from './Views/MovieList/Index';
 import theme from './Theme/Index';
 import Alert from './Layouts/Alert/Index';
 import ProtectedRoute from './Routes/ProtectedRoute/Index';
@@ -44,7 +44,7 @@ const App = () => {
             <Route exact path="/feed" component={Feed} />
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={SignUp} />
-            {/* <Route exact path="/admin/movies" component={MovieList} /> */}
+            <Route exact path="/admin/movies" component={MovieList} />
             {/* 분리 */}
             <ProtectedRoute
               exact

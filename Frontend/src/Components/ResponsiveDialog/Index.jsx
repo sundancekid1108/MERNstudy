@@ -20,29 +20,30 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 120
   },
   formControlLabel: {
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing()
   }
 }));
 
 const ResponsiveDialog = (props) => {
   const { id, title, contentText, children, open, handleClose } = props;
 
-  // const classes = useStyles();
-  // const theme = useTheme();
-  // const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const classes = useStyles();
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <>
       <Dialog
-        // fullScreen={fullScreen}
+        fullScreen={fullScreen}
         fullWidth={true}
         maxWidth="lg"
         open={open}
         onClose={handleClose}
         aria-labelledby={id}>
-        <DialogTitle id={id}>dialogTitle!</DialogTitle>
+        <DialogTitle id={id}>{title}</DialogTitle>
         <DialogContent>
-          <DialogContentText>contenttext</DialogContentText>
+          <DialogContentText>{contentText}</DialogContentText>
+          {children}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary" autoFocus>
