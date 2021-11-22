@@ -10,35 +10,37 @@ import styles from './Styles';
 const MovieCard = (props) => {
   const { classes, className, movie } = props;
   const rootClassName = classNames(classes.root, className);
-  console.log('MovieCard movie', movie);
+  // console.log('MovieCard movie', movie);
   return (
     <>
       <Paper className={rootClassName}>
         <div className={classes.imageWrapper}>
-          {/* <img alt="movie" className={classes.image} src={movie.imageUrl} /> */}
-          영화이미지
+          <img alt="movie" className={classes.image} src={movie.imageUrl} />
         </div>
         <div className={classes.details}>
           <Typography className={classes.title} variant="h4">
-            타이틀
-            {/* {movie.title} */}
+            {movie.title}
           </Typography>
           <Typography className={classes.description} variant="body1">
-            설명
-            {/* {movie.description} */}
+            {movie.description}
           </Typography>
         </div>
         <Divider />
         <div className={classes.stats}>
           <AccessTimeIcon className={classes.updateIcon} />
           <Typography className={classes.updateText} variant="body2">
-            시간
-            {/* {movie.duration} minutes */}
+            {movie.duration} minutes
           </Typography>
         </div>
       </Paper>
     </>
   );
+};
+
+MovieCard.propTypes = {
+  className: PropTypes.string,
+  classes: PropTypes.object.isRequired,
+  movie: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(MovieCard);

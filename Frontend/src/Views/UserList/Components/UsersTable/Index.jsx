@@ -156,7 +156,7 @@ const UsersTable = (props) => {
             }}
             count={users.length}
             onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
             page={page}
             rowsPerPage={rowsPerPage}
             rowsPerPageOptions={[5, 10, 25]}

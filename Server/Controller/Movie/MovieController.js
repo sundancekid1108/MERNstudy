@@ -24,19 +24,24 @@ export const createMovie = async(req, res) => {
 
 //getMoviesList(영화리스트조회)
 export const getMoviesList = async(req, res) => {
-    try {
-        const movieList = await Movie.find({}, null, {
-            sort: {
-                _id: -1,
-            },
-        });
-        console.log('movieList', movieList);
-        res.json(movieList).status(200);
-    } catch (err) {
-        console.log(err);
-        res.json({
-            response: 'getMovieList Error',
-        });
+    const isAdmin = req.decodedUser.isAdmin;
+    if (isAdmin == false) {
+        res.status(400).json({ response: 'Unauthorized You are not Admin' });
+    } else {
+        try {
+            const movieList = await Movie.find({}, null, {
+                sort: {
+                    _id: -1,
+                },
+            });
+            console.log('movieList', movieList);
+            res.json(movieList).status(200);
+        } catch (err) {
+            console.log(err);
+            res.json({
+                response: 'getMovieList Error',
+            });
+        }
     }
 };
 

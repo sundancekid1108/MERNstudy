@@ -42,12 +42,16 @@ export const createMovie = async(
 };
 
 export const getMovieInfo = () => {
+    const token = authHeader();
     try {} catch (error) {}
 };
 
 export const getMoviesList = async() => {
+    const token = authHeader();
     try {
-        const movieListData = await api.get('/movies/movieslist', {});
+        const movieListData = await api.get('/movies/movieslist', {
+            headers: token
+        });
         console.log('getMoviesListData: ', movieListData);
         return movieListData;
     } catch (error) {
