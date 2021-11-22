@@ -47,13 +47,13 @@ const MovieToolBar = (props) => {
           <span className={classes.spacer} />
           <DisplayMode mode="grid" />
         </div>
-        <ResponsiveDialog
-          id="Add_Movie"
-          open={isOpenAddDialog}
-          handleClose={handleAddDialog}>
-          <AddMovie />
-        </ResponsiveDialog>
       </div>
+      <ResponsiveDialog
+        id="Add_Movie"
+        open={isOpenAddDialog}
+        handleClose={handleAddDialog}>
+        <AddMovie />
+      </ResponsiveDialog>
     </>
   );
 };
