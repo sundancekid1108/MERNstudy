@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 120
   },
   formControlLabel: {
-    marginTop: theme.spacing()
+    marginTop: theme.spacing(1)
   }
 }));
 

@@ -11,8 +11,8 @@ const styles = (theme) => ({
     flexShrink: 0
   },
   sm: {
-    height: theme.spacing(),
-    width: theme.spacing()
+    height: theme.spacing(1),
+    width: theme.spacing(1)
   },
   md: {
     height: theme.spacing(2),

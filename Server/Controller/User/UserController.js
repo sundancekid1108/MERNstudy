@@ -239,7 +239,7 @@ export const postUserLogin = async(req, res) => {
     const { emailErrors, emailIsValid } = await validateLogInData.validateLoginEmail(email);
 
     if (!emailIsValid) {
-        res.status(400).json(emailErrors);
+        return res.status(400).json(emailErrors);
     }
 
     // Password체크
@@ -248,7 +248,7 @@ export const postUserLogin = async(req, res) => {
     );
 
     if (!passwordIsValid) {
-        res.status(400).json(passwordErrors);
+        return res.status(400).json(passwordErrors);
     }
 
     //DB에서 Email 매치되는 user 없을때 에러 처리
@@ -257,7 +257,7 @@ export const postUserLogin = async(req, res) => {
     });
 
     if (!isEmailMatchedUser) {
-        res.status(404).json({
+        return res.status(404).json({
             response: 'Check your Email and Password',
         });
     }
@@ -288,10 +288,10 @@ export const postUserLogin = async(req, res) => {
             },
             (err, token) => {
                 if (err) {
-                    res.json(err);
+                    return res.json(err);
                     accessToken: null;
                 }
-                res.status(200).json({
+                return res.status(200).json({
                     // userId: LoginSuccessUser.id,
                     userEmail: LoginSuccessUser.email,
                     userName: LoginSuccessUser.username,
@@ -304,7 +304,7 @@ export const postUserLogin = async(req, res) => {
         );
     } else {
         //비밀번호 틀릴때
-        res.status(400).json({
+        return res.status(400).json({
             response: 'Login failed Check your Email and Password',
             accessToken: null,
         });

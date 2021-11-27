@@ -21,7 +21,7 @@ export const validateUserFirstName = (firstname) => {
     let userFirstNameErrors = {};
     const userFirstNameData = !isEmpty(firstname) ? firstname : '';
     if (Validator.isEmpty(userFirstNameData)) {
-        userFirstNameErrors.firstname = 'This field is required';
+        userFirstNameErrors.firstname = 'firstname field is required';
     } else if (!Validator.isLength(userFirstNameData, { min: 3, max: 20 })) {
         userFirstNameErrors.firstname =
             'firstname field must be at least 3 characters and under 20characters';

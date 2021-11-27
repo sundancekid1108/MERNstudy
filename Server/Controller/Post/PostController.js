@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const { ObjectId } = mongoose.Types;
 
 //post list 받기
-export const getPostList = async (req, res) => {
+export const getPostList = async(req, res) => {
     try {
         const posts = await Post.find({}, null, { sort: { _id: -1 } });
         res.json(posts).status(200);
@@ -19,7 +19,7 @@ export const searchPost = (req, res) => {
 };
 
 // post detail 받기
-export const getPostDetail = async (req, res) => {
+export const getPostDetail = async(req, res) => {
     try {
         if (!ObjectId.isValid(req.params.id)) {
             res.json('400 bad request').status = 400;
@@ -34,7 +34,7 @@ export const getPostDetail = async (req, res) => {
 };
 
 //create new post
-export const createPost = async (req, res) => {
+export const createPost = async(req, res) => {
     console.log(req.body);
     const post = new Post({
         title: req.body.title,
@@ -53,21 +53,17 @@ export const createPost = async (req, res) => {
 };
 
 //update post
-export const updatePost = async (req, res) => {
+export const updatePost = async(req, res) => {
     try {
         if (!ObjectId.isValid(req.params.id)) {
             res.json('400 bad request').status = 400; // Bad Request
         }
-        const post = await Post.findByIdAndUpdate(
-            {
-                _id: req.params.id,
-            },
-            {
-                title: req.body.title,
-                contents: req.body.contents,
-            },
-            { multi: true, new: true },
-        );
+        const post = await Post.findByIdAndUpdate({
+            _id: req.params.id,
+        }, {
+            title: req.body.title,
+            contents: req.body.contents,
+        }, { multi: true, new: true });
 
         if (!post) {
             res.json({ response: '404 Error' }).status(404);
@@ -80,7 +76,7 @@ export const updatePost = async (req, res) => {
 };
 
 //delete post
-export const deletePost = async (req, res) => {
+export const deletePost = async(req, res) => {
     try {
         if (!ObjectId.isValid(req.params.id)) {
             res.json('400 bad request').status = 400; // Bad Request

@@ -23,13 +23,15 @@ const Topbar = (props) => {
     ToolbarClasses,
     children,
     isSidebarOpen,
-    onToggleSidebar,
-    logout,
-    auth
+    onToggleSidebar
+    // logout,
+    // auth
   } = props;
 
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const auth = useSelector((state) => state.auth);
 
   //Redux test
 
@@ -40,7 +42,7 @@ const Topbar = (props) => {
   // };
   ///=======
 
-  const handleLogOutTest = (e) => {
+  const handleLogOut = (e) => {
     dispatch(AuthActions.userLogOut());
 
     history.push('/signin');
@@ -70,10 +72,7 @@ const Topbar = (props) => {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton
-            className={classes.signOutButton}
-            // onClick={handleLogOut}
-            onClick={handleLogOutTest}>
+          <IconButton className={classes.signOutButton} onClick={handleLogOut}>
             <InputIcon />
           </IconButton>
         </Toolbar>
@@ -92,17 +91,9 @@ Topbar.propTypes = {
   children: PropTypes.node,
   classes: PropTypes.object.isRequired,
   isSidebarOpen: PropTypes.bool,
-  title: PropTypes.string,
-  logout: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  title: PropTypes.string
+  // logout: PropTypes.func.isRequired,
+  // auth: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Topbar);
-
-// //Redux test
-// const mapStateToProps = (state) => ({
-//   auth: state.authState
-// });
-// export default withStyles(styles)(
-//   connect(mapStateToProps, { userLogOut })(Topbar)
-// );

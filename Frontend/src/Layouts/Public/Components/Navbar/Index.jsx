@@ -1,30 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { withStyles, Button } from '@material-ui/core';
-
+import { withStyles, Button, Typography } from '@material-ui/core';
+import classnames from 'classnames';
 import styles from './Styles';
 import logoImg from '../../../../Images/logo.jpg';
 
 const Navbar = (props) => {
   const { classes } = props;
-
   const history = useHistory();
+  const [showMenu, setShowMenu] = useState(false);
 
   const onclickEvent = (e) => {
     e.preventDefault();
     history.push('/signin');
   };
 
+  const handleShowMenu = (e) => {
+    if (showMenu == false) {
+      setShowMenu(true);
+    } else {
+      setShowMenu(false);
+    }
+  };
+
   return (
     <>
       <nav className={classes.navbar}>
         <Link className={classes.logoLink} to="/dashboard">
-          <img
-            className={classes.logoImage}
-            alt="Logo"
-            //   src={logoImg}
-          />
+          <Typography className={classes.logoImage} variant="h1">
+            SundanceCinema
+          </Typography>
         </Link>
         <div className={classes.navLinks}>
           <Link className={classes.navLink} to="/admin/userslist">
@@ -37,15 +43,50 @@ const Navbar = (props) => {
             Dashboard
           </Link>
         </div>
-
-        <Button
-          color="primary"
-          variant="contained"
-          // onClick={() => history.push('/signin')}
-          onClick={onclickEvent}>
-          SignIn
-        </Button>
+        <div className={classes.navBtn} onClick={handleShowMenu}>
+          <div className={classes.navIcon}>
+            <div
+              className={classnames(
+                classes.navIconLine,
+                classes.navIconLine__left
+              )}
+            />
+            <div className={classes.navIconLine} />
+            <div
+              className={classnames(
+                classes.navIconLine,
+                classes.navIconLine__right
+              )}
+            />
+          </div>
+        </div>
       </nav>
+      <div
+        className={classnames({
+          [classes.navActive]: showMenu,
+          [classes.nav]: true
+        })}>
+        <div className={classes.navContent}>
+          <div className={classes.currentPageShadow}>Movies</div>
+          <ul className={classes.innerNav}>
+            <li className={classes.innerNavListItem}>
+              <Link className={classes.innerNavLink} to="/">
+                Home
+              </Link>
+            </li>
+            <li className={classes.innerNavListItem}>
+              <Link className={classes.innerNavLink} to="/movies">
+                Movies
+              </Link>
+            </li>
+            <li className={classes.innerNavListItem}>
+              <Link className={classes.innerNavLink} to="/signin">
+                SignIn
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
     </>
   );
 };
