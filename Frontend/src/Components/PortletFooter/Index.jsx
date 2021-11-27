@@ -5,8 +5,8 @@ import { withStyles } from '@material-ui/core';
 
 const styles = (theme) => ({
   root: {
-    paddingBottom: theme.spacing(),
-    paddingTop: theme.spacing(),
+    paddingBottom: theme.spacing(1),
+    paddingTop: theme.spacing(1),
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
     borderTop: `1px solid ${theme.palette.border}`,

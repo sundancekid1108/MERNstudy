@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { withStyles, CircularProgress, Typography } from '@material-ui/core';
-import Dashboard from '../../Layouts/Dashboard/Dashboard';
+import Dashboard from '../../Layouts/Dashboard/Index';
 
 const styles = (theme) => ({
   root: {

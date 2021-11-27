@@ -14,6 +14,7 @@ import * as userApi from '../../Api/UserApi/UserApi';
 
 // signin
 export const userSignIn = (userEmail, userPassword) => async(dispatch) => {
+    try {} catch (error) {}
     const result = await userApi.userLogin(userEmail, userPassword);
     const responseData = result;
     // console.log('authaction usersignin :', responseData);
@@ -28,6 +29,26 @@ export const userSignIn = (userEmail, userPassword) => async(dispatch) => {
     }
 };
 
+export const userSignUp = (a, b, c, d, e, f) => async(dispatch) => {
+    try {
+        const result = await userApi.userSignUp(a, b, c, d, e, f);
+        const responseData = result;
+        // console.log(responseData);
+
+        if (responseData.status == 201) {
+            dispatch({ type: SIGN_UP_SUCCESS, payload: responseData });
+            dispatch(setAlert('SignUp Success', 'success', 5000));
+        } else {
+            dispatch({ type: SIGN_UP_FAIL });
+            dispatch(setAlert('Sign up Fail', 'error', 5000));
+        }
+        return responseData;
+    } catch (error) {
+        dispatch({ type: SIGN_UP_FAIL });
+        dispatch(setAlert('Sign up Fail', 'error', 5000));
+    }
+};
+
 // log out
 export const userLogOut = () => (dispatch) => {
     userApi.userLogout();
@@ -39,7 +60,7 @@ export const userLogOut = () => (dispatch) => {
 export const getLoginUserInfo = () => async(dispatch) => {
     const result = await userApi.getUserInfo();
     const responseData = result;
-    console.log('getLoginUserInfo: ', responseData);
+    // console.log('getLoginUserInfo: ', responseData);
     if (responseData.ok) {
         dispatch({ type: 'GET_USER_INFO', payload: responseData });
     } else {

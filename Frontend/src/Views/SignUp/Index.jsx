@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import {
@@ -12,11 +12,16 @@ import {
 } from '@material-ui/core';
 import { ArrowBack as ArrowBackIcon } from '@material-ui/icons';
 import * as userApi from '../../Api/UserApi/UserApi';
+import { useDispatch, useSelector } from 'react-redux';
+import * as AuthActions from '../../Store/Actions/AuthActions';
 import styles from './Styles';
 
 const SignUp = (props) => {
   const { classes } = props;
   const form = useRef();
+
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [userFirstName, setUserFirstName] = useState('');
@@ -29,7 +34,14 @@ const SignUp = (props) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [policyError, setPolicyError] = useState(false);
 
-  const history = useHistory();
+  const state = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (state.isAuthenticated) {
+      return history.push('/');
+    } else {
+      history.push('/signup');
+    }
+  }, []);
 
   const handleBack = () => {
     history.goBack();
@@ -73,6 +85,52 @@ const SignUp = (props) => {
     }
   };
 
+  // const handleSignUp = async (e) => {
+  //   e.preventDefault();
+  //   setIsLoading(true);
+  //   setIsValid(false);
+  //   if (checkValue == false) {
+  //     //Check 버튼 확인
+  //     setIsLoading(false);
+  //     setIsValid(true);
+  //     setPolicyError('Check the Terms and Conditions');
+  //   } else if (
+  //     userEmail === '' ||
+  //     userName === '' ||
+  //     userFirstName === '' ||
+  //     userLastName === '' ||
+  //     userPassword === '' ||
+  //     userPassword2 === ''
+  //   ) {
+  //     //빈칸 확인
+  //     setPolicyError('');
+  //     setIsLoading(false);
+  //     setIsValid(true);
+  //     setErrorMessage('Check the Empty Field');
+  //   } else {
+  //     setPolicyError('');
+  //     setIsLoading(false);
+  //     setIsValid(true);
+
+  //     const result = await userApi.userSignUp(
+  //       userName,
+  //       userEmail,
+  //       userFirstName,
+  //       userLastName,
+  //       userPassword,
+  //       userPassword2
+  //     );
+  //     // console.log("result : ", result);
+  //     // 회원가입성공했을때 넘김
+  //     if (result.status == 400) {
+  //       setErrorMessage(result.data.response);
+  //     } else {
+  //       history.push('/signin');
+  //     }
+  //   }
+  // };
+
+  //Redux를 활용한 signup 함수 재작성
   const handleSignUp = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -95,44 +153,41 @@ const SignUp = (props) => {
       setIsLoading(false);
       setIsValid(true);
       setErrorMessage('Check the Empty Field');
-    }
-    const result = await userApi.userSignUp(
-      userName,
-      userEmail,
-      userFirstName,
-      userLastName,
-      userPassword,
-      userPassword2
-    );
-    // console.log("result : ", result);
-    // 회원가입성공했을때 넘김
-    if (result.status == 400) {
-      setErrorMessage(result.data.response);
     } else {
-      history.push('/signin');
+      setPolicyError('');
+      setIsLoading(false);
+      setIsValid(true);
+
+      try {
+        const result = await dispatch(
+          AuthActions.userSignUp(
+            userName,
+            userEmail,
+            userFirstName,
+            userLastName,
+            userPassword,
+            userPassword2
+          )
+        );
+
+        console.log('dispatch result', result);
+        if (result.status !== 201) {
+          setErrorMessage(result.data.response);
+        } else {
+          history.push('/signin');
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
+
   return (
     <>
       <div className={classes.root}>
         <Grid className={classes.grid} container>
           <Grid className={classes.quoteWrapper} item lg={5}>
-            <div className={classes.quote}>
-              <div className={classes.quoteInner}>
-                <Typography className={classes.quoteText} variant="h1">
-                  Hella narwhal Cosby sweater McSweeney's, salvia kitsch before
-                  they sold out High Life.
-                </Typography>
-                <div className={classes.person}>
-                  <Typography className={classes.name} variant="body1">
-                    Takamaru Ayako
-                  </Typography>
-                  <Typography className={classes.bio} variant="body2">
-                    Manager at inVision
-                  </Typography>
-                </div>
-              </div>
-            </div>
+            <div className={classes.quote}></div>
           </Grid>
           <Grid className={classes.content} item lg={7} xs={12}>
             <div className={classes.content}>

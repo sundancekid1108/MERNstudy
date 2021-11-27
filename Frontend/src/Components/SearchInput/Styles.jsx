@@ -6,13 +6,13 @@ export default (theme) => ({
     borderRadius: '4px',
     display: 'flex',
     flexBasis: '420px',
-    paddingBottom: theme.spacing(),
-    paddingLeft: theme.spacing(),
-    paddingRight: theme.spacing(),
-    paddingTop: theme.spacing()
+    paddingBottom: theme.spacing(1),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    paddingTop: theme.spacing(1)
   },
   icon: {
-    marginRight: theme.spacing(),
+    marginRight: theme.spacing(1),
     color: theme.palette.text.secondary
   },
   input: {

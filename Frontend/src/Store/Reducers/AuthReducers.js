@@ -31,7 +31,7 @@ const authReducers = (state = initialState, action) => {
         case LOG_OUT:
             return {
                 ...state,
-                token: null,
+                token: '',
                 isAuthenticated: false,
                 user: null,
                 loading: false
