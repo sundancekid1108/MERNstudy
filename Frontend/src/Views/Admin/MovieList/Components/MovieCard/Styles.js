@@ -11,7 +11,6 @@ export default (theme) => ({
     },
     imageWrapper: {
         height: '200px',
-
         margin: '0 auto',
         border: '1px solid #EDF0F2',
         borderRadius: '5px',

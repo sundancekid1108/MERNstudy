@@ -42,14 +42,20 @@ const AddMovie = (props) => {
   const [status, setStatus] = useState('');
   const [infoMessage, setInfoMessage] = useState('');
 
-  // const prevMovie = usePrevious(movie);
-  const prevMovie = useRef();
-
+  const prevMovie = props.editmovie;
+  // console.log('prevMovie', prevMovie);
   useEffect(() => {
-    if (prevMovie !== movie) {
-      setTitle(title);
-      setGenre(genre);
-      setLanguage(language);
+    if (prevMovie) {
+      setTitle(prevMovie.title);
+      setGenre(prevMovie.genre);
+      setMovieImage(prevMovie.image);
+      setLanguage(prevMovie.language);
+      setDuration(prevMovie.duration);
+      setDescription(prevMovie.description);
+      setDirector(prevMovie.director);
+      setCast(prevMovie.cast);
+      setReleaseDate(prevMovie.releaseDate);
+      setEndDate(prevMovie.endDate);
     }
   }, []);
 
@@ -91,12 +97,8 @@ const AddMovie = (props) => {
     setDirector(data);
   };
 
-  const onChangeReleaseDate = (e) => {
-    const data = e.target.value;
-    setReleaseDate(data);
-  };
-
   const handleAddMovie = async (e) => {
+    console.log('handleAddMovie');
     // e.preventDefault();
     if (
       title === '' ||
@@ -135,17 +137,62 @@ const AddMovie = (props) => {
         console.log(error);
       }
     }
-
-    console.log('handleAddMovie');
   };
+
+  const handleUpdateMovie = async (e) => {
+    console.log('handleUpdateMovieInfo');
+    if (
+      title === '' ||
+      genre === '' ||
+      movieImage === '' ||
+      language === '' ||
+      duration === '' ||
+      description === '' ||
+      director === '' ||
+      cast === '' ||
+      releaseDate === '' ||
+      endDate === ''
+    ) {
+      setInfoMessage('Movie have not been saved, try again.');
+    } else {
+      try {
+        const response = await MovieApi.updateMovieInfo(
+          prevMovie._id,
+          title,
+          movieImage,
+          genre,
+          language,
+          duration,
+          description,
+          director,
+          cast,
+          releaseDate,
+          endDate
+        );
+        setStatus(true);
+        setInfoMessage('Updated Movie have been saved!');
+        // console.log(response);
+        return response;
+      } catch (error) {
+        setStatus(false);
+        setInfoMessage('Updated Movie have not been saved, try again.');
+        console.log(error);
+      }
+    }
+  };
+
+  const subtitle = prevMovie ? 'Edit Movie' : 'Add Movie';
+  const submitButton = prevMovie ? 'Update Movie' : 'Save Movie Info';
+  const submitAction = prevMovie ? handleUpdateMovie : handleAddMovie;
+
   return (
     <>
       <Portlet {...rest} className={rootClassName}>
         <PortletHeader>
-          <PortletLabel subtitle="Add a new one" title="Movie" />
+          <PortletLabel subtitle={subtitle} title="Movie" />
         </PortletHeader>
         <PortletContent noPadding>
-          <form autoComplete="off" noValidate>
+          <form autoComplete="off" noValidate ref={form}>
             <div className={classes.field}>
               <TextField
                 className={classes.textField}
@@ -158,14 +205,18 @@ const AddMovie = (props) => {
                 onChange={onChangeTitle}
               />
               <TextField
+                select
                 className={classes.textField}
                 label="Genre"
                 margin="dense"
                 required
                 value={genre}
                 variant="outlined"
-                onChange={onChangeGenre}
-              />
+                onChange={onChangeGenre}>
+                {genreData.map((genreItem) => (
+                  <MenuItem value={genreItem}>{genreItem}</MenuItem>
+                ))}
+              </TextField>
             </div>
             <div className={classes.field}>
               <TextField
@@ -191,14 +242,18 @@ const AddMovie = (props) => {
             </div>
             <div className={classes.field}>
               <TextField
+                select
                 className={classes.textField}
                 label="Language"
                 margin="dense"
                 required
                 value={language}
                 variant="outlined"
-                onChange={onChangeLanguage}
-              />
+                onChange={onChangeLanguage}>
+                {languageData.map((langItem) => (
+                  <MenuItem value={langItem}>{langItem}</MenuItem>
+                ))}
+              </TextField>
               <TextField
                 className={classes.textField}
                 label="Duration"
@@ -271,8 +326,8 @@ const AddMovie = (props) => {
           </form>
         </PortletContent>
         <PortletFooter className={classes.portletFooter}>
-          <Button color="primary" variant="contained" onClick={handleAddMovie}>
-            Save details
+          <Button color="primary" variant="contained" onClick={submitAction}>
+            {submitButton}
           </Button>
           <Typography
             className={classes.infoMessage}
@@ -280,23 +335,6 @@ const AddMovie = (props) => {
             variant="caption">
             {infoMessage}
           </Typography>
-          {/* {status ? (
-            status === true ? (
-              <Typography
-                className={classes.infoMessage}
-                color="primary"
-                variant="caption">
-                Movie have been saved!
-              </Typography>
-            ) : (
-              <Typography
-                className={classes.infoMessage}
-                color="error"
-                variant="caption">
-                Movie have not been saved, try again.
-              </Typography>
-            )
-          ) : null} */}
         </PortletFooter>
       </Portlet>
     </>
@@ -314,4 +352,8 @@ export default withStyles(styles)(AddMovie);
 /**
  * KeyboardDatePicker format 속성에 따라 에러 뜸...
  * 중요: material-ui-pickers v3의 경우 @date-io 어댑터의 v1.x 버전을 사용하십시오 .
+ *
+ *
+ * MovieList에서 어떻게 prevMovie Data를 전달받는지 다시 확인
+ * 이를통해 하나의 페이지로, add, edit 구현
  */

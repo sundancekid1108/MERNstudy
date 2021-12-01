@@ -7,14 +7,18 @@ import { Link } from 'react-router-dom';
 import { CircularProgress, Grid, Typography } from '@material-ui/core';
 import { MovieToolBar, MovieCard } from './Components/Index';
 import * as MovieApi from '../../../Api/MovieApi/MovieApi';
-
+import { ResponsiveDialog } from '../../../Components/Index';
 import Dashboard from '../../../Layouts/Dashboard/Index';
-
+import AddMovie from './Components/AddMovie/Index';
 import styles from './Styles';
+
 const MovieList = (props) => {
-  const { classes } = props;
+  const { classes, ...rest } = props;
   const [isLoading, setIsLoading] = useState(false);
+  const [editDialog, setEditDialog] = useState(false);
   const [moviesList, setMoviesList] = useState([]);
+  const [editMovie, setEditMovie] = useState(null);
+
   useEffect(() => {
     getMoviesList();
   }, []);
@@ -33,7 +37,26 @@ const MovieList = (props) => {
     }
   };
 
-  // const renderMoviesList = () => {};
+  const handleEditDialog = (e) => {
+    if (editDialog == false) {
+      setEditDialog(true);
+    } else {
+      setEditDialog(false);
+    }
+  };
+
+  // 무비리스트에서 수정하고자 하는 movie data를 어떻게 넘겼는지가 중요!
+  const handleEditMovieInfo = (movie) => {
+    console.log('handleEditMovieInfo', movie);
+    if (editDialog == false) {
+      handleEditDialog();
+      // setEditDialog(true);
+      setEditMovie(movie);
+    } else {
+      handleEditDialog();
+      setEditMovie(null);
+    }
+  };
 
   if (!moviesList) {
     return (
@@ -54,16 +77,27 @@ const MovieList = (props) => {
           <div className={classes.root}>
             <MovieToolBar />
           </div>
-
-          <Grid container spacing={3}>
-            {moviesList.map((movie) => (
-              <Grid item key={movie._id} lg={4} md={6} xs={12}>
-                <Link to="#">
+          <div className={classes.content}>
+            <Grid container spacing={3}>
+              {moviesList.map((movie) => (
+                <Grid
+                  item
+                  key={movie._id}
+                  lg={4}
+                  md={6}
+                  xs={12}
+                  onClick={() => handleEditMovieInfo(movie)}>
                   <MovieCard movie={movie} />
-                </Link>
-              </Grid>
-            ))}
-          </Grid>
+                </Grid>
+              ))}
+            </Grid>
+            <ResponsiveDialog
+              id="Edit-movie"
+              open={editDialog}
+              handleClose={handleEditDialog}>
+              <AddMovie editmovie={editMovie} />
+            </ResponsiveDialog>
+          </div>
         </Dashboard>
       </>
     );
