@@ -23,7 +23,7 @@ const MoviesList = (props) => {
             container
             direction="column"
             alignItems="center"
-            justify="center"
+            justifyContent="center"
             spacing={2}>
             <Typography className={classes.title} variant="h2" color="inherit">
               All Movies

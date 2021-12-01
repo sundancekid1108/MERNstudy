@@ -66,8 +66,42 @@ export const getMoviesList = async() => {
     }
 };
 
-export const updateMovieInfo = () => {
-    try {} catch (error) {}
+export const updateMovieInfo = async(
+    id,
+    title,
+    image,
+    genre,
+    language,
+    duration,
+    description,
+    director,
+    cast,
+    releaseDate,
+    endDate
+) => {
+    const body = {
+        title,
+        image,
+        genre,
+        language,
+        duration,
+        description,
+        director,
+        cast,
+        releaseDate,
+        endDate
+    };
+
+    const token = authHeader();
+    try {
+        const updateMovieData = await api.patch('/movies/movieinfo/' + id, body, {
+            headers: token
+        });
+        return updateMovieData;
+    } catch (error) {
+        console.log('updateMovieInfo Error: ', error);
+        return error;
+    }
 };
 
 export const deleteMovie = () => {

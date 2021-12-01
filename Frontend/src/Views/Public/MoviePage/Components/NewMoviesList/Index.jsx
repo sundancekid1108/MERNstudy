@@ -21,7 +21,7 @@ const NewMoviesList = (props) => {
           className={classes.fullHeight}
           container
           alignItems="center"
-          justify="center"
+          justifyContent="center"
           spacing={5}>
           <Grid item xs={3}>
             <div className={classes.title}>

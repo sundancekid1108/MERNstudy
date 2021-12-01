@@ -14,4 +14,11 @@ export const genreData = [
     'western'
 ];
 
-export const languageData = ['english', 'kor', 'greek', 'german', 'french'];
+export const languageData = [
+    'english',
+    'kor',
+    'french',
+    'german',
+    'chinese',
+    'japanese'
+];
