@@ -104,6 +104,15 @@ export const updateMovieInfo = async(
     }
 };
 
-export const deleteMovie = () => {
-    try {} catch (error) {}
+export const deleteMovie = async(id) => {
+    const token = authHeader();
+    try {
+        const res = await api.delete('/movies/movieinfo/' + id, {
+            headers: token
+        });
+        return res;
+    } catch (error) {
+        console.log('getMoviesListError: ', error);
+        return error;
+    }
 };

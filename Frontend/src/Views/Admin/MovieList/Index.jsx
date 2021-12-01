@@ -21,7 +21,7 @@ const MovieList = (props) => {
 
   useEffect(() => {
     getMoviesList();
-  }, []);
+  }, [moviesList.data]);
 
   const getMoviesList = async () => {
     setIsLoading(true);
