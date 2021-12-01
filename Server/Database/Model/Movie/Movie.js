@@ -9,6 +9,7 @@ const movieSchema = new Schema({
     },
     image: {
         type: String,
+        required: true,
     },
     language: {
         type: String,
@@ -52,7 +53,7 @@ const movieSchema = new Schema({
         type: Date,
         required: true,
     },
-}, { timestamps: true }, { versionKey: false }, );
+}, { timestamps: true }, { versionKey: false });
 
 const Movie = mongoose.model('Movie', movieSchema);
 

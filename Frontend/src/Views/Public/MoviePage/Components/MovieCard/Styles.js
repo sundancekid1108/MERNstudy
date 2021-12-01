@@ -8,7 +8,7 @@ export default (theme) => ({
         margin: '60px 30px'
     },
     header: {
-        backgroundImage: 'url("https://source.unsplash.com/user/erondu/600x400")',
+        backgroundColor: '#7fc7d9', // Average color of the background image.,
         backgroundSize: 'cover',
         height: '200px',
         padding: '5px 10px',

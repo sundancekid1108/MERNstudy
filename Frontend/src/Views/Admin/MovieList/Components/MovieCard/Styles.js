@@ -1,14 +1,17 @@
 export default (theme) => ({
     root: {
         maxWidth: '100%',
-        paddingTop: theme.spacing(3),
+        paddingTop: theme.spacing(2),
         paddingBottom: theme.spacing(2),
-        paddingRight: theme.spacing(3),
-        paddingLeft: theme.spacing(3)
+        paddingRight: theme.spacing(2),
+        paddingLeft: theme.spacing(2),
+        marginBottom: theme.spacing(1),
+        marginRight: theme.spacing(2),
+        marginLeft: theme.spacing(2)
     },
     imageWrapper: {
-        height: '64px',
-        width: '64px',
+        height: '200px',
+
         margin: '0 auto',
         border: '1px solid #EDF0F2',
         borderRadius: '5px',
@@ -18,7 +21,9 @@ export default (theme) => ({
         justifyContent: 'center'
     },
     image: {
-        width: '100%'
+        width: '100%',
+        height: '100%',
+        'object-fit': 'cover'
     },
     details: {},
     title: {

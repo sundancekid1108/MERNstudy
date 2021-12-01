@@ -21,6 +21,7 @@ import Account from './Views/Admin/Account/Index';
 import Settings from './Views/Settings/Index';
 import UpdateAccount from './Views/UpdateAccount/Index';
 import MovieList from './Views/Admin/MovieList/Index';
+import MovieInfo from './Views/Public/MovieInfo/Index';
 import theme from './Theme/Index';
 import Alert from './Layouts/Alert/Index';
 import ProtectedRoute from './Routes/ProtectedRoute/Index';
@@ -46,6 +47,7 @@ const App = () => {
           <Router history={history}>
             <Switch>
               <Route exact path="/" component={MoviePage} />
+              <Route exact path="/movie/:id" component={MovieInfo} />
               <Route exact path="/feed" component={Feed} />
               <Route exact path="/signin" component={SignIn} />
               <Route exact path="/signup" component={SignUp} />

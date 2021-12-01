@@ -33,18 +33,25 @@ const MoviePage = (props) => {
     getMovies();
   }, []);
 
-  return (
-    <>
-      <div className={classes.root}>
-        <PublicNavbar />
-        <NewMoviesList movies={newMovies} />
-        <MoviesList movies={movies} />
-      </div>
-      <div className="cursor" id="cursor" />
-      <div className="cursor2" id="cursor2" />
-      <div className="cursor3" id="cursor3" />
-    </>
-  );
+  if (!movies) {
+    return (
+      <>
+        <div className={classes.root}>
+          <PublicNavbar />
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div className={classes.root}>
+          <PublicNavbar />
+          <NewMoviesList movies={newMovies} />
+          <MoviesList movies={movies} />
+        </div>
+      </>
+    );
+  }
 };
 
 MoviePage.propTypes = {
