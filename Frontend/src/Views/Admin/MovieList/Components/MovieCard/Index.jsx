@@ -15,7 +15,7 @@ const MovieCard = (props) => {
     <>
       <Paper className={rootClassName}>
         <div className={classes.imageWrapper}>
-          <img alt="movie" className={classes.image} src={movie.imageUrl} />
+          <img alt="movie" className={classes.image} src={movie.image} />
         </div>
         <div className={classes.details}>
           <Typography className={classes.title} variant="h4">

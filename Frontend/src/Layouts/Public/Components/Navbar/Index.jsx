@@ -27,7 +27,7 @@ const Navbar = (props) => {
   return (
     <>
       <nav className={classes.navbar}>
-        <Link className={classes.logoLink} to="/dashboard">
+        <Link className={classes.logoLink} to="/">
           <Typography className={classes.logoImage} variant="h1">
             SundanceCinema
           </Typography>
@@ -41,6 +41,9 @@ const Navbar = (props) => {
           </Link>
           <Link className={classes.navLink} to="/admin/dashboard">
             Dashboard
+          </Link>
+          <Link className={classes.navLink} to="/login">
+            Login
           </Link>
         </div>
         <div className={classes.navBtn} onClick={handleShowMenu}>

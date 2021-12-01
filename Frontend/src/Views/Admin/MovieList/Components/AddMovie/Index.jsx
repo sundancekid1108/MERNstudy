@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, usePrevious } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles, Grid } from '@material-ui/core';
-import { Button, TextField, Typography } from '@material-ui/core';
+import { Button, TextField, Typography, MenuItem } from '@material-ui/core';
 
 import {
   MuiPickersUtilsProvider,
@@ -16,6 +16,10 @@ import PortletLabel from '../../../../../Components/PortletLabel/Index';
 import PortletContent from '../../../../../Components/PortletContent/Index';
 import PortletFooter from '../../../../../Components/PortletFooter/Index';
 
+import {
+  genreData,
+  languageData
+} from '../../../../../Utils/MovieDataService/index';
 import * as MovieApi from '../../../../../Api/MovieApi/MovieApi';
 
 import styles from './Styles';
@@ -27,6 +31,7 @@ const AddMovie = (props) => {
 
   const [title, setTitle] = useState('');
   const [genre, setGenre] = useState('');
+  const [movieImage, setMovieImage] = useState('');
   const [language, setLanguage] = useState('');
   const [duration, setDuration] = useState('');
   const [description, setDescription] = useState('');
@@ -53,9 +58,14 @@ const AddMovie = (props) => {
     setTitle(data);
   };
 
+  const onChangeImage = (e) => {
+    const data = e.target.value;
+    setMovieImage(data);
+  };
+
   const onChangeGenre = (e) => {
-    const genreData = e.target.value;
-    setGenre(genreData);
+    const data = e.target.value;
+    setGenre(data);
   };
 
   const onChangeDescription = (e) => {
@@ -87,10 +97,11 @@ const AddMovie = (props) => {
   };
 
   const handleAddMovie = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     if (
       title === '' ||
       genre === '' ||
+      movieImage === '' ||
       language === '' ||
       duration === '' ||
       description === '' ||
@@ -104,6 +115,7 @@ const AddMovie = (props) => {
       try {
         const response = await MovieApi.createMovie(
           title,
+          movieImage,
           genre,
           language,
           duration,
@@ -159,8 +171,19 @@ const AddMovie = (props) => {
               <TextField
                 fullWidth
                 className={classes.textField}
+                label="Movie Image URL"
+                margin="dense"
+                variant="outlined"
+                required
+                value={movieImage}
+                onChange={onChangeImage}
+              />
+              <TextField
+                fullWidth
+                className={classes.textField}
                 label="Description"
                 margin="dense"
+                variant="outlined"
                 required
                 value={description}
                 onChange={onChangeDescription}
@@ -170,7 +193,7 @@ const AddMovie = (props) => {
               <TextField
                 className={classes.textField}
                 label="Language"
-                margin="Language"
+                margin="dense"
                 required
                 value={language}
                 variant="outlined"

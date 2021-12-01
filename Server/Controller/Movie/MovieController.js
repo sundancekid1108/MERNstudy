@@ -49,8 +49,9 @@ export const getMoviesList = async(req, res) => {
 export const getMovieInfo = async(req, res) => {
     const movieId = req.params.id;
     try {
-        const movieInfo = await Movie.findById(movieId);
-        res.status(201).json(movieInfo);
+        const movie = await Movie.findById(movieId);
+        // console.log(movie);
+        res.status(201).json(movie);
     } catch (error) {
         res.status(400).json(error);
     }
@@ -58,52 +59,62 @@ export const getMovieInfo = async(req, res) => {
 
 //updateMovieById(영화 정보 업데이트)
 export const updateMovieInfo = async(req, res) => {
-    const movieId = req.params.id;
-    const movieUpdates = Object.keys(req.body);
-    const allowedUpdates = [
-        'title',
-        'language',
-        'genre',
-        'director',
-        'cast',
-        'description',
-        'duration',
-    ];
-    const isValidOperation = movieUpdates.every((update) => allowedUpdates.includes(update));
+    const isAdmin = req.decodedUser.isAdmin;
+    if (isAdmin == false) {
+        res.status(400).json({ response: 'Unauthorized You are not Admin' });
+    } else {
+        const movieId = req.params.id;
+        const movieUpdates = Object.keys(req.body);
+        const allowedUpdates = [
+            'title',
+            'language',
+            'genre',
+            'director',
+            'cast',
+            'description',
+            'duration',
+        ];
+        const isValidOperation = movieUpdates.every((update) => allowedUpdates.includes(update));
 
-    if (!isValidOperation) res.status(400).send({ error: 'Invalid updates!' });
+        if (!isValidOperation) res.status(400).send({ error: 'Invalid updates!' });
 
-    try {
-        const movie = await Movie.findById(movieId);
-        movieUpdates.forEach((update) => (movie[update] = req.body[update]));
-        await movie.save();
-        if (!movie) {
-            res.status(404).json({ response: 'No Movie' });
-        } else {
-            res.status(200).json(movie);
+        try {
+            const movie = await Movie.findById(movieId);
+            movieUpdates.forEach((update) => (movie[update] = req.body[update]));
+            await movie.save();
+            if (!movie) {
+                res.status(404).json({ response: 'No Movie' });
+            } else {
+                res.status(200).json(movie);
+            }
+        } catch (error) {
+            res.status(400).json(error);
         }
-    } catch (error) {
-        res.status(400).json(error);
     }
 };
 
 //deleteMovieById(영화정보삭제)
 export const deleteMovie = async(req, res) => {
-    const movieId = req.params.id;
-    try {
-        const movie = await Movie.findByIdAndDelete({ id: movieId });
-        if (!movie) {
-            return res
-                .json({
-                    response: 'No Movie Data',
-                })
-                .status(404);
-        } else {
-            res.status(200).json({
-                response: 'delete Movie successfully',
-            });
+    const isAdmin = req.decodedUser.isAdmin;
+    if (isAdmin == false) {
+        res.status(400).json({ response: 'Unauthorized You are not Admin' });
+    } else {
+        const movieId = req.params.id;
+        try {
+            const movie = await Movie.findByIdAndDelete({ id: movieId });
+            if (!movie) {
+                return res
+                    .json({
+                        response: 'No Movie Data',
+                    })
+                    .status(404);
+            } else {
+                res.status(200).json({
+                    response: 'delete Movie successfully',
+                });
+            }
+        } catch (error) {
+            res.status(400).json(error);
         }
-    } catch (error) {
-        res.status(400).json(error);
     }
 };
