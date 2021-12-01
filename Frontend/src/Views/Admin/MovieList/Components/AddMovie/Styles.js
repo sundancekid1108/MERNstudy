@@ -19,5 +19,8 @@ export default (theme) => ({
     },
     infoMessage: {
         marginLeft: theme.spacing(3)
+    },
+    buttonFooter: {
+        marginRight: theme.spacing(1)
     }
 });

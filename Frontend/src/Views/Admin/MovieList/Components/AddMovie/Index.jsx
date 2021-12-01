@@ -140,7 +140,7 @@ const AddMovie = (props) => {
   };
 
   const handleUpdateMovie = async (e) => {
-    console.log('handleUpdateMovieInfo');
+    // console.log('handleUpdateMovieInfo');
     if (
       title === '' ||
       genre === '' ||
@@ -178,6 +178,20 @@ const AddMovie = (props) => {
         setInfoMessage('Updated Movie have not been saved, try again.');
         console.log(error);
       }
+    }
+  };
+
+  const handleDeleteMovie = async (e) => {
+    const id = prevMovie._id;
+    try {
+      const response = await MovieApi.deleteMovie(id);
+      setStatus(true);
+      setInfoMessage('Movie have been deleted!');
+      return response;
+    } catch (error) {
+      setStatus(false);
+      setInfoMessage('Failed to delte Movie , try again.');
+      console.log(error);
     }
   };
 
@@ -291,7 +305,10 @@ const AddMovie = (props) => {
                 onChange={onChangeCast}
               />
             </div>
-            <Grid container className={classes.grid} justify="space-around">
+            <Grid
+              container
+              className={classes.grid}
+              justifyContent="space-around">
               <MuiPickersUtilsProvider utils={MomentUtils}>
                 <KeyboardDatePicker
                   autoOk
@@ -326,9 +343,21 @@ const AddMovie = (props) => {
           </form>
         </PortletContent>
         <PortletFooter className={classes.portletFooter}>
-          <Button color="primary" variant="contained" onClick={submitAction}>
+          <Button
+            className={classes.buttonFooter}
+            variant="contained"
+            onClick={submitAction}>
             {submitButton}
           </Button>
+          {prevMovie && (
+            <Button
+              className={classes.buttonFooter}
+              color="dafault"
+              variant="contained"
+              onClick={handleDeleteMovie}>
+              Delete Movie
+            </Button>
+          )}
           <Typography
             className={classes.infoMessage}
             color="primary"
