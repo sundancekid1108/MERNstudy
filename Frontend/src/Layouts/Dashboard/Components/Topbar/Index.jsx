@@ -24,8 +24,6 @@ const Topbar = (props) => {
     children,
     isSidebarOpen,
     onToggleSidebar
-    // logout,
-    // auth
   } = props;
 
   const dispatch = useDispatch();

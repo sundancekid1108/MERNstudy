@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
-import Container from '@material-ui/core/Container';
-import moment from 'moment';
-import { Grid, GridList, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import styles from './Styles';
 import MovieCard from '../MovieCard/Index';
 import ResponsiveMovieCard from '../ResponsiveMovieCard/Index';
-import * as MovieApi from '../../../../../Api/MovieApi/MovieApi';
 
 const MoviesList = (props) => {
   const { classes, movies } = props;
-
-  // const nowTime = moment().format('YYYY-MM-DD');
 
   return (
     <>

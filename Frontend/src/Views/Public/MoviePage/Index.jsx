@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
+import { CircularProgress, Grid, Typography } from '@material-ui/core';
 import styles from './Styles';
 import PublicNavbar from '../../../Layouts/Public/Components/Navbar/Index';
 import NewMoviesList from './Components/NewMoviesList/Index';
 import MoviesList from './Components/MoviesList/Index';
-import MoviePopUp from './Components/MoviePopUp/Index';
 import * as MovieApi from '../../../Api/MovieApi/MovieApi';
+import { useDispatch, useSelector } from 'react-redux';
+
 const MoviePage = (props) => {
   const { classes } = props;
-
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
+  console.log('isAuth', isAuth);
   const [movies, setMovies] = useState([]);
   const [newMovies, setNewMovies] = useState([]);
 
@@ -37,7 +40,10 @@ const MoviePage = (props) => {
     return (
       <>
         <div className={classes.root}>
-          <PublicNavbar />
+          <PublicNavbar isAuth={isAuth} />
+          <div className={classes.content}>
+            <Typography variant="h1">There are no movies available</Typography>
+          </div>
         </div>
       </>
     );
@@ -45,7 +51,7 @@ const MoviePage = (props) => {
     return (
       <>
         <div className={classes.root}>
-          <PublicNavbar />
+          <PublicNavbar isAuth={isAuth} />
           <NewMoviesList movies={newMovies} />
           <MoviesList movies={movies} />
         </div>

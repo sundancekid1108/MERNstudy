@@ -20,11 +20,11 @@ export const userSignIn = (userEmail, userPassword) => async(dispatch) => {
     // console.log('authaction usersignin :', responseData);
     if (responseData.accessToken) {
         dispatch({ type: SIGN_IN_SUCCESS, payload: responseData });
-        dispatch(setAlert('Login Success', 'success', 5000));
+        dispatch(setAlert('Login Success', 'success', 3000));
     } else {
         dispatch({ type: SIGN_IN_FAIL });
         dispatch(
-            setAlert('Login failed Check your Email and Password', 'error', 5000)
+            setAlert('Login failed Check your Email and Password', 'error', 3000)
         );
     }
 };
@@ -37,15 +37,15 @@ export const userSignUp = (a, b, c, d, e, f) => async(dispatch) => {
 
         if (responseData.status == 201) {
             dispatch({ type: SIGN_UP_SUCCESS, payload: responseData });
-            dispatch(setAlert('SignUp Success', 'success', 5000));
+            dispatch(setAlert('SignUp Success', 'success', 3000));
         } else {
             dispatch({ type: SIGN_UP_FAIL });
-            dispatch(setAlert('Sign up Fail', 'error', 5000));
+            dispatch(setAlert('Sign up Fail', 'error', 3000));
         }
         return responseData;
     } catch (error) {
         dispatch({ type: SIGN_UP_FAIL });
-        dispatch(setAlert('Sign up Fail', 'error', 5000));
+        dispatch(setAlert('Sign up Fail', 'error', 3000));
     }
 };
 
@@ -53,7 +53,7 @@ export const userSignUp = (a, b, c, d, e, f) => async(dispatch) => {
 export const userLogOut = () => (dispatch) => {
     userApi.userLogout();
     dispatch({ type: LOG_OUT });
-    dispatch(setAlert('log out!', 'success', 5000));
+    dispatch(setAlert('log out!', 'success', 3000));
 };
 
 // userinfo
@@ -62,7 +62,7 @@ export const getLoginUserInfo = () => async(dispatch) => {
     const responseData = result;
     // console.log('getLoginUserInfo: ', responseData);
     if (responseData.ok) {
-        dispatch({ type: 'GET_USER_INFO', payload: responseData });
+        dispatch({ type: GET_USER_INFO, payload: responseData });
     } else {
         dispatch({ type: AUTH_ERROR });
     }

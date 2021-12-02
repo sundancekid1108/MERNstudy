@@ -10,7 +10,7 @@ export default (theme) => ({
         flexWrap: 'wrap',
         alignItems: 'center',
         justifyContent: 'space-between',
-        background: 'transparent',
+        background: '#1d252e',
         transition: 'all 300ms linear',
         transform: 'translate3d(0,0,0)',
         backfaceVisibility: 'hidden',
@@ -27,9 +27,9 @@ export default (theme) => ({
         textDecoration: 'none'
     },
     logoImage: {
-        maxHeight: '2.0rem',
+        maxHeight: '2rem',
         width: 'auto',
-        fontSize: '1em',
+        fontSize: '1.5rem',
         letterSpacing: '1px',
         color: theme.palette.common.white
     },
@@ -99,10 +99,13 @@ export default (theme) => ({
         display: 'flex',
         // display: 'none',
         position: 'fixed',
-        // flexWrap: 'wrap',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: -1,
         paddingLeft: 0,
         marginBottom: 0,
-        // listStyle: 'none',
         '&:before, &:after': {
             content: '""',
             position: 'fixed',
@@ -123,6 +126,7 @@ export default (theme) => ({
     },
     navActive: {
         visibility: 'visible',
+        zIndex: 9,
         '&:before': {
             transitionDelay: '0s',
             transform: 'translateX(0%) translateY(0%)'
@@ -166,7 +170,12 @@ export default (theme) => ({
         opacity: 0,
         transition: 'all 300ms linear'
     },
-    innerNav: { position: 'relative', padding: 0, margin: 0, zIndex: 2 },
+    innerNav: {
+        position: 'relative',
+        padding: 0,
+        margin: 0,
+        zIndex: 2
+    },
     innerNavListItem: {
         opacity: 0,
         position: 'relative',

@@ -24,41 +24,31 @@ export const createMovie = async(req, res) => {
 
 //getMoviesList(영화리스트조회)
 export const getMoviesList = async(req, res) => {
-    const isAdmin = req.decodedUser.isAdmin;
-    if (isAdmin == false) {
-        return res.status(400).json({ response: 'Unauthorized You are not Admin' });
-    } else {
-        try {
-            const movieList = await Movie.find({}, null, {
-                sort: {
-                    _id: -1,
-                },
-            });
-            console.log('movieList', movieList);
-            return res.json(movieList).status(200);
-        } catch (err) {
-            console.log(err);
-            return res.json({
-                response: 'getMovieList Error',
-            });
-        }
+    try {
+        const movieList = await Movie.find({}, null, {
+            sort: {
+                _id: -1,
+            },
+        });
+        console.log('movieList', movieList);
+        return res.json(movieList).status(200);
+    } catch (err) {
+        console.log(err);
+        return res.json({
+            response: 'getMovieList Error',
+        });
     }
 };
 
 //getMovieInfoById(영화 정보 불러오기)
 export const getMovieInfo = async(req, res) => {
-    const isAdmin = req.decodedUser.isAdmin;
-    if (isAdmin == false) {
-        return res.status(400).json({ response: 'Unauthorized You are not Admin' });
-    } else {
-        const movieId = req.params.id;
-        try {
-            const movie = await Movie.findById(movieId);
-            // console.log(movie);
-            return res.status(201).json(movie);
-        } catch (error) {
-            return res.status(400).json(error);
-        }
+    const movieId = req.params.id;
+    try {
+        const movie = await Movie.findById(movieId);
+        // console.log(movie);
+        return res.status(201).json(movie);
+    } catch (error) {
+        return res.status(400).json(error);
     }
 };
 

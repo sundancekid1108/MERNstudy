@@ -1,6 +1,3 @@
-const backgroundImage =
-    'https://image.tmdb.org/t/p/original/dKxkwAJfGuznW8Hu0mhaDJtna0n.jpg';
-
 export default (theme) => ({
     root: {
         backgroundColor: theme.palette.background.dark,
@@ -39,8 +36,7 @@ export default (theme) => ({
         zIndex: -1
     },
     background: {
-        backgroundImage: `url(${backgroundImage})`,
-        backgroundColor: '#7fc7d9', // Average color of the background image.
+        backgroundColor: '#7fc7d9',
         backgroundPosition: 'center',
         position: 'absolute',
         left: 0,
