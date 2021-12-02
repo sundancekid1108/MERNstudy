@@ -7,7 +7,8 @@ import styles from './Styles';
 import logoImg from '../../../../Images/logo.jpg';
 
 const Navbar = (props) => {
-  const { classes } = props;
+  const { classes, isAuth } = props;
+  console.log('isAuth', isAuth);
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
 
@@ -28,11 +29,11 @@ const Navbar = (props) => {
     <>
       <nav className={classes.navbar}>
         <Link className={classes.logoLink} to="/">
-          <Typography className={classes.logoImage} variant="h1">
+          <Typography className={classes.logoImage} variant="h2">
             SundanceCinema
           </Typography>
         </Link>
-        <div className={classes.navLinks}>
+        {/* <div className={classes.navLinks}>
           <Link className={classes.navLink} to="/admin/userslist">
             Users
           </Link>
@@ -42,10 +43,10 @@ const Navbar = (props) => {
           <Link className={classes.navLink} to="/admin/dashboard">
             Dashboard
           </Link>
-          <Link className={classes.navLink} to="/login">
+          <Link className={classes.navLink} to="/signin">
             Login
           </Link>
-        </div>
+        </div> */}
         <div className={classes.navBtn} onClick={handleShowMenu}>
           <div className={classes.navIcon}>
             <div
@@ -77,16 +78,25 @@ const Navbar = (props) => {
                 Home
               </Link>
             </li>
+            {isAuth && (
+              <li className={classes.innerNavListItem}>
+                <Link className={classes.innerNavLink} to="/admin/dashboard">
+                  Dashboard
+                </Link>
+              </li>
+            )}
             <li className={classes.innerNavListItem}>
               <Link className={classes.innerNavLink} to="/movies">
                 Movies
               </Link>
             </li>
-            <li className={classes.innerNavListItem}>
-              <Link className={classes.innerNavLink} to="/signin">
-                SignIn
-              </Link>
-            </li>
+            {!isAuth && (
+              <li className={classes.innerNavListItem}>
+                <Link className={classes.innerNavLink} to="/signin">
+                  SignIn
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>

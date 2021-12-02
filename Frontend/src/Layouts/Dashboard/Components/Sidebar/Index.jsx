@@ -39,9 +39,12 @@ const Sidebar = (props) => {
             // src={LogoIMG}
             className={classes.logoImage}
           />
+          {/* <Typography className={classes.logoImage} variant="h1">
+            SundanceCinema
+          </Typography> */}
         </Link>
       </div>
-      <Divider className={classes.logoDivider} />
+      {/* <Divider className={classes.logoDivider} />
       <div className={classes.profile}>
         <Link to="/account">
           <Avatar alt=" test " className={classes.avatar} src={AvatarIMG} />
@@ -53,7 +56,7 @@ const Sidebar = (props) => {
           취준생
         </Typography>
       </div>
-      <Divider className={classes.profileDivider} />
+      <Divider className={classes.profileDivider} /> */}
       <List component="div" disablePadding>
         <ListItem
           activeClassName={classes.activeListItem}

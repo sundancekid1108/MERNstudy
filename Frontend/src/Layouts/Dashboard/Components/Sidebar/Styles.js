@@ -18,8 +18,14 @@ export default (theme) => ({
         fontSize: 0
     },
     logoImage: {
-        width: '12rem',
-        cursor: 'pointer'
+        // width: '12rem',
+        // cursor: 'pointer'
+
+        maxHeight: '2.0rem',
+        width: 'auto',
+        fontSize: '1em',
+        letterSpacing: '1px',
+        color: theme.palette.common.black
     },
     logoDivider: {
         marginBottom: theme.spacing(2)

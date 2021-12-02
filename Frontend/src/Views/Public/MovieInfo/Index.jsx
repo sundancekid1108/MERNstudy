@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { withStyles, Container, Typography, Button } from '@material-ui/core';
+import { withStyles, Container, Typography } from '@material-ui/core';
 import styles from './Styles';
 import PublicNavbar from '../../../Layouts/Public/Components/Navbar/Index';
 import * as MovieApi from '../../../Api/MovieApi/MovieApi';
@@ -9,8 +9,6 @@ const MovieInfo = (props) => {
   // console.log('MovieInfo Props', props.match.params.id);
   const { classes } = props;
   const [movie, setMovie] = useState('');
-  const backgroundImage =
-    'https://image.tmdb.org/t/p/original/dihW2yTsvQlust7mSuAqJDtqW7k.jpg';
 
   const movieId = props.match.params.id;
 
