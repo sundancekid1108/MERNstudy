@@ -1,13 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core';
 import Dashboard from '../../../Layouts/Dashboard/Index';
-
-const styles = (theme) => ({
-  root: {
-    textAlign: 'center',
-    paddingTop: theme.spacing(20)
-  }
-});
+import styles from './Styles';
 
 const DashboardPage = () => {
   return (

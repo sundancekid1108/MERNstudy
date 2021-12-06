@@ -5,11 +5,13 @@ export default (theme) => ({
         backgroundColor: theme.palette.background.dark
     },
     fullHeight: {
-        minHeight: '100vh'
+        minHeight: '100vh',
+        marginBottom: theme.spacing(2)
     },
     title: {
         fontSize: '3rem',
         lineHeight: '3rem',
+        textAlign: 'center',
         marginBottom: theme.spacing(3)
     },
 

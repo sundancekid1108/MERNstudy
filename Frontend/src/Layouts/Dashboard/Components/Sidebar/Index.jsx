@@ -32,31 +32,6 @@ const Sidebar = (props) => {
   const { classes, user } = props;
   return (
     <section className={classes.root}>
-      <div className={classes.logoWrapper}>
-        <Link className={classes.logoLink} to="/">
-          <img
-            alt="Logo"
-            // src={LogoIMG}
-            className={classes.logoImage}
-          />
-          {/* <Typography className={classes.logoImage} variant="h1">
-            SundanceCinema
-          </Typography> */}
-        </Link>
-      </div>
-      {/* <Divider className={classes.logoDivider} />
-      <div className={classes.profile}>
-        <Link to="/account">
-          <Avatar alt=" test " className={classes.avatar} src={AvatarIMG} />
-        </Link>
-        <Typography className={classes.nameText} variant="h6">
-          양원철
-        </Typography>
-        <Typography className={classes.bioText} variant="caption">
-          취준생
-        </Typography>
-      </div>
-      <Divider className={classes.profileDivider} /> */}
       <List component="div" disablePadding>
         <ListItem
           activeClassName={classes.activeListItem}

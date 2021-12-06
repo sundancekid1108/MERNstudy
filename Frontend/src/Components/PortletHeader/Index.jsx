@@ -1,28 +1,8 @@
-import React from "react";
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core";
-
-const styles = (theme) => ({
-  root: {
-    alignItems: "center",
-    borderBottom: `1px solid ${theme.palette.border}`,
-    borderTopLeftRadius: "2px",
-    borderTopRightRadius: "2px",
-    display: "flex",
-    height: "64px",
-    justifyContent: "space-between",
-    paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(3),
-    position: "relative",
-  },
-  noDivider: {
-    borderBottom: "none",
-  },
-  noPadding: {
-    padding: 0,
-  },
-});
+import React from 'react';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core';
+import styles from './Styles';
 
 const PortletHeader = (props) => {
   const { classes, className, noDivider, noPadding, children, ...rest } = props;
@@ -30,7 +10,7 @@ const PortletHeader = (props) => {
     {
       [classes.root]: true,
       [classes.noDivider]: noDivider,
-      [classes.noPadding]: noPadding,
+      [classes.noPadding]: noPadding
     },
     className
   );
@@ -49,7 +29,7 @@ PortletHeader.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
   noDivider: PropTypes.bool,
-  noPadding: PropTypes.bool,
+  noPadding: PropTypes.bool
 };
 
 export default withStyles(styles)(PortletHeader);

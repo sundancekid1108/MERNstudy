@@ -22,8 +22,8 @@ const NewMoviesList = (props) => {
           container
           alignItems="center"
           justifyContent="center"
-          spacing={5}>
-          <Grid item xs={3}>
+          spacing={2}>
+          <Grid item md={3} xs={12}>
             <div className={classes.title}>
               <Typography className={classes.h2} variant="h2" color="inherit">
                 Latest Movies
@@ -33,7 +33,7 @@ const NewMoviesList = (props) => {
               </Typography>
             </div>
           </Grid>
-          <Grid item xs={9}>
+          <Grid item md={8} xs={12}>
             <GridList className={classes.gridList} cols={2.5}>
               {movies.map((movie) => (
                 <MovieCard key={movie._id} movie={movie} />
