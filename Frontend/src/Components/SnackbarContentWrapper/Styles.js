@@ -1,3 +1,5 @@
+import { amber, green } from '@material-ui/core/colors';
+
 export default (theme) => ({
     topbar: {
         position: 'fixed',

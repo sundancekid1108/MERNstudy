@@ -1,15 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import { withStyles } from "@material-ui/core";
-import Paper from "../Paper/Index";
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { withStyles } from '@material-ui/core';
+import Paper from '../Paper/Index';
+import styles from './Styles';
 // Component styles
-const styles = () => ({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-  },
-});
 
 const Portlet = (props) => {
   const { classes, className, children, ...rest } = props;
@@ -21,8 +16,7 @@ const Portlet = (props) => {
       className={rootClassName}
       elevation={0}
       outlined
-      squared={false}
-    >
+      squared={false}>
       {children}
     </Paper>
   );
@@ -31,7 +25,7 @@ const Portlet = (props) => {
 Portlet.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Portlet);

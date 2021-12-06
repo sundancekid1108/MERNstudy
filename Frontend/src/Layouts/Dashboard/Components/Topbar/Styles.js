@@ -1,21 +1,48 @@
 export default (theme) => ({
     root: {
-        borderBottom: `1px solid ${theme.palette.border}`,
-        backgroundColor: theme.palette.common.white,
+        borderBottom: `1px solid ${theme.palette.borderShadow}`,
+        boxShadow: `0 0 35px 0  ${theme.palette.borderShadow}`,
+        backgroundColor: theme.palette.background.paper,
         display: 'flex',
         alignItems: 'center',
-        height: '64px',
+        height: theme.topBar.height,
         zIndex: theme.zIndex.appBar
     },
     toolbar: {
         minHeight: 'auto',
-        width: '100%'
+        width: '100%',
+        paddingLeft: 0
+    },
+    brandWrapper: {
+        background: theme.palette.default.dark,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '270px',
+        height: theme.topBar.height,
+        flexShrink: 0
+    },
+    logoLink: {
+        display: 'inline-block',
+        fontSize: 0
+    },
+    logo: {
+        width: 'calc(100% - 160px)',
+        maxWidth: '100%',
+        margin: 'auto',
+        fontFamily: 'Montserrat,sans-serif',
+        fontSize: '16px',
+        fontWeight: 700,
+        letterSpacing: 3,
+        color: theme.palette.common.white
     },
     title: {
         marginLeft: theme.spacing(1)
     },
     menuButton: {
-        marginLeft: '-4px'
+        color: theme.palette.common.white,
+
+        marginLeft: 'auto'
     },
     notificationsButton: {
         marginLeft: 'auto'

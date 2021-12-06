@@ -5,14 +5,14 @@ import { CircularProgress, Grid, Typography } from '@material-ui/core';
 import styles from './Styles';
 import PublicNavbar from '../../../Layouts/Public/Components/Navbar/Index';
 import NewMoviesList from './Components/NewMoviesList/Index';
-import MoviesList from './Components/MoviesList/Index';
+import TotalMoviesList from './Components/TotalMoviesList/Index';
 import * as MovieApi from '../../../Api/MovieApi/MovieApi';
 import { useDispatch, useSelector } from 'react-redux';
 
 const MoviePage = (props) => {
   const { classes } = props;
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
-  console.log('isAuth', isAuth);
+  console.log('MoviePage isAuth', isAuth);
   const [movies, setMovies] = useState([]);
   const [newMovies, setNewMovies] = useState([]);
 
@@ -53,7 +53,7 @@ const MoviePage = (props) => {
         <div className={classes.root}>
           <PublicNavbar isAuth={isAuth} />
           <NewMoviesList movies={newMovies} />
-          <MoviesList movies={movies} />
+          <TotalMoviesList movies={movies} />
         </div>
       </>
     );

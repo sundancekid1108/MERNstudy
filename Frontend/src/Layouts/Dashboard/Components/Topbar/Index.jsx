@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Badge, Toolbar, IconButton, Typography } from '@material-ui/core';
@@ -54,15 +54,17 @@ const Topbar = (props) => {
     <>
       <div className={`${classes.root} , ${ToolbarClasses}`}>
         <Toolbar className={classes.toolbar}>
-          <IconButton
-            className={classes.menuButton}
-            aria-label="Menu"
-            onClick={onToggleSidebar}>
-            {isSidebarOpen ? <CloseIcon /> : <MenuIcon />}
-          </IconButton>
-          <Typography variant="h6" color="inherit" className={classes.title}>
-            {title}
-          </Typography>
+          <div className={classes.brandWrapper}>
+            <div className={classes.logo}>SundanceCinema</div>
+
+            <IconButton
+              className={classes.menuButton}
+              aria-label="Menu"
+              onClick={onToggleSidebar}>
+              {isSidebarOpen ? <CloseIcon /> : <MenuIcon />}
+            </IconButton>
+          </div>
+
           <IconButton
             className={classes.notificationsButton}
             onClick={onChangeNotification}>

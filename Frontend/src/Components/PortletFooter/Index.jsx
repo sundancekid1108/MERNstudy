@@ -2,21 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core';
-
-const styles = (theme) => ({
-  root: {
-    paddingBottom: theme.spacing(1),
-    paddingTop: theme.spacing(1),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    borderTop: `1px solid ${theme.palette.border}`,
-    borderBottomLeftRadius: '2px',
-    borderBottomRightRadius: '2px'
-  },
-  noDivider: {
-    borderTop: 'none'
-  }
-});
+import styles from './Styles';
 
 const PortletFooter = (props) => {
   const { classes, className, noDivider, children, ...rest } = props;

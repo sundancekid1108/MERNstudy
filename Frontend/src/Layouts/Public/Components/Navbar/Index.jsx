@@ -11,6 +11,7 @@ const Navbar = (props) => {
   console.log('isAuth', isAuth);
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
+  const [scrollPosition, setScrollPositon] = useState(0);
 
   const onclickEvent = (e) => {
     e.preventDefault();
@@ -25,15 +26,30 @@ const Navbar = (props) => {
     }
   };
 
+  //스크롤 위치에 따라 navbar 투명도 조절해주는것..
+  //hooks에서 componentWillUnmount처리할때 useEffect안에서 return으로 처리
+  useEffect(() => {
+    const handleScrollPositon = () => {
+      setScrollPositon(window.pageYOffset);
+      // console.log('scrollPosition', scrollPosition);
+    };
+    window.addEventListener('scroll', handleScrollPositon);
+    return () => window.removeEventListener('scroll', handleScrollPositon);
+  }, []);
+
   return (
     <>
-      <nav className={classes.navbar}>
+      <nav
+        className={classnames({
+          [classes.navbar]: true,
+          [classes.navbarColor]: scrollPosition > 100
+        })}>
         <Link className={classes.logoLink} to="/">
-          <Typography className={classes.logoImage} variant="h2">
+          <Typography className={classes.logo} variant="h2">
             SundanceCinema
           </Typography>
         </Link>
-        {/* <div className={classes.navLinks}>
+        <div className={classes.navLinks}>
           <Link className={classes.navLink} to="/admin/userslist">
             Users
           </Link>
@@ -44,9 +60,9 @@ const Navbar = (props) => {
             Dashboard
           </Link>
           <Link className={classes.navLink} to="/signin">
-            Login
+            SignIn
           </Link>
-        </div> */}
+        </div>
         <div className={classes.navBtn} onClick={handleShowMenu}>
           <div className={classes.navIcon}>
             <div
