@@ -1,37 +1,27 @@
 import { amber, green } from '@material-ui/core/colors';
 
 export default (theme) => ({
-    topbar: {
-        position: 'fixed',
-        width: '100%',
-        top: 0,
-        left: 0,
-        right: 'auto',
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen
-        })
+    success: {
+        backgroundColor: green[600]
     },
-    drawerPaper: {
-        borderRight: 0,
-        zIndex: 1200,
-        width: '271px',
-        top: theme.topBar.height
+    error: {
+        backgroundColor: theme.palette.error.dark
     },
-    sidebar: {
-        width: '270px'
+    info: {
+        backgroundColor: theme.palette.primary.dark
     },
-    content: {
-        height: '100%',
-        padding: theme.spacing(3),
-        paddingTop: theme.spacing(9),
-        backgroundColor: theme.palette.background.default,
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen
-        })
+    warning: {
+        backgroundColor: amber[700]
     },
-    contentShift: {
-        marginLeft: '270px'
+    icon: {
+        fontSize: 20
+    },
+    iconVariant: {
+        opacity: 0.9,
+        marginRight: theme.spacing(1)
+    },
+    message: {
+        display: 'flex',
+        alignItems: 'center'
     }
 });

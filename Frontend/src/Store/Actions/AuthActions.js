@@ -10,9 +10,6 @@ import {
 } from '../Types/Index';
 import * as userApi from '../../Api/UserApi/UserApi';
 
-// signup
-
-// signin
 export const userSignIn = (userEmail, userPassword) => async(dispatch) => {
     try {} catch (error) {}
     const result = await userApi.userLogin(userEmail, userPassword);

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Link,
   Route,
+  HashRouter,
   BrowserRouter as Router,
   Switch,
   useHistory
@@ -45,7 +46,7 @@ const App = () => {
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
           <Alert />
-          <Router history={history}>
+          <HashRouter>
             <Switch>
               <Route exact path="/" component={MoviePage} />
               <Route exact path="/movie/:id" component={MovieInfo} />
@@ -83,7 +84,7 @@ const App = () => {
               />
               <Route path="*" component={NotFound} />
             </Switch>
-          </Router>
+          </HashRouter>
         </MuiThemeProvider>
       </Provider>
     </>
