@@ -40,10 +40,18 @@ export const userLogin = (email, password) => {
         })
         .then((response) => {
             if (response.data.accessToken) {
+                //localStorage
                 localStorage.setItem(
                     'token',
                     JSON.stringify(response.data.accessToken)
                 );
+
+                //session
+                sessionStorage.setItem(
+                    'token',
+                    JSON.stringify(response.data.accessToken)
+                );
+
                 // localStorage.setItem('user', JSON.stringify(response.data));
                 // localStorage.setItem('isAdmin', JSON.stringify(response.data.isAdmin));
             }
@@ -63,6 +71,7 @@ export const userLogin = (email, password) => {
 export const userLogout = () => {
     // console.log('RemoveToken!!');
     localStorage.removeItem('token');
+    sessionStorage.clear();
     // localStorage.removeItem('user');
     // localStorage.removeItem('isAdmin');
 };
