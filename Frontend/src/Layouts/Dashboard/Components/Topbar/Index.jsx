@@ -18,7 +18,6 @@ import { connect } from 'react-redux';
 const Topbar = (props) => {
   // console.log('topbar props', props);
   const {
-    title,
     classes,
     ToolbarClasses,
     children,

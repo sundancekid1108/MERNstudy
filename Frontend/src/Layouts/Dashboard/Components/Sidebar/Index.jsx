@@ -87,19 +87,6 @@ const Sidebar = (props) => {
           />
         </ListItem>
 
-        {/* <ListItem
-          activeClassName={classes.activeListItem}
-          className={classes.listItem}
-          component={NavLink}
-          to="/signin">
-          <ListItemIcon className={classes.listItemIcon}>
-            <LockOpenIcon />
-          </ListItemIcon>
-          <ListItemText
-            classes={{ primary: classes.listItemText }}
-            primary="Authentication"
-          />
-        </ListItem> */}
 
         <ListItem
           activeClassName={classes.activeListItem}

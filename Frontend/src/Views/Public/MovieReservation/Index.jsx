@@ -45,6 +45,7 @@ const MovieReservation = (props) => {
 
   // 극장 좌석 설정
   const handleMovieReservation = (row, seat) => {
+    //0 => 빈자리, 1=> 예매완료, 2=> 내가 선택
     const selectedSeats = theaterSeats[row][seat];
 
     if (selectedSeats !== 1) {
