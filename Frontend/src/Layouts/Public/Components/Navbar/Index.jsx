@@ -9,12 +9,15 @@ import * as AuthActions from '../../../../Store/Actions/AuthActions';
 import logoImg from '../../../../Images/logo.jpg';
 
 const Navbar = (props) => {
-  const { classes, isAuth, logout } = props;
-  console.log('isAuth', isAuth);
+  const { classes, logout } = props;
+
   const history = useHistory();
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const [scrollPosition, setScrollPositon] = useState(0);
+
+  const isAuth = useSelector((state) => state.auth.isAuthenticated);
+  // console.log('isAuth', isAuth);
 
   const onclickEvent = (e) => {
     e.preventDefault();

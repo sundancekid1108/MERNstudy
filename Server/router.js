@@ -5,7 +5,7 @@ import userRouter from './Routes/User/UserRouter';
 import movieRouter from './Routes/Movie/MovieRouter';
 import movieReservationRouter from './Routes/MovieReservation/MovieReservationRouter';
 import theaterRouter from './Routes/Theater/TheaterRouter';
-import movieTimeRouter from './Routes/MovieTime/MovieTimeRouter';
+import showingMovieInfoRouter from './Routes/ShowingMovieInfo/ShowingMovieInfo';
 
 const router = express.Router();
 
@@ -21,7 +21,7 @@ router.use('/users', userRouter);
 //Movie관련 API
 router.use('/movies', movieRouter);
 
-router.use('/movietimes', movieTimeRouter);
+router.use('/showingmovieinfo', showingMovieInfoRouter);
 
 router.use('/moviereservation', movieReservationRouter);
 

@@ -10,7 +10,7 @@ import styles from './Styles';
 
 const ResponsiveMovieCard = (props) => {
   const { classes, movie } = props;
-
+  console.log('ResponsiveMovieCard', props);
   return (
     <>
       <Link to={`movie/${movie._id}`} style={{ textDecoration: 'none' }}>

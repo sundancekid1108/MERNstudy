@@ -7,7 +7,7 @@ import styles from './Styles';
 
 const MovieCard = (props) => {
   const { classes, movie } = props;
-  console.log('MovieCard movie', movie);
+  console.log('MovieCard', props);
   return (
     <>
       <Link to={`movie/${movie._id}`} style={{ textDecoration: 'none' }}>
