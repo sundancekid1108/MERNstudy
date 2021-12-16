@@ -60,6 +60,7 @@ export const updateMovieInfo = async(req, res) => {
     } else {
         const movieId = req.params.id;
         const movieUpdates = Object.keys(req.body);
+
         const allowedUpdates = [
             'title',
             'image',

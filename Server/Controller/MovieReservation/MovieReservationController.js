@@ -10,9 +10,9 @@ export const createMovieReservation = async(req, res) => {
     const movieReservationData = new MovieReservation(req.body);
     try {
         await movieReservationData.save();
-        res.status(201).json(movieReservationData);
+        return res.status(201).json(movieReservationData);
     } catch (error) {
-        res.status(400).json(error);
+        return res.status(400).json(error);
     }
 };
 
@@ -26,7 +26,7 @@ export const getMovieReservationList = async(req, res) => {
         });
         res.satus(201).json(movieReservationList);
     } catch (error) {
-        res.status(400).json(error);
+        return res.status(400).json(error);
     }
 };
 
@@ -34,49 +34,41 @@ export const getMovieReservationList = async(req, res) => {
 export const getMovieReservationInfo = async(req, res) => {
     const movieReservationId = req.params.id;
     try {
-        const movieReservationInfo = await MovieReservation.findById(
-            movieReservationId,
-        );
+        const movieReservationInfo = await MovieReservation.findById(movieReservationId);
         if (movieReservationInfo) {
-            res.satus(201).json(movieReservationInfo);
+            return res.satus(201).json(movieReservationInfo);
         } else {
-            return res
-                .status(400)
-                .json({ response: 'NO MovieReservationInfo' });
+            return res.status(400).json({ response: 'NO MovieReservationInfo' });
         }
     } catch (error) {
-        res.status(400).json(error);
+        return res.status(400).json(error);
     }
 };
 
 //updateMovieReservation(영화티켓수정)
 export const updateMovieReservation = async(req, res) => {
     const movieReservationId = req.params.id;
-    const updates = Object.keys(req.body);
+    const movieReservationUpdates = Object.keys(req.body);
     const allowedUpdates = ['startAt', 'is3d', 'isImax'];
-    const isValidOperation = updates.every((update) =>
-        allowedUpdates.includes(update),
+    const isValidOperation = movieReservationUpdates.every((update) =>
+        allowedUpdates.includes(update)
     );
 
-    if (!isValidOperation) res.status(400).send({ error: 'update Fail' });
+    if (!isValidOperation) {
+        return res.status(400).send({ error: 'update Fail' });
+    }
     try {
-        const movieReservation = await MovieReservation.findById(
-            movieReservationId,
-        );
-        updates.forEach(
-            (update) => (movieReservation[update] = req.body[update]),
-        );
+        const movieReservation = await MovieReservation.findById(movieReservationId);
+        movieReservationUpdates.forEach((update) => (movieReservation[update] = req.body[update]));
         await movieReservation.save();
 
         if (!movieReservation) {
-            return res
-                .status(400)
-                .json({ response: 'NO MovieReservationInfo' });
+            return res.status(400).json({ response: 'No MovieReservationInfo' });
         } else {
-            res.satus(201).json(movieReservation);
+            return res.satus(201).json(movieReservation);
         }
     } catch (error) {
-        res.status(400).json(error);
+        return res.status(400).json(error);
     }
 };
 
@@ -88,15 +80,15 @@ export const deleteMovieReservation = async(req, res) => {
             id: movieReservationId,
         });
         if (!movieReservation) {
-            res.status(404).json({
+            return res.status(404).json({
                 response: 'No Movie Reservation Data',
             });
         } else {
-            res.status(200).json({
+            return res.status(200).json({
                 response: 'delete Movie Reservation successfully',
             });
         }
     } catch (error) {
-        res.status(400).json(error);
+        return res.status(400).json(error);
     }
 };

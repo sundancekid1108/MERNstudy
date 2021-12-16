@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const TheatherSchema = new Schema({
-    name: {
+    theaterName: {
         type: String,
         required: true,
         trim: true,
@@ -28,7 +28,7 @@ const TheatherSchema = new Schema({
     image: {
         type: String,
     },
-}, { timestamps: true }, { versionKey: false }, );
+}, { timestamps: true }, { versionKey: false });
 
 const Theather = mongoose.model('Theather', TheatherSchema);
 export default Theather;

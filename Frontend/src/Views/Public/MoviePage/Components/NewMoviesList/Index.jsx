@@ -11,6 +11,7 @@ import * as MovieApi from '../../../../../Api/MovieApi/MovieApi';
 
 const NewMoviesList = (props) => {
   const { classes, movies } = props;
+  console.log(props);
 
   const nowTime = moment().format('YYYY-MM-DD');
 

@@ -37,8 +37,8 @@ const StyledRating = withStyles({
 })(Rating);
 
 const MovieInfo = (props) => {
-  // console.log('MovieInfo Props', props.match.params.id);
   const { classes } = props;
+
   const [movie, setMovie] = useState('');
 
   const getMovieInfo = async () => {
@@ -155,6 +155,14 @@ const MovieInfo = (props) => {
                   <ArrowRightAlt className={classes.buttonIcon} />
                 </Button>
               </Link>
+              {/* <Link
+                to={`moviereservation/${movie._id}`}
+                style={{ textDecoration: 'none' }}>
+                <Button variant="contained" className={classes.button}>
+                  Buy Tickets
+                  <ArrowRightAlt className={classes.buttonIcon} />
+                </Button>
+              </Link> */}
             </div>
           </Paper>
         )}

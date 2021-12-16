@@ -3,24 +3,24 @@ const Schema = mongoose.Schema;
 const movieReservationSchema = new Schema({
     date: {
         type: Date,
-        required: true,
+        // required: true,
     },
     startAt: {
         type: String,
-        required: true,
+        // required: true,
         trim: true,
     },
     seats: {
         type: [Schema.Types.Mixed],
-        required: true,
+        // required: true,
     },
     ticketPrice: {
         type: Number,
-        required: true,
+        // required: true,
     },
     total: {
         type: Number,
-        required: true,
+        // required: true,
     },
     movieId: {
         type: Schema.Types.ObjectId,
@@ -34,17 +34,17 @@ const movieReservationSchema = new Schema({
     },
     username: {
         type: String,
-        required: true,
+        // required: true,
     },
     phone: {
         type: String,
-        required: true,
+        // required: true,
     },
     checkin: {
         type: Boolean,
         default: false,
     },
-}, { timestamps: true }, { versionKey: false }, );
+}, { timestamps: true }, { versionKey: false });
 
-const MovieReservation = mongoose.model('MovieTicket', movieReservationSchema);
+const MovieReservation = mongoose.model('MovieReservation', movieReservationSchema);
 export default MovieReservation;

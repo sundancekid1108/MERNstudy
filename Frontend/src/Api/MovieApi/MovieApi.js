@@ -30,7 +30,7 @@ export const createMovie = async(
     try {
         const res = await api.post('/movies/movies', body, { headers: token });
 
-        console.log('createMovie res', res);
+        // console.log('createMovie res', res);
         const movie = await res.json();
         return movie;
     } catch (error) {
@@ -43,7 +43,7 @@ export const createMovie = async(
 export const getMovieInfo = async(id) => {
     const token = authHeader();
     try {
-        const data = await api.get('/movies/movieinfo/' + id, {
+        const data = await api.get('/movies/movieinfo/' + String(id), {
             headers: token
         });
         return data;
@@ -58,7 +58,7 @@ export const getMoviesList = async() => {
         const movieListData = await api.get('/movies/movieslist', {
             headers: token
         });
-        console.log('getMoviesListData: ', movieListData);
+        // console.log('getMoviesListData: ', movieListData);
         return movieListData;
     } catch (error) {
         console.log('getMoviesListError: ', error);

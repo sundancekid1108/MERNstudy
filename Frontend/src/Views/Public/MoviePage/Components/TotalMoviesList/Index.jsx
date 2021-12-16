@@ -8,6 +8,7 @@ import ResponsiveMovieCard from '../ResponsiveMovieCard/Index';
 
 const TotalMoviesList = (props) => {
   const { classes, movies } = props;
+  console.log(props);
 
   return (
     <>

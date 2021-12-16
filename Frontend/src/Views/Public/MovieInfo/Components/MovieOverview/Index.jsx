@@ -10,8 +10,8 @@ import {
 import styles from './Styles';
 
 const MovieOverview = (props) => {
-  console.log(props);
   const { classes, title, description, image } = props;
+  console.log('MovieOverview Props', props);
 
   const Stats = ({ stats, classes }) => {
     stats.map((stat, index) => (

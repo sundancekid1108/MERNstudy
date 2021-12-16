@@ -9,10 +9,10 @@ const { ObjectId } = mongoose.Types;
 export const createTheater = async(req, res) => {
     const theater = new Theater(req.body);
     try {
-        await Theater.save();
-        res.status(201).json(theater);
+        await theater.save();
+        return res.status(201).json(theater);
     } catch (error) {
-        res.status(400).json(error);
+        return res.status(400).json(error);
     }
 };
 //getTheaterList(극장리스트조회)
@@ -23,9 +23,9 @@ export const getTheaterList = async(req, res) => {
                 _id: -1,
             },
         });
-        res.satus(201).json(theaterList);
+        return res.satus(201).json(theaterList);
     } catch (error) {
-        res.status(400).json(error);
+        return res.status(400).json(error);
     }
 };
 //getTheaterInfoById(극장정보조회)
@@ -33,30 +33,35 @@ export const getTheaterInfo = async(req, res) => {
     const theaterId = req.params.id;
     try {
         const theaterInfo = await Theater.findById(theaterId);
-        res.status(201).json(theaterInfo);
+        return res.status(201).json(theaterInfo);
     } catch (error) {
-        res.status(400).json(error);
+        return res.status(400).json(error);
     }
 };
 //updateTheaterInfo(극장정보업데이트)
 export const updateTheaterInfo = async(req, res) => {
     const theaterId = req.params.id;
+
     const theaterUpdates = Object.keys(req.body);
-    const allowedUpdates = [
-        'name',
-        'ticketPrice',
-        'city',
-        'seats',
-        'seatsAvailable',
-    ];
-    const isValidOperation = updates.every((update) =>
-        allowedUpdates.includes(update),
-    );
+    console.log(theaterUpdates);
+    const allowedUpdates = ['name', 'ticketPrice', 'city', 'seats', 'seatsAvailable'];
+    const isValidOperation = theaterUpdates.every((update) => allowedUpdates.includes(update));
 
-    if (!isValidOperation) res.status(400).json({ error: 'Invalid updates!' });
+    if (!isValidOperation) {
+        return res.status(400).json({ error: 'Invalid updates!' });
+    }
 
-    try {} catch (error) {
-        res.status(400).json(error);
+    try {
+        const theaterData = await Theater.findById(theaterId);
+        theaterUpdates.forEach((update) => (theaterData[update] = req.body[update]));
+        await theaterData.save();
+        if (!theaterData) {
+            return res.status(404).json({ error: 'No theater Info' });
+        } else {
+            res.status(201).json(theaterData);
+        }
+    } catch (error) {
+        return res.status(400).json(error);
     }
 };
 //deleteTheaterById(극장정보삭제)
@@ -71,11 +76,11 @@ export const deleteTheater = async(req, res) => {
                 })
                 .status(404);
         } else {
-            res.status(200).json({
+            return res.status(200).json({
                 response: 'delete Theater successfully',
             });
         }
     } catch (error) {
-        res.status(400).json(error);
+        return res.status(400).json(error);
     }
 };

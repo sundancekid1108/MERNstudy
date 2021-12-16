@@ -12,9 +12,11 @@ import { useDispatch, useSelector } from 'react-redux';
 const MoviePage = (props) => {
   const { classes } = props;
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
-  console.log('MoviePage isAuth', isAuth);
+  const authTest = useSelector((state) => state.auth);
+
   const [movies, setMovies] = useState([]);
   const [newMovies, setNewMovies] = useState([]);
+  const [isAuthed, setIsAuthed] = useState(null);
 
   const getMovies = async () => {
     try {
@@ -34,13 +36,14 @@ const MoviePage = (props) => {
 
   useEffect(() => {
     getMovies();
+    setIsAuthed(authTest);
   }, []);
 
   if (!movies) {
     return (
       <>
         <div className={classes.root}>
-          <PublicNavbar isAuth={isAuth} />
+          <PublicNavbar />
           <div className={classes.content}>
             <Typography variant="h1">There are no movies available</Typography>
           </div>
@@ -51,7 +54,7 @@ const MoviePage = (props) => {
     return (
       <>
         <div className={classes.root}>
-          <PublicNavbar isAuth={isAuth} />
+          <PublicNavbar isAuthed={isAuthed} />
           <NewMoviesList movies={newMovies} />
           <TotalMoviesList movies={movies} />
         </div>
