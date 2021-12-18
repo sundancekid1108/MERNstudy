@@ -28,7 +28,7 @@ import LogoIMG from '../../../../Images/logo.jpg';
 import styles from './Styles';
 
 const Sidebar = (props) => {
-  console.log('sidebar props', props);
+  // console.log('sidebar props', props);
   const { classes, user } = props;
   return (
     <section className={classes.root}>
@@ -59,7 +59,6 @@ const Sidebar = (props) => {
             primary="Feed"
           />
         </ListItem>
-
         <ListItem
           activeClassName={classes.activeListItem}
           className={classes.listItem}
@@ -77,6 +76,19 @@ const Sidebar = (props) => {
           activeClassName={classes.activeListItem}
           className={classes.listItem}
           component={NavLink}
+          to="/admin/moviereservationlist">
+          <ListItemIcon className={classes.listItemIcon}>
+            <ViewListIcon />
+          </ListItemIcon>
+          <ListItemText
+            classes={{ primary: classes.listItemText }}
+            primary="Movie Reservations"
+          />
+        </ListItem>
+        <ListItem
+          activeClassName={classes.activeListItem}
+          className={classes.listItem}
+          component={NavLink}
           to="/admin/userslist">
           <ListItemIcon className={classes.listItemIcon}>
             <PeopleIcon />
@@ -86,7 +98,6 @@ const Sidebar = (props) => {
             primary="Users"
           />
         </ListItem>
-
 
         <ListItem
           activeClassName={classes.activeListItem}

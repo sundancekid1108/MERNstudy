@@ -23,7 +23,7 @@ const Dashboard = (props) => {
     }
   };
 
-  console.log('children', children);
+  // console.log('children', children);
 
   return (
     <>

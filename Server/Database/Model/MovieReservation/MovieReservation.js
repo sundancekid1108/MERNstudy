@@ -18,7 +18,7 @@ const movieReservationSchema = new Schema({
         type: Number,
         // required: true,
     },
-    total: {
+    totalPrice: {
         type: Number,
         // required: true,
     },

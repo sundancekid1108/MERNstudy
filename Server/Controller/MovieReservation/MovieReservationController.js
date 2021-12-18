@@ -24,9 +24,9 @@ export const getMovieReservationList = async(req, res) => {
                 _id: -1,
             },
         });
-        res.satus(201).json(movieReservationList);
+        return res.json(movieReservationList).status(201);
     } catch (error) {
-        return res.status(400).json(error);
+        return res.json(error).status(400);
     }
 };
 

@@ -36,6 +36,9 @@ const MovieInfo = lazy(() => import('./Views/Public/MovieInfo/Index'));
 const MovieReservation = lazy(() =>
   import('./Views/Public/MovieReservation/Index')
 );
+const MovieReservationList = lazy(() =>
+  import('./Views/Admin/MovieReservationList/Index')
+);
 
 const App = () => {
   const history = useHistory();
@@ -86,6 +89,11 @@ const App = () => {
                   exact
                   path="/admin/updateaccount"
                   component={UpdateAccount}
+                />
+                <ProtectedRoute
+                  exact
+                  path="/admin/moviereservationlist"
+                  component={MovieReservationList}
                 />
                 <ProtectedRoute
                   exact
