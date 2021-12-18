@@ -19,7 +19,7 @@ import PortletContent from '../../../../../Components/PortletContent/Index';
 import styles from './Styles';
 
 const UsersTable = (props) => {
-  console.log('UserTable props :', props);
+  // console.log('UserTable props :', props);
   const { classes, className, users, onSelect, onShowDetails } = props;
   const rootClassName = classNames(classes.root, className);
 

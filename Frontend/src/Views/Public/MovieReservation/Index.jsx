@@ -155,6 +155,7 @@ const MovieReservation = (props) => {
     getUserInfo();
     getMovieInfo();
     getTheaterInfo();
+    return () => {};
   }, []);
 
   // console.log('movie', movie);
