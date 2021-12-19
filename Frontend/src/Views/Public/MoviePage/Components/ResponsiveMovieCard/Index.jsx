@@ -10,7 +10,7 @@ import styles from './Styles';
 
 const ResponsiveMovieCard = (props) => {
   const { classes, movie } = props;
-  console.log('ResponsiveMovieCard', props);
+
   return (
     <>
       <Link to={`movie/${movie._id}`} style={{ textDecoration: 'none' }}>
@@ -47,8 +47,7 @@ const ResponsiveMovieCard = (props) => {
               <Typography
                 className={classes.descriptionText}
                 variant="body1"
-                color="inherit"
-                nowrap>
+                color="inherit">
                 {textTruncate(movie.description, 250)}
               </Typography>
             </div>

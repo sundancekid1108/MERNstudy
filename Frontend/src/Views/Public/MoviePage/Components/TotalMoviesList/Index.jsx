@@ -8,7 +8,6 @@ import ResponsiveMovieCard from '../ResponsiveMovieCard/Index';
 
 const TotalMoviesList = (props) => {
   const { classes, movies } = props;
-  console.log(props);
 
   return (
     <>
@@ -25,7 +24,7 @@ const TotalMoviesList = (props) => {
           xs={12}
           direction="column"
           alignItems="center"
-          justify="center"
+          justifyContent="center"
           spacing={2}>
           {movies.map((movie) => (
             <Grid key={movie._id} item className={classes.fullWidth}>

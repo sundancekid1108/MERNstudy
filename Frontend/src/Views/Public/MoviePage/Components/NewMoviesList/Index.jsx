@@ -4,14 +4,13 @@ import moment from 'moment';
 import { withStyles } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 
-import { Grid, GridList, Typography } from '@material-ui/core';
+import { Grid, GridList, ImageList, Typography } from '@material-ui/core';
 import styles from './Styles';
 import MovieCard from '../MovieCard/Index';
 import * as MovieApi from '../../../../../Api/MovieApi/MovieApi';
 
 const NewMoviesList = (props) => {
   const { classes, movies } = props;
-  console.log(props);
 
   const nowTime = moment().format('YYYY-MM-DD');
 
