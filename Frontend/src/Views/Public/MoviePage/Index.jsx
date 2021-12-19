@@ -6,6 +6,9 @@ import styles from './Styles';
 import PublicNavbar from '../../../Layouts/Public/Components/Navbar/Index';
 import NewMoviesList from './Components/NewMoviesList/Index';
 import TotalMoviesList from './Components/TotalMoviesList/Index';
+
+import MovieCarousel from './Components/MovieCarousel/Index';
+
 import * as MovieApi from '../../../Api/MovieApi/MovieApi';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -56,6 +59,22 @@ const MoviePage = (props) => {
         <div className={classes.root}>
           <PublicNavbar isAuthed={isAuthed} />
           <NewMoviesList movies={newMovies} />
+          <MovieCarousel
+            carouselClass={classes.carousel}
+            title="Latest Movies"
+            movies={movies}
+          />
+          <MovieCarousel
+            carouselClass={classes.carousel}
+            title="Popular Movies"
+            movies={movies}
+          />
+          <MovieCarousel
+            carouselClass={classes.carousel}
+            title="Now Playing Movies"
+            movies={movies}
+          />
+
           <TotalMoviesList movies={movies} />
         </div>
       </>

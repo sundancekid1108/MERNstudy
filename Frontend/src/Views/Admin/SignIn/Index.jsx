@@ -9,6 +9,8 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
 import PropTypes from 'prop-types';
 import { ArrowBack as ArrowBackIcon } from '@material-ui/icons';
 import * as userApi from '../../../Api/UserApi/UserApi';
@@ -32,6 +34,8 @@ const SignIn = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState('');
+
+  const react_app_id = process.env.REACT_APP_FACEBOOK_APP_ID;
 
   useEffect(() => {
     //
@@ -60,6 +64,23 @@ const SignIn = (props) => {
     history.goBack();
   };
 
+  const handleFacebookAuthLogin = () => {
+    // console.log('handleFacebookAuthLogin');
+  };
+
+  const callbackFacebookAuthLogin = (response) => {
+    dispatch(AuthActions.userFacebookAuthLogin(response))
+      .then(() => {
+        history.push('/admin/dashboard');
+      })
+      .catch(() => {
+        setErrorMessage('Login failed, Check your Email and Password');
+      });
+  };
+
+  const handleGoogleAuthLogin = () => {
+    console.log('handleGoogleAuthLogin');
+  };
   /**
    *리액트 Hooks, Redux를 활용한 로그인 구조 개선..
     개선 이유..
@@ -81,81 +102,88 @@ const SignIn = (props) => {
   return (
     <>
       <div className={classes.root}>
-        <Grid className={classes.grid} container>
-          <Grid className={classes.quoteWrapper} item lg={5}>
-            <div className={classes.quote}></div>
-          </Grid>
-          <Grid className={classes.content} item lg={7} xs={12}>
-            <div className={classes.content}>
-              <div className={classes.contentHeader}>
-                <IconButton className={classes.backButton} onClick={handleBack}>
-                  <ArrowBackIcon />
-                </IconButton>
-              </div>
-              <div className={classes.contentBody}>
-                <form
-                  className={classes.form}
-                  ref={form}
-                  onSubmit={handleSignIn}>
-                  <Typography className={classes.title} variant="h2">
-                    Sign in
-                  </Typography>
+        <div className={classes.content}>
+          <div className={classes.contentHeader}>
+            <IconButton className={classes.backButton} onClick={handleBack}>
+              <ArrowBackIcon />
+            </IconButton>
+          </div>
+          <div className={classes.contentBody}>
+            <form className={classes.form}>
+              <Typography className={classes.title} variant="h2">
+                Sign in
+              </Typography>
 
-                  <div className={classes.fields}>
-                    <TextField
-                      className={classes.textField}
-                      label="Email"
-                      name="email"
-                      onChange={onChangeUserEmail}
-                      type="text"
-                      value={userEmail}
-                      variant="outlined"
-                      autoFocus
-                    />
-                    <TextField
-                      className={classes.textField}
-                      label="Password"
-                      name="password"
-                      onChange={onChangeUserPassword}
-                      type="password"
-                      value={userPassword}
-                      variant="outlined"
-                    />
-                  </div>
-                  {/* Error Message  */}
-                  {errorMessage && (
-                    <Typography
-                      className={classes.errorMessage}
-                      variant="body2">
-                      {errorMessage}
-                    </Typography>
-                  )}
-
-                  {/* Loding bar */}
-                  {isLoading ? (
-                    <CircularProgress className={classes.progress} />
-                  ) : (
-                    <Button
-                      className={classes.signInButton}
-                      color="primary"
-                      disabled={!isValid}
-                      onClick={handleSignIn}
-                      size="large"
-                      variant="contained">
-                      Sign in now
-                    </Button>
-                  )}
-                  <Typography className={classes.signUp} variant="body1">
-                    Don't have an account?{' '}
-                    <Link className={classes.signUpUrl} to="/signup">
-                      Sign up
-                    </Link>
-                  </Typography>
-                </form>
+              <div className={classes.socialLogin}>
+                <FacebookLogin
+                  buttonStyle={{ width: '100%' }}
+                  autoLoad={false}
+                  cookie={false}
+                  appId={react_app_id}
+                  fields="name,email,picture"
+                  onClick={handleFacebookAuthLogin}
+                  callback={callbackFacebookAuthLogin}
+                />
+                <GoogleLogin
+                  className={classes.googleButton}
+                  // clientId="794162856058-buhtf925b2p3q2v05aes5ievt2vknccs.apps.googleusercontent.com" //CLIENTID NOT CREATED YET
+                  buttonText="LOGIN WITH GOOGLE"
+                  // onSuccess={this.responseGoogle}
+                  // onFailure={this.responseGoogle}
+                />
               </div>
-            </div>
-          </Grid>
-        </Grid>
+
+              <div className={classes.fields}>
+                <TextField
+                  className={classes.textField}
+                  label="Email"
+                  name="email"
+                  onChange={onChangeUserEmail}
+                  type="text"
+                  value={userEmail}
+                  variant="outlined"
+                  autoFocus
+                />
+                <TextField
+                  className={classes.textField}
+                  label="Password"
+                  name="password"
+                  onChange={onChangeUserPassword}
+                  type="password"
+                  value={userPassword}
+                  variant="outlined"
+                />
+              </div>
+              {/* Error Message  */}
+              {errorMessage && (
+                <Typography className={classes.errorMessage} variant="body2">
+                  {errorMessage}
+                </Typography>
+              )}
+
+              {/* Loding bar */}
+              {isLoading ? (
+                <CircularProgress className={classes.progress} />
+              ) : (
+                <Button
+                  className={classes.signInButton}
+                  color="primary"
+                  disabled={!isValid}
+                  onClick={handleSignIn}
+                  size="large"
+                  variant="contained">
+                  Sign in now
+                </Button>
+              )}
+              <Typography className={classes.signUp} variant="body1">
+                Don't have an account?{' '}
+                <Link className={classes.signUpUrl} to="/signup">
+                  Sign up
+                </Link>
+              </Typography>
+            </form>
+          </div>
+        </div>
       </div>
     </>
   );
@@ -164,8 +192,7 @@ const SignIn = (props) => {
 SignIn.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-  signin: PropTypes.func.isRequired
+  history: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(SignIn);

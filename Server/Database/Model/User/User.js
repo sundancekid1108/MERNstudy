@@ -43,7 +43,7 @@ const userSchema = new Schema({
 
     password: {
         type: String,
-        required: true,
+        // required: true,
     },
 
     date: {
@@ -63,7 +63,21 @@ const userSchema = new Schema({
         type: Boolean,
         default: false,
     },
-}, { timestamps: true }, { versionKey: false }, );
+    facebookLoginProvider: {
+        type: {
+            id: String,
+            token: String,
+        },
+        select: false,
+    },
+    googleLoginProvider: {
+        type: {
+            id: String,
+            token: String,
+        },
+        select: false,
+    },
+}, { timestamps: true }, { versionKey: false });
 
 const User = mongoose.model('User', userSchema);
 export default User;
