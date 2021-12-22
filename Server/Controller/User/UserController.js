@@ -277,7 +277,7 @@ export const postUserLogin = async(req, res) => {
         console.log(LoginSuccessUser);
         const payload = {
             userId: LoginSuccessUser.id,
-
+            user: LoginSuccessUser,
             isAdmin: LoginSuccessUser.isAdmin,
         };
 
@@ -292,7 +292,7 @@ export const postUserLogin = async(req, res) => {
                     accessToken: null;
                 }
                 return res.status(200).json({
-                    // userId: LoginSuccessUser.id,
+                    userId: LoginSuccessUser.id,
                     userEmail: LoginSuccessUser.email,
                     userName: LoginSuccessUser.username,
                     userFirstName: LoginSuccessUser.firstname,
@@ -307,6 +307,101 @@ export const postUserLogin = async(req, res) => {
         return res.status(400).json({
             response: 'Login failed Check your Email and Password',
             accessToken: null,
+        });
+    }
+};
+
+//Facebook 로그인
+export const facebookAuthLogin = async(req, res) => {
+    console.log(req.body);
+    const { accessToken, email, userID, name } = req.body;
+    const nameList = name.split(' ');
+    try {
+        const existedUser = await User.findOne({
+            userID,
+        });
+
+        if (existedUser) {
+            const payload = {
+                userId: existedUser.id,
+                user: existedUser,
+                isAdmin: existedUser.isAdmin,
+            };
+            jwt.sign(
+                payload,
+                process.env.JWT_SECRET_KEY, {
+                    expiresIn: 360000,
+                },
+                (err, token) => {
+                    if (err) {
+                        return res.json(err);
+                        accessToken: null;
+                    }
+                    return res.status(200).json({
+                        userId: existedUser.id,
+                        userEmail: existedUser.email,
+                        userName: existedUser.username,
+                        userFirstName: existedUser.firstname,
+                        userLastName: existedUser.lastname,
+                        isAdmin: existedUser.isAdmin,
+                        accessToken: token,
+                    });
+                }
+            );
+        } else {
+            const facebookAuthUser = new User({
+                firstname: nameList[0],
+                lastname: nameList[1],
+                username: name,
+                email: email,
+                isAdmin: false,
+                facebookLoginProvider: {
+                    id: userID,
+                    token: accessToken,
+                },
+            });
+
+            await facebookAuthUser.save();
+
+            const payload = {
+                userId: facebookAuthUser.id,
+                user: facebookAuthUser,
+                isAdmin: facebookAuthUser.isAdmin,
+            };
+            jwt.sign(
+                payload,
+                process.env.JWT_SECRET_KEY, {
+                    expiresIn: 360000,
+                },
+                (err, token) => {
+                    if (err) {
+                        return res.json(err);
+                        accessToken: null;
+                    }
+                    return res.status(200).json({
+                        userId: facebookAuthUser.id,
+                        userEmail: facebookAuthUser.email,
+                        userName: facebookAuthUser.username,
+                        userFirstName: facebookAuthUser.firstname,
+                        userLastName: facebookAuthUser.lastname,
+                        isAdmin: facebookAuthUser.isAdmin,
+                        accessToken: token,
+                    });
+                }
+            );
+        }
+    } catch (error) {
+        return res.status(400).json({
+            response: 'facebookAuthLogin Fail',
+        });
+    }
+};
+//Google 로그인
+export const googleAuthLogin = async(req, res) => {
+    console.log('googleAuthLogin', req);
+    try {} catch (error) {
+        return res.status(400).json({
+            response: 'facebookAuthLogin Fail',
         });
     }
 };

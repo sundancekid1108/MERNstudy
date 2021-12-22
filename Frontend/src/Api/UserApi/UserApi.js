@@ -56,7 +56,7 @@ export const userLogin = (email, password) => {
                 // localStorage.setItem('isAdmin', JSON.stringify(response.data.isAdmin));
             }
             console.log('userLogin success');
-            // console.log('response : ', response);
+            console.log('response : ', response);
             return response.data;
         })
         .catch((error) => {
@@ -66,6 +66,39 @@ export const userLogin = (email, password) => {
             return error;
         });
 };
+
+//facebook Auth Login
+export const userFacebookAuthLogin = async(
+    accessToken,
+    email,
+    userID,
+    name
+) => {
+    const body = {
+        accessToken,
+        email,
+        userID,
+        name
+    };
+    // console.log('body', body);
+    try {
+        const res = await api.post('/users/auth/facebooklogin', body);
+
+        console.log('userFacebookAuthLogin', res);
+        if (res.data.accessToken) {
+            localStorage.setItem('token', JSON.stringify(res.data.accessToken));
+            //session
+            // sessionStorage.setItem('token', JSON.stringify(res.data.accessToken));
+        }
+        return res;
+    } catch (error) {
+        return error;
+    }
+};
+
+//google Auth Login
+
+export const userGoogleAuthLogin = (email, password) => {};
 
 //로그아웃
 export const userLogout = () => {
@@ -110,6 +143,7 @@ export const updateUserInfo = async(
 //유저 정보 받아오기
 export const getUserInfo = async() => {
     const token = authHeader();
+    console.log(token);
     try {
         const res = await api.get('/users/userinfo', {
             headers: token

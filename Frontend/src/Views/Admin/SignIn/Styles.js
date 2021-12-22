@@ -3,45 +3,13 @@ export default (theme) => ({
         backgroundColor: theme.palette.background.default,
         height: '100vh'
     },
-    grid: {
-        height: '100%'
-    },
-    quoteWrapper: {
-        [theme.breakpoints.down('md')]: {
-            display: 'none'
-        }
-    },
-    quote: {
-        backgroundColor: theme.palette.common.neutral,
-        height: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundImage: 'url(/images/sign_up.jpg)',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center'
-    },
-    quoteInner: {
-        textAlign: 'center',
-        flexBasis: '600px'
-    },
-    quoteText: {
-        color: theme.palette.common.white,
-        fontWeight: 300
-    },
-    name: {
-        marginTop: theme.spacing(3),
-        color: theme.palette.common.white
-    },
-    bio: {
-        color: theme.palette.common.white
-    },
-    contentWrapper: {},
+
     content: {
         height: '100%',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     contentHeader: {
         display: 'flex',
@@ -51,11 +19,7 @@ export default (theme) => ({
         paddingLeft: theme.spacing(2),
         paddingRight: theme.spacing(2)
     },
-    backButton: {},
-    logoImage: {
-        marginLeft: theme.spacing(4),
-        background: 'transparent'
-    },
+
     contentBody: {
         flexGrow: 1,
         display: 'flex',
@@ -63,6 +27,21 @@ export default (theme) => ({
         [theme.breakpoints.down('md')]: {
             justifyContent: 'center'
         }
+    },
+    socialLogin: {
+        display: 'flex',
+        flexDirection: 'column',
+        margin: theme.spacing(4, 0)
+    },
+    facebookButton: {
+        marginTop: theme.spacing(3),
+        width: '100%'
+    },
+
+    googleButton: {
+        marginTop: theme.spacing(2),
+        padding: theme.spacing(1),
+        width: '100%'
     },
     form: {
         paddingLeft: '100px',
@@ -81,50 +60,13 @@ export default (theme) => ({
         color: theme.palette.text.secondary,
         marginTop: theme.spacing(0.5)
     },
-    // facebookButton: {
-    //     marginTop: theme.spacing(3),
-    //     width: '100%'
-    // },
-    // facebookIcon: {
-    //     marginRight: theme.spacing(1)
-    // },
-    // googleButton: {
-    //     marginTop: theme.spacing(2),
-    //     width: '100%'
-    // },
-    // googleIcon: {
-    //     marginRight: theme.spacing(1)
-    // },
-    // sugestion: {
-    //     color: theme.palette.text.secondary,
-    //     marginTop: theme.spacing(2),
-    //     textAlign: 'center'
-    // },
     fields: {
-        marginTop: theme.spacing(5)
+        marginTop: theme.spacing(2)
     },
     textField: {
         width: '100%',
         '& + & ': {
             marginTop: theme.spacing(2)
-        }
-    },
-    policy: {
-        display: 'flex',
-        alignItems: 'center'
-    },
-    policyCheckbox: {
-        marginLeft: '-14px'
-    },
-    policyText: {
-        display: 'inline',
-        color: theme.palette.text.secondary
-    },
-    policyUrl: {
-        color: theme.palette.text.primary,
-        '&:hover': {
-            cursor: 'pointer',
-            color: theme.palette.primary.main
         }
     },
     progress: {
@@ -133,15 +75,15 @@ export default (theme) => ({
         marginLeft: 'auto',
         marginRight: 'auto'
     },
-    signInButton: {
+    loginButton: {
         marginTop: theme.spacing(2),
         width: '100%'
     },
-    signUp: {
+    register: {
         marginTop: theme.spacing(2),
         color: theme.palette.text.secondary
     },
-    signUpUrl: {
+    registerUrl: {
         color: theme.palette.primary.main,
         fontWeight: 'bold',
         '&:hover': {
@@ -151,12 +93,12 @@ export default (theme) => ({
     fieldError: {
         color: theme.palette.danger.main,
         marginBottom: theme.spacing(2),
-        marginTop: theme.spacing()
+        marginTop: theme.spacing(1)
     },
-    errorMessage: {
+    submitError: {
         color: theme.palette.danger.main,
         alignText: 'center',
-        marginBottom: theme.spacing(),
+        marginBottom: theme.spacing(1),
         marginTop: theme.spacing(2)
     }
 });

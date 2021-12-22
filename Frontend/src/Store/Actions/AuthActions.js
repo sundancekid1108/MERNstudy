@@ -11,20 +11,54 @@ import {
 import * as userApi from '../../Api/UserApi/UserApi';
 
 export const userSignIn = (userEmail, userPassword) => async(dispatch) => {
-    try {} catch (error) {}
-    const result = await userApi.userLogin(userEmail, userPassword);
-    const responseData = result;
-    // console.log('authaction usersignin :', responseData);
-    if (responseData.accessToken) {
-        dispatch({ type: SIGN_IN_SUCCESS, payload: responseData });
-        dispatch(setAlert('Login Success', 'success', 3000));
-    } else {
+    try {
+        const result = await userApi.userLogin(userEmail, userPassword);
+        const responseData = result;
+        console.log('authaction userSignIn', responseData);
+        if (responseData.accessToken) {
+            dispatch({ type: SIGN_IN_SUCCESS, payload: responseData });
+            dispatch(setAlert('Login Success', 'success', 3000));
+        } else {
+            dispatch({ type: SIGN_IN_FAIL });
+            dispatch(
+                setAlert('Login failed Check your Email and Password', 'error', 3000)
+            );
+        }
+    } catch (error) {
         dispatch({ type: SIGN_IN_FAIL });
         dispatch(
             setAlert('Login failed Check your Email and Password', 'error', 3000)
         );
     }
 };
+
+export const userFacebookAuthLogin = (e) => async(dispatch) => {
+    // console.log(e);
+    const { accessToken, email, userID, name } = e;
+
+    try {
+        const responseData = await userApi.userFacebookAuthLogin(
+            accessToken,
+            email,
+            userID,
+            name
+        );
+        console.log('authaction facebook', responseData);
+
+        if (responseData.status == 200) {
+            dispatch({ type: SIGN_IN_SUCCESS, payload: responseData.data });
+            dispatch(setAlert('LOGIN Success', 'success', 3000));
+        } else {
+            dispatch({ type: SIGN_IN_FAIL });
+            dispatch(setAlert(responseData.error.message, 'error', 3000));
+        }
+    } catch (error) {
+        dispatch({ type: SIGN_IN_FAIL });
+        dispatch(setAlert('Facebook Auth Login Fail!!', 'error', 3000));
+    }
+};
+
+export const userGoogleAuthLogin = () => async(dispatch) => {};
 
 export const userSignUp = (a, b, c, d, e, f) => async(dispatch) => {
     try {
@@ -58,7 +92,7 @@ export const getLoginUserInfo = () => async(dispatch) => {
     const result = await userApi.getUserInfo();
     const responseData = result;
     // console.log('getLoginUserInfo: ', responseData);
-    if (responseData.ok) {
+    if (responseData) {
         dispatch({ type: GET_USER_INFO, payload: responseData });
     } else {
         dispatch({ type: AUTH_ERROR });
