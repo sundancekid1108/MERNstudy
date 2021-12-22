@@ -39,7 +39,11 @@
         "validator": "^13.6.0"
     },
     "scripts": {
+<<<<<<< HEAD
+        "start": "react-scripts start --openssl-legacy-provider",
+=======
         "start": "HTTPS=true react-scripts start --openssl-legacy-provider",
+>>>>>>> mywork
         "build": "react-scripts build --openssl-legacy-provider",
         "test": "react-scripts test --openssl-legacy-provider",
         "eject": "react-scripts eject"
