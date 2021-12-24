@@ -47,7 +47,7 @@ const MovieList = (props) => {
 
   // 무비리스트에서 수정하고자 하는 movie data를 어떻게 넘겼는지가 중요!
   const handleEditMovieInfo = (movie) => {
-    console.log('handleEditMovieInfo', movie);
+    // console.log('handleEditMovieInfo', movie);
     if (editDialog == false) {
       handleEditDialog();
       // setEditDialog(true);

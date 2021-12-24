@@ -21,8 +21,9 @@ const Account = (props) => {
   const getUserInfo = async () => {
     const fetchedUserData = await userApi.getUserInfo();
     console.log('fetchedUserData', fetchedUserData);
+    const userInfo = fetchedUserData.data;
     // return fetchedUserData;
-    setUser(fetchedUserData);
+    setUser(userInfo);
   };
 
   //불러온 유저 정보 props에 저장

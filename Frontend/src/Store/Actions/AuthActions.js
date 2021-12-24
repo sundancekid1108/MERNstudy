@@ -58,7 +58,22 @@ export const userFacebookAuthLogin = (e) => async(dispatch) => {
     }
 };
 
-export const userGoogleAuthLogin = () => async(dispatch) => {};
+export const userGoogleAuthLogin = (e) => async(dispatch) => {
+    try {
+        const responseData = await userApi.userGoogleAuthLogin(e);
+        console.log(responseData);
+        if (responseData.status == 200) {
+            dispatch({ type: SIGN_IN_SUCCESS, payload: responseData.data });
+            dispatch(setAlert('LOGIN Success', 'success', 3000));
+        } else {
+            dispatch({ type: SIGN_IN_FAIL });
+            dispatch(setAlert(responseData.error.message, 'error', 3000));
+        }
+    } catch (error) {
+        dispatch({ type: SIGN_IN_FAIL });
+        dispatch(setAlert('Google Auth Login Fail!!', 'error', 3000));
+    }
+};
 
 export const userSignUp = (a, b, c, d, e, f) => async(dispatch) => {
     try {
@@ -91,9 +106,9 @@ export const userLogOut = () => (dispatch) => {
 export const getLoginUserInfo = () => async(dispatch) => {
     const result = await userApi.getUserInfo();
     const responseData = result;
-    // console.log('getLoginUserInfo: ', responseData);
-    if (responseData) {
-        dispatch({ type: GET_USER_INFO, payload: responseData });
+
+    if (responseData.status == 200) {
+        dispatch({ type: GET_USER_INFO, payload: responseData.data });
     } else {
         dispatch({ type: AUTH_ERROR });
     }
