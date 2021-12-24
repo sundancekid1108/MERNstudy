@@ -313,14 +313,14 @@ export const postUserLogin = async(req, res) => {
 
 //Facebook 로그인
 export const facebookAuthLogin = async(req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     const { accessToken, email, userID, name } = req.body;
     const nameList = name.split(' ');
     try {
         const existedUser = await User.findOne({
-            userID,
+            'facebookLoginProvider.id': userID,
         });
-
+        // console.log('existedUser', existedUser);
         if (existedUser) {
             const payload = {
                 userId: existedUser.id,
@@ -398,10 +398,92 @@ export const facebookAuthLogin = async(req, res) => {
 };
 //Google 로그인
 export const googleAuthLogin = async(req, res) => {
-    console.log('googleAuthLogin', req);
-    try {} catch (error) {
+    // console.log('googleAuthLogin', req.body.profileObj);
+
+    // console.log(req.body.accessToken);
+    const { googleId, email, name, givenName, familyName } = req.body.profileObj;
+    const accessToken = req.body.accessToken;
+    // console.log(googleId, email, name, givenName, familyName, accessToken);
+
+    try {
+        const existedUser = await User.findOne({
+            'googleLoginProvider.id': googleId,
+        });
+        // console.log('existedUser', existedUser);
+        if (existedUser) {
+            const payload = {
+                userId: existedUser.id,
+                user: existedUser,
+                isAdmin: existedUser.isAdmin,
+            };
+            jwt.sign(
+                payload,
+                process.env.JWT_SECRET_KEY, {
+                    expiresIn: 360000,
+                },
+                (err, token) => {
+                    if (err) {
+                        return res.json(err);
+                        accessToken: null;
+                    }
+                    return res.status(200).json({
+                        userId: existedUser.id,
+                        userEmail: existedUser.email,
+                        userName: existedUser.username,
+                        userFirstName: existedUser.firstname,
+                        userLastName: existedUser.lastname,
+                        isAdmin: existedUser.isAdmin,
+                        accessToken: token,
+                    });
+                }
+            );
+        } else {
+            const googleAuthUser = new User({
+                firstname: givenName,
+                lastname: familyName,
+                username: name,
+                email: email,
+                isAdmin: false,
+                googleLoginProvider: {
+                    id: googleId,
+                    token: accessToken,
+                },
+            });
+
+            await googleAuthUser.save();
+
+            // console.log(googleAuthUser);
+
+            const payload = {
+                userId: googleAuthUser.id,
+                user: googleAuthUser,
+                isAdmin: googleAuthUser.isAdmin,
+            };
+            jwt.sign(
+                payload,
+                process.env.JWT_SECRET_KEY, {
+                    expiresIn: 360000,
+                },
+                (err, token) => {
+                    if (err) {
+                        return res.json(err);
+                        accessToken: null;
+                    }
+                    return res.status(200).json({
+                        userId: googleAuthUser.id,
+                        userEmail: googleAuthUser.email,
+                        userName: googleAuthUser.username,
+                        userFirstName: googleAuthUser.firstname,
+                        userLastName: googleAuthUser.lastname,
+                        isAdmin: googleAuthUser.isAdmin,
+                        accessToken: token,
+                    });
+                }
+            );
+        }
+    } catch (error) {
         return res.status(400).json({
-            response: 'facebookAuthLogin Fail',
+            response: 'googleAuthLogin Fail',
         });
     }
 };

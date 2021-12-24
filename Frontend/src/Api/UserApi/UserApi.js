@@ -92,13 +92,25 @@ export const userFacebookAuthLogin = async(
         }
         return res;
     } catch (error) {
+        console.log('userFacebookAuthLogin error', error);
         return error;
     }
 };
 
 //google Auth Login
 
-export const userGoogleAuthLogin = (email, password) => {};
+export const userGoogleAuthLogin = async(response) => {
+    console.log('userGoogleAuthLogin response', response);
+    const body = response;
+    try {
+        const res = await api.post('/users/auth/googlelogin', body);
+        console.log(res);
+        return res;
+    } catch (error) {
+        console.log('userGoogleAuthLogin error', error);
+        return error;
+    }
+};
 
 //로그아웃
 export const userLogout = () => {
@@ -143,15 +155,15 @@ export const updateUserInfo = async(
 //유저 정보 받아오기
 export const getUserInfo = async() => {
     const token = authHeader();
-    console.log(token);
+
     try {
         const res = await api.get('/users/userinfo', {
             headers: token
         });
-        // console.log("res : ", res);
 
-        const response = res.data;
-        return response;
+        return res;
+        // const response = res.data;
+        // return response;
     } catch (error) {
         // console.log(error);
         return error;

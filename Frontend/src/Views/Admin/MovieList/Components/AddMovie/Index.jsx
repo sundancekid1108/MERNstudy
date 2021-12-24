@@ -25,7 +25,7 @@ import * as MovieApi from '../../../../../Api/MovieApi/MovieApi';
 import styles from './Styles';
 
 const AddMovie = (props) => {
-  const { movie, classes, className, ...rest } = props;
+  const { editmovie, classes, className, ...rest } = props;
   const rootClassName = classNames(classes.root, className);
   const form = useRef();
 
@@ -42,7 +42,8 @@ const AddMovie = (props) => {
   const [status, setStatus] = useState('');
   const [infoMessage, setInfoMessage] = useState('');
 
-  const prevMovie = props.editmovie;
+  // const prevMovie = props.editmovie;
+  const prevMovie = editmovie;
   // console.log('prevMovie', prevMovie);
   useEffect(() => {
     if (prevMovie) {
@@ -373,7 +374,7 @@ const AddMovie = (props) => {
 AddMovie.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
-  movie: PropTypes.object.isRequired
+  editmovie: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(AddMovie);

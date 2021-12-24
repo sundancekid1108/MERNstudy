@@ -35,7 +35,8 @@ const SignIn = (props) => {
 
   const [errorMessage, setErrorMessage] = useState('');
 
-  const react_app_id = process.env.REACT_APP_FACEBOOK_APP_ID;
+  const facebook_app_id = process.env.REACT_APP_FACEBOOK_APP_ID;
+  const google_app_id = process.env.REACT_APP_GOOGLE_AUTH_ID;
 
   useEffect(() => {
     //
@@ -81,6 +82,23 @@ const SignIn = (props) => {
   const handleGoogleAuthLogin = () => {
     console.log('handleGoogleAuthLogin');
   };
+
+  const googleAuthSuccess = (response) => {
+    console.log('googleAuthSuccess', response);
+    // userApi.userGoogleAuthLogin(response);
+    dispatch(AuthActions.userGoogleAuthLogin(response))
+      .then(() => {
+        history.push('/admin/dashboard');
+      })
+      .catch(() => {
+        setErrorMessage('Login failed, Check your Email and Password');
+      });
+  };
+
+  const googleAuthFailure = (error) => {
+    console.log('googleAuthFailure', error);
+  };
+
   /**
    *리액트 Hooks, Redux를 활용한 로그인 구조 개선..
     개선 이유..
@@ -119,17 +137,19 @@ const SignIn = (props) => {
                   buttonStyle={{ width: '100%' }}
                   autoLoad={false}
                   cookie={false}
-                  appId={react_app_id}
+                  appId={facebook_app_id}
                   fields="name,email,picture"
                   onClick={handleFacebookAuthLogin}
                   callback={callbackFacebookAuthLogin}
                 />
                 <GoogleLogin
                   className={classes.googleButton}
-                  // clientId="794162856058-buhtf925b2p3q2v05aes5ievt2vknccs.apps.googleusercontent.com" //CLIENTID NOT CREATED YET
+                  clientId={google_app_id}
                   buttonText="LOGIN WITH GOOGLE"
-                  // onSuccess={this.responseGoogle}
-                  // onFailure={this.responseGoogle}
+                  cookiePolicy={'single_host_origin'}
+                  onClick={handleGoogleAuthLogin}
+                  onSuccess={googleAuthSuccess}
+                  onFailure={googleAuthFailure}
                 />
               </div>
 
