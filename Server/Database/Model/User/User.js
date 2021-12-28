@@ -63,6 +63,17 @@ const userSchema = new Schema({
         type: Boolean,
         default: false,
     },
+    role: {
+        type: String,
+        default: 'guest',
+        enum: ['guest', 'admin', 'superadmin'],
+    },
+    facebookLoginProviderId: {
+        type: String,
+    },
+    googleLoginProviderId: {
+        type: String,
+    },
     facebookLoginProvider: {
         type: {
             id: String,

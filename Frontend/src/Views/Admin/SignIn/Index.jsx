@@ -22,7 +22,6 @@ import * as AuthActions from '../../../Store/Actions/AuthActions';
 
 const SignIn = (props) => {
   const { classes, user } = props;
-  // console.log('signin user:', user);
   const state = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
@@ -71,32 +70,41 @@ const SignIn = (props) => {
 
   const callbackFacebookAuthLogin = (response) => {
     dispatch(AuthActions.userFacebookAuthLogin(response))
-      .then(() => {
-        history.push('/admin/dashboard');
+      .then((response) => {
+        console.log(response.data.isAdmin);
+        if (response.data.isAdmin == true) {
+          history.push('/admin/dashboard');
+        } else {
+          history.push('/');
+        }
       })
-      .catch(() => {
+      .catch((error) => {
         setErrorMessage('Login failed, Check your Email and Password');
       });
   };
 
   const handleGoogleAuthLogin = () => {
-    console.log('handleGoogleAuthLogin');
+    // console.log('handleGoogleAuthLogin');
   };
 
-  const googleAuthSuccess = (response) => {
-    console.log('googleAuthSuccess', response);
-    // userApi.userGoogleAuthLogin(response);
+  const googleAuthSuccess = async (response) => {
+    userApi.userGoogleAuthLogin(response);
     dispatch(AuthActions.userGoogleAuthLogin(response))
-      .then(() => {
-        history.push('/admin/dashboard');
+      .then((response) => {
+        console.log(response.data.isAdmin);
+        if (response.data.isAdmin == true) {
+          history.push('/admin/dashboard');
+        } else {
+          history.push('/');
+        }
       })
-      .catch(() => {
+      .catch((error) => {
         setErrorMessage('Login failed, Check your Email and Password');
       });
   };
 
   const googleAuthFailure = (error) => {
-    console.log('googleAuthFailure', error);
+    // console.log('googleAuthFailure', error);
   };
 
   /**
@@ -106,13 +114,17 @@ const SignIn = (props) => {
 
     */
 
-  const handleSignIn = (e) => {
-    e.preventDefault();
+  const handleSignIn = () => {
     dispatch(AuthActions.userSignIn(userEmail, userPassword))
-      .then(() => {
-        history.push('/admin/dashboard');
+      .then((response) => {
+        console.log(response.data.isAdmin);
+        if (response.data.isAdmin === true) {
+          history.push('/admin/dashboard');
+        } else {
+          history.push('/');
+        }
       })
-      .catch(() => {
+      .catch((error) => {
         setErrorMessage('Login failed, Check your Email and Password');
       });
   };

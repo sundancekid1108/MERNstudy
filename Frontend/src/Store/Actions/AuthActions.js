@@ -15,8 +15,8 @@ export const userSignIn = (userEmail, userPassword) => async(dispatch) => {
         const result = await userApi.userLogin(userEmail, userPassword);
         const responseData = result;
         console.log('authaction userSignIn', responseData);
-        if (responseData.accessToken) {
-            dispatch({ type: SIGN_IN_SUCCESS, payload: responseData });
+        if (responseData.status == 200) {
+            dispatch({ type: SIGN_IN_SUCCESS, payload: responseData.data });
             dispatch(setAlert('Login Success', 'success', 3000));
         } else {
             dispatch({ type: SIGN_IN_FAIL });
@@ -24,11 +24,13 @@ export const userSignIn = (userEmail, userPassword) => async(dispatch) => {
                 setAlert('Login failed Check your Email and Password', 'error', 3000)
             );
         }
+        return responseData;
     } catch (error) {
         dispatch({ type: SIGN_IN_FAIL });
         dispatch(
             setAlert('Login failed Check your Email and Password', 'error', 3000)
         );
+        return error;
     }
 };
 
@@ -43,7 +45,7 @@ export const userFacebookAuthLogin = (e) => async(dispatch) => {
             userID,
             name
         );
-        console.log('authaction facebook', responseData);
+        // console.log('authaction facebook', responseData);
 
         if (responseData.status == 200) {
             dispatch({ type: SIGN_IN_SUCCESS, payload: responseData.data });
@@ -52,16 +54,18 @@ export const userFacebookAuthLogin = (e) => async(dispatch) => {
             dispatch({ type: SIGN_IN_FAIL });
             dispatch(setAlert(responseData.error.message, 'error', 3000));
         }
+        return responseData;
     } catch (error) {
         dispatch({ type: SIGN_IN_FAIL });
         dispatch(setAlert('Facebook Auth Login Fail!!', 'error', 3000));
+        return error;
     }
 };
 
 export const userGoogleAuthLogin = (e) => async(dispatch) => {
     try {
         const responseData = await userApi.userGoogleAuthLogin(e);
-        console.log(responseData);
+        // console.log(responseData);
         if (responseData.status == 200) {
             dispatch({ type: SIGN_IN_SUCCESS, payload: responseData.data });
             dispatch(setAlert('LOGIN Success', 'success', 3000));
@@ -69,9 +73,11 @@ export const userGoogleAuthLogin = (e) => async(dispatch) => {
             dispatch({ type: SIGN_IN_FAIL });
             dispatch(setAlert(responseData.error.message, 'error', 3000));
         }
+        return responseData;
     } catch (error) {
         dispatch({ type: SIGN_IN_FAIL });
         dispatch(setAlert('Google Auth Login Fail!!', 'error', 3000));
+        return error;
     }
 };
 
@@ -92,6 +98,7 @@ export const userSignUp = (a, b, c, d, e, f) => async(dispatch) => {
     } catch (error) {
         dispatch({ type: SIGN_UP_FAIL });
         dispatch(setAlert('Sign up Fail', 'error', 3000));
+        return error;
     }
 };
 

@@ -58,7 +58,8 @@ export const getMoviesList = async() => {
         const movieListData = await api.get('/movies/movieslist', {
             headers: token
         });
-        // console.log('getMoviesListData: ', movieListData);
+        console.log('getMoviesListData: ', movieListData);
+        console.log('getMoviesListData: ', movieListData.ok);
         return movieListData;
     } catch (error) {
         console.log('getMoviesListError: ', error);

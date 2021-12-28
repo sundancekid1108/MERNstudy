@@ -9,7 +9,7 @@ import * as AuthActions from '../../../../Store/Actions/AuthActions';
 import logoImg from '../../../../Images/logo.jpg';
 
 const Navbar = (props) => {
-  const { classes, logout } = props;
+  const { classes } = props;
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const Navbar = (props) => {
   const [scrollPosition, setScrollPositon] = useState(0);
 
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
-  // console.log('isAuth', isAuth);
+  const user = useSelector((state) => state.auth.user);
 
   const onclickEvent = (e) => {
     e.preventDefault();
@@ -62,6 +62,10 @@ const Navbar = (props) => {
           </Typography>
         </Link>
         <div className={classes.navLinks}>
+          {}
+          <Link className={classes.navLink} to="/movie/category/latestmovies">
+            Latest Movies
+          </Link>
           <Link className={classes.navLink} to="/admin/userslist">
             Users
           </Link>

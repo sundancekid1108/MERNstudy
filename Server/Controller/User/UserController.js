@@ -298,6 +298,7 @@ export const postUserLogin = async(req, res) => {
                     userFirstName: LoginSuccessUser.firstname,
                     userLastName: LoginSuccessUser.lastname,
                     isAdmin: LoginSuccessUser.isAdmin,
+                    role: LoginSuccessUser.role,
                     accessToken: token,
                 });
             }
@@ -314,11 +315,11 @@ export const postUserLogin = async(req, res) => {
 //Facebook 로그인
 export const facebookAuthLogin = async(req, res) => {
     // console.log(req.body);
-    const { accessToken, email, userID, name } = req.body;
+    const { email, userID, name } = req.body;
     const nameList = name.split(' ');
     try {
         const existedUser = await User.findOne({
-            'facebookLoginProvider.id': userID,
+            facebookLoginProviderId: userID,
         });
         // console.log('existedUser', existedUser);
         if (existedUser) {
@@ -344,6 +345,7 @@ export const facebookAuthLogin = async(req, res) => {
                         userFirstName: existedUser.firstname,
                         userLastName: existedUser.lastname,
                         isAdmin: existedUser.isAdmin,
+                        role: existedUser.role,
                         accessToken: token,
                     });
                 }
@@ -355,10 +357,7 @@ export const facebookAuthLogin = async(req, res) => {
                 username: name,
                 email: email,
                 isAdmin: false,
-                facebookLoginProvider: {
-                    id: userID,
-                    token: accessToken,
-                },
+                facebookLoginProviderId: userID,
             });
 
             await facebookAuthUser.save();
@@ -385,6 +384,7 @@ export const facebookAuthLogin = async(req, res) => {
                         userFirstName: facebookAuthUser.firstname,
                         userLastName: facebookAuthUser.lastname,
                         isAdmin: facebookAuthUser.isAdmin,
+                        role: facebookAuthUser.role,
                         accessToken: token,
                     });
                 }
@@ -402,12 +402,12 @@ export const googleAuthLogin = async(req, res) => {
 
     // console.log(req.body.accessToken);
     const { googleId, email, name, givenName, familyName } = req.body.profileObj;
-    const accessToken = req.body.accessToken;
+    // const accessToken = req.body.accessToken;
     // console.log(googleId, email, name, givenName, familyName, accessToken);
 
     try {
         const existedUser = await User.findOne({
-            'googleLoginProvider.id': googleId,
+            googleLoginProviderId: googleId,
         });
         // console.log('existedUser', existedUser);
         if (existedUser) {
@@ -433,6 +433,7 @@ export const googleAuthLogin = async(req, res) => {
                         userFirstName: existedUser.firstname,
                         userLastName: existedUser.lastname,
                         isAdmin: existedUser.isAdmin,
+                        role: existedUser.role,
                         accessToken: token,
                     });
                 }
@@ -444,10 +445,7 @@ export const googleAuthLogin = async(req, res) => {
                 username: name,
                 email: email,
                 isAdmin: false,
-                googleLoginProvider: {
-                    id: googleId,
-                    token: accessToken,
-                },
+                googleLoginProviderId: googleId,
             });
 
             await googleAuthUser.save();
@@ -476,6 +474,7 @@ export const googleAuthLogin = async(req, res) => {
                         userFirstName: googleAuthUser.firstname,
                         userLastName: googleAuthUser.lastname,
                         isAdmin: googleAuthUser.isAdmin,
+                        role: googleAuthUser.role,
                         accessToken: token,
                     });
                 }
