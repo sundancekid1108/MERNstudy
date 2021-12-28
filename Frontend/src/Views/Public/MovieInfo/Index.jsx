@@ -20,21 +20,13 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import CaledarIcon from '@material-ui/icons/CalendarToday';
 
 import PublicNavbar from '../../../Layouts/Public/Components/Navbar/Index';
+// import MovieBanner from '../MovieBanner/Index';
 import styles from './Styles';
 
 import * as MovieApi from '../../../Api/MovieApi/MovieApi';
 import textTruncate from '../../../Utils/TextTruncate/Index';
+import MovieBanner from '../MovieBanner/Index';
 import MovieOverview from './Components/MovieOverview/Index';
-
-//별점
-const StyledRating = withStyles({
-  iconFilled: {
-    color: '#fff'
-  },
-  iconEmpty: {
-    color: '#fff'
-  }
-})(Rating);
 
 const MovieInfo = (props) => {
   const { classes } = props;
@@ -62,127 +54,7 @@ const MovieInfo = (props) => {
     <>
       <div className={classes.root}>
         <PublicNavbar />
-        {movie && (
-          <Paper className={classes.movieInfo} elevation={20}>
-            <div className={classes.infoSection}>
-              <header className={classes.movieHeader}>
-                <Box mb={3} display="flex" alignItems="center" flexWrap="wrap">
-                  <Typography
-                    className={classes.tag}
-                    variant="body1"
-                    color="inherit">
-                    {movie.genre}
-                  </Typography>
-                  <Typography
-                    className={classes.tag}
-                    variant="body1"
-                    color="inherit">
-                    {movie.genre}
-                  </Typography>
-                  <Typography
-                    className={classes.tag}
-                    variant="body1"
-                    color="inherit">
-                    {movie.genre}
-                  </Typography>
-                  <StyledRating
-                    value={4}
-                    readOnly
-                    size="small"
-                    emptyIcon={<StarBorderIcon fontSize="inherit" />}
-                  />
-                </Box>
-                <Typography
-                  className={classes.movieTitle}
-                  variant="h1"
-                  color="inherit">
-                  {movie.title}
-                </Typography>
-                <Typography
-                  className={classes.descriptionText}
-                  variant="body1"
-                  color="inherit">
-                  {textTruncate(movie.description, 450)}
-                </Typography>
-                <Typography
-                  className={classes.director}
-                  variant="h4"
-                  color="inherit">
-                  By: {movie.director}
-                </Typography>
-                <Typography
-                  className={classes.duration}
-                  variant="body1"
-                  color="inherit">
-                  {movie.duration} min
-                </Typography>
-                <Typography
-                  className={classes.genre}
-                  variant="body1"
-                  color="inherit">
-                  {movie.genre}
-                </Typography>
-              </header>
-            </div>
-            <div
-              className={classes.blurBackground}
-              style={{
-                backgroundImage: `url(${movie.image})`
-              }}
-            />
-
-            <div className={classes.footer}>
-              <div className={classes.icons}>
-                <ShareIcon fontSize="small" />
-              </div>
-              <div className={classes.icons}>
-                <FavoriteIcon fontSize="small" />
-              </div>
-              <div className={classes.icons}>
-                <CaledarIcon fontSize="small" />
-              </div>
-            </div>
-            <div className={classes.movieActions}>
-              <Button className={classnames(classes.button, classes.learnMore)}>
-                Learn More
-                <ArrowRightAlt className={classes.buttonIcon} />
-              </Button>
-              <Link
-                to={`moviereservation/${movie._id}`}
-                style={{ textDecoration: 'none' }}>
-                <Button variant="contained" className={classes.button}>
-                  Buy Tickets
-                  <ArrowRightAlt className={classes.buttonIcon} />
-                </Button>
-              </Link>
-              {/* <Link
-                to={`moviereservation/${movie._id}`}
-                style={{ textDecoration: 'none' }}>
-                <Button variant="contained" className={classes.button}>
-                  Buy Tickets
-                  <ArrowRightAlt className={classes.buttonIcon} />
-                </Button>
-              </Link> */}
-            </div>
-          </Paper>
-        )}
-
-        {false && (
-          <>
-            <Tabs indicatorColor="primary" textColor="primary" centered>
-              <Tab label="Overview" />
-              <Tab label="Videos" />
-              <Tab label="Booking" />
-            </Tabs>
-            <Container>
-              <MovieOverview
-                title={movie.title}
-                movie={movie.description}
-                image={movie.image}
-              />
-            </Container>
-          </>
-        )}
+        {movie && <MovieBanner movie={movie} description />}
       </div>
     </>
   );

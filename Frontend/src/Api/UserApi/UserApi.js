@@ -55,9 +55,9 @@ export const userLogin = (email, password) => {
                 // localStorage.setItem('user', JSON.stringify(response.data));
                 // localStorage.setItem('isAdmin', JSON.stringify(response.data.isAdmin));
             }
-            console.log('userLogin success');
-            console.log('response : ', response);
-            return response.data;
+            // console.log('userLogin success');
+            // console.log('response : ', response);
+            return response;
         })
         .catch((error) => {
             console.log(error.status);

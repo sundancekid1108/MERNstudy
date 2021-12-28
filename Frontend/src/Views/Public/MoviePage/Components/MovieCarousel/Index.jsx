@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import { makeStyles, withStyles, Typography, Button } from '@material-ui/core';
 import Slider from 'react-slick';
@@ -31,7 +32,7 @@ const PrevArrow = (props) => {
 };
 
 const MovieCarousel = (props) => {
-  const { classes, carouselClass, title, movies } = props;
+  const { classes, carouselClass, title, movies, to } = props;
   const settings = {
     centerMode: true,
     swipeToSlide: true,
@@ -61,23 +62,29 @@ const MovieCarousel = (props) => {
       }
     ]
   };
-  return (
-    <div className={carouselClass}>
-      <div className={classes.container}>
-        <Typography className={classes.h2} variant="h2" color="inherit">
-          {title}
-        </Typography>
-        <Button className={classes.button} color="primary">
-          Explore All
-        </Button>
+  if (!movies) {
+    return <>No Movies Info</>;
+  } else {
+    return (
+      <div className={carouselClass}>
+        <div className={classes.container}>
+          <Typography className={classes.h2} variant="h2" color="inherit">
+            {title}
+          </Typography>
+          <Link to={to} style={{ textDecoration: 'none' }}>
+            <Button className={classes.button} color="primary">
+              Explore All
+            </Button>
+          </Link>
+        </div>
+        <Slider {...settings} className={classes.slider}>
+          {movies.map((movie) => (
+            <MovieCardTest key={movie._id} movie={movie} />
+          ))}
+        </Slider>
       </div>
-      <Slider {...settings} className={classes.slider}>
-        {movies.map((movie) => (
-          <MovieCardTest key={movie._id} movie={movie} />
-        ))}
-      </Slider>
-    </div>
-  );
+    );
+  }
 };
 
 export default withStyles(styles)(MovieCarousel);
