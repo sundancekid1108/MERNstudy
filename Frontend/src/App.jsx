@@ -14,33 +14,35 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import theme from './Theme/Index';
-import Alert from './Layouts/Alert/Index';
-import ProtectedRoute from './Routes/ProtectedRoute/Index';
+import Alert from './Layouts/Alert/Alert';
+import ProtectedRoute from './Routes/ProtectedRoute/ProtectedRoute';
 import * as AuthActions from './Store/Actions/AuthActions';
 import store from './Store/Index';
-import Loading from './Components/Loading/Index';
+import Loading from './Components/Loading/Loading';
 
-const Feed = lazy(() => import('./Views/Feed/Index'));
-const SignIn = lazy(() => import('./Views/Admin/SignIn/Index'));
-const SignUp = lazy(() => import('./Views/SignUp/Index'));
-const AdminSignUp = lazy(() => import('./Views/Admin/AdminSignUp/Index'));
-const MoviePage = lazy(() => import('./Views/Public/MoviePage/Index'));
-const NotFound = lazy(() => import('./Views/NotFound/Index'));
-const DashboardPage = lazy(() => import('./Views/Admin/Dashboard/Index'));
-const UserList = lazy(() => import('./Views/Admin/UserList/Index'));
-const Account = lazy(() => import('./Views/Admin/Account/Index'));
-const Settings = lazy(() => import('./Views/Settings/Index'));
-const UpdateAccount = lazy(() => import('./Views/UpdateAccount/Index'));
-const MovieList = lazy(() => import('./Views/Admin/MovieList/Index'));
-const MovieInfo = lazy(() => import('./Views/Public/MovieInfo/Index'));
+const Feed = lazy(() => import('./Views/Feed/Feed'));
+const SignIn = lazy(() => import('./Views/Admin/SignIn/SignIn'));
+const SignUp = lazy(() => import('./Views/SignUp/SignUp'));
+const AdminSignUp = lazy(() => import('./Views/Admin/AdminSignUp/AdminSignUp'));
+const MoviePage = lazy(() => import('./Views/Public/MoviePage/MoviePage'));
+const NotFound = lazy(() => import('./Views/NotFound/NotFound'));
+const DashboardPage = lazy(() =>
+  import('./Views/Admin/DashboardPage/DashboardPage')
+);
+const UserList = lazy(() => import('./Views/Admin/UserList/UserList'));
+const Account = lazy(() => import('./Views/Admin/Account/Account'));
+const Settings = lazy(() => import('./Views/Settings/Settings'));
+const UpdateAccount = lazy(() => import('./Views/UpdateAccount/UpdateAccount'));
+const MovieList = lazy(() => import('./Views/Admin/MovieList/MovieList'));
+const MovieInfo = lazy(() => import('./Views/Public/MovieInfo/MovieInfo'));
 const MovieReservation = lazy(() =>
-  import('./Views/Public/MovieReservation/Index')
+  import('./Views/Public/MovieReservation/MovieReservation')
 );
 const MovieReservationList = lazy(() =>
-  import('./Views/Admin/MovieReservationList/Index')
+  import('./Views/Admin/MovieReservationList/MovieReservationList')
 );
 const LatestMoviesList = lazy(() =>
-  import('./Views/Public/LatestMoviesList/Index')
+  import('./Views/Public/LatestMoviesList/LatestMoviesList')
 );
 
 const App = () => {
