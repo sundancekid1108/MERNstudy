@@ -1,2 +1,2 @@
-export { default as MovieCard } from './MovieCard/Index';
-export { default as MovieToolBar } from './MovieToolBar/Index';
+export { default as MovieCard } from './MovieCard/MovieCard';
+export { default as MovieToolBar } from './MovieToolBar/MovieToolBar';
