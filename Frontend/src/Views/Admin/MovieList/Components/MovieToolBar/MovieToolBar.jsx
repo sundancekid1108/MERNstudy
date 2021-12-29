@@ -3,11 +3,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
-import {
-  DisplayMode,
-  SearchInput,
-  ResponsiveDialog
-} from '../../../../../Components/Index';
+import { SearchInput, ResponsiveDialog } from '../../../../../Components/Index';
 import AddMovie from '../AddMovie/AddMovie';
 import styles from './Styles';
 
@@ -30,22 +26,17 @@ const MovieToolBar = (props) => {
     <>
       <div className={rootClassName}>
         <div className={classes.row}>
-          <span className={classes.spacer} />
-          <Button
-            color="primary"
-            size="small"
-            variant="outlined"
-            onClick={handleAddDialog}>
-            add
-          </Button>
-        </div>
-        <div className={classes.row}>
           <SearchInput
             className={classes.searchInput}
-            placeholder="Search Movie"
+            placeholder="Search movie"
           />
-          <span className={classes.spacer} />
-          <DisplayMode mode="grid" />
+          <Button
+            onClick={handleAddDialog}
+            color="primary"
+            size="small"
+            variant="outlined">
+            Add
+          </Button>
         </div>
       </div>
       <ResponsiveDialog

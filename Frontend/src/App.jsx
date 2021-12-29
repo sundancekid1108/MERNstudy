@@ -45,6 +45,8 @@ const LatestMoviesList = lazy(() =>
   import('./Views/Public/LatestMoviesList/LatestMoviesList')
 );
 
+const Theaters = lazy(() => import('./Views/Public/Theaters/Theaters'));
+
 const App = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -74,6 +76,7 @@ const App = () => {
                   path="/movie/category/latestmovies"
                   component={LatestMoviesList}
                 />
+                <Route exact path="/theaters" component={Theaters} />
                 <Route exact path="/feed" component={Feed} />
                 <Route exact path="/signin" component={SignIn} />
                 <Route exact path="/signup" component={SignUp} />

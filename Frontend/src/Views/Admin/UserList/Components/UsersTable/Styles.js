@@ -1,27 +1,27 @@
 export default (theme) => ({
-    root: {},
+    root: { color: theme.palette.common.contrastText },
     tableRow: {
-        height: "64px",
+        height: '64px'
     },
     tableCell: {
-        whiteSpace: "nowrap",
+        whiteSpace: 'nowrap'
     },
     tableCellInner: {
-        display: "flex",
-        alignItems: "center",
+        display: 'flex',
+        alignItems: 'center'
     },
     avatar: {
         backgroundColor: theme.palette.primary.main,
-        display: "inline-flex",
-        fontSize: "14px",
+        display: 'inline-flex',
+        fontSize: '14px',
         fontWeight: 500,
-        height: "36px",
-        width: "36px",
+        height: '36px',
+        width: '36px'
     },
     nameText: {
-        display: "inline-block",
+        display: 'inline-block',
         marginLeft: theme.spacing(2),
         fontWeight: 500,
-        cursor: "pointer",
-    },
+        cursor: 'pointer'
+    }
 });
