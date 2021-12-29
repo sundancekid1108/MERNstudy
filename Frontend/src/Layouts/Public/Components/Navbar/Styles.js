@@ -195,7 +195,7 @@ export default (theme) => ({
         color: theme.palette.common.white,
         padding: '0 .5rem',
         margin: '0 1rem',
-        fontSize: '3rem',
+        fontSize: '2rem',
         fontWeight: '600',
         cursor: 'pointer',
         textDecoration: 'none',
@@ -215,7 +215,7 @@ export default (theme) => ({
         },
         '&:hover:after': {
             opacity: 1,
-            height: '20px'
+            height: '15'
         }
     },
     [theme.breakpoints.down('sm')]: {

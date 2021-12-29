@@ -1,19 +1,11 @@
 export default (theme) => ({
     root: {
         maxWidth: '100%',
-        paddingTop: theme.spacing(2),
-        paddingBottom: theme.spacing(2),
-        paddingRight: theme.spacing(2),
-        paddingLeft: theme.spacing(2),
-        marginBottom: theme.spacing(1),
-        marginRight: theme.spacing(2),
-        marginLeft: theme.spacing(2)
+        paddingBottom: theme.spacing(2)
     },
     imageWrapper: {
         height: '200px',
         margin: '0 auto',
-        border: '1px solid #EDF0F2',
-        borderRadius: '5px',
         overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',
@@ -24,12 +16,12 @@ export default (theme) => ({
         height: '100%',
         'object-fit': 'cover'
     },
-    details: {},
+    details: { padding: theme.spacing(3) },
     title: {
         fontSize: '18px',
         lineHeight: '21px',
-        textAlign: 'center',
-        marginTop: theme.spacing(2)
+        marginTop: theme.spacing(2),
+        textTransform: 'capitalize'
     },
     description: {
         lineHeight: '16px',
@@ -38,27 +30,19 @@ export default (theme) => ({
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
         color: theme.palette.text.secondary,
-        textAlign: 'center',
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(2)
     },
     stats: {
         display: 'flex',
         alignItems: 'center',
-        paddingTop: theme.spacing(1)
+        paddingTop: theme.spacing(1),
+        paddingLeft: theme.spacing(3)
     },
     updateIcon: {
         color: theme.palette.text.secondary
     },
     updateText: {
-        marginLeft: theme.spacing(1),
-        color: theme.palette.text.secondary
-    },
-    downloadsIcon: {
-        marginLeft: 'auto',
-        color: theme.palette.text.secondary
-    },
-    downloadsText: {
         marginLeft: theme.spacing(1),
         color: theme.palette.text.secondary
     }

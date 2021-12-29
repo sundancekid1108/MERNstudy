@@ -10,7 +10,7 @@ export const createTheater = async(req, res) => {
     const theater = new Theater(req.body);
     try {
         await theater.save();
-        return res.status(201).json(theater);
+        return res.json(theater).status(200);
     } catch (error) {
         return res.status(400).json(error);
     }
@@ -23,7 +23,8 @@ export const getTheaterList = async(req, res) => {
                 _id: -1,
             },
         });
-        return res.satus(201).json(theaterList);
+        console.log(theaterList);
+        return res.json(theaterList).status(200);
     } catch (error) {
         return res.status(400).json(error);
     }
@@ -33,7 +34,7 @@ export const getTheaterInfo = async(req, res) => {
     const theaterId = req.params.id;
     try {
         const theaterInfo = await Theater.findById(theaterId);
-        return res.status(201).json(theaterInfo);
+        return res.json(theaterInfo).status(200);
     } catch (error) {
         return res.status(400).json(error);
     }
@@ -58,7 +59,7 @@ export const updateTheaterInfo = async(req, res) => {
         if (!theaterData) {
             return res.status(404).json({ error: 'No theater Info' });
         } else {
-            res.status(201).json(theaterData);
+            return res.json(theaterData).status(200);
         }
     } catch (error) {
         return res.status(400).json(error);

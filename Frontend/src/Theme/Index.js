@@ -6,7 +6,7 @@ import typography from './Typography';
 
 // read more at https://material-ui.com/customization/themes
 const theme = createTheme({
-    palette,
+    palette: paletteDark,
     typography,
     zIndex: {
         appBar: 1200,

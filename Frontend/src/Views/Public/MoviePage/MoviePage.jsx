@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withStyles, Typography } from '@material-ui/core';
+import { withStyles, Typography, Box } from '@material-ui/core';
 import styles from './Styles';
 import PublicNavbar from '../../../Layouts/Public/Components/Navbar/Navbar';
 import MovieBanner from '../Components/MovieBanner/MovieBanner';
@@ -37,6 +37,7 @@ const MoviePage = (props) => {
         <div className={classes.root}>
           <PublicNavbar />
           <MovieBanner movie={movies[0]} height="70vh" />
+          <Box height={100} />
           <MovieCarousel
             carouselClass={classes.carousel}
             title="Latest Movies"

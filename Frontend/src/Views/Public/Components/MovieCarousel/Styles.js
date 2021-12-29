@@ -4,6 +4,7 @@ export default (theme) => ({
         alignItems: 'baseline'
     },
     h2: {
+        fontSize: '2rem',
         color: theme.palette.common.white,
         margin: theme.spacing(3),
         textTransform: 'capitalize'
@@ -11,7 +12,7 @@ export default (theme) => ({
     button: {},
     carousel: {
         width: '85%',
-        height: '100%',
+        height: 'auto',
         margin: 'auto'
     },
     arrow: {

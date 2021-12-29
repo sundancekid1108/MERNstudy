@@ -75,6 +75,9 @@ const Navbar = (props) => {
           <Link className={classes.navLink} to="/admin/dashboard">
             Dashboard
           </Link>
+          <Link className={classes.navLink} to="/theaters">
+            Theaters
+          </Link>
           {!isAuth && (
             <Link className={classes.navLink} to="/signin">
               Sign In

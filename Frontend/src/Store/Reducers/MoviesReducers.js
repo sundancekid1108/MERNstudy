@@ -5,7 +5,7 @@ const initialState = {
     latestMovies: []
 };
 
-const movieReducers = (state = initialState, action) => {
+const moviesReducers = (state = initialState, action) => {
     const { type, payload } = action;
 
     switch (type) {
@@ -22,4 +22,4 @@ const movieReducers = (state = initialState, action) => {
     }
 };
 
-export default movieReducers;
+export default moviesReducers;

@@ -1,7 +1,18 @@
 import api from '../axiosApi';
 import authHeader from '../authHeader';
 
-export const getTheatersList = () => {};
+export const getTheatersList = async() => {
+    const token = authHeader();
+    try {
+        const res = await api.get('/theater/theaters/', {
+            headers: token
+        });
+
+        return res;
+    } catch (error) {
+        return error;
+    }
+};
 
 export const getTheaterInfo = async(id) => {
     const token = authHeader();

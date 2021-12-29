@@ -1,0 +1,1 @@
+export const GET_THEATERSLIST = 'GET_THEATERSLIST';

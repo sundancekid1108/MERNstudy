@@ -25,7 +25,6 @@ const MovieCard = (props) => {
             {movie.description}
           </Typography>
         </div>
-        <Divider />
         <div className={classes.stats}>
           <AccessTimeIcon className={classes.updateIcon} />
           <Typography className={classes.updateText} variant="body2">
