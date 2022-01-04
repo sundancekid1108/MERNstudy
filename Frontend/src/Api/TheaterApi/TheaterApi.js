@@ -14,6 +14,27 @@ export const getTheatersList = async() => {
     }
 };
 
+export const createTheater = async(
+    image,
+    theaterName,
+    ticketPrice,
+    city,
+    seats,
+    seatsAvailable
+) => {
+    const token = authHeader();
+    const body = { image, theaterName, ticketPrice, city, seats, seatsAvailable };
+    try {
+        const res = await api.post('/theater/theaters/', body, {
+            headers: token
+        });
+
+        return res;
+    } catch (error) {
+        return error;
+    }
+};
+
 export const getTheaterInfo = async(id) => {
     const token = authHeader();
     try {
@@ -46,13 +67,15 @@ export const updateTheaterInfo = async(
         image: image
     };
     console.log('updateTheaterInfobody', body);
+    console.log(id);
     try {
-        const res = await api.patch('/theater/theaters/' + String(id), body, {
+        const res = await api.patch('/theater/theaters/' + id, body, {
             headers: token
         });
-
+        console.log('updateTheaterInfo res', res);
         return res;
     } catch (error) {
+        console.log('updateTheaterInfo error', error);
         return error;
     }
 };
@@ -76,6 +99,19 @@ export const updateTheaterSeatsInfo = async(
 
         return res;
     } catch (error) {
+        return error;
+    }
+};
+
+export const deleteTheaterInfo = async(id) => {
+    const token = authHeader();
+    try {
+        const res = await api.delete('/theater/theaters/' + id, {
+            headers: token
+        });
+        return res;
+    } catch (error) {
+        console.log('deleteTheaterInfo: ', error);
         return error;
     }
 };

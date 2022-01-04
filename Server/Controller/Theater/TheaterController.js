@@ -45,7 +45,7 @@ export const updateTheaterInfo = async(req, res) => {
 
     const theaterUpdates = Object.keys(req.body);
     console.log(theaterUpdates);
-    const allowedUpdates = ['name', 'ticketPrice', 'city', 'seats', 'seatsAvailable'];
+    const allowedUpdates = ['image', 'theaterName', 'ticketPrice', 'city', 'seats', 'seatsAvailable'];
     const isValidOperation = theaterUpdates.every((update) => allowedUpdates.includes(update));
 
     if (!isValidOperation) {
@@ -69,7 +69,7 @@ export const updateTheaterInfo = async(req, res) => {
 export const deleteTheater = async(req, res) => {
     const theaterId = req.params.id;
     try {
-        const theater = await Theater.findByIdAndDelete({ id: theaterId });
+        const theater = await Theater.findByIdAndDelete({ _id: theaterId });
         if (!theater) {
             return res
                 .json({
