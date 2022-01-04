@@ -98,8 +98,8 @@ const AddMovie = (props) => {
     setDirector(data);
   };
 
-  const handleAddMovie = async (e) => {
-    console.log('handleAddMovie');
+  const handleCreateMovie = async (e) => {
+    // console.log('handleCreateMovie');
     // e.preventDefault();
     if (
       title === '' ||
@@ -198,7 +198,7 @@ const AddMovie = (props) => {
 
   const subtitle = prevMovie ? 'Edit Movie' : 'Add Movie';
   const submitButton = prevMovie ? 'Update Movie' : 'Save Movie Info';
-  const submitAction = prevMovie ? handleUpdateMovie : handleAddMovie;
+  const submitAction = prevMovie ? handleUpdateMovie : handleCreateMovie;
 
   return (
     <>

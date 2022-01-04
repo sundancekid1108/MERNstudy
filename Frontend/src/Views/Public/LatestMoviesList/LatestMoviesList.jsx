@@ -33,7 +33,7 @@ const LatestMoviesList = (props) => {
             xs={12}
             direction="column"
             alignItems="center"
-            justify="center"
+            justifyContent="center"
             spacing={2}>
             {latestMovies.map((movie) => (
               <Grid key={movie._id} item className={classes.fullWidth}>

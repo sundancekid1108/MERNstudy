@@ -1,37 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import classNames from 'classnames';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
+import { withStyles } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { SearchInput, ResponsiveDialog } from '../../../../../Components/Index';
-import AddMovie from '../AddMovie/AddMovie';
-import styles from './Styles';
 
-const MovieToolBar = (props) => {
-  // console.log('MovieToolBar props', props);
+// Component styles
+import styles from './Styles';
+import AddTheater from '../AddTheater/AddTheater';
+
+const TheatersToolbar = (props) => {
   const { classes, className } = props;
   const rootClassName = classNames(classes.root, className);
-  const [isOpenAddDialog, setIsOpenAddDialog] = useState(false);
-
-  //popup dialog 열고 닫기
-  const handleCreateDialog = () => {
-    if (isOpenAddDialog === false) {
-      setIsOpenAddDialog(true);
+  const [isOpenDialog, setIsOpenDialog] = useState(false);
+  const handleDialog = () => {
+    if (isOpenDialog == false) {
+      setIsOpenDialog(true);
     } else {
-      setIsOpenAddDialog(false);
+      setIsOpenDialog(false);
     }
   };
-
   return (
     <>
       <div className={rootClassName}>
         <div className={classes.row}>
           <SearchInput
             className={classes.searchInput}
-            placeholder="Search movie"
+            placeholder="Search cinema"
           />
           <Button
-            onClick={handleCreateDialog}
+            onClick={handleDialog}
             color="primary"
             size="small"
             variant="outlined">
@@ -40,18 +38,18 @@ const MovieToolBar = (props) => {
         </div>
       </div>
       <ResponsiveDialog
-        id="Add_Movie"
-        open={isOpenAddDialog}
-        handleClose={handleCreateDialog}>
-        <AddMovie />
+        id="Add-theater"
+        open={isOpenDialog}
+        handleClose={handleDialog}>
+        <AddTheater />
       </ResponsiveDialog>
     </>
   );
 };
 
-MovieToolBar.propTypes = {
+TheatersToolbar.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(MovieToolBar);
+export default withStyles(styles)(TheatersToolbar);

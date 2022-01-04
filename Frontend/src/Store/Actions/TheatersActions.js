@@ -6,7 +6,7 @@ export const getTheatersList = () => async(dispatch) => {
     try {
         const result = await theaterApi.getTheatersList();
         const responseData = result;
-        console.log(responseData);
+        // console.log(responseData);
         if (responseData.status == 200) {
             dispatch({ type: GET_THEATERSLIST, payload: responseData.data });
         } else {

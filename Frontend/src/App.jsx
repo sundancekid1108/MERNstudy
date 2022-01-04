@@ -29,7 +29,7 @@ const NotFound = lazy(() => import('./Views/NotFound/NotFound'));
 const DashboardPage = lazy(() =>
   import('./Views/Admin/DashboardPage/DashboardPage')
 );
-const UserList = lazy(() => import('./Views/Admin/UserList/UserList'));
+const UserList = lazy(() => import('./Views/Admin/UsersList/UserList'));
 const Account = lazy(() => import('./Views/Admin/Account/Account'));
 const Settings = lazy(() => import('./Views/Settings/Settings'));
 const UpdateAccount = lazy(() => import('./Views/UpdateAccount/UpdateAccount'));
@@ -46,6 +46,9 @@ const LatestMoviesList = lazy(() =>
 );
 
 const Theaters = lazy(() => import('./Views/Public/Theaters/Theaters'));
+const TheatersList = lazy(() =>
+  import('./Views/Admin/TheatersList/TheatersList')
+);
 
 const App = () => {
   const history = useHistory();
@@ -107,6 +110,11 @@ const App = () => {
                   exact
                   path="/admin/moviereservationlist"
                   component={MovieReservationList}
+                />
+                <ProtectedRoute
+                  exact
+                  path="/admin/theaters"
+                  component={TheatersList}
                 />
                 <ProtectedRoute
                   exact
