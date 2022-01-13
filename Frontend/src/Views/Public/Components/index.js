@@ -1,5 +1,5 @@
-export { default as LatestMovieList }
-from './LatestMovieList/LatestMovieList';
+export { default as LatestMoviesList }
+from './LatestMoviesList/LatestMoviesList';
 export { default as MovieBanner }
 from './MovieBanner/MovieBanner';
 export { default as MovieCard }

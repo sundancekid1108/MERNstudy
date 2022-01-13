@@ -26,7 +26,7 @@ const TheatersList = (props) => {
     dispatch(getTheatersList());
 
     // setTheaters(results);
-  }, []);
+  }, [theaters.length]);
 
   const handleEditDialog = (e) => {
     if (isOpenEditDialog == false) {

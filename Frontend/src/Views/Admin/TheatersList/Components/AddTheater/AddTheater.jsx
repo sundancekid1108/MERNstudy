@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { withStyles, Button, TextField, Typography } from '@material-ui/core';
 import {
   Portlet,
@@ -10,6 +11,7 @@ import {
   PortletFooter
 } from '../../../../../Components/Index';
 import * as TheaterApi from '../../../../../Api/TheaterApi/TheaterApi';
+import * as TheatersActions from '../../../../../Store/Actions/TheatersActions';
 import styles from './Styles';
 import { Add } from '@material-ui/icons';
 
@@ -25,7 +27,7 @@ const AddTheater = (props) => {
   const [status, setStatus] = useState('');
   const [infoMessage, setInfoMessage] = useState('');
 
-  const [seatLength, setSeatLength] = useState(0);
+  const dispatch = useDispatch();
 
   const prevTheater = editTheater;
   console.log('prevTheater', prevTheater);
@@ -63,31 +65,31 @@ const AddTheater = (props) => {
       setStatus('fail');
       setInfoMessage('Check The Empty Fields');
     } else {
-      // seats = seats.filter((el) => {
-      //   if (el.length !== 0) {
-      //     return el;
-      //   }
-      // });
       try {
-        const res = await TheaterApi.createTheater(
-          image,
-          theaterName,
-          ticketPrice,
-          city,
-          seats,
-          seatsAvailable
+        const res = await dispatch(
+          TheatersActions.createTheater(
+            image,
+            theaterName,
+            ticketPrice,
+            city,
+            seats,
+            seatsAvailable
+          )
         );
+
+        console.log(res);
         setStatus('success');
         setInfoMessage('Theater Info have been saved.');
+        dispatch(TheatersActions.getTheatersList());
       } catch (error) {
         setStatus('fail');
         setInfoMessage('Theater Info have not been saved, try again.');
       }
     }
   };
+
   const handleUpdateTheater = async () => {
     const id = prevTheater._id;
-    console.log('handleUpdateTheater');
     if (
       theaterName === '' ||
       ticketPrice === '' ||
@@ -100,30 +102,36 @@ const AddTheater = (props) => {
       setInfoMessage('Check The Empty Fields');
     } else {
       try {
-        const res = await TheaterApi.updateTheaterInfo(
-          id,
-          theaterName,
-          ticketPrice,
-          city,
-          seats,
-          seatsAvailable,
-          image
+        const res = await dispatch(
+          TheatersActions.updateTheater(
+            id,
+            image,
+            theaterName,
+            ticketPrice,
+            city,
+            seats,
+            seatsAvailable
+          )
         );
         console.log(res);
         setStatus('success');
         setInfoMessage('Theater Info have been saved.');
+        dispatch(TheatersActions.getTheatersList());
       } catch (error) {
         setStatus('fail');
         setInfoMessage('Theater Info have not been saved, try again.');
       }
     }
   };
+
   const handleDeleteTheater = async () => {
     const id = prevTheater._id;
     try {
-      const res = await TheaterApi.deleteTheaterInfo(id);
+      const res = await dispatch(TheatersActions.deleteTheater(id));
+
       setStatus('success');
       setInfoMessage('Delete Success');
+      dispatch(TheatersActions.getTheatersList());
       return res;
     } catch (error) {
       setStatus('fail');
@@ -131,18 +139,11 @@ const AddTheater = (props) => {
     }
   };
 
+  const onsubmitAction = () => {};
+
   //극장 좌석 라인 추가
   const addSeatLow = () => {
-    console.log('addSeatLow');
-    // const newSeats = [...prevTheater.seats, []];
-    // setSeats(newSeats);
-    if (prevTheater) {
-      setSeats([...prevTheater.seats, []]);
-    } else {
-      setSeats([...seats, []]);
-      // console.log(seats);
-    }
-    console.log(seats);
+    setSeats([...seats, []]);
   };
 
   //라인별 좌석 개수 추가
@@ -150,11 +151,9 @@ const AddTheater = (props) => {
     console.log('handleSeatsChange', index, value);
     // if (value > 20) return;
     const newSeats = [...seats];
-
     newSeats[index] = Array.from({ length: value }, () => 0);
-
     const testSeats = newSeats.filter((x) => x.length > 0);
-
+    // const testSeats = newSeats;
     setSeats(testSeats);
   };
 
@@ -259,35 +258,6 @@ const AddTheater = (props) => {
               />
             </div>
             {renderSeats()}
-            {/* <div className={classes.field}>
-              <Button onClick={addSeatLow}>
-                <Add />
-                add Seats
-              </Button>
-            </div>
-            {seats.length > 0 &&
-              seats.map((seat, index) => (
-                <div className={classes.field}>
-                  <TextField
-                    key={`new-seat-${index}`}
-                    className={classes.textField}
-                    label={
-                      'Add number of seats for row : ' +
-                      (index + 10).toString(36).toUpperCase()
-                    }
-                    margin="dense"
-                    required
-                    value={seatLength}
-                    variant="outlined"
-                    type="number"
-                    inputProps={{
-                      min: 0,
-                      max: 20
-                    }}
-                    onChange={(e) => handleSeatsChange(index, e.target.value)}
-                  />
-                </div>
-              ))} */}
           </form>
         </PortletContent>
         <PortletFooter className={classes.portletFooter}>
@@ -335,7 +305,6 @@ const AddTheater = (props) => {
 AddTheater.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired
-  // Theater: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(AddTheater);

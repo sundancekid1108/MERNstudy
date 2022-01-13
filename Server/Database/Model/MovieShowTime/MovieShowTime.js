@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const ShowingMovieInfoSchema = new Schema({
+const movieShowTimeSchema = new Schema({
     startAt: {
         type: String,
         required: true,
@@ -20,12 +20,12 @@ const ShowingMovieInfoSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Movie',
     },
-    TheaterId: {
+    theaterId: {
         type: Schema.Types.ObjectId,
         ref: 'Theater',
     },
 }, { timestamps: true }, { versionKey: false });
 
-const ShowingMovieInfo = mongoose.model('ShowingMovieInfo', ShowingMovieInfoSchema);
+const MovieShowTime = mongoose.model('MovieShowTime', movieShowTimeSchema);
 
-export default ShowingMovieInfo;
+export default MovieShowTime;

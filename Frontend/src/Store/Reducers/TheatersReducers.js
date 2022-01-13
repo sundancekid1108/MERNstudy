@@ -1,4 +1,9 @@
-import { GET_THEATERSLIST } from '../Types/Index';
+import {
+    GET_THEATERSLIST,
+    CREATE_THEATER,
+    UPDATE_THEATER,
+    DELETE_THEATER
+} from '../Types/Index';
 
 const initialState = {
     theaters: []
