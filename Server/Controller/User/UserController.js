@@ -43,7 +43,20 @@ export const getCurrentUserInfo = async(req, res) => {
         const currentuser = await User.findById(userId);
 
         // console.log('currentuser : ', currentuser);
-        return res.json(currentuser).status(200);
+        return res
+            .json({
+                profilePic: currentuser.profilePic,
+                phoneNumber: currentuser.phonenumber,
+                userId: currentuser.id,
+                userEmail: currentuser.email,
+                userName: currentuser.username,
+                userFirstName: currentuser.firstname,
+                userLastName: currentuser.lastname,
+                isAdmin: currentuser.isAdmin,
+                role: currentuser.role,
+            })
+            .status(200);
+        // return res.json(currentuser).status(200);
     } catch (err) {
         console.log(err);
         return res.json(err);
@@ -292,6 +305,8 @@ export const postUserLogin = async(req, res) => {
                     accessToken: null;
                 }
                 return res.status(200).json({
+                    profilePic: LoginSuccessUser.profilePic,
+                    phoneNumber: LoginSuccessUser.phonenumber,
                     userId: LoginSuccessUser.id,
                     userEmail: LoginSuccessUser.email,
                     userName: LoginSuccessUser.username,
@@ -339,6 +354,8 @@ export const facebookAuthLogin = async(req, res) => {
                         accessToken: null;
                     }
                     return res.status(200).json({
+                        profilePic: existedUser.profilePic,
+                        phoneNumber: existedUser.phonenumber,
                         userId: existedUser.id,
                         userEmail: existedUser.email,
                         userName: existedUser.username,
@@ -378,6 +395,9 @@ export const facebookAuthLogin = async(req, res) => {
                         accessToken: null;
                     }
                     return res.status(200).json({
+                        profilePic: facebookAuthUser.profilePic,
+                        phoneNumber: facebookAuthUser.phonenumber,
+
                         userId: facebookAuthUser.id,
                         userEmail: facebookAuthUser.email,
                         userName: facebookAuthUser.username,
@@ -427,6 +447,8 @@ export const googleAuthLogin = async(req, res) => {
                         accessToken: null;
                     }
                     return res.status(200).json({
+                        profilePic: existedUser.profilePic,
+                        phoneNumber: existedUser.phonenumber,
                         userId: existedUser.id,
                         userEmail: existedUser.email,
                         userName: existedUser.username,
@@ -468,6 +490,8 @@ export const googleAuthLogin = async(req, res) => {
                         accessToken: null;
                     }
                     return res.status(200).json({
+                        profilePic: googleAuthUser.profilePic,
+                        phoneNumber: googleAuthUser.phonenumber,
                         userId: googleAuthUser.id,
                         userEmail: googleAuthUser.email,
                         userName: googleAuthUser.username,

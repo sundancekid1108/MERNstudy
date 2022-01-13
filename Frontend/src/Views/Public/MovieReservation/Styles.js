@@ -84,6 +84,9 @@ export default (theme) => ({
         }
     },
     [theme.breakpoints.down('sm')]: {
-        seat: { padding: theme.spacing(0.8), margin: theme.spacing(0.5) }
+        seat: { padding: theme.spacing(0.8), margin: theme.spacing(0.5) },
+        info: { display: 'none' },
+        background: { height: '100%' },
+        title: { top: '80%' }
     }
 });

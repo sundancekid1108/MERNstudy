@@ -33,7 +33,7 @@ const UserList = lazy(() => import('./Views/Admin/UsersList/UserList'));
 const Account = lazy(() => import('./Views/Admin/Account/Account'));
 const Settings = lazy(() => import('./Views/Settings/Settings'));
 const UpdateAccount = lazy(() => import('./Views/UpdateAccount/UpdateAccount'));
-const MovieList = lazy(() => import('./Views/Admin/MovieList/MovieList'));
+const MoviesList = lazy(() => import('./Views/Admin/MoviesList/MoviesList'));
 const MovieInfo = lazy(() => import('./Views/Public/MovieInfo/MovieInfo'));
 const MovieReservation = lazy(() =>
   import('./Views/Public/MovieReservation/MovieReservation')
@@ -84,7 +84,7 @@ const App = () => {
                 <Route exact path="/signin" component={SignIn} />
                 <Route exact path="/signup" component={SignUp} />
                 <Route exact path="/adminsignup" component={AdminSignUp} />
-                <Route exact path="/admin/movies" component={MovieList} />
+                <Route exact path="/admin/movies" component={MoviesList} />
                 {/* 분리 */}
                 <ProtectedRoute
                   exact

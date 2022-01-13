@@ -12,7 +12,7 @@ import Dashboard from '../../../Layouts/Dashboard/Dashboard';
 import AddMovie from './Components/AddMovie/AddMovie';
 import styles from './Styles';
 
-const MovieList = (props) => {
+const MoviesList = (props) => {
   const { classes, ...rest } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [editDialog, setEditDialog] = useState(false);
@@ -104,8 +104,8 @@ const MovieList = (props) => {
   }
 };
 
-MovieList.propTypes = {
+MoviesList.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(MovieList);
+export default withStyles(styles)(MoviesList);

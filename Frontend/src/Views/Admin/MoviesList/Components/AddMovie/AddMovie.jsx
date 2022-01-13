@@ -228,8 +228,10 @@ const AddMovie = (props) => {
                 value={genre}
                 variant="outlined"
                 onChange={onChangeGenre}>
-                {genreData.map((genreItem) => (
-                  <MenuItem value={genreItem}>{genreItem}</MenuItem>
+                {genreData.map((genreItem, index) => (
+                  <MenuItem key={genreItem + '-' + index} value={genreItem}>
+                    {genreItem}
+                  </MenuItem>
                 ))}
               </TextField>
             </div>
@@ -313,7 +315,6 @@ const AddMovie = (props) => {
               <MuiPickersUtilsProvider utils={MomentUtils}>
                 <KeyboardDatePicker
                   autoOk
-                  //openTo="year"
                   margin="normal"
                   id="release-date"
                   label="Release Date"
@@ -328,7 +329,6 @@ const AddMovie = (props) => {
               <MuiPickersUtilsProvider utils={MomentUtils}>
                 <KeyboardDatePicker
                   autoOk
-                  //openTo="year"
                   margin="normal"
                   id="end-date"
                   label="End Date"
@@ -384,6 +384,6 @@ export default withStyles(styles)(AddMovie);
  * 중요: material-ui-pickers v3의 경우 @date-io 어댑터의 v1.x 버전을 사용하십시오 .
  *
  *
- * MovieList에서 어떻게 prevMovie Data를 전달받는지 다시 확인
+ * MoviesList 어떻게 prevMovie Data를 전달받는지 다시 확인
  * 이를통해 하나의 페이지로, add, edit 구현
  */

@@ -5,7 +5,7 @@ import userRouter from './Routes/User/UserRouter';
 import movieRouter from './Routes/Movie/MovieRouter';
 import movieReservationRouter from './Routes/MovieReservation/MovieReservationRouter';
 import theaterRouter from './Routes/Theater/TheaterRouter';
-import showingMovieInfoRouter from './Routes/ShowingMovieInfo/ShowingMovieInfo';
+import movieShowTimeRouter from './Routes/MovieShowTime/MovieShowTimeRouter';
 
 const router = express.Router();
 
@@ -21,7 +21,7 @@ router.use('/users', userRouter);
 //Movie관련 API
 router.use('/movies', movieRouter);
 
-router.use('/showingmovieinfo', showingMovieInfoRouter);
+router.use('/movieshowtime', movieShowTimeRouter);
 
 router.use('/moviereservation', movieReservationRouter);
 
@@ -32,12 +32,12 @@ router.use('/theater', theaterRouter);
 router.use((err, req, res, next) => {
     if (err.status === 404) {
         console.log(err);
-        res.status(404).send({ response: '404' });
+        return res.status(404).send({ response: '404' });
     }
 
     if (err.status === 500) {
         console.log(err);
-        res.status(500).send({ response: '500' });
+        return res.status(500).send({ response: '500' });
     }
 });
 

@@ -50,21 +50,29 @@ export const getTheaterInfo = async(id) => {
 
 export const updateTheaterInfo = async(
     id,
+    image,
     theaterName,
     ticketPrice,
     city,
     seats,
-    seatsAvailable,
-    image
+    seatsAvailable
 ) => {
     const token = authHeader();
+    // const body = {
+    //     theaterName: theaterName,
+    //     ticketPrice: ticketPrice,
+    //     city: city,
+    //     seats: seats,
+    //     seatsAvailable: seatsAvailable,
+    //     image: image
+    // };
     const body = {
-        theaterName: theaterName,
-        ticketPrice: ticketPrice,
-        city: city,
-        seats: seats,
-        seatsAvailable: seatsAvailable,
-        image: image
+        image,
+        theaterName,
+        ticketPrice,
+        city,
+        seats,
+        seatsAvailable
     };
     console.log('updateTheaterInfobody', body);
     console.log(id);
