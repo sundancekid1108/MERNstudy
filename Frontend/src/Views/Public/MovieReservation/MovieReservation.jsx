@@ -41,7 +41,7 @@ const MovieReservation = (props) => {
   const [selectedTheater, setSelectedTheater] = useState('');
   const [selectedMovieShowTime, setSelectedMovieShowTime] = useState('');
 
-  const [seatsAvailable, setSeatsAvailable] = useState(100);
+  const [seatsAvailable, setSeatsAvailable] = useState('');
 
   const history = useHistory();
   const movieId = props.match.params.id;
@@ -167,6 +167,7 @@ const MovieReservation = (props) => {
     const data = e.target.value;
     setSelectedTheater(data);
     setTheaterSeats(data.seats);
+    setSeatsAvailable(data.seatsAvailable);
   };
 
   const getFilteredTheater = () => {
@@ -182,6 +183,8 @@ const MovieReservation = (props) => {
   };
 
   const filteredTheatersList = getFilteredTheater();
+
+  //test
 
   useEffect(() => {
     // getUserInfo();
@@ -307,134 +310,140 @@ const MovieReservation = (props) => {
                   </Grid>
                 </Grid>
               )}
-              <Box width={1} pt={15}>
-                {selectedTheater.seats != null &&
-                  selectedTheater.seats.map((seatRows, indexRow) => (
-                    <div key={indexRow} className={classes.row}>
-                      {seatRows.map((seat, index) => (
-                        <Box
-                          key={`seat-${index}`}
-                          onClick={() => handleUserSelectSeats(indexRow, index)}
-                          className={classes.seat}
-                          bgcolor={
-                            seat === 1
-                              ? 'rgb(65, 66, 70)'
-                              : seat === 2
-                              ? 'rgb(120, 205, 4)'
-                              : 'rgb(96, 93, 169)'
-                          }>
-                          {index + 1}
-                        </Box>
+              {seatsAvailable && (
+                <>
+                  <Box width={1} pt={15}>
+                    {selectedTheater.seats != null &&
+                      selectedTheater.seats.map((seatRows, indexRow) => (
+                        <div key={indexRow} className={classes.row}>
+                          {seatRows.map((seat, index) => (
+                            <Box
+                              key={`seat-${index}`}
+                              onClick={() =>
+                                handleUserSelectSeats(indexRow, index)
+                              }
+                              className={classes.seat}
+                              bgcolor={
+                                seat === 1
+                                  ? 'rgb(65, 66, 70)'
+                                  : seat === 2
+                                  ? 'rgb(120, 205, 4)'
+                                  : 'rgb(96, 93, 169)'
+                              }>
+                              {index + 1}
+                            </Box>
+                          ))}
+                        </div>
                       ))}
-                    </div>
-                  ))}
-              </Box>
+                  </Box>
+                  <Box width={1} mt={10}>
+                    <Box
+                      width="50%"
+                      margin="auto"
+                      display="flex"
+                      alignItems="center"
+                      textAlign="center"
+                      color="#eee">
+                      <div>
+                        <Box
+                          mr={1}
+                          display="inline-block"
+                          width={10}
+                          height={10}
+                          bgcolor="rgb(96, 93, 169)"
+                        />
+                        Seat Available
+                      </div>
+                      <div>
+                        <Box
+                          mr={1}
+                          ml={2}
+                          display="inline-block"
+                          width={10}
+                          height={10}
+                          bgcolor="rgb(65, 66, 70)"
+                        />
+                        Reserved Seat
+                      </div>
+                      <div>
+                        <Box
+                          mr={1}
+                          ml={2}
+                          display="inline-block"
+                          width={10}
+                          height={10}
+                          bgcolor="rgb(120, 205, 4)"
+                        />
+                        Your Seat
+                      </div>
+                    </Box>
+                  </Box>
 
-              <Box width={1} mt={10}>
-                <Box
-                  width="50%"
-                  margin="auto"
-                  display="flex"
-                  alignItems="center"
-                  textAlign="center"
-                  color="#eee">
-                  <div>
-                    <Box
-                      mr={1}
-                      display="inline-block"
-                      width={10}
-                      height={10}
-                      bgcolor="rgb(96, 93, 169)"
-                    />
-                    Seat Available
-                  </div>
-                  <div>
-                    <Box
-                      mr={1}
-                      ml={2}
-                      display="inline-block"
-                      width={10}
-                      height={10}
-                      bgcolor="rgb(65, 66, 70)"
-                    />
-                    Reserved Seat
-                  </div>
-                  <div>
-                    <Box
-                      mr={1}
-                      ml={2}
-                      display="inline-block"
-                      width={10}
-                      height={10}
-                      bgcolor="rgb(120, 205, 4)"
-                    />
-                    Your Seat
-                  </div>
-                </Box>
-              </Box>
-              <Box marginTop={2} bgcolor="rgb(18, 20, 24)">
-                <Grid container>
-                  <Grid item xs={10}>
-                    <Grid container spacing={3} style={{ padding: 20 }}>
-                      <Grid item>
-                        <Typography className={classes.bannerTitle}>
-                          Name
-                        </Typography>
-                        <Typography className={classes.bannerContent}>
-                          {userInfo ? userInfo.userName : ''}
-                        </Typography>
+                  <Box marginTop={2} bgcolor="rgb(18, 20, 24)">
+                    <Grid container>
+                      <Grid item xs={10}>
+                        <Grid container spacing={3} style={{ padding: 20 }}>
+                          <Grid item>
+                            <Typography className={classes.bannerTitle}>
+                              Name
+                            </Typography>
+                            <Typography className={classes.bannerContent}>
+                              {userInfo ? userInfo.userName : ''}
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <Typography className={classes.bannerTitle}>
+                              Tickets
+                            </Typography>
+                            {selectedSeatsList.length > 0 ? (
+                              <Typography className={classes.bannerContent}>
+                                {selectedSeatsList.length} tickets
+                              </Typography>
+                            ) : (
+                              <Typography className={classes.bannerContent}>
+                                {'  '}
+                                {' - '}
+                              </Typography>
+                            )}
+                          </Grid>
+                          <Grid item>
+                            <Typography className={classes.bannerTitle}>
+                              Price
+                            </Typography>
+                            {!selectedTheater ? (
+                              <Typography className={classes.bannerContent}>
+                                0 $
+                              </Typography>
+                            ) : (
+                              <Typography className={classes.bannerContent}>
+                                {selectedTheater.ticketPrice *
+                                  selectedSeatsList.length}{' '}
+                                $
+                              </Typography>
+                            )}
+                          </Grid>
+                        </Grid>
                       </Grid>
-                      <Grid item>
-                        <Typography className={classes.bannerTitle}>
-                          Tickets
-                        </Typography>
-                        {selectedSeatsList.length > 0 ? (
-                          <Typography className={classes.bannerContent}>
-                            {selectedSeatsList.length} tickets
-                          </Typography>
-                        ) : (
-                          <Typography className={classes.bannerContent}>
-                            {'  '}
-                            {' - '}
-                          </Typography>
-                        )}
-                      </Grid>
-                      <Grid item>
-                        <Typography className={classes.bannerTitle}>
-                          Price
-                        </Typography>
-                        {!selectedTheater ? (
-                          <Typography className={classes.bannerContent}>
-                            0 $
-                          </Typography>
-                        ) : (
-                          <Typography className={classes.bannerContent}>
-                            {selectedTheater.ticketPrice *
-                              selectedSeatsList.length}{' '}
-                            $
-                          </Typography>
-                        )}
+                      <Grid
+                        item
+                        xs={2}
+                        style={{
+                          color: 'rgb(120, 205, 4)',
+                          background: 'black',
+                          display: 'flex'
+                        }}>
+                        <Button
+                          color="inherit"
+                          fullWidth
+                          disabled={seatsAvailable <= 0}
+                          onClick={() => handleMovieReservation()}>
+                          Checkout
+                        </Button>
                       </Grid>
                     </Grid>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={2}
-                    style={{
-                      color: 'rgb(120, 205, 4)',
-                      background: 'black',
-                      display: 'flex'
-                    }}>
-                    <Button
-                      color="inherit"
-                      fullWidth
-                      disabled={seatsAvailable <= 0}
-                      onClick={() => handleMovieReservation()}>
-                      Checkout
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Box>
+                  </Box>
+                </>
+              )}
             </Grid>
           </Grid>
         </Container>
