@@ -170,46 +170,89 @@ const MovieReservation = (props) => {
     setSeatsAvailable(data.seatsAvailable);
   };
 
-  const getFilteredTheater = () => {
-    const filteredTheatersId = movieShowTimeList
-      .map((movieShowTime) => movieShowTime.theaterId)
-      .filter((value, index, self) => self.indexOf(value) == index);
+  // const getFilteredTheater = () => {
+  //   const filteredTheatersId = movieShowTimeList
+  //     .map((movieShowTime) => movieShowTime.theaterId)
+  //     .filter((value, index, self) => self.indexOf(value) == index);
 
-    console.log(filteredTheatersId);
-    const data = theatersList.filter((theater) =>
-      filteredTheatersId.includes(theater._id)
-    );
-    return data;
-  };
+  //   const data = theatersList.filter((theater) =>
+  //     filteredTheatersId.includes(theater._id)
+  //   );
+  //   return data;
+  // };
 
-  const filteredTheatersList = getFilteredTheater();
+  // const filteredTheatersList = getFilteredTheater();
 
   //test
+  const onFiltertheater = () => {
+    console.log('movieShowTimeList', movieShowTimeList);
+    console.log('theatersList', theatersList);
+    console.log('selectedMovieShowTime', selectedMovieShowTime);
+    console.log('selectedTheater', selectedTheater);
+
+    const initialReturn = {
+      filteredTheatersList: null,
+      filtteredMovieShowTimeList: null
+    };
+
+    if (!movieShowTimeList || !theatersList) return initialReturn;
+
+    const filteredTheatersId = movieShowTimeList
+      .filter((movieShowTime) =>
+        selectedMovieShowTime
+          ? movieShowTime.startAt === selectedMovieShowTime.startAt
+          : true
+      )
+      .map((movieShowTime) => movieShowTime.theaterId)
+      .filter((value, index, self) => self.indexOf(value) === index);
+
+    console.log('filteredTheatersId', filteredTheatersId);
+
+    const filteredTheatersList = theatersList.filter((theater) =>
+      filteredTheatersId.includes(theater._id)
+    );
+
+    const filtteredMovieShowTimeList = movieShowTimeList
+      .filter((movieShowTime) =>
+        selectedTheater ? selectedTheater._id === movieShowTime.theaterId : true
+      )
+      .map((movieShowTime) => movieShowTime)
+      .filter((value, index, self) => self.indexOf(value) === index)
+      .sort(
+        (a, b) => new Date('1970/01/01 ' + a) - new Date('1970/01/01 ' + b)
+      );
+
+    return {
+      ...initialReturn,
+      filteredTheatersList,
+      filtteredMovieShowTimeList
+    };
+  };
+  const { filteredTheatersList, filtteredMovieShowTimeList } =
+    onFiltertheater();
 
   useEffect(() => {
-    // getUserInfo();
     getMovieShowTimeList();
     getMovieInfo();
 
     getTheatersList();
-    // setUniqueCinemas(result);
-    // getFilteredTheater();
 
     return () => {};
   }, []);
 
   // console.log('movie', movie);
-  console.log('theatersList', theatersList);
-  console.log('movieShowTimeList', movieShowTimeList);
-  console.log('filteredTheatersList', filteredTheatersList);
+  // console.log('theatersList', theatersList);
+  // console.log('movieShowTimeList', movieShowTimeList);
+  // console.log('selectedMovieShowTime', selectedMovieShowTime);
+  // console.log('selectedTheater', selectedTheater);
+  // console.log('filteredTheatersList', filteredTheatersList);
   // console.log('selectedSeatsList', selectedSeatsList);
   // console.log('selectedSeatsList.lengh', selectedSeatsList.length);
   // console.log('userInfo ', userInfo);
 
-  console.log('selectedTheater', selectedTheater);
-  console.log('theaterSeats', theaterSeats);
-  console.log('selectedMovieShowTime', selectedMovieShowTime);
-  console.log('movie', movie);
+  console.log('filteredTheatersList', filteredTheatersList);
+  console.log('filtteredMovieShowTimeList', filtteredMovieShowTimeList);
+
   return (
     <>
       <div className={classes.root}>
@@ -294,18 +337,18 @@ const MovieReservation = (props) => {
                       onChange={(e) =>
                         setSelectedMovieShowTime(e.target.value)
                       }>
-                      {movieShowTimeList
-                        .filter(
-                          (movieShowTime) =>
-                            movieShowTime.theaterId == selectedTheater._id
-                        )
-                        .map((movieShowTime) => (
-                          <MenuItem
-                            key={movieShowTime._id}
-                            value={movieShowTime}>
-                            {movieShowTime.startAt}
-                          </MenuItem>
-                        ))}
+                      {/* {filtteredMovieShowTimeList.map((movieShowTime) => (
+                        <MenuItem
+                          key={movieShowTime._id}
+                          value={movieShowTime.startAt}>
+                          {movieShowTime.startAt}
+                        </MenuItem>
+                      ))} */}
+                      {filtteredMovieShowTimeList.map((movieShowTime) => (
+                        <MenuItem key={movieShowTime._id} value={movieShowTime}>
+                          {movieShowTime.startAt}
+                        </MenuItem>
+                      ))}
                     </TextField>
                   </Grid>
                 </Grid>
