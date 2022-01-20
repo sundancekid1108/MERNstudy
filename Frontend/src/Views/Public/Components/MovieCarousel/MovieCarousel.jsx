@@ -5,6 +5,7 @@ import { makeStyles, withStyles, Typography, Button } from '@material-ui/core';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import MovieCard from '../MovieCard/MovieCard';
 import MovieCardTest from '../MovieCardTest/MovieCardTest';
 import { ArrowBackIos, ArrowForwardIos } from '@material-ui/icons';
 import styles from './Styles';
@@ -32,14 +33,20 @@ const PrevArrow = (props) => {
 };
 
 const MovieCarousel = (props) => {
-  const { classes, carouselClass, title, movies } = props;
-  // const to = '/';
+  const { classes, carouselClass, title, movies, to = '/' } = props;
+  // console.log('MovieCarousel movie', movies);
+
+  const MAX_SLIDE = 3;
   const settings = {
     centerMode: true,
-    swipeToSlide: true,
-    infinite: true,
+    slidesToShow: MAX_SLIDE,
+    infinite: movies.length >= MAX_SLIDE,
     speed: 500,
-    slidesToShow: 4,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    lazyLoad: true,
+    swipeToSlide: true,
+
     nextArrow: <NextArrow classes={classes} />,
     prevArrow: <PrevArrow classes={classes} />,
     responsive: [
@@ -64,7 +71,17 @@ const MovieCarousel = (props) => {
     ]
   };
   if (!movies) {
-    return <>No Movies Info</>;
+    return (
+      <>
+        <div className={carouselClass}>
+          <div className={classes.container}>
+            <Typography className={classes.h2} variant="h2" color="inherit">
+              No Movies Info
+            </Typography>
+          </div>
+        </div>
+      </>
+    );
   } else {
     return (
       <div className={carouselClass}>
@@ -72,9 +89,7 @@ const MovieCarousel = (props) => {
           <Typography className={classes.h2} variant="h2" color="inherit">
             {title}
           </Typography>
-          <Link
-            to={'/movie/category/latestmovies'}
-            style={{ textDecoration: 'none' }}>
+          <Link to={to} style={{ textDecoration: 'none' }} movies={movies}>
             <Button className={classes.button} color="primary">
               Explore All
             </Button>

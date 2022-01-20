@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withStyles, Typography } from '@material-ui/core';
-import textTruncate from '../../../../../Utils/TextTruncate/TextTruncate';
+import textTruncate from '../../../../Utils/TextTruncate/TextTruncate';
 import styles from './Styles';
 
 const MovieCard = (props) => {

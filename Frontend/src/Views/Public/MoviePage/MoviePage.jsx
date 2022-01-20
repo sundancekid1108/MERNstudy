@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withStyles, Typography, Box } from '@material-ui/core';
+import { withStyles, Typography, Box, Grid } from '@material-ui/core';
 import styles from './Styles';
 import PublicNavbar from '../../../Layouts/Public/Components/Navbar/Navbar';
 import MovieBanner from '../Components/MovieBanner/MovieBanner';
 import MovieCarousel from '../Components/MovieCarousel/MovieCarousel';
-import { getMoviesList } from '../../../Store/Actions/Index';
+import * as MovieAction from '../../../Store/Actions/MoviesActions';
 
 const MoviePage = (props) => {
   const { classes } = props;
@@ -14,12 +14,19 @@ const MoviePage = (props) => {
   const isAuth = useSelector((state) => state.auth.isAuthenticated);
   const movies = useSelector((state) => state.movies.movies);
   const latestMovies = useSelector((state) => state.movies.latestMovies);
+  const nowShowingMovies = useSelector((state) => state.movies.nowShowing);
+  const comingSoonMovies = useSelector((state) => state.movies.comingSoon);
+
+  const getMoviesList = () => {
+    dispatch(MovieAction.getMoviesList());
+  };
 
   useEffect(() => {
-    dispatch(getMoviesList());
+    getMoviesList();
   }, []);
 
-  // console.log(movies, latestMovies);
+  console.log('nowShowingMovies', nowShowingMovies);
+  console.log('comingSoonMovies', comingSoonMovies);
   if (!movies) {
     return (
       <>
@@ -38,21 +45,18 @@ const MoviePage = (props) => {
           <PublicNavbar />
           <MovieBanner movie={movies[0]} height="70vh" />
           <Box height={100} />
+
           <MovieCarousel
             carouselClass={classes.carousel}
-            title="Latest Movies"
-            to="/movie/category/latestmovies"
-            movies={latestMovies}
+            title="Now Showing"
+            to="/movie/category/nowShowing"
+            movies={nowShowingMovies}
           />
           <MovieCarousel
             carouselClass={classes.carousel}
-            title="Popular Movies"
-            movies={movies}
-          />
-          <MovieCarousel
-            carouselClass={classes.carousel}
-            title="Now Playing Movies"
-            movies={movies}
+            title="Coming Soon"
+            to="/movie/category/comingSoon"
+            movies={comingSoonMovies}
           />
         </div>
       </>

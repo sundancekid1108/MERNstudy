@@ -41,7 +41,7 @@ const MovieReservation = (props) => {
   const [selectedTheater, setSelectedTheater] = useState('');
   const [selectedMovieShowTime, setSelectedMovieShowTime] = useState('');
 
-  const [seatsAvailable, setSeatsAvailable] = useState(100);
+  const [seatsAvailable, setSeatsAvailable] = useState('');
 
   const history = useHistory();
   const movieId = props.match.params.id;
@@ -167,46 +167,92 @@ const MovieReservation = (props) => {
     const data = e.target.value;
     setSelectedTheater(data);
     setTheaterSeats(data.seats);
+    setSeatsAvailable(data.seatsAvailable);
   };
 
-  const getFilteredTheater = () => {
-    const filteredTheatersId = movieShowTimeList
-      .map((movieShowTime) => movieShowTime.theaterId)
-      .filter((value, index, self) => self.indexOf(value) == index);
+  // const getFilteredTheater = () => {
+  //   const filteredTheatersId = movieShowTimeList
+  //     .map((movieShowTime) => movieShowTime.theaterId)
+  //     .filter((value, index, self) => self.indexOf(value) == index);
 
-    console.log(filteredTheatersId);
-    const data = theatersList.filter((theater) =>
+  //   const data = theatersList.filter((theater) =>
+  //     filteredTheatersId.includes(theater._id)
+  //   );
+  //   return data;
+  // };
+
+  // const filteredTheatersList = getFilteredTheater();
+
+  //test
+  const onFiltertheater = () => {
+    console.log('movieShowTimeList', movieShowTimeList);
+    console.log('theatersList', theatersList);
+    console.log('selectedMovieShowTime', selectedMovieShowTime);
+    console.log('selectedTheater', selectedTheater);
+
+    const initialReturn = {
+      filteredTheatersList: [],
+      filtteredMovieShowTimeList: []
+    };
+
+    if (!movieShowTimeList || !theatersList) return initialReturn;
+
+    const filteredTheatersId = movieShowTimeList
+      .filter((movieShowTime) =>
+        selectedMovieShowTime
+          ? movieShowTime.startAt === selectedMovieShowTime.startAt
+          : true
+      )
+      .map((movieShowTime) => movieShowTime.theaterId)
+      .filter((value, index, self) => self.indexOf(value) === index);
+
+    console.log('filteredTheatersId', filteredTheatersId);
+
+    const filteredTheatersList = theatersList.filter((theater) =>
       filteredTheatersId.includes(theater._id)
     );
-    return data;
-  };
 
-  const filteredTheatersList = getFilteredTheater();
+    const filtteredMovieShowTimeList = movieShowTimeList
+      .filter((movieShowTime) =>
+        selectedTheater ? selectedTheater._id === movieShowTime.theaterId : true
+      )
+      .map((movieShowTime) => movieShowTime)
+      .filter((value, index, self) => self.indexOf(value) === index)
+      .sort(
+        (a, b) => new Date('1970/01/01 ' + a) - new Date('1970/01/01 ' + b)
+      );
+
+    return {
+      ...initialReturn,
+      filteredTheatersList,
+      filtteredMovieShowTimeList
+    };
+  };
+  const { filteredTheatersList, filtteredMovieShowTimeList } =
+    onFiltertheater();
 
   useEffect(() => {
-    // getUserInfo();
     getMovieShowTimeList();
     getMovieInfo();
 
     getTheatersList();
-    // setUniqueCinemas(result);
-    // getFilteredTheater();
 
     return () => {};
   }, []);
 
   // console.log('movie', movie);
-  console.log('theatersList', theatersList);
-  console.log('movieShowTimeList', movieShowTimeList);
-  console.log('filteredTheatersList', filteredTheatersList);
+  // console.log('theatersList', theatersList);
+  // console.log('movieShowTimeList', movieShowTimeList);
+  // console.log('selectedMovieShowTime', selectedMovieShowTime);
+  // console.log('selectedTheater', selectedTheater);
+  // console.log('filteredTheatersList', filteredTheatersList);
   // console.log('selectedSeatsList', selectedSeatsList);
   // console.log('selectedSeatsList.lengh', selectedSeatsList.length);
   // console.log('userInfo ', userInfo);
 
-  console.log('selectedTheater', selectedTheater);
-  console.log('theaterSeats', theaterSeats);
-  console.log('selectedMovieShowTime', selectedMovieShowTime);
-  console.log('movie', movie);
+  console.log('filteredTheatersList', filteredTheatersList);
+  console.log('filtteredMovieShowTimeList', filtteredMovieShowTimeList);
+
   return (
     <>
       <div className={classes.root}>
@@ -261,7 +307,7 @@ const MovieReservation = (props) => {
               </Grid>
             )}
             <Grid item lg={9} xs={12} md={12}>
-              {filteredTheatersList.length > 0 && (
+              {filteredTheatersList.length > 0 ? (
                 <Grid container spacing={3}>
                   <Grid item xs={6}>
                     <TextField
@@ -280,161 +326,175 @@ const MovieReservation = (props) => {
                       ))}
                     </TextField>
                   </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      fullWidth
-                      select
-                      defaultValue={''}
-                      value={selectedMovieShowTime}
-                      label="Select Time"
-                      variant="outlined"
-                      onChange={(e) =>
-                        setSelectedMovieShowTime(e.target.value)
-                      }>
-                      {movieShowTimeList
-                        .filter(
-                          (movieShowTime) =>
-                            movieShowTime.theaterId == selectedTheater._id
-                        )
-                        .map((movieShowTime) => (
+                  {selectedTheater && (
+                    <Grid item xs={6}>
+                      <TextField
+                        fullWidth
+                        select
+                        defaultValue={''}
+                        value={selectedMovieShowTime}
+                        label="Select Time"
+                        variant="outlined"
+                        onChange={(e) =>
+                          setSelectedMovieShowTime(e.target.value)
+                        }>
+                        {filtteredMovieShowTimeList.map((movieShowTime) => (
                           <MenuItem
                             key={movieShowTime._id}
                             value={movieShowTime}>
                             {movieShowTime.startAt}
                           </MenuItem>
                         ))}
-                    </TextField>
-                  </Grid>
+                      </TextField>
+                    </Grid>
+                  )}
                 </Grid>
-              )}
-              <Box width={1} pt={15}>
-                {selectedTheater.seats != null &&
-                  selectedTheater.seats.map((seatRows, indexRow) => (
-                    <div key={indexRow} className={classes.row}>
-                      {seatRows.map((seat, index) => (
-                        <Box
-                          key={`seat-${index}`}
-                          onClick={() => handleUserSelectSeats(indexRow, index)}
-                          className={classes.seat}
-                          bgcolor={
-                            seat === 1
-                              ? 'rgb(65, 66, 70)'
-                              : seat === 2
-                              ? 'rgb(120, 205, 4)'
-                              : 'rgb(96, 93, 169)'
-                          }>
-                          {index + 1}
-                        </Box>
-                      ))}
-                    </div>
-                  ))}
-              </Box>
-
-              <Box width={1} mt={10}>
+              ) : (
                 <Box
-                  width="50%"
-                  margin="auto"
                   display="flex"
+                  width={1}
+                  height={1}
                   alignItems="center"
-                  textAlign="center"
-                  color="#eee">
-                  <div>
-                    <Box
-                      mr={1}
-                      display="inline-block"
-                      width={10}
-                      height={10}
-                      bgcolor="rgb(96, 93, 169)"
-                    />
-                    Seat Available
-                  </div>
-                  <div>
-                    <Box
-                      mr={1}
-                      ml={2}
-                      display="inline-block"
-                      width={10}
-                      height={10}
-                      bgcolor="rgb(65, 66, 70)"
-                    />
-                    Reserved Seat
-                  </div>
-                  <div>
-                    <Box
-                      mr={1}
-                      ml={2}
-                      display="inline-block"
-                      width={10}
-                      height={10}
-                      bgcolor="rgb(120, 205, 4)"
-                    />
-                    Your Seat
-                  </div>
+                  justifyContent="center">
+                  <Typography align="center" variant="h2" color="inherit">
+                    No Theater List.
+                  </Typography>
                 </Box>
-              </Box>
-              <Box marginTop={2} bgcolor="rgb(18, 20, 24)">
-                <Grid container>
-                  <Grid item xs={10}>
-                    <Grid container spacing={3} style={{ padding: 20 }}>
-                      <Grid item>
-                        <Typography className={classes.bannerTitle}>
-                          Name
-                        </Typography>
-                        <Typography className={classes.bannerContent}>
-                          {userInfo ? userInfo.userName : ''}
-                        </Typography>
+              )}
+              {selectedTheater && selectedMovieShowTime && (
+                <>
+                  <Box width={1} pt={15}>
+                    {selectedTheater.seats != null &&
+                      selectedTheater.seats.map((seatRows, indexRow) => (
+                        <div key={indexRow} className={classes.row}>
+                          {seatRows.map((seat, index) => (
+                            <Box
+                              key={`seat-${index}`}
+                              onClick={() =>
+                                handleUserSelectSeats(indexRow, index)
+                              }
+                              className={classes.seat}
+                              bgcolor={
+                                seat === 1
+                                  ? 'rgb(65, 66, 70)'
+                                  : seat === 2
+                                  ? 'rgb(120, 205, 4)'
+                                  : 'rgb(96, 93, 169)'
+                              }>
+                              {index + 1}
+                            </Box>
+                          ))}
+                        </div>
+                      ))}
+                  </Box>
+                  <Box width={1} mt={10}>
+                    <Box
+                      width="50%"
+                      margin="auto"
+                      display="flex"
+                      alignItems="center"
+                      textAlign="center"
+                      color="#eee">
+                      <div>
+                        <Box
+                          mr={1}
+                          display="inline-block"
+                          width={10}
+                          height={10}
+                          bgcolor="rgb(96, 93, 169)"
+                        />
+                        Seat Available
+                      </div>
+                      <div>
+                        <Box
+                          mr={1}
+                          ml={2}
+                          display="inline-block"
+                          width={10}
+                          height={10}
+                          bgcolor="rgb(65, 66, 70)"
+                        />
+                        Reserved Seat
+                      </div>
+                      <div>
+                        <Box
+                          mr={1}
+                          ml={2}
+                          display="inline-block"
+                          width={10}
+                          height={10}
+                          bgcolor="rgb(120, 205, 4)"
+                        />
+                        Your Seat
+                      </div>
+                    </Box>
+                  </Box>
+
+                  <Box marginTop={2} bgcolor="rgb(18, 20, 24)">
+                    <Grid container>
+                      <Grid item xs={10}>
+                        <Grid container spacing={3} style={{ padding: 20 }}>
+                          <Grid item>
+                            <Typography className={classes.bannerTitle}>
+                              Name
+                            </Typography>
+                            <Typography className={classes.bannerContent}>
+                              {userInfo ? userInfo.userName : ''}
+                            </Typography>
+                          </Grid>
+                          <Grid item>
+                            <Typography className={classes.bannerTitle}>
+                              Tickets
+                            </Typography>
+                            {selectedSeatsList.length > 0 ? (
+                              <Typography className={classes.bannerContent}>
+                                {selectedSeatsList.length} tickets
+                              </Typography>
+                            ) : (
+                              <Typography className={classes.bannerContent}>
+                                {'  '}
+                                {' - '}
+                              </Typography>
+                            )}
+                          </Grid>
+                          <Grid item>
+                            <Typography className={classes.bannerTitle}>
+                              Price
+                            </Typography>
+                            {!selectedTheater ? (
+                              <Typography className={classes.bannerContent}>
+                                0 $
+                              </Typography>
+                            ) : (
+                              <Typography className={classes.bannerContent}>
+                                {selectedTheater.ticketPrice *
+                                  selectedSeatsList.length}{' '}
+                                $
+                              </Typography>
+                            )}
+                          </Grid>
+                        </Grid>
                       </Grid>
-                      <Grid item>
-                        <Typography className={classes.bannerTitle}>
-                          Tickets
-                        </Typography>
-                        {selectedSeatsList.length > 0 ? (
-                          <Typography className={classes.bannerContent}>
-                            {selectedSeatsList.length} tickets
-                          </Typography>
-                        ) : (
-                          <Typography className={classes.bannerContent}>
-                            {'  '}
-                            {' - '}
-                          </Typography>
-                        )}
-                      </Grid>
-                      <Grid item>
-                        <Typography className={classes.bannerTitle}>
-                          Price
-                        </Typography>
-                        {!selectedTheater ? (
-                          <Typography className={classes.bannerContent}>
-                            0 $
-                          </Typography>
-                        ) : (
-                          <Typography className={classes.bannerContent}>
-                            {selectedTheater.ticketPrice *
-                              selectedSeatsList.length}{' '}
-                            $
-                          </Typography>
-                        )}
+                      <Grid
+                        item
+                        xs={2}
+                        style={{
+                          color: 'rgb(120, 205, 4)',
+                          background: 'black',
+                          display: 'flex'
+                        }}>
+                        <Button
+                          color="inherit"
+                          fullWidth
+                          disabled={seatsAvailable <= 0}
+                          onClick={() => handleMovieReservation()}>
+                          Checkout
+                        </Button>
                       </Grid>
                     </Grid>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={2}
-                    style={{
-                      color: 'rgb(120, 205, 4)',
-                      background: 'black',
-                      display: 'flex'
-                    }}>
-                    <Button
-                      color="inherit"
-                      fullWidth
-                      disabled={seatsAvailable <= 0}
-                      onClick={() => handleMovieReservation()}>
-                      Checkout
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Box>
+                  </Box>
+                </>
+              )}
             </Grid>
           </Grid>
         </Container>

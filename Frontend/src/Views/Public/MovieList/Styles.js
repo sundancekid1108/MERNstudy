@@ -7,6 +7,7 @@ export default (theme) => ({
     title: {
         fontSize: '3rem',
         lineHeight: '3rem',
+        textTransform: 'capitalize',
         textAlign: 'center',
         marginTop: theme.spacing(15),
         marginBottom: theme.spacing(3)

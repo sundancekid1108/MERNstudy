@@ -62,19 +62,19 @@ const Navbar = (props) => {
           </Typography>
         </Link>
         <div className={classes.navLinks}>
-          {}
+          <Link className={classes.navLink} to="/">
+            Home
+          </Link>
           <Link className={classes.navLink} to="/movie/category/latestmovies">
             Latest Movies
           </Link>
-          <Link className={classes.navLink} to="/admin/userslist">
-            Users
+          <Link className={classes.navLink} to="/movie/category/nowShowing">
+            Now Showing
           </Link>
-          <Link className={classes.navLink} to="/admin/account">
-            Account
+          <Link className={classes.navLink} to="/movie/category/comingSoon">
+            Coming Soon
           </Link>
-          <Link className={classes.navLink} to="/admin/dashboard">
-            Dashboard
-          </Link>
+
           <Link className={classes.navLink} to="/theaters">
             Theaters
           </Link>
@@ -84,9 +84,15 @@ const Navbar = (props) => {
             </Link>
           )}
           {isAuth && (
-            <Link className={classes.navLink} onClick={handleLogOut} to="/">
-              Log Out
-            </Link>
+            <>
+              <Link className={classes.navLink} to="/admin/dashboard">
+                Dashboard
+              </Link>
+
+              <Link className={classes.navLink} onClick={handleLogOut} to="/">
+                Log Out
+              </Link>
+            </>
           )}
         </div>
         <div className={classes.navBtn} onClick={handleShowMenu}>
