@@ -45,6 +45,7 @@ const MoviePage = (props) => {
           <PublicNavbar />
           <MovieBanner movie={movies[0]} height="70vh" />
           <Box height={100} />
+
           <MovieCarousel
             carouselClass={classes.carousel}
             title="Now Showing"
@@ -57,12 +58,6 @@ const MoviePage = (props) => {
             to="/movie/category/comingSoon"
             movies={comingSoonMovies}
           />
-          {false && (
-            <Grid container style={{ height: 500 }}>
-              <Grid item xs={7} style={{ background: '#131334' }}></Grid>
-              <Grid item xs={5} style={{ background: '#010025' }}></Grid>
-            </Grid>
-          )}
         </div>
       </>
     );

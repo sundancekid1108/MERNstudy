@@ -4,8 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "client": "cd client && yarn start",
-        "server": "cd server && yarn start",
+        "Frontend": "cd Frontend && yarn start",
+        "Server": "cd Server && yarn start",
         "start": "concurrently --kill-others \"npm run database\" \"npm run server\" \"npm run client\""
     },
     "repository": {
