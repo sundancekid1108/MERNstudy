@@ -41,8 +41,8 @@ const MovieReservation = lazy(() =>
 const MovieReservationList = lazy(() =>
   import('./Views/Admin/MovieReservationList/MovieReservationList')
 );
-const LatestMoviesList = lazy(() =>
-  import('./Views/Public/LatestMoviesList/LatestMoviesList')
+const PublicMovieList = lazy(() =>
+  import('./Views/Public/MovieList/MovieList')
 );
 
 const Theaters = lazy(() => import('./Views/Public/Theaters/Theaters'));
@@ -76,8 +76,8 @@ const App = () => {
                 />
                 <Route
                   exact
-                  path="/movie/category/latestmovies"
-                  component={LatestMoviesList}
+                  path="/movie/category/:category"
+                  component={PublicMovieList}
                 />
                 <Route exact path="/theaters" component={Theaters} />
                 <Route exact path="/feed" component={Feed} />

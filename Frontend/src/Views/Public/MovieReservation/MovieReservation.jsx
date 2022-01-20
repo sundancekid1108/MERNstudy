@@ -191,8 +191,8 @@ const MovieReservation = (props) => {
     console.log('selectedTheater', selectedTheater);
 
     const initialReturn = {
-      filteredTheatersList: null,
-      filtteredMovieShowTimeList: null
+      filteredTheatersList: [],
+      filtteredMovieShowTimeList: []
     };
 
     if (!movieShowTimeList || !theatersList) return initialReturn;
@@ -307,7 +307,7 @@ const MovieReservation = (props) => {
               </Grid>
             )}
             <Grid item lg={9} xs={12} md={12}>
-              {filteredTheatersList.length > 0 && (
+              {filteredTheatersList.length > 0 ? (
                 <Grid container spacing={3}>
                   <Grid item xs={6}>
                     <TextField
@@ -326,34 +326,42 @@ const MovieReservation = (props) => {
                       ))}
                     </TextField>
                   </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      fullWidth
-                      select
-                      defaultValue={''}
-                      value={selectedMovieShowTime}
-                      label="Select Time"
-                      variant="outlined"
-                      onChange={(e) =>
-                        setSelectedMovieShowTime(e.target.value)
-                      }>
-                      {/* {filtteredMovieShowTimeList.map((movieShowTime) => (
-                        <MenuItem
-                          key={movieShowTime._id}
-                          value={movieShowTime.startAt}>
-                          {movieShowTime.startAt}
-                        </MenuItem>
-                      ))} */}
-                      {filtteredMovieShowTimeList.map((movieShowTime) => (
-                        <MenuItem key={movieShowTime._id} value={movieShowTime}>
-                          {movieShowTime.startAt}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
+                  {selectedTheater && (
+                    <Grid item xs={6}>
+                      <TextField
+                        fullWidth
+                        select
+                        defaultValue={''}
+                        value={selectedMovieShowTime}
+                        label="Select Time"
+                        variant="outlined"
+                        onChange={(e) =>
+                          setSelectedMovieShowTime(e.target.value)
+                        }>
+                        {filtteredMovieShowTimeList.map((movieShowTime) => (
+                          <MenuItem
+                            key={movieShowTime._id}
+                            value={movieShowTime}>
+                            {movieShowTime.startAt}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
+                  )}
                 </Grid>
+              ) : (
+                <Box
+                  display="flex"
+                  width={1}
+                  height={1}
+                  alignItems="center"
+                  justifyContent="center">
+                  <Typography align="center" variant="h2" color="inherit">
+                    No Theater List.
+                  </Typography>
+                </Box>
               )}
-              {seatsAvailable && (
+              {selectedTheater && selectedMovieShowTime && (
                 <>
                   <Box width={1} pt={15}>
                     {selectedTheater.seats != null &&

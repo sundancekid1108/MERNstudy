@@ -32,7 +32,8 @@ const PrevArrow = (props) => {
 };
 
 const MovieCarousel = (props) => {
-  const { classes, carouselClass, title, movies } = props;
+  const { classes, carouselClass, title, movies, to = '/' } = props;
+  console.log('MovieCarousel movie', movies);
   // const to = '/';
   const settings = {
     centerMode: true,
@@ -72,9 +73,7 @@ const MovieCarousel = (props) => {
           <Typography className={classes.h2} variant="h2" color="inherit">
             {title}
           </Typography>
-          <Link
-            to={'/movie/category/latestmovies'}
-            style={{ textDecoration: 'none' }}>
+          <Link to={to} style={{ textDecoration: 'none' }} movies={movies}>
             <Button className={classes.button} color="primary">
               Explore All
             </Button>
