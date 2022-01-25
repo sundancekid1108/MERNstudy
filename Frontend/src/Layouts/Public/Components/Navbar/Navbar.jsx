@@ -5,7 +5,7 @@ import { withStyles, Button, Typography } from '@material-ui/core';
 import classnames from 'classnames';
 import styles from './Styles';
 import { useDispatch, useSelector } from 'react-redux';
-import * as AuthActions from '../../../../Store/Actions/AuthActions';
+import * as AuthAction from '../../../../Store/Actions/AuthAction';
 import logoImg from '../../../../Images/logo.jpg';
 
 const Navbar = (props) => {
@@ -25,7 +25,7 @@ const Navbar = (props) => {
   };
 
   const handleLogOut = (e) => {
-    dispatch(AuthActions.userLogOut());
+    dispatch(AuthAction.userLogOut());
 
     history.push('/signin');
   };

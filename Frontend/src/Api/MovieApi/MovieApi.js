@@ -52,17 +52,15 @@ export const getMovieInfo = async(id) => {
     }
 };
 
-export const getMoviesList = async() => {
+export const getMovieList = async() => {
     const token = authHeader();
     try {
         const movieListData = await api.get('/movies/movieslist', {
             headers: token
         });
-        console.log('getMoviesListData: ', movieListData);
-        console.log('getMoviesListData: ', movieListData.ok);
         return movieListData;
     } catch (error) {
-        console.log('getMoviesListError: ', error);
+        console.log('getMovieListError: ', error);
         return error;
     }
 };
@@ -113,7 +111,7 @@ export const deleteMovie = async(id) => {
         });
         return res;
     } catch (error) {
-        console.log('getMoviesListError: ', error);
+        console.log('getMovieListError: ', error);
         return error;
     }
 };

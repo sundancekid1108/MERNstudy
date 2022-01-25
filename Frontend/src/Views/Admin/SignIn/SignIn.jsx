@@ -18,7 +18,7 @@ import styles from './Styles.js';
 
 //Redux test
 import { useDispatch, useSelector } from 'react-redux';
-import * as AuthActions from '../../../Store/Actions/AuthActions';
+import * as AuthAction from '../../../Store/Actions/AuthAction';
 
 const SignIn = (props) => {
   const { classes, user } = props;
@@ -69,7 +69,7 @@ const SignIn = (props) => {
   };
 
   const callbackFacebookAuthLogin = (response) => {
-    dispatch(AuthActions.userFacebookAuthLogin(response))
+    dispatch(AuthAction.userFacebookAuthLogin(response))
       .then((response) => {
         console.log(response.data.isAdmin);
         if (response.data.isAdmin == true) {
@@ -89,7 +89,7 @@ const SignIn = (props) => {
 
   const googleAuthSuccess = async (response) => {
     userApi.userGoogleAuthLogin(response);
-    dispatch(AuthActions.userGoogleAuthLogin(response))
+    dispatch(AuthAction.userGoogleAuthLogin(response))
       .then((response) => {
         console.log(response.data.isAdmin);
         if (response.data.isAdmin == true) {
@@ -115,7 +115,7 @@ const SignIn = (props) => {
     */
 
   const handleSignIn = () => {
-    dispatch(AuthActions.userSignIn(userEmail, userPassword))
+    dispatch(AuthAction.userSignIn(userEmail, userPassword))
       .then((response) => {
         console.log(response.data.isAdmin);
         if (response.data.isAdmin === true) {

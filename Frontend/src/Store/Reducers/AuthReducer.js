@@ -15,7 +15,7 @@ const initialState = {
     user: null
 };
 
-const authReducers = (state = initialState, action) => {
+const AuthReducer = (state = initialState, action) => {
     const { type, payload } = action;
     switch (type) {
         case SIGN_IN_SUCCESS:
@@ -48,4 +48,4 @@ const authReducers = (state = initialState, action) => {
     }
 };
 
-export default authReducers;
+export default AuthReducer;

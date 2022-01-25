@@ -11,7 +11,7 @@ import {
   PortletFooter
 } from '../../../../../Components/Index';
 import * as TheaterApi from '../../../../../Api/TheaterApi/TheaterApi';
-import * as TheatersActions from '../../../../../Store/Actions/TheatersActions';
+import * as TheaterAction from '../../../../../Store/Actions/TheaterAction';
 import styles from './Styles';
 import { Add } from '@material-ui/icons';
 
@@ -67,7 +67,7 @@ const AddTheater = (props) => {
     } else {
       try {
         const res = await dispatch(
-          TheatersActions.createTheater(
+          TheaterAction.createTheater(
             image,
             theaterName,
             ticketPrice,
@@ -80,7 +80,7 @@ const AddTheater = (props) => {
         console.log(res);
         setStatus('success');
         setInfoMessage('Theater Info have been saved.');
-        dispatch(TheatersActions.getTheatersList());
+        dispatch(TheaterAction.getTheaterList());
       } catch (error) {
         setStatus('fail');
         setInfoMessage('Theater Info have not been saved, try again.');
@@ -103,7 +103,7 @@ const AddTheater = (props) => {
     } else {
       try {
         const res = await dispatch(
-          TheatersActions.updateTheater(
+          TheaterAction.updateTheater(
             id,
             image,
             theaterName,
@@ -116,7 +116,7 @@ const AddTheater = (props) => {
         console.log(res);
         setStatus('success');
         setInfoMessage('Theater Info have been saved.');
-        dispatch(TheatersActions.getTheatersList());
+        dispatch(TheaterAction.getTheaterList());
       } catch (error) {
         setStatus('fail');
         setInfoMessage('Theater Info have not been saved, try again.');
@@ -127,11 +127,11 @@ const AddTheater = (props) => {
   const handleDeleteTheater = async () => {
     const id = prevTheater._id;
     try {
-      const res = await dispatch(TheatersActions.deleteTheater(id));
+      const res = await dispatch(TheaterAction.deleteTheater(id));
 
       setStatus('success');
       setInfoMessage('Delete Success');
-      dispatch(TheatersActions.getTheatersList());
+      dispatch(TheaterAction.getTheaterList());
       return res;
     } catch (error) {
       setStatus('fail');

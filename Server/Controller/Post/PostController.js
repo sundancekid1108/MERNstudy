@@ -45,7 +45,7 @@ export const createPost = async(req, res) => {
     await post
         .save()
         .then((result) => {
-            res.json(result).status(201);
+            res.json(result).status(200);
         })
         .catch((err) => {
             res.json({ response: 'createPost Error' }).status(500);

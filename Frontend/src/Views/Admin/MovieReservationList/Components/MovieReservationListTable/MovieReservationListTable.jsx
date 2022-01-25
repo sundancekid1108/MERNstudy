@@ -15,7 +15,8 @@ import styles from './Styles';
 
 const MovieReservationListTable = (props) => {
   console.log(props);
-  const { classes, className, MovieReservationList } = props;
+  const { classes, className, MovieReservationList, MovieList, TheaterList } =
+    props;
   const rootClassName = classNames(classes.root, className);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
@@ -29,6 +30,11 @@ const MovieReservationListTable = (props) => {
     setRowsPerPage(e.target.value);
     setPage(0);
     // console.log('handleChangeRowsPerPage');
+  };
+
+  const filterAttr = (id, list, attr) => {
+    const item = list.find((item) => item._id === id);
+    return item ? item[attr] : `Not ${attr} Found`;
   };
 
   return (
@@ -58,10 +64,15 @@ const MovieReservationListTable = (props) => {
                     {movieReservation.startAt}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {movieReservation.movieId}
+                    {/* {movieReservation.movieId} */}
+                    {filterAttr(movieReservation.movieId, MovieList, 'title')}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {movieReservation.theaterId}
+                    {filterAttr(
+                      movieReservation.theaterId,
+                      TheaterList,
+                      'theaterName'
+                    )}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
                     {movieReservation.ticketPrice}
@@ -96,6 +107,8 @@ const MovieReservationListTable = (props) => {
 
 MovieReservationListTable.defaultProps = {
   MovieReservationList: [],
+  MovieList: [],
+  TheaterList: [],
   onSelect: () => {},
   onShowDetails: () => {}
 };
@@ -105,7 +118,9 @@ MovieReservationListTable.propTypes = {
   classes: PropTypes.object.isRequired,
   onSelect: PropTypes.func,
   onShowDetails: PropTypes.func,
-  MovieReservationList: PropTypes.array
+  MovieReservationList: PropTypes.array,
+  movies: PropTypes.array.isRequired,
+  theaters: PropTypes.array.isRequired
 };
 
 export default withStyles(styles)(MovieReservationListTable);

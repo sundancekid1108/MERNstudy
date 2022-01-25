@@ -1,10 +1,10 @@
 import { GET_THEATERSLIST } from '../Types/Index';
-import { setAlert } from './AlertActions';
+import { setAlert } from './AlertAction';
 import * as theaterApi from '../../Api/TheaterApi/TheaterApi';
 
-export const getTheatersList = () => async(dispatch) => {
+export const getTheaterList = () => async(dispatch) => {
     try {
-        const result = await theaterApi.getTheatersList();
+        const result = await theaterApi.getTheaterList();
         const responseData = result;
         // console.log(responseData);
         if (responseData.status == 200) {
@@ -30,7 +30,7 @@ export const createTheater =
                 seatsAvailable
             );
             console.log('createTheater', result);
-            dispatch(setAlert('Create Theater Info', 'success', 3000));
+            dispatch(setAlert('Create Theater Data', 'success', 3000));
         } catch (error) {
             dispatch(setAlert('Failed to Create Theater Info', 'error', 3000));
         }

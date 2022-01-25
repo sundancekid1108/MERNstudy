@@ -12,18 +12,13 @@ import styles from './Styles';
 
 //Redux test
 import { useDispatch, useSelector } from 'react-redux';
-import * as AuthActions from '../../../../Store/Actions/AuthActions';
+import * as AuthAction from '../../../../Store/Actions/AuthAction';
 import { connect } from 'react-redux';
 
 const Topbar = (props) => {
   // console.log('topbar props', props);
-  const {
-    classes,
-    ToolbarClasses,
-    children,
-    isSidebarOpen,
-    onToggleSidebar
-  } = props;
+  const { classes, ToolbarClasses, children, isSidebarOpen, onToggleSidebar } =
+    props;
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -40,7 +35,7 @@ const Topbar = (props) => {
   ///=======
 
   const handleLogOut = (e) => {
-    dispatch(AuthActions.userLogOut());
+    dispatch(AuthAction.userLogOut());
 
     history.push('/signin');
   };
