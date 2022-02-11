@@ -10,7 +10,7 @@ export const createMovieReservation = async(req, res) => {
     const movieReservationData = new MovieReservation(req.body);
     try {
         await movieReservationData.save();
-        return res.status(201).json(movieReservationData);
+        return res.status(200).json(movieReservationData);
     } catch (error) {
         return res.status(400).json(error);
     }
@@ -24,7 +24,7 @@ export const getMovieReservationList = async(req, res) => {
                 _id: -1,
             },
         });
-        return res.json(movieReservationList).status(201);
+        return res.json(movieReservationList).status(200);
     } catch (error) {
         return res.json(error).status(400);
     }
@@ -36,7 +36,7 @@ export const getMovieReservationInfo = async(req, res) => {
     try {
         const movieReservationInfo = await MovieReservation.findById(movieReservationId);
         if (movieReservationInfo) {
-            return res.satus(201).json(movieReservationInfo);
+            return res.satus(200).json(movieReservationInfo);
         } else {
             return res.status(400).json({ response: 'NO MovieReservationInfo' });
         }
@@ -65,7 +65,7 @@ export const updateMovieReservation = async(req, res) => {
         if (!movieReservation) {
             return res.status(400).json({ response: 'No MovieReservationInfo' });
         } else {
-            return res.satus(201).json(movieReservation);
+            return res.satus(200).json(movieReservation);
         }
     } catch (error) {
         return res.status(400).json(error);

@@ -17,7 +17,7 @@ const removeAlert = (state, { payload }) => ({
     showAlert: false
 });
 
-const alertReducers = (state = initialState, action) => {
+const AlertReducer = (state = initialState, action) => {
     const { type } = action;
     switch (type) {
         case SET_ALERT:
@@ -29,4 +29,4 @@ const alertReducers = (state = initialState, action) => {
     }
 };
 
-export default alertReducers;
+export default AlertReducer;

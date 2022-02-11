@@ -5,8 +5,7 @@
     "main": "index.js",
     "scripts": {
         "Frontend": "cd Frontend && yarn start",
-        "Server": "cd Server && yarn start",
-        "start": "concurrently --kill-others \"npm run database\" \"npm run server\" \"npm run client\""
+        "Server": "cd Server && yarn start"
     },
     "repository": {
         "type": "git"

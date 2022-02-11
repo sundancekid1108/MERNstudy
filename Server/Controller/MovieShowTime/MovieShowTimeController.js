@@ -9,7 +9,7 @@ export const createMovieShowTime = async(req, res) => {
     const movieShowTime = new MovieShowTime(req.body);
     try {
         await movieShowTime.save();
-        return res.status(201).json(movieShowTime);
+        return res.status(200).json(movieShowTime);
     } catch (error) {
         return res.status(400).json(error);
     }
@@ -36,7 +36,7 @@ export const getMovieShowTimeInfo = async(req, res) => {
     try {
         const MovieShowTime = await MovieShowTime.findById(id);
         if (MovieShowTime) {
-            return res.json(MovieShowTime).satus(201);
+            return res.json(MovieShowTime).satus(200);
         } else {
             return res.json({ response: 'NO MovieShowTime' }).status(400);
         }
@@ -61,7 +61,7 @@ export const updateMovieShowTime = async(req, res) => {
         if (!MovieShowTime) {
             return res.status(400).json({ response: 'NO MovieShowTime' });
         } else {
-            return res.satus(201).json(MovieShowTime);
+            return res.satus(200).json(MovieShowTime);
         }
     } catch (error) {
         return res.status(400).json(error);

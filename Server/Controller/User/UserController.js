@@ -1,5 +1,5 @@
 import User from '../../Database/Model/User/User';
-import * as validateSignInData from '../../Middleware/Validation/signinValidation';
+import * as validateSignInData from '../../Middleware/Validation/signInValidation';
 import * as validateLogInData from '../../Middleware/Validation/loginValidation';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -149,7 +149,7 @@ export const createUser = async(req, res) => {
             newUser
                 .save()
                 .then((result) => {
-                    res.status(201).json(result);
+                    res.status(200).json(result);
                 })
                 .catch((error) => {
                     res.status(400).json(error);

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withStyles, Grid, Typography, Container } from '@material-ui/core';
 import Navbar from '../../../Layouts/Public/Components/Navbar/Navbar';
 import TheaterCard from '../Components/TheaterCard/TheaterCard';
-import { getTheatersList } from '../../../Store/Actions/Index';
+import { getTheaterList } from '../../../Store/Actions/Index';
 import styles from './Styles';
 
 const Theaters = (props) => {
@@ -13,7 +13,7 @@ const Theaters = (props) => {
   const theaters = useSelector((state) => state.theaters.theaters);
 
   useEffect(() => {
-    dispatch(getTheatersList());
+    dispatch(getTheaterList());
   }, []);
 
   return (

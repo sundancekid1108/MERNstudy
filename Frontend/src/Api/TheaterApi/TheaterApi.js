@@ -1,7 +1,7 @@
 import api from '../axiosApi';
 import authHeader from '../authHeader';
 
-export const getTheatersList = async() => {
+export const getTheaterList = async() => {
     const token = authHeader();
     try {
         const res = await api.get('/theater/theaters/', {

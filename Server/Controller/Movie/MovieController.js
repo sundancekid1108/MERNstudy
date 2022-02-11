@@ -15,15 +15,15 @@ export const createMovie = async(req, res) => {
         console.log('createMovie MovieData :', movieData);
         try {
             await movieData.save();
-            return res.status(201).json(movieData);
+            return res.status(200).json(movieData);
         } catch (error) {
             return res.status(400).json(error);
         }
     }
 };
 
-//getMoviesList(영화리스트조회)
-export const getMoviesList = async(req, res) => {
+//getMovieList(영화리스트조회)
+export const getMovieList = async(req, res) => {
     try {
         const movieList = await Movie.find({}, null, {
             sort: {
@@ -46,7 +46,7 @@ export const getMovieInfo = async(req, res) => {
     try {
         const movie = await Movie.findById(movieId);
         // console.log(movie);
-        return res.status(201).json(movie);
+        return res.status(200).json(movie);
     } catch (error) {
         return res.status(400).json(error);
     }

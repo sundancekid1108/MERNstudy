@@ -6,7 +6,7 @@ import styles from './Styles';
 import PublicNavbar from '../../../Layouts/Public/Components/Navbar/Navbar';
 import MovieBanner from '../Components/MovieBanner/MovieBanner';
 import MovieCarousel from '../Components/MovieCarousel/MovieCarousel';
-import * as MovieAction from '../../../Store/Actions/MoviesActions';
+import * as MovieAction from '../../../Store/Actions/MovieAction';
 
 const MoviePage = (props) => {
   const { classes } = props;
@@ -17,12 +17,12 @@ const MoviePage = (props) => {
   const nowShowingMovies = useSelector((state) => state.movies.nowShowing);
   const comingSoonMovies = useSelector((state) => state.movies.comingSoon);
 
-  const getMoviesList = () => {
-    dispatch(MovieAction.getMoviesList());
+  const getMovieList = () => {
+    dispatch(MovieAction.getMovieList());
   };
 
   useEffect(() => {
-    getMoviesList();
+    getMovieList();
   }, []);
 
   console.log('nowShowingMovies', nowShowingMovies);

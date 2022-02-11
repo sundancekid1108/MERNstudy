@@ -1,13 +1,14 @@
-import { GET_MOVIESLIST } from '../Types/Index';
+import { GET_MOVIESLIST, GET_MOVIE_INFO } from '../Types/Index';
 
 const initialState = {
     movies: [],
     latestMovies: [],
     nowShowing: [],
-    comingSoon: []
+    comingSoon: [],
+    movieInfo: []
 };
 
-const moviesReducers = (state = initialState, action) => {
+const MoviesReducer = (state = initialState, action) => {
     const { type, payload } = action;
 
     switch (type) {
@@ -27,9 +28,14 @@ const moviesReducers = (state = initialState, action) => {
                     (movie) => new Date(movie.releaseDate) > new Date()
                 )
             };
+        case GET_MOVIE_INFO:
+            return {
+                ...state,
+                movieInfo: payload.data
+            };
         default:
             return state;
     }
 };
 
-export default moviesReducers;
+export default MoviesReducer;

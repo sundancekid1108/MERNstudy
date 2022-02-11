@@ -9,7 +9,7 @@ import styles from './Styles';
 import Dashboard from '../../../Layouts/Dashboard/Dashboard';
 import AddTheater from './Components/AddTheater/AddTheater';
 import TheaterCard from '../../Public/Components/TheaterCard/TheaterCard';
-import { getTheatersList } from '../../../Store/Actions/Index';
+import { getTheaterList } from '../../../Store/Actions/Index';
 
 const TheatersList = (props) => {
   const { classes } = props;
@@ -23,7 +23,7 @@ const TheatersList = (props) => {
   // const results = useSelector((state) => state.theaters.theaters);
   const theaters = useSelector((state) => state.theaters.theaters);
   useEffect(() => {
-    dispatch(getTheatersList());
+    dispatch(getTheaterList());
 
     // setTheaters(results);
   }, [theaters.length]);

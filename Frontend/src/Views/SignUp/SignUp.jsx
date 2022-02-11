@@ -13,7 +13,7 @@ import {
 import { ArrowBack as ArrowBackIcon } from '@material-ui/icons';
 import * as userApi from '../../Api/UserApi/UserApi';
 import { useDispatch, useSelector } from 'react-redux';
-import * as AuthActions from '../../Store/Actions/AuthActions';
+import * as AuthAction from '../../Store/Actions/AuthAction';
 import styles from './Styles';
 
 const SignUp = (props) => {
@@ -160,7 +160,7 @@ const SignUp = (props) => {
 
       try {
         const result = await dispatch(
-          AuthActions.userSignUp(
+          AuthAction.userSignUp(
             userName,
             userEmail,
             userFirstName,
@@ -171,7 +171,7 @@ const SignUp = (props) => {
         );
 
         console.log('dispatch result', result);
-        if (result.status !== 201) {
+        if (result.status !== 200) {
           setErrorMessage(result.data.response);
         } else {
           history.push('/signin');

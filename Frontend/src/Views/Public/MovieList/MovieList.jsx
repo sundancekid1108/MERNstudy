@@ -4,7 +4,7 @@ import { withStyles, Grid, Typography } from '@material-ui/core';
 import Navbar from '../../../Layouts/Public/Components/Navbar/Navbar';
 import styles from './Styles';
 import ResponsiveMovieCard from '../Components/ResponsiveMovieCard/ResponsiveMovieCard';
-import * as MovieAction from '../../../Store/Actions/MoviesActions';
+import * as MovieAction from '../../../Store/Actions/MovieAction';
 
 const MovieList = (props) => {
   console.log('MovielistProps', props);
@@ -14,11 +14,11 @@ const MovieList = (props) => {
   const latestMovies = useSelector((state) => state.movies.latestMovies);
   const category = props.match.params.category;
 
-  const getMoviesList = () => {
-    dispatch(MovieAction.getMoviesList());
+  const getMovieList = () => {
+    dispatch(MovieAction.getMovieList());
   };
   useEffect(() => {
-    getMoviesList();
+    getMovieList();
   }, []);
 
   console.log('category', category);

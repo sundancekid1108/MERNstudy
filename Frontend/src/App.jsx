@@ -16,7 +16,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from './Theme/Index';
 import Alert from './Layouts/Alert/Alert';
 import ProtectedRoute from './Routes/ProtectedRoute/ProtectedRoute';
-import * as AuthActions from './Store/Actions/AuthActions';
+import * as AuthAction from './Store/Actions/AuthAction';
 import store from './Store/Index';
 import Loading from './Components/Loading/Loading';
 
@@ -55,7 +55,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(AuthActions.getLoginUserInfo());
+    dispatch(AuthAction.getLoginUserInfo());
   }, []);
 
   return (

@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
-import alertReducers from './AlertReducers';
-import authReducers from './AuthReducers';
-import moviesReducers from './MoviesReducers';
-import theatersReducers from './TheatersReducers';
+import AlertReducer from './AlertReducer';
+import AuthReducer from './AuthReducer';
+import MovieReducer from './MovieReducer';
+import TheaterReducer from './TheaterReducer';
 
-const alert = alertReducers;
-const auth = authReducers;
-const movies = moviesReducers;
-const theaters = theatersReducers;
+const alert = AlertReducer;
+const auth = AuthReducer;
+const movies = MovieReducer;
+const theaters = TheaterReducer;
 
 export default combineReducers({
     alert,

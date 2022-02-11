@@ -9,7 +9,7 @@ const initialState = {
     theaters: []
 };
 
-const theatersReducers = (state = initialState, action) => {
+const TheatersReducer = (state = initialState, action) => {
     const { type, payload } = action;
 
     switch (type) {
@@ -23,4 +23,4 @@ const theatersReducers = (state = initialState, action) => {
     }
 };
 
-export default theatersReducers;
+export default TheatersReducer;

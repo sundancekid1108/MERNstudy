@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
@@ -7,34 +8,30 @@ import { Link } from 'react-router-dom';
 import { CircularProgress, Grid, Typography } from '@material-ui/core';
 import { MovieToolBar, MovieCard } from './Components/Index';
 import * as MovieApi from '../../../Api/MovieApi/MovieApi';
+import * as MovieAction from '../../../Store/Actions/MovieAction';
 import { ResponsiveDialog } from '../../../Components/Index';
 import Dashboard from '../../../Layouts/Dashboard/Dashboard';
 import AddMovie from './Components/AddMovie/AddMovie';
 import styles from './Styles';
 
 const MoviesList = (props) => {
-  const { classes, ...rest } = props;
+  const { classes, movieInfo, ...rest } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [editDialog, setEditDialog] = useState(false);
-  const [moviesList, setMoviesList] = useState([]);
+  // const [moviesList, setMoviesList] = useState([]);
   const [editMovie, setEditMovie] = useState(null);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    getMoviesList();
-  }, [moviesList.data]);
+  console.log('props movie info', movieInfo);
 
-  const getMoviesList = async () => {
-    setIsLoading(true);
-    try {
-      const res = await MovieApi.getMoviesList();
-      const fetchedMoviesList = res.data;
-      // console.log('fetchedMoviesList : ', fetchedMoviesList);
-      setMoviesList(fetchedMoviesList);
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      console.log('MoviesListError', error);
-    }
+  const getMovieList = () => {
+    dispatch(MovieAction.getMovieList());
+  };
+
+  const GetMovieInfo = (id) => {
+    dispatch(MovieAction.getMovieInfo(id));
+    const movieInfoTest = useSelector((state) => state.movies.movieInfo);
+    return movieInfoTest;
   };
 
   const handleEditDialog = (e) => {
@@ -50,7 +47,7 @@ const MoviesList = (props) => {
     // console.log('handleEditMovieInfo', movie);
     if (editDialog == false) {
       handleEditDialog();
-      // setEditDialog(true);
+      dispatch(MovieAction.getMovieInfo(movie._id));
       setEditMovie(movie);
     } else {
       handleEditDialog();
@@ -58,6 +55,16 @@ const MoviesList = (props) => {
     }
   };
 
+  useEffect(() => {
+    getMovieList();
+  }, []);
+
+  const moviesList = useSelector((state) => state.movies.movies);
+  const movieInfoTest = useSelector((state) => state.movies.movieInfo);
+
+  console.log('editMovie', editMovie);
+  console.log('movieInfoTest', movieInfoTest);
+  console.log('movieInfo', movieInfo);
   if (!moviesList) {
     return (
       <>

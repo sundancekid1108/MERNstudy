@@ -1,1 +1,0 @@
-export const GET_MOVIESLIST = 'GET_MOVIESLIST';

@@ -1,4 +1,5 @@
 export * from './AlertTypes';
 export * from './AuthTypes';
-export * from './MoviesTypes';
-export * from './TheatersTypes';
+export * from './MovieTypes';
+export * from './TheaterTypes';
+export * from './MovieReservationTypes';

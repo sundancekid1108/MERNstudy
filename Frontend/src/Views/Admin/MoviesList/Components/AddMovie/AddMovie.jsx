@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, usePrevious } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles, Grid } from '@material-ui/core';
@@ -20,7 +21,7 @@ import {
   genreData,
   languageData
 } from '../../../../../Utils/MovieDataService/MovieDataService';
-import * as MovieApi from '../../../../../Api/MovieApi/MovieApi';
+import * as MovieAction from '../../../../../Store/Actions/MovieAction';
 
 import styles from './Styles';
 
@@ -41,6 +42,7 @@ const AddMovie = (props) => {
   const [endDate, setEndDate] = useState(new Date());
   const [status, setStatus] = useState('');
   const [infoMessage, setInfoMessage] = useState('');
+  const dispatch = useDispatch();
 
   // const prevMovie = props.editmovie;
   const prevMovie = editmovie;
@@ -99,8 +101,6 @@ const AddMovie = (props) => {
   };
 
   const handleCreateMovie = async (e) => {
-    // console.log('handleCreateMovie');
-    // e.preventDefault();
     if (
       title === '' ||
       genre === '' ||
@@ -116,21 +116,24 @@ const AddMovie = (props) => {
       setInfoMessage('Movie have not been saved, try again.');
     } else {
       try {
-        const response = await MovieApi.createMovie(
-          title,
-          movieImage,
-          genre,
-          language,
-          duration,
-          description,
-          director,
-          cast,
-          releaseDate,
-          endDate
+        const response = await dispatch(
+          MovieAction.createMovie(
+            title,
+            movieImage,
+            genre,
+            language,
+            duration,
+            description,
+            director,
+            cast,
+            releaseDate,
+            endDate
+          )
         );
+
         setStatus(true);
         setInfoMessage('Movie have been saved!');
-        // console.log(response);
+        console.log(response);
         return response;
       } catch (error) {
         setStatus(false);
@@ -157,18 +160,20 @@ const AddMovie = (props) => {
       setInfoMessage('Movie have not been saved, try again.');
     } else {
       try {
-        const response = await MovieApi.updateMovieInfo(
-          prevMovie._id,
-          title,
-          movieImage,
-          genre,
-          language,
-          duration,
-          description,
-          director,
-          cast,
-          releaseDate,
-          endDate
+        const response = await dispatch(
+          MovieAction.updateMovie(
+            prevMovie._id,
+            title,
+            movieImage,
+            genre,
+            language,
+            duration,
+            description,
+            director,
+            cast,
+            releaseDate,
+            endDate
+          )
         );
         setStatus(true);
         setInfoMessage('Updated Movie have been saved!');
@@ -185,7 +190,7 @@ const AddMovie = (props) => {
   const handleDeleteMovie = async (e) => {
     const id = prevMovie._id;
     try {
-      const response = await MovieApi.deleteMovie(id);
+      const response = await dispatch(MovieAction.deleteMovie(id));
       setStatus(true);
       setInfoMessage('Movie have been deleted!');
       return response;
@@ -346,6 +351,7 @@ const AddMovie = (props) => {
         <PortletFooter className={classes.portletFooter}>
           <Button
             className={classes.buttonFooter}
+            color="dafault"
             variant="contained"
             onClick={submitAction}>
             {submitButton}

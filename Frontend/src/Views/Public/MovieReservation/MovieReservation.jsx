@@ -20,7 +20,7 @@ import * as MovieApi from '../../../Api/MovieApi/MovieApi';
 import * as TheaterApi from '../../../Api/TheaterApi/TheaterApi';
 import * as MovieShowTimeApi from '../../../Api/MovieShowTimeApi/MovieShowTimeApi';
 import * as MovieReservationApi from '../../../Api/MovieReservationApi/MovieReservationApi';
-import * as TheatersActions from '../../../Store/Actions/TheatersActions';
+import * as TheaterAction from '../../../Store/Actions/TheaterAction';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Styles';
 
@@ -59,8 +59,8 @@ const MovieReservation = (props) => {
   };
 
   //극장 리스트
-  const getTheatersList = () => {
-    dispatch(TheatersActions.getTheatersList());
+  const getTheaterList = () => {
+    dispatch(TheaterAction.getTheaterList());
   };
 
   //극장별 영화 상영시간
@@ -235,7 +235,7 @@ const MovieReservation = (props) => {
     getMovieShowTimeList();
     getMovieInfo();
 
-    getTheatersList();
+    getTheaterList();
 
     return () => {};
   }, []);

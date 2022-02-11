@@ -1,4 +1,4 @@
-import { setAlert } from './AlertActions';
+import { setAlert } from './AlertAction';
 import {
     SIGN_UP_SUCCESS,
     SIGN_UP_FAIL,
@@ -87,7 +87,7 @@ export const userSignUp = (a, b, c, d, e, f) => async(dispatch) => {
         const responseData = result;
         // console.log(responseData);
 
-        if (responseData.status == 201) {
+        if (responseData.status == 200) {
             dispatch({ type: SIGN_UP_SUCCESS, payload: responseData });
             dispatch(setAlert('SignUp Success', 'success', 3000));
         } else {
