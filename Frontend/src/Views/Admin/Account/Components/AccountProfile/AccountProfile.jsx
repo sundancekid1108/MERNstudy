@@ -20,7 +20,7 @@ const AccountProfile = (props) => {
   const { user, classes, className, ...rest } = props;
   const history = useHistory();
 
-  // console.log('Account Profile user props', user);
+  console.log('Account Profile user props', user);
   const rootClassName = classNames(classes.root, className);
   return (
     <>
@@ -29,13 +29,13 @@ const AccountProfile = (props) => {
           <div className={classes.details}>
             <div className={classes.info}>
               <Typography variant="h2">
-                {user.firstname + ' ' + user.lastname}
+                {user.userFirstName + ' ' + user.userLastName}
               </Typography>
               <Typography className={classes.emailText} variant="body1">
-                {user.username}
+                {user.userName}
               </Typography>
               <Typography className={classes.emailText} variant="body1">
-                {user.email}
+                {user.userEmail}
               </Typography>
             </div>
             <Avatar className={classes.avatar} src={AvatarIMG} />
