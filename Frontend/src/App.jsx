@@ -41,6 +41,9 @@ const MovieReservation = lazy(() =>
 const MovieReservationList = lazy(() =>
   import('./Views/Admin/MovieReservationList/MovieReservationList')
 );
+const MovieShowTimeList = lazy(() =>
+  import('./Views/Admin/MovieShowTimeList/MovieShowTimeList')
+);
 const PublicMovieList = lazy(() =>
   import('./Views/Public/MovieList/MovieList')
 );
@@ -108,8 +111,13 @@ const App = () => {
                 />
                 <ProtectedRoute
                   exact
-                  path="/admin/moviereservationlist"
+                  path="/admin/moviereservation"
                   component={MovieReservationList}
+                />
+                <ProtectedRoute
+                  exact
+                  path="/admin/movieshowtimes"
+                  component={MovieShowTimeList}
                 />
                 <ProtectedRoute
                   exact

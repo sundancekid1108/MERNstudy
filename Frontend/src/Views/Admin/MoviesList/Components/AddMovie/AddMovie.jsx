@@ -133,6 +133,7 @@ const AddMovie = (props) => {
 
         setStatus(true);
         setInfoMessage('Movie have been saved!');
+        dispatch(MovieAction.getMovieList());
         console.log(response);
         return response;
       } catch (error) {

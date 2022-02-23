@@ -13,3 +13,16 @@ export const getMovieShowTimeList = async() => {
         return error;
     }
 };
+
+export const deleteMovieShowTime = async(id) => {
+    const token = authHeader();
+    try {
+        const res = await api.delete('/movieshowtime/movieshowtime/' + id, {
+            headers: token
+        });
+
+        return res;
+    } catch (error) {
+        return error;
+    }
+};

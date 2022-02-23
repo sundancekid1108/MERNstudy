@@ -74,7 +74,7 @@ const MovieReservationList = (props) => {
         </Dashboard>
       </>
     );
-  } else if (movieReservationList.length == 0) {
+  } else if (!movieReservationList) {
     return (
       <>
         <Dashboard title="Movie Reservations List">

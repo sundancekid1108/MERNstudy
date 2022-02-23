@@ -20,7 +20,7 @@ import styles from './Styles';
 
 const UsersTable = (props) => {
   // console.log('UserTable props :', props);
-  const { classes, className, users, onSelect, onShowDetails } = props;
+  const { classes, className, users, onSelect } = props;
   const rootClassName = classNames(classes.root, className);
 
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -46,23 +46,23 @@ const UsersTable = (props) => {
     console.log('handleSelectOne');
 
     const selectedIndex = selectedUsers.indexOf(username);
-    let newSelectedUsers = [];
+    let selectedData = [];
 
     if (selectedIndex === -1) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers, username);
+      selectedData = selectedData.concat(selectedUsers, username);
     } else if (selectedIndex === 0) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(1));
+      selectedData = selectedData.concat(selectedUsers.slice(1));
     } else if (selectedIndex === selectedUsers.length - 1) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(0, -1));
+      selectedData = selectedData.concat(selectedUsers.slice(0, -1));
     } else if (selectedIndex > 0) {
-      newSelectedUsers = newSelectedUsers.concat(
+      selectedData = selectedData.concat(
         selectedUsers.slice(0, selectedIndex),
         selectedUsers.slice(selectedIndex + 1)
       );
     }
-    setSelectedUsers(newSelectedUsers);
+    setSelectedUsers(selectedData);
 
-    onSelect(newSelectedUsers);
+    onSelect(selectedData);
   };
 
   const handleChangePage = (e, newPage) => {
@@ -169,8 +169,8 @@ const UsersTable = (props) => {
 
 UsersTable.defaultProps = {
   users: [],
-  onSelect: () => {},
-  onShowDetails: () => {}
+  onSelect: () => { },
+  onShowDetails: () => { }
 };
 
 UsersTable.propTypes = {

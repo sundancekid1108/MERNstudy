@@ -48,7 +48,7 @@ export const getMovieShowTimeInfo = async(req, res) => {
 export const updateMovieShowTime = async(req, res) => {
     const id = req.params.id;
     const updates = Object.keys(req.body);
-    const allowedUpdates = ['startAt', 'is3d', 'isImax'];
+    const allowedUpdates = ['startAt', 'startDate', 'endDate', 'is3d', 'isImax'];
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
 
     if (!isValidOperation) res.status(400).json({ error: 'update Fail' });
@@ -72,10 +72,9 @@ export const deleteMovieShowTime = async(req, res) => {
     const id = req.params.id;
 
     try {
-        const MovieShowTime = await MovieShowTime.findByIdAndDelete({
-            id: id,
-        });
-        if (!MovieShowTime) {
+        const data = await MovieShowTime.findByIdAndDelete({ _id: id });
+
+        if (!data) {
             return res
                 .json({
                     response: 'No MovieShowTime',
@@ -87,6 +86,7 @@ export const deleteMovieShowTime = async(req, res) => {
             });
         }
     } catch (error) {
+        console.log(error);
         return res.status(400).json(error);
     }
 };

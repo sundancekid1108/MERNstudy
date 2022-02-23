@@ -139,7 +139,7 @@ const AddTheater = (props) => {
     }
   };
 
-  const onsubmitAction = () => {};
+  // const onsubmitAction = () => {};
 
   //극장 좌석 라인 추가
   const addSeatLow = () => {

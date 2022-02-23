@@ -1,21 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const movieShowTimeSchema = new Schema({
-    startAt: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    is3d: {
-        type: Boolean,
-        default: false,
-    },
-    isImax: {
-        type: String,
-        required: true,
-        trim: true,
-        lowercase: true,
-    },
     movieId: {
         type: Schema.Types.ObjectId,
         ref: 'Movie',
@@ -23,6 +8,30 @@ const movieShowTimeSchema = new Schema({
     theaterId: {
         type: Schema.Types.ObjectId,
         ref: 'Theater',
+    },
+    isImax: {
+        type: Boolean,
+        required: true,
+        default: false,
+    },
+    is3d: {
+        type: Boolean,
+        required: true,
+        default: false,
+    },
+    startAt: {
+        type: Date,
+        required: true,
+        trim: true,
+    },
+
+    startDate: {
+        type: Date,
+        required: true,
+    },
+    endDate: {
+        type: Date,
+        required: true,
     },
 }, { timestamps: true }, { versionKey: false });
 

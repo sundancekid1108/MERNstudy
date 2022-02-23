@@ -24,6 +24,14 @@ const MoviesList = (props) => {
 
   console.log('props movie info', movieInfo);
 
+
+  const moviesList = useSelector((state) => state.movies.movies);
+  const movieInfoTest = useSelector((state) => state.movies.movieInfo);
+
+  useEffect(() => {
+    dispatch(MovieAction.getMovieList());
+  }, [moviesList.length]);
+
   const getMovieList = () => {
     dispatch(MovieAction.getMovieList());
   };
@@ -55,12 +63,8 @@ const MoviesList = (props) => {
     }
   };
 
-  useEffect(() => {
-    getMovieList();
-  }, []);
 
-  const moviesList = useSelector((state) => state.movies.movies);
-  const movieInfoTest = useSelector((state) => state.movies.movieInfo);
+
 
   console.log('editMovie', editMovie);
   console.log('movieInfoTest', movieInfoTest);

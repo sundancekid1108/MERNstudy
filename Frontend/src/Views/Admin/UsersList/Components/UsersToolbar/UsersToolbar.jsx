@@ -11,9 +11,7 @@ const UsersToolbar = (props) => {
   const { classes, className, users, selectedUsers, deleteUser } = props;
   const rootClassName = classNames(classes.root, className);
 
-  const onDeleteUser = (e) => {
-    console.log('ondeleteUser');
-    e.preventDefault();
+  const handleDeleteUser = (e) => {
     for (let i in selectedUsers) {
       const pickedUser = selectedUsers[i];
       const userToDelete = users.find((user) => user.username === pickedUser);
@@ -34,7 +32,7 @@ const UsersToolbar = (props) => {
             {selectedUsers.length >= 1 && (
               <IconButton
                 className={classes.deleteButton}
-                onClick={onDeleteUser}>
+                onClick={handleDeleteUser}>
                 <DeleteIcon />
               </IconButton>
             )}
