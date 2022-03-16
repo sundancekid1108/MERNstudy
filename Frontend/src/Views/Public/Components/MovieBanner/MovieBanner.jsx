@@ -134,7 +134,7 @@ const MovieBanner = (props) => {
 };
 
 MovieBanner.propTypes = {
-  movie: PropTypes.object.isRequired
+  movie: PropTypes.object
 };
 
 export default withStyles(styles)(MovieBanner);

@@ -45,7 +45,6 @@ const TheatersList = (props) => {
       setEditTheater(null);
     }
   };
-  console.log(theaters);
 
   const theaterRender = () => {
     if (isLoading) {

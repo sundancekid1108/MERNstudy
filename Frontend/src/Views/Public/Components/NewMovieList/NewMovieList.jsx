@@ -9,7 +9,7 @@ import styles from './Styles';
 import MovieCard from '../MovieCard/MovieCard';
 import * as MovieApi from '../../../../../Api/MovieApi/MovieApi';
 
-const NewMoviesList = (props) => {
+const NewMovieList = (props) => {
   const { classes, movies } = props;
 
   const nowTime = moment().format('YYYY-MM-DD');
@@ -46,10 +46,10 @@ const NewMoviesList = (props) => {
   );
 };
 
-NewMoviesList.propTypes = {
+NewMovieList.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
   movies: PropTypes.array.isRequired
 };
 
-export default withStyles(styles)(NewMoviesList);
+export default withStyles(styles)(NewMovieList);

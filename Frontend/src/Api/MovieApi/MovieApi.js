@@ -55,7 +55,7 @@ export const getMovieInfo = async(id) => {
 export const getMovieList = async() => {
     const token = authHeader();
     try {
-        const movieListData = await api.get('/movies/movieslist', {
+        const movieListData = await api.get('/movies/movielist', {
             headers: token
         });
         return movieListData;

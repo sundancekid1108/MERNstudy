@@ -170,19 +170,6 @@ const MovieReservation = (props) => {
     setSeatsAvailable(data.seatsAvailable);
   };
 
-  // const getFilteredTheater = () => {
-  //   const filteredTheatersId = movieShowTimeList
-  //     .map((movieShowTime) => movieShowTime.theaterId)
-  //     .filter((value, index, self) => self.indexOf(value) == index);
-
-  //   const data = theatersList.filter((theater) =>
-  //     filteredTheatersId.includes(theater._id)
-  //   );
-  //   return data;
-  // };
-
-  // const filteredTheatersList = getFilteredTheater();
-
   //test
   const onFiltertheater = () => {
     console.log('movieShowTimeList', movieShowTimeList);
@@ -237,7 +224,7 @@ const MovieReservation = (props) => {
 
     getTheaterList();
 
-    return () => {};
+    return () => { };
   }, []);
 
   // console.log('movie', movie);
@@ -378,8 +365,8 @@ const MovieReservation = (props) => {
                                 seat === 1
                                   ? 'rgb(65, 66, 70)'
                                   : seat === 2
-                                  ? 'rgb(120, 205, 4)'
-                                  : 'rgb(96, 93, 169)'
+                                    ? 'rgb(120, 205, 4)'
+                                    : 'rgb(96, 93, 169)'
                               }>
                               {index + 1}
                             </Box>

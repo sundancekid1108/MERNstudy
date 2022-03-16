@@ -1,45 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles, Typography } from '@material-ui/core';
 import { Button, TextField, MenuItem } from '@material-ui/core';
 import {
     MuiPickersUtilsProvider,
+    KeyboardTimePicker,
     KeyboardDatePicker
 } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
+import * as MovieShowTimeApi from '../../../../../Api/MovieShowTimeApi/MovieShowTimeApi'
 import styles from './Styles';
 
 const AddMovieShowTime = (props) => {
-    const [movieId, setMovieId] = useState('')
-    const [theaterId, setTheaterId] = useState('')
-    const [startAt, setStartAt] = useState('')
-    const [startDate, setStartDate] = useState('')
-    const [endDate, setEndDate] = useState('')
-    const [isImax, setIsImax] = useState(false)
-    const [is3d, setIs3d] = useState(false)
-
-    const rootClassName = classNames(classes.root, className);
-
-    const handleAddMovieShowTime = () => {
-        console.log("handleAddMovieShowTime")
-    }
-
-    const handleUpdateMovieShowTime = () => {
-        console.log("handleUpdateMovieShowTime")
-    }
-
-
-    const title = selectedMovieShowtime
-        ? 'Edit Showtime'
-        : 'Add Showtime';
-    const submitButton = selectedMovieShowtime
-        ? 'Update Showtime'
-        : 'Save Details';
-    const submitAction = selectedMovieShowtime
-        ? () => handleUpdateMovieShowTime()
-        : () => handleAddMovieShowTime();
-
     const {
         movieShowTimes,
         selectedMovieShowtime,
@@ -47,6 +21,122 @@ const AddMovieShowTime = (props) => {
         className,
         ...rest
     } = props;
+    console.log(props)
+    console.log("AddMovieShowTime selectedMovieShowtime", selectedMovieShowtime)
+
+    const [movieId, setMovieId] = useState('')
+    const [theaterId, setTheaterId] = useState('')
+    const [startAt, setStartAt] = useState(new Date())
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+    const [isImax, setIsImax] = useState(false)
+    const [is3d, setIs3d] = useState(false)
+
+    const movieList = useSelector((state) => state.movies.movies);
+    const theaterList = useSelector((state) => state.theaters.theaters);
+
+    const rootClassName = classNames(classes.root, className);
+
+
+    const prevMovieShowTime = selectedMovieShowtime[0]
+
+    //이전 데이터들이 있을땐 이전 데이터 입력
+    useEffect(() => {
+        if (prevMovieShowTime) {
+            setMovieId(movieList.filter(x => x._id == prevMovieShowTime.movieId)[0]._id)
+            setTheaterId(theaterList.filter(x => x._id == prevMovieShowTime.theaterId)[0]._id)
+            setStartAt(prevMovieShowTime.startAt)
+            setStartDate(prevMovieShowTime.startDate)
+            setEndDate(prevMovieShowTime.endDate)
+            setIsImax(prevMovieShowTime.isImax)
+            setIs3d(prevMovieShowTime.is3d)
+        }
+    }, [])
+
+
+    const handleAddMovieShowTime = async () => {
+        if (
+
+            movieId !== '' ||
+            theaterId !== '' ||
+            isImax !== '' ||
+            is3d !== '' ||
+            startAt !== '' ||
+            startDate !== '' ||
+            endDate !== ''
+
+        ) {
+            const body = {
+                movieId,
+                theaterId,
+                isImax,
+                is3d,
+                startAt,
+                startDate,
+                endDate
+            }
+            try {
+                const response = await MovieShowTimeApi.createMovieShowTime(body)
+                return response
+            } catch (error) {
+                console.log("handleAddMovieShowTime Error", error)
+            }
+        } else {
+            console.log("handleAddMovieShowTime Fail")
+        }
+
+
+    }
+
+    const handleUpdateMovieShowTime = async () => {
+        console.log("handleUpdateMovieShowTime")
+        if (
+            movieId !== '' ||
+            theaterId !== '' ||
+            isImax !== '' ||
+            is3d !== '' ||
+            startAt !== '' ||
+            startDate !== '' ||
+            endDate !== ''
+
+        ) {
+            const id = prevMovieShowTime._id
+            const body = {
+                movieId,
+                theaterId,
+                isImax,
+                is3d,
+                startAt,
+                startDate,
+                endDate
+            }
+            try {
+                const response = await MovieShowTimeApi.updateMovieShowTime(
+                    id, body
+                )
+                return response
+
+            } catch (error) {
+                console.log("handleUpdateMovieShowTime Fail", error)
+            }
+        } else {
+            console.log("handleAddMovieShowTime Fail")
+        }
+    }
+
+
+
+    const title = prevMovieShowTime
+        ? 'Edit Showtime'
+        : 'Add Showtime';
+    const submitButton = prevMovieShowTime
+        ? 'Update Showtime'
+        : 'Save Details';
+    const submitAction = prevMovieShowTime
+        ? () => handleUpdateMovieShowTime()
+        : () => handleAddMovieShowTime();
+
+    console.log(movieId)
 
     return <>
         <div className={rootClassName} {...rest}>
@@ -55,27 +145,23 @@ const AddMovieShowTime = (props) => {
             </Typography>
             <form autoComplete="off" noValidate>
                 <div className={classes.field}>
-                    <TextField
-                        fullWidth
-                        select
-                        className={classes.textField}
-                        helperText="Please specify the Time"
-                        label="Time"
-                        margin="dense"
-                        required
-                        value={startAt}
-                        variant="outlined"
-                        onChange={event =>
-                            setStartAt(event.target.value)
-                        }>
-                        {['18:00', '19:00', '20:00', '21:00', ' 22:00', '23:00'].map(
-                            time => (
-                                <MenuItem key={`time-${time}`} value={time}>
-                                    {time}
-                                </MenuItem>
-                            )
-                        )}
-                    </TextField>
+                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                        <KeyboardTimePicker
+                            autoOk
+                            className={classes.textField}
+                            margin="normal"
+                            label="Time"
+                            value={startAt}
+                            variant="inline"
+                            onChange={data =>
+                                setStartAt(data)
+                            }
+                            inputVariant="outlined"
+
+
+                        />
+                    </MuiPickersUtilsProvider>
+
                 </div>
                 <div className={classes.field}>
                     <TextField
@@ -89,12 +175,15 @@ const AddMovieShowTime = (props) => {
                         variant="outlined"
                         onChange={event =>
                             setMovieId(event.target.value)
-                        }>
-                        {movies.map(movie => (
+                        }
+
+                    >
+                        {movieList.map(movie => (
                             <MenuItem key={movie._id} value={movie._id}>
                                 {movie.title}
                             </MenuItem>
                         ))}
+
                     </TextField>
 
                     <TextField
@@ -108,24 +197,76 @@ const AddMovieShowTime = (props) => {
                         variant="outlined"
                         onChange={(event) => setTheaterId(event.target.value)
                         }>
-                        {theaters.map(theater => (
+                        {theaterList.map(theater => (
                             <MenuItem key={theater._id} value={theater._id}>
-                                {theater.name}
+                                {theater.theaterName}
                             </MenuItem>
                         ))}
+                    </TextField>
+
+
+                </div>
+
+                <div className={classes.field}>
+                    <TextField
+                        fullWidth
+                        select
+                        className={classes.textField}
+
+                        label="IMAX"
+                        margin="dense"
+                        required
+                        value={isImax}
+                        variant="outlined"
+                        onChange={event =>
+                            setIsImax(event.target.value)
+                        }>
+                        {['true', 'false'].map(
+                            value => (
+                                <MenuItem key={value} value={value}>
+                                    {value}
+                                </MenuItem>
+                            )
+                        )}
+                    </TextField>
+                    <TextField
+                        fullWidth
+                        select
+                        className={classes.textField}
+
+                        label="3D"
+                        margin="dense"
+                        required
+                        value={is3d}
+                        variant="outlined"
+                        onChange={event =>
+                            setIs3d(event.target.value)
+                        }>
+                        {['true', 'false'].map(
+                            value => (
+                                <MenuItem key={value} value={value}>
+                                    {value}
+                                </MenuItem>
+                            )
+                        )}
                     </TextField>
                 </div>
 
                 <div className={classes.field}>
                     <MuiPickersUtilsProvider utils={MomentUtils}>
                         <KeyboardDatePicker
+                            autoOk
                             className={classes.textField}
-                            inputVariant="outlined"
                             margin="normal"
                             id="start-date"
                             label="Start Date"
+                            format="YYYY-MM-DD"
+                            views={['year', 'month', 'date']}
                             value={startDate}
-                            onChange={date => this.handleFieldChange('startDate', date._d)}
+                            variant="inline"
+                            onChange={(data) => setStartDate(data)}
+                            inputVariant="outlined"
+
                             KeyboardButtonProps={{
                                 'aria-label': 'change date'
                             }}
@@ -137,8 +278,10 @@ const AddMovieShowTime = (props) => {
                             margin="normal"
                             id="end-date"
                             label="End Date"
+                            format="YYYY-MM-DD"
+                            views={['year', 'month', 'date']}
                             value={endDate}
-                            onChange={date => this.handleFieldChange('endDate', date._d)}
+                            onChange={(data) => setEndDate(data)}
                             KeyboardButtonProps={{
                                 'aria-label': 'change date'
                             }}

@@ -30,20 +30,18 @@ const MovieShowTimeTable = (props) => {
     const handleSelectAll = e => {
         let allSelectedData;
         if (e.target.checked) {
-            allSelectedData = movieShowTimes.map((moviwShowTime) => moviwShowTime._id);
-            console.log('handleselectall data: ', allSelectedData);
+            allSelectedData = movieShowTimes.map((movieShowTime) => movieShowTime);
         } else {
             allSelectedData = [];
         }
-
+        console.log(allSelectedData)
         setSelectedMovieShowTimes(allSelectedData);
         handleSelect(allSelectedData);
     };
 
     const handleSelectOne = (e, selectedMovieShowTime) => {
-        const selectedIndex = selectedMovieShowTimes.indexOf(selectedMovieShowTime);
+        const selectedIndex = selectedMovieShowTimes.findIndex(i => i._id == selectedMovieShowTime._id);
         let selectedData = [];
-
         if (selectedIndex === -1) {
             selectedData = selectedData.concat(
                 selectedMovieShowTimes,
@@ -106,49 +104,49 @@ const MovieShowTimeTable = (props) => {
                     </TableHead>
                     <TableBody>
                         {movieShowTimes
-                            .filter(showtime => {
-                                return showtime;
+                            .filter(movieShowTime => {
+                                return movieShowTime;
                             })
                             .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
-                            .map(showtime => (
+                            .map(movieShowTime => (
                                 <TableRow
                                     className={classes.tableRow}
                                     hover
-                                    key={showtime._id}
-                                    selected={selectedMovieShowTimes.indexOf(showtime._id) !== -1}>
+                                    key={movieShowTime._id}
+                                    selected={selectedMovieShowTimes.findIndex(i => i._id == movieShowTime._id) !== -1}>
                                     <TableCell className={classes.tableCell}>
                                         <div className={classes.tableCellInner}>
                                             <Checkbox
                                                 checked={
-                                                    selectedMovieShowTimes.indexOf(showtime._id) !== -1
+                                                    selectedMovieShowTimes.findIndex(i => i._id == movieShowTime._id) !== -1
                                                 }
                                                 color="primary"
                                                 onChange={e =>
-                                                    handleSelectOne(e, showtime._id)
+                                                    handleSelectOne(e, movieShowTime)
                                                 }
                                                 value="true"
                                             />
                                             <Typography
                                                 className={classes.nameText}
                                                 variant="body1">
-                                                {showtime._id}
+                                                {movieShowTime._id}
                                             </Typography>
                                         </div>
                                     </TableCell>
                                     <TableCell className={classes.tableCell}>
-                                        {showtime.movieId}
+                                        {movieShowTime.movieId}
                                     </TableCell>
                                     <TableCell className={classes.tableCell}>
-                                        {showtime.theaterId}
+                                        {movieShowTime.theaterId}
                                     </TableCell>
                                     <TableCell className={classes.tableCell}>
-                                        {moment(showtime.startDate).format('DD/MM/YYYY')}
+                                        {moment(movieShowTime.startDate).format('DD/MM/YYYY')}
                                     </TableCell>
                                     <TableCell className={classes.tableCell}>
-                                        {moment(showtime.endDate).format('DD/MM/YYYY')}
+                                        {moment(movieShowTime.endDate).format('DD/MM/YYYY')}
                                     </TableCell>
                                     <TableCell className={classes.tableCell}>
-                                        {moment(showtime.startAt).format('DD/MM/YYYY')}
+                                        {moment(movieShowTime.startAt).format('DD/MM/YYYY')}
 
                                     </TableCell>
                                 </TableRow>
@@ -164,8 +162,8 @@ const MovieShowTimeTable = (props) => {
                     nextIconButtonProps={{
                         'aria-label': 'Next Page'
                     }}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
                     page={page}
                     rowsPerPage={rowsPerPage}
                     rowsPerPageOptions={[5, 10, 25]}

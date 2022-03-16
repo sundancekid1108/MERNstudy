@@ -92,8 +92,8 @@ const MovieReservationListTable = (props) => {
               nextIconButtonProps={{
                 'aria-label': 'Next Page'
               }}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
               page={page}
               rowsPerPage={rowsPerPage}
               rowsPerPageOptions={[5, 10, 25]}
@@ -109,8 +109,8 @@ MovieReservationListTable.defaultProps = {
   MovieReservationList: [],
   MovieList: [],
   TheaterList: [],
-  onSelect: () => {},
-  onShowDetails: () => {}
+  onSelect: () => { },
+  onShowDetails: () => { }
 };
 
 MovieReservationListTable.propTypes = {

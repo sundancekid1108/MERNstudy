@@ -1,4 +1,4 @@
-import { GET_MOVIESLIST, GET_MOVIE_INFO } from '../Types/Index';
+import { GET_MOVIES_LIST, GET_MOVIE_INFO } from '../Types/Index';
 import { setAlert } from './AlertAction';
 import * as movieApi from '../../Api/MovieApi/MovieApi';
 
@@ -7,7 +7,7 @@ export const getMovieList = () => async(dispatch) => {
         const result = await movieApi.getMovieList();
         const responseData = result;
         if (responseData.status == 200) {
-            dispatch({ type: GET_MOVIESLIST, payload: responseData });
+            dispatch({ type: GET_MOVIES_LIST, payload: responseData });
         } else {
             dispatch(setAlert('Failed to get Movies List', 'error', 3000));
         }

@@ -1,4 +1,4 @@
-import { GET_MOVIESLIST, GET_MOVIE_INFO } from '../Types/Index';
+import { GET_MOVIES_LIST, GET_MOVIE_INFO } from '../Types/Index';
 
 const initialState = {
     movies: [],
@@ -12,7 +12,7 @@ const MoviesReducer = (state = initialState, action) => {
     const { type, payload } = action;
 
     switch (type) {
-        case GET_MOVIESLIST:
+        case GET_MOVIES_LIST:
             return {
                 ...state,
                 movies: payload.data,

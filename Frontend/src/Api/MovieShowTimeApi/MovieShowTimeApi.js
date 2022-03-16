@@ -14,6 +14,32 @@ export const getMovieShowTimeList = async() => {
     }
 };
 
+export const createMovieShowTime = async(body) => {
+    const token = authHeader();
+    try {
+        const res = await api.post('/movieshowtime/movieshowtime', body, {
+            headers: token
+        });
+        const movieShowTime = res;
+        return movieShowTime;
+    } catch (error) {
+        console.log('createMovieShowTime Error: ', error);
+    }
+};
+
+export const updateMovieShowTime = async(id, body) => {
+    const token = authHeader();
+    try {
+        const res = await api.patch('/movieshowtime/movieshowtime/' + id, body, {
+            headers: token
+        });
+        return res;
+    } catch (error) {
+        console.log('updateMovieShowTime Error: ', error);
+        return error;
+    }
+};
+
 export const deleteMovieShowTime = async(id) => {
     const token = authHeader();
     try {

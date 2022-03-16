@@ -14,23 +14,23 @@ import Dashboard from '../../../Layouts/Dashboard/Dashboard';
 import AddMovie from './Components/AddMovie/AddMovie';
 import styles from './Styles';
 
-const MoviesList = (props) => {
+const MovieList = (props) => {
   const { classes, movieInfo, ...rest } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [editDialog, setEditDialog] = useState(false);
-  // const [moviesList, setMoviesList] = useState([]);
+  // const [movieList, setmovieList] = useState([]);
   const [editMovie, setEditMovie] = useState(null);
   const dispatch = useDispatch();
 
   console.log('props movie info', movieInfo);
 
 
-  const moviesList = useSelector((state) => state.movies.movies);
+  const movieList = useSelector((state) => state.movies.movies);
   const movieInfoTest = useSelector((state) => state.movies.movieInfo);
 
   useEffect(() => {
     dispatch(MovieAction.getMovieList());
-  }, [moviesList.length]);
+  }, [movieList.length]);
 
   const getMovieList = () => {
     dispatch(MovieAction.getMovieList());
@@ -69,7 +69,7 @@ const MoviesList = (props) => {
   console.log('editMovie', editMovie);
   console.log('movieInfoTest', movieInfoTest);
   console.log('movieInfo', movieInfo);
-  if (!moviesList) {
+  if (!movieList) {
     return (
       <>
         <Dashboard title="Movie List">
@@ -77,7 +77,7 @@ const MoviesList = (props) => {
             <MovieToolBar />
           </div>
 
-          <Typography variant="h6">No MoviesList Data</Typography>
+          <Typography variant="h6">No movieList Data</Typography>
         </Dashboard>
       </>
     );
@@ -90,7 +90,7 @@ const MoviesList = (props) => {
           </div>
           <div className={classes.content}>
             <Grid container spacing={3}>
-              {moviesList.map((movie) => (
+              {movieList.map((movie) => (
                 <Grid
                   item
                   key={movie._id}
@@ -115,8 +115,8 @@ const MoviesList = (props) => {
   }
 };
 
-MoviesList.propTypes = {
+MovieList.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(MoviesList);
+export default withStyles(styles)(MovieList);

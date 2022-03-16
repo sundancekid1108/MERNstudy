@@ -2,17 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles, CircularProgress, Typography } from '@material-ui/core';
+import { ResponsiveDialog } from '../../../Components/Index';
 import Dashboard from '../../../Layouts/Dashboard/Dashboard';
 import { MovieShowTimeTable, MovieShowTimeToolbar } from './Components/Index'
 import * as MovieShowTimeApi from '../../../Api/MovieShowTimeApi/MovieShowTimeApi'
+import * as MovieAction from '../../../Store/Actions/MovieAction';
+import * as TheaterAction from '../../../Store/Actions/TheaterAction';
+import * as MovieShowTimeAction from '../../../Store/Actions/MovieShowTimeAction'
 import styles from './Styles';
 
 const MovieShowTimeList = (props) => {
     const { className, classes } = props;
     const [movieShowTimes, setMovieShowTimes] = useState([])
     const [selectedMovieShowTimes, setSelectedMovieShowTimes] = useState([])
+    const [isOpenEditDialog, setIsOpenEditDialog] = useState(false);
+
+    const dispatch = useDispatch();
+    const getMovieList = () => {
+        dispatch(MovieAction.getMovieList());
+    };
+
+    const getTheaterList = () => {
+        dispatch(TheaterAction.getTheaterList());
+    };
+    // dispatch(MovieShowTimeAction.getMovieShowTimesList())
+    const movieShowTimeListTest = useSelector((state) => state.movieShowTimes.movieShowTimes);
+    // console.log("movieShowTimeListTest", movieShowTimeListTest)
+
+
 
     useEffect(() => {
+        getMovieList();
+        getTheaterList();
         getMovieShowTimeList()
         return () => {
             getMovieShowTimeList()
@@ -20,12 +41,10 @@ const MovieShowTimeList = (props) => {
     }, [selectedMovieShowTimes])
 
     const getMovieShowTimeList = async () => {
-        console.log("getMovieShowTimeList")
         try {
             const result = await MovieShowTimeApi.getMovieShowTimeList()
 
             setMovieShowTimes(result.data)
-            console.log("movieShowTimes", movieShowTimes)
         } catch (error) {
             console.log("getMovieShowTimeList fail")
         }
@@ -48,8 +67,9 @@ const MovieShowTimeList = (props) => {
         }
     }
 
-    const handleSelect = selectedShowtimes => {
-        setSelectedMovieShowTimes(selectedShowtimes);
+    const handleSelect = selectedMovieShowtimes => {
+        setSelectedMovieShowTimes(selectedMovieShowtimes);
+        console.log("selectedMovieShowtimes", selectedMovieShowtimes)
     };
 
     const renderMovieShowTimes = () => {
@@ -72,6 +92,7 @@ const MovieShowTimeList = (props) => {
                     deleteMovieShowtime={handleDeleteMovieShowTime}
                 />
                 <div className={classes.content}>{renderMovieShowTimes()}</div>
+
             </div>
         </Dashboard>
     </>
