@@ -16,3 +16,5 @@ export const getMovieRservationsList = () => async(dispatch) => {
         dispatch(setAlert('Failed to get Movie Reservation List', 'error', 3000));
     }
 };
+
+export const createMovieReservation = () => async(dispatch) => {};

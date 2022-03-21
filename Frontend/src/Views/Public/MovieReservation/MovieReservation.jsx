@@ -16,36 +16,47 @@ import {
 } from '@material-ui/core';
 import Navbar from '../../../Layouts/Public/Components/Navbar/Navbar';
 import moment from 'moment';
+
 import * as MovieApi from '../../../Api/MovieApi/MovieApi';
 import * as TheaterApi from '../../../Api/TheaterApi/TheaterApi';
 import * as MovieShowTimeApi from '../../../Api/MovieShowTimeApi/MovieShowTimeApi';
 import * as MovieReservationApi from '../../../Api/MovieReservationApi/MovieReservationApi';
+
+import * as MovieAction from '../../../Store/Actions/MovieAction'
 import * as TheaterAction from '../../../Store/Actions/TheaterAction';
+import * as MovieShowTimeAction from '../../../Store/Actions/MovieShowTimeAction'
+import * as MovieReservationAction from '../../../Store/Actions/MovieReservationAction';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Styles';
 
 const MovieReservation = (props) => {
   const { classes } = props;
+  const history = useHistory();
+  const movieId = props.match.params.id;
+  const nowTime = moment().format('YYYY-MM-DD');
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.auth.user); // 유저정보 Redux
   const theatersList = useSelector((state) => state.theaters.theaters);
-  // const [userInfo, setUserInfo] = useState(userData);
+  const movieShowTimeList = useSelector((state) => state.movieShowTimes.movieShowTimes);
+  const movieShowTimeListTest = movieShowTimeList.filter(i => i.movieId == movieId)
+  const filtertheaterIdTest = movieShowTimeListTest.map(i => i.theaterId).filter((value, index, self) => self.indexOf(value) === index)
+
+
   const [movie, setMovie] = useState('');
   const [theater, setTheater] = useState('');
   const [theaterSeats, setTheaterSeats] = useState([]);
   const [selectedSeatsList, setSelectedSeatsList] = useState([]);
-  const [movieShowTimeList, setMovieShowTimeList] = useState([]);
 
-  // const [uniqueCinemas, setUniqueCinemas] = useState([]);
+
+
+
 
   const [selectedTheater, setSelectedTheater] = useState('');
   const [selectedMovieShowTime, setSelectedMovieShowTime] = useState('');
 
   const [seatsAvailable, setSeatsAvailable] = useState('');
 
-  const history = useHistory();
-  const movieId = props.match.params.id;
-  const nowTime = moment().format('YYYY-MM-DD');
+
 
   //영화정보
   const getMovieInfo = async () => {
@@ -65,18 +76,8 @@ const MovieReservation = (props) => {
 
   //극장별 영화 상영시간
   const getMovieShowTimeList = async () => {
-    try {
-      const res = await MovieShowTimeApi.getMovieShowTimeList();
-      const data = res.data;
-      // console.log('getMovieShowTimeList data', data);
-      const filteredData = data.filter(
-        (movieShowTime) => movieShowTime.movieId == movieId
-        // movieShowTime.theaterId == selectedTheater._id
-      );
-      setMovieShowTimeList(filteredData);
-    } catch (error) {
-      console.log('getMovieShowTimeList error', error);
-    }
+    dispatch(MovieShowTimeAction.getMovieShowTimesList());
+
   };
 
   //좌석 선택, 선택 좌석 개수 세기,  선택좌석 정보 저장
@@ -106,7 +107,7 @@ const MovieReservation = (props) => {
   };
 
   //영화 예매 함수
-  const makeReservation = async () => {
+  const createMovieReservation = async () => {
     const startAt = selectedMovieShowTime.startAt;
     const seats = selectedSeatsList;
     const ticketPrice = selectedTheater.ticketPrice;
@@ -125,7 +126,7 @@ const MovieReservation = (props) => {
       );
       console.log(res);
     } catch (error) {
-      console.log('makeReservationError ', error);
+      console.log('createMovieReservationError ', error);
     }
   };
 
@@ -134,6 +135,17 @@ const MovieReservation = (props) => {
     const seats = theaterSeats.map((row) =>
       row.map((seat) => ([1, 2].includes(seat) ? 1 : 0))
     );
+
+    const reaservatinSeats = theaterSeats.map(row =>
+      row.map((seat, i) => (seat === 2 ? i : -1)).filter(seat => seat !== -1)
+    )
+      .map((seats, i) => (seats.length ? seats.map(seat => [i, seat]) : -1))
+      .filter(seat => seat !== -1)
+      .reduce((a, b) => a.concat(b));
+
+    console.log("changedTotalseats", seats)
+    console.log("reaservatinSeats", reaservatinSeats)
+
     const theaterId = selectedTheater._id;
     const seatsAvailable =
       selectedTheater.seatsAvailable - selectedSeatsList.length;
@@ -158,12 +170,13 @@ const MovieReservation = (props) => {
       console.log('choose seats first');
     } else {
       // console.log('handleMovieReservation');
-      makeReservation();
+      createMovieReservation();
       updateTheaterSeatsData();
     }
   };
 
   const handleSelectedTheater = (e) => {
+    // console.log("filteredTheatersList", filteredTheatersList)
     const data = e.target.value;
     setSelectedTheater(data);
     setTheaterSeats(data.seats);
@@ -172,34 +185,23 @@ const MovieReservation = (props) => {
 
   //test
   const onFiltertheater = () => {
-    console.log('movieShowTimeList', movieShowTimeList);
-    console.log('theatersList', theatersList);
-    console.log('selectedMovieShowTime', selectedMovieShowTime);
-    console.log('selectedTheater', selectedTheater);
-
     const initialReturn = {
       filteredTheatersList: [],
-      filtteredMovieShowTimeList: []
+      filteredMovieShowTimeList: []
     };
 
     if (!movieShowTimeList || !theatersList) return initialReturn;
 
-    const filteredTheatersId = movieShowTimeList
-      .filter((movieShowTime) =>
-        selectedMovieShowTime
-          ? movieShowTime.startAt === selectedMovieShowTime.startAt
-          : true
-      )
-      .map((movieShowTime) => movieShowTime.theaterId)
-      .filter((value, index, self) => self.indexOf(value) === index);
+    const movieShowTimeListTest = movieShowTimeList.filter(i => i.movieId == movieId)
+    const filteredTheatersId = movieShowTimeListTest.map(i => i.theaterId).filter((value, index, self) => self.indexOf(value) === index)
 
-    console.log('filteredTheatersId', filteredTheatersId);
+
 
     const filteredTheatersList = theatersList.filter((theater) =>
       filteredTheatersId.includes(theater._id)
     );
 
-    const filtteredMovieShowTimeList = movieShowTimeList
+    const filteredMovieShowTimeList = movieShowTimeList
       .filter((movieShowTime) =>
         selectedTheater ? selectedTheater._id === movieShowTime.theaterId : true
       )
@@ -212,10 +214,10 @@ const MovieReservation = (props) => {
     return {
       ...initialReturn,
       filteredTheatersList,
-      filtteredMovieShowTimeList
+      filteredMovieShowTimeList
     };
   };
-  const { filteredTheatersList, filtteredMovieShowTimeList } =
+  const { filteredTheatersList, filteredMovieShowTimeList } =
     onFiltertheater();
 
   useEffect(() => {
@@ -227,18 +229,19 @@ const MovieReservation = (props) => {
     return () => { };
   }, []);
 
-  // console.log('movie', movie);
+  // console.log('movieId', movieId);
   // console.log('theatersList', theatersList);
   // console.log('movieShowTimeList', movieShowTimeList);
+  // console.log('movieShowTimeListTest', movieShowTimeListTest);
+  // console.log("filtertheaterIdTest", filtertheaterIdTest)
   // console.log('selectedMovieShowTime', selectedMovieShowTime);
   // console.log('selectedTheater', selectedTheater);
   // console.log('filteredTheatersList', filteredTheatersList);
   // console.log('selectedSeatsList', selectedSeatsList);
   // console.log('selectedSeatsList.lengh', selectedSeatsList.length);
-  // console.log('userInfo ', userInfo);
 
-  console.log('filteredTheatersList', filteredTheatersList);
-  console.log('filtteredMovieShowTimeList', filtteredMovieShowTimeList);
+  // console.log('filteredTheatersList', filteredTheatersList);
+  // console.log('filteredMovieShowTimeList', filteredMovieShowTimeList);
 
   return (
     <>
@@ -294,23 +297,23 @@ const MovieReservation = (props) => {
               </Grid>
             )}
             <Grid item lg={9} xs={12} md={12}>
+
               {filteredTheatersList.length > 0 ? (
                 <Grid container spacing={3}>
                   <Grid item xs={6}>
                     <TextField
                       fullWidth
                       select
-                      defaultValue={''}
                       value={selectedTheater}
                       label="Select Theater"
                       variant="outlined"
-                      // onChange={(e) => setSelectedTheater(e.target.value)}
                       onChange={handleSelectedTheater}>
                       {filteredTheatersList.map((theater) => (
                         <MenuItem key={theater._id} value={theater}>
                           {theater.theaterName}
                         </MenuItem>
                       ))}
+
                     </TextField>
                   </Grid>
                   {selectedTheater && (
@@ -318,18 +321,17 @@ const MovieReservation = (props) => {
                       <TextField
                         fullWidth
                         select
-                        defaultValue={''}
                         value={selectedMovieShowTime}
                         label="Select Time"
                         variant="outlined"
                         onChange={(e) =>
                           setSelectedMovieShowTime(e.target.value)
                         }>
-                        {filtteredMovieShowTimeList.map((movieShowTime) => (
+                        {filteredMovieShowTimeList.map((movieShowTime) => (
                           <MenuItem
                             key={movieShowTime._id}
                             value={movieShowTime}>
-                            {movieShowTime.startAt}
+                            {moment(movieShowTime.startAt).format('YYYY-MM-DD HH:mm')}
                           </MenuItem>
                         ))}
                       </TextField>
@@ -426,7 +428,7 @@ const MovieReservation = (props) => {
                               Name
                             </Typography>
                             <Typography className={classes.bannerContent}>
-                              {userInfo ? userInfo.userName : ''}
+                              {userInfo ? userInfo.userName : null}
                             </Typography>
                           </Grid>
                           <Grid item>

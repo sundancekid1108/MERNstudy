@@ -5,7 +5,6 @@ import { withStyles, CircularProgress, Typography } from '@material-ui/core';
 import { ResponsiveDialog } from '../../../Components/Index';
 import Dashboard from '../../../Layouts/Dashboard/Dashboard';
 import { MovieShowTimeTable, MovieShowTimeToolbar } from './Components/Index'
-import * as MovieShowTimeApi from '../../../Api/MovieShowTimeApi/MovieShowTimeApi'
 import * as MovieAction from '../../../Store/Actions/MovieAction';
 import * as TheaterAction from '../../../Store/Actions/TheaterAction';
 import * as MovieShowTimeAction from '../../../Store/Actions/MovieShowTimeAction'
@@ -25,10 +24,16 @@ const MovieShowTimeList = (props) => {
     const getTheaterList = () => {
         dispatch(TheaterAction.getTheaterList());
     };
-    // dispatch(MovieShowTimeAction.getMovieShowTimesList())
-    const movieShowTimeListTest = useSelector((state) => state.movieShowTimes.movieShowTimes);
-    // console.log("movieShowTimeListTest", movieShowTimeListTest)
 
+    const getMovieShowTimeList = async () => {
+        dispatch(MovieShowTimeAction.getMovieShowTimesList())
+
+        setMovieShowTimes(movieShowTimeList)
+
+
+    }
+
+    const movieShowTimeList = useSelector((state) => state.movieShowTimes.movieShowTimes);
 
 
     useEffect(() => {
@@ -38,30 +43,14 @@ const MovieShowTimeList = (props) => {
         return () => {
             getMovieShowTimeList()
         }
-    }, [selectedMovieShowTimes])
+    }, [movieShowTimes])
 
-    const getMovieShowTimeList = async () => {
-        try {
-            const result = await MovieShowTimeApi.getMovieShowTimeList()
-
-            setMovieShowTimes(result.data)
-        } catch (error) {
-            console.log("getMovieShowTimeList fail")
-        }
-    }
 
     const handleDeleteMovieShowTime = async (id) => {
         try {
-            const result = await MovieShowTimeApi.deleteMovieShowTime(id)
+            const result = await dispatch(MovieShowTimeAction.deleteMovieShowTime(id))
             console.log(result)
-            if (result.status == 200) {
-                const data = movieShowTimes.filter(
-                    movieShowTime => movieShowTime._id !== id
-                )
 
-                setMovieShowTimes(data)
-                setSelectedMovieShowTimes([])
-            }
         } catch (error) {
             console.log("handleDeleteMovieShowTime fail")
         }
@@ -69,7 +58,6 @@ const MovieShowTimeList = (props) => {
 
     const handleSelect = selectedMovieShowtimes => {
         setSelectedMovieShowTimes(selectedMovieShowtimes);
-        console.log("selectedMovieShowtimes", selectedMovieShowtimes)
     };
 
     const renderMovieShowTimes = () => {

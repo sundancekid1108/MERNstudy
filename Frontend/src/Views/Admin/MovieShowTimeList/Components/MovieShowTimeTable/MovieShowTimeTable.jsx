@@ -34,7 +34,6 @@ const MovieShowTimeTable = (props) => {
         } else {
             allSelectedData = [];
         }
-        console.log(allSelectedData)
         setSelectedMovieShowTimes(allSelectedData);
         handleSelect(allSelectedData);
     };

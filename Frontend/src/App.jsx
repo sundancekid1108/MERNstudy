@@ -111,12 +111,12 @@ const App = () => {
                 />
                 <ProtectedRoute
                   exact
-                  path="/admin/moviereservation"
+                  path="/admin/reservation"
                   component={MovieReservationList}
                 />
                 <ProtectedRoute
                   exact
-                  path="/admin/movieshowtimes"
+                  path="/admin/showtimes"
                   component={MovieShowTimeList}
                 />
                 <ProtectedRoute

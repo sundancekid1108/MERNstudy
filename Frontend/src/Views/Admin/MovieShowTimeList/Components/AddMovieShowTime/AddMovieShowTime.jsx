@@ -11,6 +11,7 @@ import {
 } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import * as MovieShowTimeApi from '../../../../../Api/MovieShowTimeApi/MovieShowTimeApi'
+import * as MovieShowTimeAction from '../../../../../Store/Actions/MovieShowTimeAction'
 import styles from './Styles';
 
 const AddMovieShowTime = (props) => {
@@ -21,8 +22,6 @@ const AddMovieShowTime = (props) => {
         className,
         ...rest
     } = props;
-    console.log(props)
-    console.log("AddMovieShowTime selectedMovieShowtime", selectedMovieShowtime)
 
     const [movieId, setMovieId] = useState('')
     const [theaterId, setTheaterId] = useState('')
@@ -31,6 +30,7 @@ const AddMovieShowTime = (props) => {
     const [endDate, setEndDate] = useState(new Date());
     const [isImax, setIsImax] = useState(false)
     const [is3d, setIs3d] = useState(false)
+    const dispatch = useDispatch();
 
     const movieList = useSelector((state) => state.movies.movies);
     const theaterList = useSelector((state) => state.theaters.theaters);
@@ -76,7 +76,7 @@ const AddMovieShowTime = (props) => {
                 endDate
             }
             try {
-                const response = await MovieShowTimeApi.createMovieShowTime(body)
+                const response = await dispatch(MovieShowTimeAction.createMovieShowTime(body))
                 return response
             } catch (error) {
                 console.log("handleAddMovieShowTime Error", error)
@@ -111,9 +111,7 @@ const AddMovieShowTime = (props) => {
                 endDate
             }
             try {
-                const response = await MovieShowTimeApi.updateMovieShowTime(
-                    id, body
-                )
+                const response = await dispatch(MovieShowTimeAction.updateMovieShowTime(id, body))
                 return response
 
             } catch (error) {
@@ -136,7 +134,6 @@ const AddMovieShowTime = (props) => {
         ? () => handleUpdateMovieShowTime()
         : () => handleAddMovieShowTime();
 
-    console.log(movieId)
 
     return <>
         <div className={rootClassName} {...rest}>
