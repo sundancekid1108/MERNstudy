@@ -14,16 +14,8 @@ export const getTheaterList = async() => {
     }
 };
 
-export const createTheater = async(
-    image,
-    theaterName,
-    ticketPrice,
-    city,
-    seats,
-    seatsAvailable
-) => {
+export const createTheater = async(body) => {
     const token = authHeader();
-    const body = { image, theaterName, ticketPrice, city, seats, seatsAvailable };
     try {
         const res = await api.post('/theater/theaters/', body, {
             headers: token
@@ -48,32 +40,9 @@ export const getTheaterInfo = async(id) => {
     }
 };
 
-export const updateTheaterInfo = async(
-    id,
-    image,
-    theaterName,
-    ticketPrice,
-    city,
-    seats,
-    seatsAvailable
-) => {
+export const updateTheaterInfo = async(id, body) => {
     const token = authHeader();
-    // const body = {
-    //     theaterName: theaterName,
-    //     ticketPrice: ticketPrice,
-    //     city: city,
-    //     seats: seats,
-    //     seatsAvailable: seatsAvailable,
-    //     image: image
-    // };
-    const body = {
-        image,
-        theaterName,
-        ticketPrice,
-        city,
-        seats,
-        seatsAvailable
-    };
+
     console.log('updateTheaterInfobody', body);
     console.log(id);
     try {
@@ -88,17 +57,12 @@ export const updateTheaterInfo = async(
     }
 };
 
-export const updateTheaterSeatsInfo = async(
-    id,
-
-    seats,
-    seatsAvailable
-) => {
+export const updateTheaterSeatsInfo = async(id, body) => {
     const token = authHeader();
-    const body = {
-        seats,
-        seatsAvailable
-    };
+    // const body = {
+    //     seats,
+    //     seatsAvailable
+    // };
     // console.log('updateTheaterInfobody', body);
     try {
         const res = await api.patch('/theater/theaters/' + String(id), body, {

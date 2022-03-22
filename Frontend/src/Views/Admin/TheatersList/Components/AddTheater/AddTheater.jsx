@@ -66,14 +66,10 @@ const AddTheater = (props) => {
       setInfoMessage('Check The Empty Fields');
     } else {
       try {
+        const body = { image, theaterName, ticketPrice, city, seats, seatsAvailable };
         const res = await dispatch(
           TheaterAction.createTheater(
-            image,
-            theaterName,
-            ticketPrice,
-            city,
-            seats,
-            seatsAvailable
+            body
           )
         );
 
@@ -102,18 +98,20 @@ const AddTheater = (props) => {
       setInfoMessage('Check The Empty Fields');
     } else {
       try {
+        const body = {
+          image,
+          theaterName,
+          ticketPrice,
+          city,
+          seats,
+          seatsAvailable
+        }
         const res = await dispatch(
           TheaterAction.updateTheater(
             id,
-            image,
-            theaterName,
-            ticketPrice,
-            city,
-            seats,
-            seatsAvailable
+            body
           )
         );
-        console.log(res);
         setStatus('success');
         setInfoMessage('Theater Info have been saved.');
         dispatch(TheaterAction.getTheaterList());

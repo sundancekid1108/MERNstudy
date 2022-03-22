@@ -115,14 +115,18 @@ const MovieReservation = (props) => {
     const movieId = movie._id;
     const theaterId = selectedTheater._id;
 
+    const body = {
+      startAt,
+      seats,
+      ticketPrice,
+      totalPrice,
+      movieId,
+      theaterId
+    };
+
     try {
       const res = await MovieReservationApi.createMovieReservation(
-        startAt,
-        seats,
-        ticketPrice,
-        totalPrice,
-        movieId,
-        theaterId
+        body
       );
       console.log(res);
     } catch (error) {
@@ -136,6 +140,14 @@ const MovieReservation = (props) => {
       row.map((seat) => ([1, 2].includes(seat) ? 1 : 0))
     );
 
+    // const newSeats = theaterSeats.map((row) =>
+    //   row.map((seat) => ([1, 2].includes(seat) ? 1 : 0))
+    // );
+
+    // const totalBookedSeats = seats
+    //   .reduce((a, b) => a.concat(b))
+    //   .reduce((a, b) => a + b);
+
     const reaservatinSeats = theaterSeats.map(row =>
       row.map((seat, i) => (seat === 2 ? i : -1)).filter(seat => seat !== -1)
     )
@@ -143,18 +155,22 @@ const MovieReservation = (props) => {
       .filter(seat => seat !== -1)
       .reduce((a, b) => a.concat(b));
 
-    console.log("changedTotalseats", seats)
-    console.log("reaservatinSeats", reaservatinSeats)
+    // console.log("seats", seats)
+    // console.log("totalBookedSeats", totalBookedSeats)
+    // console.log("reaservatinSeats", reaservatinSeats)
 
     const theaterId = selectedTheater._id;
     const seatsAvailable =
       selectedTheater.seatsAvailable - selectedSeatsList.length;
 
+    const body = {
+      seats,
+      seatsAvailable
+    }
+    // console.log("body", body)
     try {
-      const res = await TheaterApi.updateTheaterSeatsInfo(
-        theaterId,
-        seats,
-        seatsAvailable
+      const res = await TheaterApi.updateTheaterSeatsInfo(theaterId,
+        body
       );
       console.log(res);
     } catch (error) {
@@ -193,13 +209,29 @@ const MovieReservation = (props) => {
     if (!movieShowTimeList || !theatersList) return initialReturn;
 
     const movieShowTimeListTest = movieShowTimeList.filter(i => i.movieId == movieId)
+
     const filteredTheatersId = movieShowTimeListTest.map(i => i.theaterId).filter((value, index, self) => self.indexOf(value) === index)
-
-
 
     const filteredTheatersList = theatersList.filter((theater) =>
       filteredTheatersId.includes(theater._id)
     );
+
+
+    // const filteredTheatersId = movieShowTimeList
+    //   .filter((movieShowTime) =>
+    //     selectedMovieShowTime
+    //       ? movieShowTime.startAt === selectedMovieShowTime.startAt
+    //       : true
+    //   )
+    //   .map((movieShowTime) => movieShowTime.theaterId)
+    //   .filter((value, index, self) => self.indexOf(value) === index);
+
+    // console.log('filteredTheatersId', filteredTheatersId);
+
+    // const filteredTheatersList = theatersList.filter((theater) =>
+    //   filteredTheatersId.includes(theater._id)
+    // );
+
 
     const filteredMovieShowTimeList = movieShowTimeList
       .filter((movieShowTime) =>

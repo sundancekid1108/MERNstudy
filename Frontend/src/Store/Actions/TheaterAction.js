@@ -17,50 +17,32 @@ export const getTheaterList = () => async(dispatch) => {
     }
 };
 
-export const createTheater =
-    (image, theaterName, ticketPrice, city, seats, seatsAvailable) =>
-    async(dispatch) => {
-        try {
-            const result = await theaterApi.createTheater(
-                image,
-                theaterName,
-                ticketPrice,
-                city,
-                seats,
-                seatsAvailable
-            );
-            console.log('createTheater', result);
-            dispatch(setAlert('Create Theater Data', 'success', 3000));
-        } catch (error) {
-            dispatch(setAlert('Failed to Create Theater Info', 'error', 3000));
-        }
-    };
+export const createTheater = (body) => async(dispatch) => {
+    try {
+        console.log(body);
+        const result = await theaterApi.createTheater(body);
+        console.log('createTheater', result);
+        dispatch(setAlert('Create Theater Data', 'success', 3000));
+    } catch (error) {
+        dispatch(setAlert('Failed to Create Theater Info', 'error', 3000));
+    }
+};
 
-export const updateTheater =
-    (id, image, theaterName, ticketPrice, city, seats, seatsAvailable) =>
-    async(dispatch) => {
-        try {
-            const result = await theaterApi.updateTheaterInfo(
-                id,
-                image,
-                theaterName,
-                ticketPrice,
-                city,
-                seats,
-                seatsAvailable
-            );
+export const updateTheater = (id, body) => async(dispatch) => {
+    try {
+        const result = await theaterApi.updateTheaterInfo(id, body);
 
-            console.log('updateTheater', result);
-            if (result.status == 200) {
-                dispatch(setAlert('Update Theater Info', 'success', 3000));
-            } else {
-                dispatch(setAlert('Failed to Update Theater Info', 'error', 3000));
-            }
-        } catch (error) {
-            console.log('updateTheater error ', error);
+        console.log('updateTheater', result);
+        if (result.status == 200) {
+            dispatch(setAlert('Update Theater Info', 'success', 3000));
+        } else {
             dispatch(setAlert('Failed to Update Theater Info', 'error', 3000));
         }
-    };
+    } catch (error) {
+        console.log('updateTheater error ', error);
+        dispatch(setAlert('Failed to Update Theater Info', 'error', 3000));
+    }
+};
 
 export const deleteTheater = (id) => async(dispatch) => {
     try {
