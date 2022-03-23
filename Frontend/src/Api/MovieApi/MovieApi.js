@@ -1,30 +1,7 @@
 import api from '../axiosApi';
 import authHeader from '../authHeader';
 
-export const createMovie = async(
-    title,
-    image,
-    genre,
-    language,
-    duration,
-    description,
-    director,
-    cast,
-    releaseDate,
-    endDate
-) => {
-    const body = {
-        title,
-        image,
-        genre,
-        language,
-        duration,
-        description,
-        director,
-        cast,
-        releaseDate,
-        endDate
-    };
+export const createMovie = async(body) => {
     const token = authHeader();
 
     try {
@@ -65,32 +42,7 @@ export const getMovieList = async() => {
     }
 };
 
-export const updateMovieInfo = async(
-    id,
-    title,
-    image,
-    genre,
-    language,
-    duration,
-    description,
-    director,
-    cast,
-    releaseDate,
-    endDate
-) => {
-    const body = {
-        title,
-        image,
-        genre,
-        language,
-        duration,
-        description,
-        director,
-        cast,
-        releaseDate,
-        endDate
-    };
-
+export const updateMovieInfo = async(id, body) => {
     const token = authHeader();
     try {
         const updateMovieData = await api.patch('/movies/movieinfo/' + id, body, {

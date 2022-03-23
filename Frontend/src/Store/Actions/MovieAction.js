@@ -29,79 +29,29 @@ export const getMovieInfo = (id) => async(dispatch) => {
     }
 };
 
-export const createMovie =
-    (
-        title,
-        image,
-        genre,
-        language,
-        duration,
-        description,
-        director,
-        cast,
-        releaseDate,
-        endDate
-    ) =>
-    async(dispatch) => {
-        try {
-            const result = await movieApi.createMovie(
-                title,
-                image,
-                genre,
-                language,
-                duration,
-                description,
-                director,
-                cast,
-                releaseDate,
-                endDate
-            );
-            console.log('result', result);
-            dispatch(setAlert('Create Movie Data', 'success', 3000));
-        } catch (error) {
-            dispatch(setAlert('Failed to Create Movie', 'error', 3000));
-        }
-    };
+export const createMovie = (body) => async(dispatch) => {
+    try {
+        const result = await movieApi.createMovie(body);
+        console.log('result', result);
+        dispatch(setAlert('Create Movie Data', 'success', 3000));
+    } catch (error) {
+        dispatch(setAlert('Failed to Create Movie', 'error', 3000));
+    }
+};
 
-export const updateMovie =
-    (
-        id,
-        title,
-        image,
-        genre,
-        language,
-        duration,
-        description,
-        director,
-        cast,
-        releaseDate,
-        endDate
-    ) =>
-    async(dispatch) => {
-        try {
-            const result = await movieApi.updateMovieInfo(
-                id,
-                title,
-                image,
-                genre,
-                language,
-                duration,
-                description,
-                director,
-                cast,
-                releaseDate,
-                endDate
-            );
-            console.log('updateTheater', result);
-            if (result.status == 200) {
-                dispatch(setAlert('Update Theater Info', 'success', 3000));
-            } else {
-                dispatch(setAlert('Failed to Update Theater Info', 'error', 3000));
-            }
-        } catch (error) {
-            dispatch(setAlert('Failed to Update Movie data', 'error', 3000));
+export const updateMovie = (id, body) => async(dispatch) => {
+    try {
+        const result = await movieApi.updateMovieInfo(id, body);
+        console.log('updateTheater', result);
+        if (result.status == 200) {
+            dispatch(setAlert('Update Theater Info', 'success', 3000));
+        } else {
+            dispatch(setAlert('Failed to Update Theater Info', 'error', 3000));
         }
-    };
+    } catch (error) {
+        dispatch(setAlert('Failed to Update Movie data', 'error', 3000));
+    }
+};
 
 export const deleteMovie = (id) => async(dispatch) => {
     try {

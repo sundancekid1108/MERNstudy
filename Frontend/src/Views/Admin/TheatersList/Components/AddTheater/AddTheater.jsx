@@ -195,107 +195,104 @@ const AddTheater = (props) => {
 
   return (
     <>
-      <Portlet {...rest} className={rootClassName}>
-        <PortletHeader>
-          <PortletLabel title={mainTitle} />
-        </PortletHeader>
-        <PortletContent noPadding>
-          <form autoComplete="off" noValidate>
-            <div className={classes.field}>
-              <TextField
-                className={classes.textField}
-                helperText="Please specify the cinema name"
-                label="Name"
-                margin="dense"
-                required
-                value={theaterName}
-                variant="outlined"
-                onChange={(e) => setTheaterName(e.target.value)}
-              />
+      <div {...rest} className={rootClassName}>
+        <Typography variant="h4" className={classes.title}>
+          {mainTitle}
+        </Typography>
+        <form autoComplete="off" noValidate>
+          <div className={classes.field}>
 
-              <TextField
-                fullWidth
-                className={classes.textField}
-                label="City"
-                margin="dense"
-                required
-                variant="outlined"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-              />
-            </div>
-            <div className={classes.field}>
-              <TextField
-                className={classes.textField}
-                label="Image Url"
-                margin="dense"
-                required
-                value={image}
-                variant="outlined"
-                onChange={(e) => setImage(e.target.value)}
-              />
-            </div>
-            <div className={classes.field}>
-              <TextField
-                className={classes.textField}
-                label="Ticket Price"
-                margin="dense"
-                type="number"
-                value={ticketPrice}
-                variant="outlined"
-                onChange={(e) => setTicketPrice(e.target.value)}
-              />
-              <TextField
-                className={classes.textField}
-                label="Seats Available"
-                margin="dense"
-                required
-                value={seatsAvailable}
-                variant="outlined"
-                onChange={(e) => setSeatsAvailable(e.target.value)}
-              />
-            </div>
-            {renderSeats()}
-          </form>
-        </PortletContent>
-        <PortletFooter className={classes.portletFooter}>
+            <TextField
+              className={classes.textField}
+              helperText="Please specify the Theater name"
+              label="Theater Name"
+              margin="dense"
+              required
+              value={theaterName}
+              variant="outlined"
+              onChange={(e) => setTheaterName(e.target.value)}
+            />
+            <TextField
+              fullWidth
+              className={classes.textField}
+              label="City"
+              margin="dense"
+              required
+              variant="outlined"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+          </div>
+          <div className={classes.field}>
+            <TextField
+              className={classes.textField}
+              label="Image Url"
+              margin="dense"
+              required
+              value={image}
+              variant="outlined"
+              onChange={(e) => setImage(e.target.value)}
+            />
+          </div>
+          <div className={classes.field}>
+            <TextField
+              className={classes.textField}
+              label="Ticket Price"
+              margin="dense"
+              type="number"
+              value={ticketPrice}
+              variant="outlined"
+              onChange={(e) => setTicketPrice(e.target.value)}
+            />
+            <TextField
+              className={classes.textField}
+              label="Seats Available"
+              margin="dense"
+              required
+              value={seatsAvailable}
+              variant="outlined"
+              onChange={(e) => setSeatsAvailable(e.target.value)}
+            />
+          </div>
+          {renderSeats()}
+        </form>
+        <Button
+          className={classes.buttonFooter}
+          color="primary"
+          variant="contained"
+          onClick={submitAction}>
+          {submitButton}
+        </Button>
+        {prevTheater && (
           <Button
             className={classes.buttonFooter}
-            color="primary"
+            color="dafault"
             variant="contained"
-            onClick={submitAction}>
-            {submitButton}
+            onClick={handleDeleteTheater}>
+            Delete Cinema
           </Button>
-          {prevTheater && (
-            <Button
-              className={classes.buttonFooter}
-              color="dafault"
-              variant="contained"
-              onClick={handleDeleteTheater}>
-              Delete Cinema
-            </Button>
-          )}
+        )}
 
-          {status ? (
-            status === 'success' ? (
-              <Typography
-                className={classes.infoMessage}
-                color="primary"
-                variant="caption">
-                {infoMessage}
-                Theater Info have been saved!
-              </Typography>
-            ) : (
-              <Typography
-                className={classes.infoMessage}
-                color="error"
-                variant="caption">
-                {infoMessage}
-              </Typography>
-            )
-          ) : null}
-        </PortletFooter>
-      </Portlet>
+        {status ? (
+          status === 'success' ? (
+            <Typography
+              className={classes.infoMessage}
+              color="primary"
+              variant="caption">
+              {infoMessage}
+              Theater Info have been saved!
+            </Typography>
+          ) : (
+            <Typography
+              className={classes.infoMessage}
+              color="error"
+              variant="caption">
+              {infoMessage}
+            </Typography>
+          )
+        ) : null}
+      </div>
+
     </>
   );
 };

@@ -1,14 +1,12 @@
 export default (theme) => ({
     root: {},
+    title: { marginLeft: theme.spacing(3) },
     field: {
-        margin: theme.spacing(3)
-    },
-    grid: {
-        width: '60%'
+        margin: theme.spacing(3),
+        display: 'flex'
     },
     textField: {
-        width: '420px',
-        maxWidth: '100%',
+        width: '100%',
         marginRight: theme.spacing(3)
     },
     portletFooter: {
@@ -17,10 +15,10 @@ export default (theme) => ({
         paddingTop: theme.spacing(2),
         paddingBottom: theme.spacing(2)
     },
+    buttonFooter: {
+        margin: theme.spacing(3)
+    },
     infoMessage: {
         marginLeft: theme.spacing(3)
-    },
-    buttonFooter: {
-        marginRight: theme.spacing(1)
     }
 });

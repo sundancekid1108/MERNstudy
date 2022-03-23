@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef, usePrevious } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { withStyles, Grid } from '@material-ui/core';
-import { Button, TextField, Typography, MenuItem } from '@material-ui/core';
+import { withStyles, Grid, Button, TextField, Typography, MenuItem } from '@material-ui/core';
 
 import {
   MuiPickersUtilsProvider,
@@ -11,11 +10,11 @@ import {
 } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 // import DateFnsUtils from '@date-io/date-fns';
-import Portlet from '../../../../../Components/Portlet/Portlet';
-import PortletHeader from '../../../../../Components/PortletHeader/PortletHeader';
-import PortletLabel from '../../../../../Components/PortletLabel/PortletLabel';
-import PortletContent from '../../../../../Components/PortletContent/PortletContent';
-import PortletFooter from '../../../../../Components/PortletFooter/PortletFooter';
+// import Portlet from '../../../../../Components/Portlet/Portlet';
+// import PortletHeader from '../../../../../Components/PortletHeader/PortletHeader';
+// import PortletLabel from '../../../../../Components/PortletLabel/PortletLabel';
+// import PortletContent from '../../../../../Components/PortletContent/PortletContent';
+// import PortletFooter from '../../../../../Components/PortletFooter/PortletFooter';
 
 import {
   genreData,
@@ -115,19 +114,23 @@ const AddMovie = (props) => {
     ) {
       setInfoMessage('Movie have not been saved, try again.');
     } else {
+      const body = {
+        title: title,
+        image: movieImage,
+        genre: genre,
+        language: language,
+        duration: duration,
+        description: description,
+        director: director,
+        cast: cast,
+        releaseDate: releaseDate,
+        endDate: endDate
+      };
       try {
         const response = await dispatch(
           MovieAction.createMovie(
-            title,
-            movieImage,
-            genre,
-            language,
-            duration,
-            description,
-            director,
-            cast,
-            releaseDate,
-            endDate
+            body
+
           )
         );
 
@@ -161,19 +164,23 @@ const AddMovie = (props) => {
       setInfoMessage('Movie have not been saved, try again.');
     } else {
       try {
+        const body = {
+          title: title,
+          image: movieImage,
+          genre: genre,
+          language: language,
+          duration: duration,
+          description: description,
+          director: director,
+          cast: cast,
+          releaseDate: releaseDate,
+          endDate: endDate
+        };
         const response = await dispatch(
           MovieAction.updateMovie(
             prevMovie._id,
-            title,
-            movieImage,
-            genre,
-            language,
-            duration,
-            description,
-            director,
-            cast,
-            releaseDate,
-            endDate
+            body
+
           )
         );
         setStatus(true);
@@ -208,151 +215,149 @@ const AddMovie = (props) => {
 
   return (
     <>
-      <Portlet {...rest} className={rootClassName}>
-        <PortletHeader>
-          <PortletLabel subtitle={subtitle} title="Movie" />
-        </PortletHeader>
-        <PortletContent noPadding>
-          <form autoComplete="off" noValidate ref={form}>
-            <div className={classes.field}>
-              <TextField
+      <div className={rootClassName} {...rest}>
+        <Typography variant="h4" className={classes.title}>
+          {subtitle}
+        </Typography>
+        <form autoComplete="off" noValidate ref={form}>
+          <div className={classes.field}>
+            <TextField
+              className={classes.textField}
+              helperText="Please specify the title"
+              label="Title"
+              margin="dense"
+              required
+              value={title}
+              variant="outlined"
+              onChange={onChangeTitle}
+            />
+            <TextField
+              select
+              className={classes.textField}
+              label="Genre"
+              margin="dense"
+              required
+              value={genre}
+              variant="outlined"
+              onChange={onChangeGenre}>
+              {genreData.map((genreItem, index) => (
+                <MenuItem key={genreItem + '-' + index} value={genreItem}>
+                  {genreItem}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
+
+          <div className={classes.field}>
+            <TextField
+              fullWidth
+              className={classes.textField}
+              label="Movie Image URL"
+              margin="dense"
+              variant="outlined"
+              required
+              value={movieImage}
+              onChange={onChangeImage}
+            />
+            <TextField
+              fullWidth
+              className={classes.textField}
+              label="Description"
+              margin="dense"
+              variant="outlined"
+              required
+              value={description}
+              onChange={onChangeDescription}
+            />
+          </div>
+
+          <div className={classes.field}>
+            <TextField
+              select
+              className={classes.textField}
+              label="Language"
+              margin="dense"
+              required
+              value={language}
+              variant="outlined"
+              onChange={onChangeLanguage}>
+              {languageData.map((langItem) => (
+                <MenuItem value={langItem}>{langItem}</MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              className={classes.textField}
+              label="Duration"
+              margin="dense"
+              type="number"
+              required
+              InputProps={{
+                inputProps: {
+                  max: 1000,
+                  min: 0
+                }
+              }}
+              value={duration}
+              variant="outlined"
+              onChange={onChangeDuration}
+            />
+
+          </div>
+          <div className={classes.field}>
+            <TextField
+              className={classes.textField}
+              label="Director"
+              margin="dense"
+              required
+              value={director}
+              variant="outlined"
+              onChange={onChangeDirector}
+            />
+            <TextField
+              className={classes.textField}
+              label="Cast"
+              margin="dense"
+              required
+              value={cast}
+              variant="outlined"
+              onChange={onChangeCast}
+            />
+          </div>
+          <div className={classes.field}>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+              <KeyboardDatePicker
                 className={classes.textField}
-                helperText="Please specify the title"
-                label="Title"
-                margin="dense"
-                required
-                value={title}
-                variant="outlined"
-                onChange={onChangeTitle}
+                autoOk
+                margin="normal"
+                id="release-date"
+                label="Release Date"
+                format="YYYY-MM-DD"
+                views={['year', 'month', 'date']}
+                value={releaseDate}
+                variant="inline"
+                onChange={(data) => setReleaseDate(data)}
+                inputVariant="outlined"
               />
-              <TextField
-                select
+            </MuiPickersUtilsProvider>
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+              <KeyboardDatePicker
                 className={classes.textField}
-                label="Genre"
-                margin="dense"
-                required
-                value={genre}
-                variant="outlined"
-                onChange={onChangeGenre}>
-                {genreData.map((genreItem, index) => (
-                  <MenuItem key={genreItem + '-' + index} value={genreItem}>
-                    {genreItem}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </div>
-            <div className={classes.field}>
-              <TextField
-                fullWidth
-                className={classes.textField}
-                label="Movie Image URL"
-                margin="dense"
-                variant="outlined"
-                required
-                value={movieImage}
-                onChange={onChangeImage}
+                autoOk
+                margin="normal"
+                id="end-date"
+                label="End Date"
+                format="YYYY-MM-DD"
+                views={['year', 'month', 'date']}
+                value={endDate}
+                variant="inline"
+                onChange={(data) => setEndDate(data)}
+                inputVariant="outlined"
               />
-              <TextField
-                fullWidth
-                className={classes.textField}
-                label="Description"
-                margin="dense"
-                variant="outlined"
-                required
-                value={description}
-                onChange={onChangeDescription}
-              />
-            </div>
-            <div className={classes.field}>
-              <TextField
-                select
-                className={classes.textField}
-                label="Language"
-                margin="dense"
-                required
-                value={language}
-                variant="outlined"
-                onChange={onChangeLanguage}>
-                {languageData.map((langItem) => (
-                  <MenuItem value={langItem}>{langItem}</MenuItem>
-                ))}
-              </TextField>
-              <TextField
-                className={classes.textField}
-                label="Duration"
-                margin="dense"
-                type="number"
-                required
-                InputProps={{
-                  inputProps: {
-                    max: 1000,
-                    min: 0
-                  }
-                }}
-                value={duration}
-                variant="outlined"
-                onChange={onChangeDuration}
-              />
-            </div>
-            <div className={classes.field}>
-              <TextField
-                className={classes.textField}
-                label="Director"
-                margin="dense"
-                required
-                value={director}
-                variant="outlined"
-                onChange={onChangeDirector}
-              />
-              <TextField
-                className={classes.textField}
-                label="Cast"
-                margin="dense"
-                required
-                value={cast}
-                variant="outlined"
-                onChange={onChangeCast}
-              />
-            </div>
-            <Grid
-              container
-              className={classes.grid}
-              justifyContent="space-around">
-              <MuiPickersUtilsProvider utils={MomentUtils}>
-                <KeyboardDatePicker
-                  autoOk
-                  margin="normal"
-                  id="release-date"
-                  label="Release Date"
-                  format="YYYY-MM-DD"
-                  views={['year', 'month', 'date']}
-                  value={releaseDate}
-                  variant="inline"
-                  onChange={(data) => setReleaseDate(data)}
-                  inputVariant="outlined"
-                />
-              </MuiPickersUtilsProvider>
-              <MuiPickersUtilsProvider utils={MomentUtils}>
-                <KeyboardDatePicker
-                  autoOk
-                  margin="normal"
-                  id="end-date"
-                  label="End Date"
-                  format="YYYY-MM-DD"
-                  views={['year', 'month', 'date']}
-                  value={endDate}
-                  variant="inline"
-                  onChange={(data) => setEndDate(data)}
-                  inputVariant="outlined"
-                />
-              </MuiPickersUtilsProvider>
-            </Grid>
-          </form>
-        </PortletContent>
-        <PortletFooter className={classes.portletFooter}>
+            </MuiPickersUtilsProvider>
+          </div>
           <Button
             className={classes.buttonFooter}
-            color="dafault"
+            color="default"
             variant="contained"
             onClick={submitAction}>
             {submitButton}
@@ -360,7 +365,7 @@ const AddMovie = (props) => {
           {prevMovie && (
             <Button
               className={classes.buttonFooter}
-              color="dafault"
+              color="default"
               variant="contained"
               onClick={handleDeleteMovie}>
               Delete Movie
@@ -372,8 +377,11 @@ const AddMovie = (props) => {
             variant="caption">
             {infoMessage}
           </Typography>
-        </PortletFooter>
-      </Portlet>
+
+        </form>
+
+      </div>
+
     </>
   );
 };
