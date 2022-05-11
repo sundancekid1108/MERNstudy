@@ -32,7 +32,7 @@ export const userSignUp = (
 };
 
 // 로그인
-export const userLogin = (email, password) => {
+export const userLogin = (email, password, body) => {
     return api
         .post('/users/auth/login', {
             email: email,

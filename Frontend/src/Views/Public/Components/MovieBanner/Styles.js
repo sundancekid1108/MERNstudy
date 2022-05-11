@@ -14,7 +14,6 @@ export default (theme) => ({
         height: '100%',
         right: 0,
         backgroundSize: 'cover',
-        backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         borderRadius: 11,
         width: '100%'

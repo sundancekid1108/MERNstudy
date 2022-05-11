@@ -186,8 +186,8 @@ const SignUp = (props) => {
     <>
       <div className={classes.root}>
         <Grid className={classes.grid} container>
-          <Grid className={classes.quoteWrapper} item lg={5}>
-            <div className={classes.quote}></div>
+          <Grid className={classes.bgWrapper} item lg={5}>
+            <div className={classes.bg} />
           </Grid>
           <Grid className={classes.content} item lg={7} xs={12}>
             <div className={classes.content}>

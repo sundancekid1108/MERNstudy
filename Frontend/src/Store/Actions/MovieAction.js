@@ -25,7 +25,7 @@ export const getMovieInfo = (id) => async(dispatch) => {
             dispatch({ type: GET_MOVIE_INFO, payload: responseData });
         }
     } catch (error) {
-        dispatch(setAlert('Failed to get Movies List', 'error', 3000));
+        dispatch(setAlert('Failed to get Movie Info', 'error', 3000));
     }
 };
 

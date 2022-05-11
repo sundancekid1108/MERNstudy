@@ -21,4 +21,4 @@ export default (theme) => ({
     infoMessage: {
         marginLeft: theme.spacing(3)
     }
-});
+})
