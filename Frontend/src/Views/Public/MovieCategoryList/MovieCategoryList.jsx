@@ -6,8 +6,7 @@ import styles from './Styles';
 import ResponsiveMovieCard from '../Components/ResponsiveMovieCard/ResponsiveMovieCard';
 import * as MovieAction from '../../../Store/Actions/MovieAction';
 
-const MovieList = (props) => {
-  console.log('MovielistProps', props);
+const MovieCategoryList = (props) => {
   const { classes } = props;
   const dispatch = useDispatch();
   const movies = useSelector((state) => state.movies.movies);
@@ -21,8 +20,8 @@ const MovieList = (props) => {
     getMovieList();
   }, []);
 
-  console.log('category', category);
-  console.log('movies', movies);
+  // console.log('category', category);
+  // console.log('movies', movies);
   if (!movies) {
     return (
       <>
@@ -84,4 +83,4 @@ const MovieList = (props) => {
   }
 };
 
-export default withStyles(styles)(MovieList);
+export default withStyles(styles)(MovieCategoryList);

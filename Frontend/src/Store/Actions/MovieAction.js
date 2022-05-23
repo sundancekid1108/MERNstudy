@@ -16,9 +16,10 @@ export const getMovieList = () => async(dispatch) => {
     }
 };
 
-export const getMovieInfo = (id) => async(dispatch) => {
+export const getMovieInfo = (movieId) => async(dispatch) => {
     try {
-        const result = await movieApi.getMovieInfo(id);
+        // console.log('movieId', movieId);
+        const result = await movieApi.getMovieInfo(movieId);
         const responseData = result;
         // console.log('responseData', responseData);
         if (responseData.status == 200) {

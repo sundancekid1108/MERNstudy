@@ -30,7 +30,7 @@ export const getMovieList = async(req, res) => {
                 _id: -1,
             },
         });
-        console.log('movieList', movieList);
+        // console.log('movieList', movieList);
         return res.json(movieList).status(200);
     } catch (err) {
         console.log(err);
@@ -45,7 +45,7 @@ export const getMovieInfo = async(req, res) => {
     const movieId = req.params.id;
     try {
         const movie = await Movie.findById(movieId);
-        // console.log(movie);
+        console.log(movie);
         return res.status(200).json(movie);
     } catch (error) {
         return res.status(400).json(error);
