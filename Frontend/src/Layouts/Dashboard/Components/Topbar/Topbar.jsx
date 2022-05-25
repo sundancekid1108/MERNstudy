@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Badge, Toolbar, IconButton, Typography } from '@material-ui/core';
@@ -58,7 +58,9 @@ const Topbar = (props) => {
               {isSidebarOpen ? <CloseIcon /> : <MenuIcon />}
             </IconButton>
           </div>
-
+          <NavLink className={classes.title} to="/">
+            Return
+          </NavLink>
           <IconButton
             className={classes.notificationsButton}
             onClick={onChangeNotification}>

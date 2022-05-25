@@ -1,4 +1,4 @@
-import { GET_THEATERS_LIST } from '../Types/Index';
+import { GET_THEATERS_LIST, GET_THEATER_INFO } from '../Types/Index';
 import { setAlert } from './AlertAction';
 import * as theaterApi from '../../Api/TheaterApi/TheaterApi';
 
@@ -14,6 +14,20 @@ export const getTheaterList = () => async(dispatch) => {
         }
     } catch (error) {
         dispatch(setAlert('Failed to get Theaters List', 'error', 3000));
+    }
+};
+
+export const getTheaterInfo = (theaterId) => async(dispatch) => {
+    try {
+        const result = await theaterApi.getTheaterInfo(theaterId);
+        const responseData = result;
+        if (responseData.status == 200) {
+            dispatch({ type: GET_THEATER_INFO, payload: responseData.data });
+        } else {
+            dispatch(setAlert('Failed to get Theater Info', 'error', 3000));
+        }
+    } catch (error) {
+        dispatch(setAlert('Failed to get Theater Info', 'error', 3000));
     }
 };
 

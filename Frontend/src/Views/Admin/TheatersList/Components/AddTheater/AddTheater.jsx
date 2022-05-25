@@ -168,7 +168,7 @@ const AddTheater = (props) => {
         </div>
         {newSeats.length > 0 &&
           newSeats.map((seat, index) => (
-            <div className={classes.field}>
+            <div key={`seat-${index}-${seat.length}`} className={classes.field}>
               <TextField
                 key={`new-seat-${index}`}
                 className={classes.textField}
@@ -195,7 +195,7 @@ const AddTheater = (props) => {
 
   return (
     <>
-      <div {...rest} className={rootClassName}>
+      <div className={rootClassName}>
         <Typography variant="h4" className={classes.title}>
           {mainTitle}
         </Typography>

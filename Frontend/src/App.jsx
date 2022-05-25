@@ -4,7 +4,7 @@ import {
   Link,
   Route,
   HashRouter,
-  BrowserRouter as Router,
+  BrowserRouter,
   Switch,
   useHistory
 } from 'react-router-dom';
@@ -68,7 +68,7 @@ const App = () => {
           <CssBaseline />
           <Alert />
           <Suspense fallback={<Loading />}>
-            <HashRouter>
+            <BrowserRouter>
               <Switch>
                 <Route exact path="/" component={MoviePage} />
                 <Route exact path="/movie/:id" component={MovieInfo} />
@@ -116,7 +116,7 @@ const App = () => {
                 />
                 <ProtectedRoute
                   exact
-                  path="/admin/showtimes"
+                  path="/admin/movieshowtimes"
                   component={MovieShowTimeList}
                 />
                 <ProtectedRoute
@@ -131,7 +131,7 @@ const App = () => {
                 />
                 <Route path="*" component={NotFound} />
               </Switch>
-            </HashRouter>
+            </BrowserRouter>
           </Suspense>
         </MuiThemeProvider>
       </Provider>

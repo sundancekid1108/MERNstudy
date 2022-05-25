@@ -102,7 +102,7 @@ const Sidebar = (props) => {
           activeClassName={classes.activeListItem}
           className={classes.listItem}
           component={NavLink}
-          to="/admin/showtimes">
+          to="/admin/movieshowtimes">
           <ListItemIcon className={classes.listItemIcon}>
             <DashboardIcon />
           </ListItemIcon>

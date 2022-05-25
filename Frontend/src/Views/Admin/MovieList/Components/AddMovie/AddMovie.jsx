@@ -25,7 +25,7 @@ import * as MovieAction from '../../../../../Store/Actions/MovieAction';
 import styles from './Styles';
 
 const AddMovie = (props) => {
-  const { editmovie, classes, className, ...rest } = props;
+  const { editmovie, classes, className } = props;
   const rootClassName = classNames(classes.root, className);
   const form = useRef();
 
@@ -215,7 +215,7 @@ const AddMovie = (props) => {
 
   return (
     <>
-      <div className={rootClassName} {...rest}>
+      <div className={rootClassName}>
         <Typography variant="h4" className={classes.title}>
           {subtitle}
         </Typography>
@@ -281,8 +281,8 @@ const AddMovie = (props) => {
               value={language}
               variant="outlined"
               onChange={onChangeLanguage}>
-              {languageData.map((langItem) => (
-                <MenuItem value={langItem}>{langItem}</MenuItem>
+              {languageData.map((languageItem, index) => (
+                <MenuItem key={languageItem + '-' + index} value={languageItem}>{languageItem}</MenuItem>
               ))}
             </TextField>
             <TextField
@@ -388,8 +388,8 @@ const AddMovie = (props) => {
 
 AddMovie.propTypes = {
   className: PropTypes.string,
-  classes: PropTypes.object.isRequired,
-  editmovie: PropTypes.object.isRequired
+  classes: PropTypes.object,
+  editmovie: PropTypes.object
 };
 
 export default withStyles(styles)(AddMovie);

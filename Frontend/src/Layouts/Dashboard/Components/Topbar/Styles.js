@@ -37,7 +37,11 @@ export default (theme) => ({
         color: theme.palette.common.white
     },
     title: {
-        marginLeft: theme.spacing(1)
+        marginLeft: theme.spacing(2),
+        textTransform: 'uppercase',
+        textDecoration: 'none',
+        fontSize: '14px',
+        color: theme.palette.common.white
     },
     menuButton: {
         color: theme.palette.common.white,

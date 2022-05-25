@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles, Typography } from '@material-ui/core';
 import { Paper } from '../../../../Components/Index';
-import { EventSeat } from '@material-ui/icons';
+import { EventSeat, AttachMoney } from '@material-ui/icons';
 
 import styles from './Styles';
 
@@ -13,9 +13,9 @@ const TheaterCard = (props) => {
   return (
     <>
       <Paper className={rootClassName}>
-        <div className={classes.imageWrapper}>
+        {/* <div className={classes.imageWrapper}>
           <img alt="theater" className={classes.image} src={theater.image} />
-        </div>
+        </div> */}
         <div className={classes.details}>
           <Typography className={classes.name} variant="h4">
             {theater.theaterName}
@@ -25,11 +25,19 @@ const TheaterCard = (props) => {
           </Typography>
         </div>
         <div className={classes.stats}>
+          <AttachMoney className={classes.eventIcon} />
+          <Typography className={classes.eventText} variant="body2">
+            {theater.ticketPrice}  per movie
+          </Typography>
+
+        </div>
+        <div className={classes.stats}>
           <EventSeat className={classes.eventIcon} />
           <Typography className={classes.eventText} variant="body2">
             {theater.seatsAvailable}
           </Typography>
         </div>
+
       </Paper>
     </>
   );

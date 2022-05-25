@@ -46,7 +46,7 @@ export const getMovieInfo = async(req, res) => {
     try {
         const movie = await Movie.findById(movieId);
         console.log(movie);
-        return res.status(200).json(movie);
+        return res.json(movie).status(200);
     } catch (error) {
         return res.status(400).json(error);
     }
