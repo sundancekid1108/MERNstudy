@@ -27,13 +27,10 @@ const MovieShowTimeList = (props) => {
 
     const getMovieShowTimeList = async () => {
         dispatch(MovieShowTimeAction.getMovieShowTimesList())
-
-        setMovieShowTimes(movieShowTimeList)
-
-
+        // setMovieShowTimes(movieShowTimeList)
     }
 
-    const movieShowTimeList = useSelector((state) => state.movieShowTimes.movieShowTimes);
+
 
 
     useEffect(() => {
@@ -43,8 +40,11 @@ const MovieShowTimeList = (props) => {
         return () => {
             getMovieShowTimeList()
         }
-    }, [movieShowTimes])
+    }, [])
 
+
+    const movieShowTimeList = useSelector((state) => state.movieShowTimes.movieShowTimes);
+    // console.log("movieShowTimeList", movieShowTimeList)
 
     const handleDeleteMovieShowTime = async (id) => {
         try {
@@ -64,7 +64,7 @@ const MovieShowTimeList = (props) => {
         if (!movieShowTimes) {
             return <Typography variant="h6">There are no showtimes</Typography>;
         } else {
-            return <MovieShowTimeTable handleSelect={handleSelect} movieShowTimes={movieShowTimes} />
+            return <MovieShowTimeTable handleSelect={handleSelect} movieShowTimes={movieShowTimeList} />
 
         }
     }

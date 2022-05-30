@@ -16,13 +16,13 @@ import styles from './Styles';
 
 const AddMovieShowTime = (props) => {
     const {
-        movieShowTimes,
         selectedMovieShowtime,
         classes,
         className,
         ...rest
     } = props;
 
+    console.log("selectedMovieShowtime", selectedMovieShowtime)
     const [movieId, setMovieId] = useState('')
     const [theaterId, setTheaterId] = useState('')
     const [startAt, setStartAt] = useState(new Date())
@@ -33,6 +33,7 @@ const AddMovieShowTime = (props) => {
     const dispatch = useDispatch();
 
     const movieList = useSelector((state) => state.movies.movies);
+    const nowShowingMovieList = useSelector((state) => state.movies.nowShowing);
     const theaterList = useSelector((state) => state.theaters.theaters);
 
     const rootClassName = classNames(classes.root, className);
@@ -89,7 +90,7 @@ const AddMovieShowTime = (props) => {
     }
 
     const handleUpdateMovieShowTime = async () => {
-        console.log("handleUpdateMovieShowTime")
+        // console.log("handleUpdateMovieShowTime")
         if (
             movieId !== '' ||
             theaterId !== '' ||
@@ -123,6 +124,30 @@ const AddMovieShowTime = (props) => {
     }
 
 
+    const getMinDate = () => {
+        const id = prevMovieShowTime.movieId
+        const movie_data = nowShowingMovieList.find(movieShowTime => movieShowTime._id === id);
+        console.log("movie_data", movie_data)
+        if (movie_data) {
+            return new Date(movie_data.releaseDate)
+        } else {
+            return new Date()
+        }
+
+    }
+
+    const getMaxDate = () => {
+        const id = prevMovieShowTime.movieId
+        console.log("id", id)
+        const movie_data = nowShowingMovieList.find(movieShowTime => movieShowTime._id === id);
+        console.log("movie_data", movie_data)
+        if (movie_data) {
+            return new Date(movie_data.endDate)
+        } else {
+            return new Date()
+        }
+    }
+
 
     const title = prevMovieShowTime
         ? 'Edit Showtime'
@@ -134,6 +159,7 @@ const AddMovieShowTime = (props) => {
         ? () => handleUpdateMovieShowTime()
         : () => handleAddMovieShowTime();
 
+    console.log("nowShowingMovieList", nowShowingMovieList)
 
     return <>
         <div className={rootClassName} {...rest}>
@@ -259,6 +285,8 @@ const AddMovieShowTime = (props) => {
                             label="Start Date"
                             format="YYYY-MM-DD"
                             views={['year', 'month', 'date']}
+                            minDate={getMinDate()}
+                            maxDate={getMaxDate()}
                             value={startDate}
                             variant="inline"
                             onChange={(data) => setStartDate(data)}
@@ -277,6 +305,8 @@ const AddMovieShowTime = (props) => {
                             label="End Date"
                             format="YYYY-MM-DD"
                             views={['year', 'month', 'date']}
+                            minDate={getMinDate()}
+                            maxDate={getMaxDate()}
                             value={endDate}
                             onChange={(data) => setEndDate(data)}
                             KeyboardButtonProps={{

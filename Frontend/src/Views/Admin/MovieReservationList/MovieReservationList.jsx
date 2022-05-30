@@ -30,6 +30,9 @@ const MovieReservationList = (props) => {
     dispatch(TheaterAction.getTheaterList());
   };
 
+  const getMovieReservationListTest = () => {
+    dispatch(MovieReservationAction.getMovieRservationsList())
+  }
   const getMovieReservationList = async () => {
     try {
       const data = await MovieReservationApi.getMovieReservationList();
@@ -44,6 +47,7 @@ const MovieReservationList = (props) => {
   useEffect(() => {
     setSignal(true);
     getMovieReservationList();
+    getMovieReservationListTest()
     getMovieList();
     getTheaterList();
     return () => {
@@ -53,8 +57,8 @@ const MovieReservationList = (props) => {
 
   const movieList = useSelector((state) => state.movies.movies);
   const theaterList = useSelector((state) => state.theaters.theaters);
-
-  console.log(movieList, theaterList);
+  const movieReservationListTest = useSelector((state) => state.movieReservations.movieReservationList)
+  console.log(movieList, theaterList, movieReservationListTest);
 
   if (isLoading) {
     return (

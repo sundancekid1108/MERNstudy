@@ -61,6 +61,7 @@ const AddMovie = (props) => {
     }
   }, []);
 
+
   const onChangeTitle = (e) => {
     const data = e.target.value;
     setTitle(data);
