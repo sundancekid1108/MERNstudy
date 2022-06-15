@@ -46,7 +46,7 @@ const MovieReservationListTable = (props) => {
               <TableRow>
                 <TableCell align="left">Start At</TableCell>
                 <TableCell align="left">Movie</TableCell>
-                <TableCell align="left">Cinema</TableCell>
+                <TableCell align="left">Theater</TableCell>
                 <TableCell align="left">Ticket Price</TableCell>
                 <TableCell align="left">Total Price</TableCell>
               </TableRow>

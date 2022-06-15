@@ -58,7 +58,7 @@ const TheatersList = (props) => {
     } else if (!theaters) {
       return (
         <>
-          <Typography variant="h6">There are no cinemas available</Typography>
+          <Typography variant="h6">There are no Theaters available</Typography>
         </>
       );
     } else {
@@ -88,7 +88,7 @@ const TheatersList = (props) => {
 
   return (
     <>
-      <Dashboard title="Cinemas">
+      <Dashboard title="Theaters">
         <div className={classes.root}>
           <TheatersToolbar />
           {theaterRender()}

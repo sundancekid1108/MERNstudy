@@ -38,9 +38,6 @@ const MovieInfo = (props) => {
 
   const movieInfo = useSelector((state) => state.movies.movieInfo);
 
-  console.log(movie)
-  console.log(movieInfo)
-  console.log(typeof (movie), typeof (movieInfo))
 
   //왜 에러나는지 모르겠음..
 

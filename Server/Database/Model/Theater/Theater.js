@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const TheatherSchema = new Schema({
+const TheaterSchema = new Schema({
     theaterName: {
         type: String,
         required: true,
@@ -30,5 +30,5 @@ const TheatherSchema = new Schema({
     },
 }, { timestamps: true }, { versionKey: false });
 
-const Theather = mongoose.model('Theather', TheatherSchema);
-export default Theather;
+const Theater = mongoose.model('Theater', TheaterSchema);
+export default Theater;

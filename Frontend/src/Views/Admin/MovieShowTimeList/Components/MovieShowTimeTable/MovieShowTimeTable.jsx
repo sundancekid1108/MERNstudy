@@ -84,7 +84,7 @@ const MovieShowTimeTable = (props) => {
                         <TableRow>
                             <TableCell align="left">
                                 <Checkbox
-                                    checked={selectedMovieShowTimes.length === movieShowTimes.length}
+                                    checked={selectedMovieShowTimes.length === 0 ? false : selectedMovieShowTimes.length === movieShowTimes.length ? true : false}
                                     color="primary"
                                     indeterminate={
                                         selectedMovieShowTimes.length > 0 &&
@@ -95,7 +95,7 @@ const MovieShowTimeTable = (props) => {
                                 ID
                             </TableCell>
                             <TableCell align="left">Movie</TableCell>
-                            <TableCell align="left">Cinema</TableCell>
+                            <TableCell align="left">Theater</TableCell>
                             <TableCell align="left">Start Date</TableCell>
                             <TableCell align="left">End Date</TableCell>
                             <TableCell align="left">Time</TableCell>
@@ -112,6 +112,7 @@ const MovieShowTimeTable = (props) => {
                                     className={classes.tableRow}
                                     hover
                                     key={movieShowTime._id}
+                                    onClick={() => console.log("onclick!!")}
                                     selected={selectedMovieShowTimes.findIndex(i => i._id == movieShowTime._id) !== -1}>
                                     <TableCell className={classes.tableCell}>
                                         <div className={classes.tableCellInner}>

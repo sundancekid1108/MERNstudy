@@ -28,6 +28,8 @@ const AddMovieShowTime = (props) => {
     const [startAt, setStartAt] = useState(new Date())
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+    const [movieMinDate, setMovieMinDate] = useState('')
+    const [movieMaxDate, setMovieMaxDate] = useState('')
     const [isImax, setIsImax] = useState(false)
     const [is3d, setIs3d] = useState(false)
     const dispatch = useDispatch();
@@ -40,10 +42,10 @@ const AddMovieShowTime = (props) => {
 
 
     const prevMovieShowTime = selectedMovieShowtime[0]
-
+    console.log("prevMovieShowTime", prevMovieShowTime)
     //이전 데이터들이 있을땐 이전 데이터 입력
     useEffect(() => {
-        if (prevMovieShowTime) {
+        if (prevMovieShowTime !== undefined) {
             setMovieId(movieList.filter(x => x._id == prevMovieShowTime.movieId)[0]._id)
             setTheaterId(theaterList.filter(x => x._id == prevMovieShowTime.theaterId)[0]._id)
             setStartAt(prevMovieShowTime.startAt)
@@ -125,11 +127,10 @@ const AddMovieShowTime = (props) => {
 
 
     const getMinDate = () => {
-        const id = prevMovieShowTime.movieId
-        const movie_data = nowShowingMovieList.find(movieShowTime => movieShowTime._id === id);
-        console.log("movie_data", movie_data)
-        if (movie_data) {
-            return new Date(movie_data.releaseDate)
+        const selectedMovie = nowShowingMovieList.find(movie => movie._id === movieId)
+        console.log("selectedMovie", selectedMovie)
+        if (selectedMovie) {
+            return selectedMovie.releaseDate
         } else {
             return new Date()
         }
@@ -137,12 +138,10 @@ const AddMovieShowTime = (props) => {
     }
 
     const getMaxDate = () => {
-        const id = prevMovieShowTime.movieId
-        console.log("id", id)
-        const movie_data = nowShowingMovieList.find(movieShowTime => movieShowTime._id === id);
-        console.log("movie_data", movie_data)
-        if (movie_data) {
-            return new Date(movie_data.endDate)
+        const selectedMovie = nowShowingMovieList.find(movie => movie._id === movieId)
+        console.log("selectedMovie", selectedMovie)
+        if (selectedMovie) {
+            return selectedMovie.endDate
         } else {
             return new Date()
         }
@@ -161,171 +160,176 @@ const AddMovieShowTime = (props) => {
 
     console.log("nowShowingMovieList", nowShowingMovieList)
 
-    return <>
-        <div className={rootClassName} {...rest}>
-            <Typography variant="h4" className={classes.title}>
-                {title}
-            </Typography>
-            <form autoComplete="off" noValidate>
-                <div className={classes.field}>
-                    <MuiPickersUtilsProvider utils={MomentUtils}>
-                        <KeyboardTimePicker
-                            autoOk
+    return (
+        <>
+            <div className={rootClassName} {...rest}>
+                <Typography variant="h4" className={classes.title}>
+                    {title}
+                </Typography>
+                <form autoComplete="off" noValidate>
+                    <div className={classes.field}>
+                        <MuiPickersUtilsProvider utils={MomentUtils}>
+                            <KeyboardTimePicker
+                                autoOk
+                                className={classes.textField}
+                                ampm={false}
+                                margin="normal"
+                                label="Time"
+                                value={startAt}
+                                variant="inline"
+                                onChange={data =>
+                                    setStartAt(data)
+                                }
+                                inputVariant="outlined"
+
+
+                            />
+                        </MuiPickersUtilsProvider>
+
+
+
+                    </div>
+                    <div className={classes.field}>
+                        <TextField
+                            fullWidth
+                            select
                             className={classes.textField}
-                            margin="normal"
-                            label="Time"
-                            value={startAt}
-                            variant="inline"
-                            onChange={data =>
-                                setStartAt(data)
+                            label="Movie"
+                            margin="dense"
+                            required
+                            value={movieId}
+                            variant="outlined"
+                            onChange={event =>
+                                setMovieId(event.target.value)
                             }
-                            inputVariant="outlined"
 
-
-                        />
-                    </MuiPickersUtilsProvider>
-
-                </div>
-                <div className={classes.field}>
-                    <TextField
-                        fullWidth
-                        select
-                        className={classes.textField}
-                        label="Movie"
-                        margin="dense"
-                        required
-                        value={movieId}
-                        variant="outlined"
-                        onChange={event =>
-                            setMovieId(event.target.value)
-                        }
-
-                    >
-                        {movieList.map(movie => (
-                            <MenuItem key={movie._id} value={movie._id}>
-                                {movie.title}
-                            </MenuItem>
-                        ))}
-
-                    </TextField>
-
-                    <TextField
-                        fullWidth
-                        select
-                        className={classes.textField}
-                        label="theater"
-                        margin="dense"
-                        required
-                        value={theaterId}
-                        variant="outlined"
-                        onChange={(event) => setTheaterId(event.target.value)
-                        }>
-                        {theaterList.map(theater => (
-                            <MenuItem key={theater._id} value={theater._id}>
-                                {theater.theaterName}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-
-
-                </div>
-
-                <div className={classes.field}>
-                    <TextField
-                        fullWidth
-                        select
-                        className={classes.textField}
-
-                        label="IMAX"
-                        margin="dense"
-                        required
-                        value={isImax}
-                        variant="outlined"
-                        onChange={event =>
-                            setIsImax(event.target.value)
-                        }>
-                        {['true', 'false'].map(
-                            value => (
-                                <MenuItem key={value} value={value}>
-                                    {value}
+                        >
+                            {nowShowingMovieList.map(movie => (
+                                <MenuItem key={movie._id} value={movie._id}>
+                                    {movie.title}
                                 </MenuItem>
-                            )
-                        )}
-                    </TextField>
-                    <TextField
-                        fullWidth
-                        select
-                        className={classes.textField}
+                            ))}
 
-                        label="3D"
-                        margin="dense"
-                        required
-                        value={is3d}
-                        variant="outlined"
-                        onChange={event =>
-                            setIs3d(event.target.value)
-                        }>
-                        {['true', 'false'].map(
-                            value => (
-                                <MenuItem key={value} value={value}>
-                                    {value}
+                        </TextField>
+
+                        <TextField
+                            fullWidth
+                            select
+                            className={classes.textField}
+                            label="theater"
+                            margin="dense"
+                            required
+                            value={theaterId}
+                            variant="outlined"
+                            onChange={(event) => setTheaterId(event.target.value)
+                            }>
+                            {theaterList.map(theater => (
+                                <MenuItem key={theater._id} value={theater._id}>
+                                    {theater.theaterName}
                                 </MenuItem>
-                            )
-                        )}
-                    </TextField>
-                </div>
+                            ))}
+                        </TextField>
 
-                <div className={classes.field}>
-                    <MuiPickersUtilsProvider utils={MomentUtils}>
-                        <KeyboardDatePicker
-                            autoOk
+
+                    </div>
+
+                    <div className={classes.field}>
+                        <TextField
+                            fullWidth
+                            select
                             className={classes.textField}
-                            margin="normal"
-                            id="start-date"
-                            label="Start Date"
-                            format="YYYY-MM-DD"
-                            views={['year', 'month', 'date']}
-                            minDate={getMinDate()}
-                            maxDate={getMaxDate()}
-                            value={startDate}
-                            variant="inline"
-                            onChange={(data) => setStartDate(data)}
-                            inputVariant="outlined"
 
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date'
-                            }}
-                        />
-
-                        <KeyboardDatePicker
+                            label="IMAX"
+                            margin="dense"
+                            required
+                            value={isImax}
+                            variant="outlined"
+                            onChange={event =>
+                                setIsImax(event.target.value)
+                            }>
+                            {['true', 'false'].map(
+                                value => (
+                                    <MenuItem key={value} value={value}>
+                                        {value}
+                                    </MenuItem>
+                                )
+                            )}
+                        </TextField>
+                        <TextField
+                            fullWidth
+                            select
                             className={classes.textField}
-                            inputVariant="outlined"
-                            margin="normal"
-                            id="end-date"
-                            label="End Date"
-                            format="YYYY-MM-DD"
-                            views={['year', 'month', 'date']}
-                            minDate={getMinDate()}
-                            maxDate={getMaxDate()}
-                            value={endDate}
-                            onChange={(data) => setEndDate(data)}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date'
-                            }}
-                        />
-                    </MuiPickersUtilsProvider>
-                </div>
-            </form>
 
-            <Button
-                className={classes.buttonFooter}
-                color="primary"
-                variant="contained"
-                onClick={submitAction}>
-                {submitButton}
-            </Button>
-        </div>
-    </>
+                            label="3D"
+                            margin="dense"
+                            required
+                            value={is3d}
+                            variant="outlined"
+                            onChange={event =>
+                                setIs3d(event.target.value)
+                            }>
+                            {['true', 'false'].map(
+                                value => (
+                                    <MenuItem key={value} value={value}>
+                                        {value}
+                                    </MenuItem>
+                                )
+                            )}
+                        </TextField>
+                    </div>
+
+                    <div className={classes.field}>
+                        <MuiPickersUtilsProvider utils={MomentUtils}>
+                            <KeyboardDatePicker
+                                autoOk
+                                className={classes.textField}
+                                margin="normal"
+                                id="start-date"
+                                label="Start Date"
+                                format="YYYY-MM-DD"
+                                views={['year', 'month', 'date']}
+                                minDate={new Date()}
+                                maxDate={getMaxDate()}
+                                value={startDate}
+                                variant="inline"
+                                onChange={(data) => setStartDate(data)}
+                                inputVariant="outlined"
+
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date'
+                                }}
+                            />
+
+                            <KeyboardDatePicker
+                                className={classes.textField}
+                                inputVariant="outlined"
+                                margin="normal"
+                                id="end-date"
+                                label="End Date"
+                                format="YYYY-MM-DD"
+                                views={['year', 'month', 'date']}
+                                minDate={new Date(startDate)}
+                                maxDate={getMaxDate()}
+                                value={endDate}
+                                onChange={(data) => setEndDate(data)}
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date'
+                                }}
+                            />
+                        </MuiPickersUtilsProvider>
+                    </div>
+                </form>
+
+                <Button
+                    className={classes.buttonFooter}
+                    color="primary"
+                    variant="contained"
+                    onClick={submitAction}>
+                    {submitButton}
+                </Button>
+            </div>
+        </>
+    )
 }
 
 AddMovieShowTime.propTypes = {

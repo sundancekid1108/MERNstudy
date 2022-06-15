@@ -26,7 +26,7 @@ const TheatersToolbar = (props) => {
         <div className={classes.row}>
           <SearchInput
             className={classes.searchInput}
-            placeholder="Search cinema"
+            placeholder="Search Theater Info"
           />
           <Button
             onClick={handleDialog}

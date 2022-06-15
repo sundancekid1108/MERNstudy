@@ -54,26 +54,28 @@ const AddTheater = (props) => {
 
   const handleCreateTheater = async () => {
     console.log('handleCreateTheater');
+    console.log('seats', seats)
     if (
       theaterName === '' ||
       ticketPrice === '' ||
       image === '' ||
       city === '' ||
-      seats === [] ||
-      seatsAvailable === ''
+      seatsAvailable === '' ||
+      seats.length === 0
     ) {
       setStatus('fail');
       setInfoMessage('Check The Empty Fields');
     } else {
       try {
         const body = { image, theaterName, ticketPrice, city, seats, seatsAvailable };
+
         const res = await dispatch(
           TheaterAction.createTheater(
             body
           )
         );
 
-        console.log(res);
+        // console.log(res);
         setStatus('success');
         setInfoMessage('Theater Info have been saved.');
         dispatch(TheaterAction.getTheaterList());
@@ -269,7 +271,7 @@ const AddTheater = (props) => {
             color="dafault"
             variant="contained"
             onClick={handleDeleteTheater}>
-            Delete Cinema
+            Delete Theater Info
           </Button>
         )}
 
