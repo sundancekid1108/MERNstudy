@@ -21,8 +21,8 @@ import store from './Store/Index';
 import Loading from './Components/Loading/Loading';
 
 const Feed = lazy(() => import('./Views/Feed/Feed'));
-const SignIn = lazy(() => import('./Views/Admin/SignIn/SignIn'));
-const SignUp = lazy(() => import('./Views/SignUp/SignUp'));
+const SignIn = lazy(() => import('./Views/Public/SignIn/SignIn'));
+const SignUp = lazy(() => import('./Views/Public/SignUp/SignUp'));
 const AdminSignUp = lazy(() => import('./Views/Admin/AdminSignUp/AdminSignUp'));
 const MoviePage = lazy(() => import('./Views/Public/MoviePage/MoviePage'));
 const NotFound = lazy(() => import('./Views/NotFound/NotFound'));

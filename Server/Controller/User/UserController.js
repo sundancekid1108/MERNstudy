@@ -65,9 +65,14 @@ export const getCurrentUserInfo = async(req, res) => {
 //회원가입
 
 export const createUser = async(req, res) => {
-    // console.log(req.body);
-    const { username, email, firstname, lastname, password1, password2 } = req.body;
-
+    console.log(req.body);
+    // const { username, email, firstname, lastname, password1, password2 } = req.body;
+    const username = req.body.userName
+    const email = req.body.userEmail
+    const firstname = req.body.userFirstName
+    const lastname = req.body.userLastName
+    const password1 = req.body.userPassword
+    const password2 = req.body.userPassword2
     //username 검증
     const { userNameErrors, userNameIsValid } = await validateSignInData.validateUserName(username);
     if (!userNameIsValid) {
@@ -246,8 +251,9 @@ export const deleteUserById = async(req, res) => {
 
 //user 로그인
 export const postUserLogin = async(req, res) => {
-    const { email, password } = req.body;
 
+    const email = req.body.userEmail
+    const password = req.body.userPassword
     //Email 체크
     const { emailErrors, emailIsValid } = await validateLogInData.validateLoginEmail(email);
 

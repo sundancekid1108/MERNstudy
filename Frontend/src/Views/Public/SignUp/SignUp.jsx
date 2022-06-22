@@ -11,9 +11,9 @@ import {
   Typography
 } from '@material-ui/core';
 import { ArrowBack as ArrowBackIcon } from '@material-ui/icons';
-import * as userApi from '../../Api/UserApi/UserApi';
+import * as userApi from '../../../Api/UserApi/UserApi';
 import { useDispatch, useSelector } from 'react-redux';
-import * as AuthAction from '../../Store/Actions/AuthAction';
+import * as AuthAction from '../../../Store/Actions/AuthAction';
 import styles from './Styles';
 
 const SignUp = (props) => {
@@ -85,51 +85,6 @@ const SignUp = (props) => {
     }
   };
 
-  // const handleSignUp = async (e) => {
-  //   e.preventDefault();
-  //   setIsLoading(true);
-  //   setIsValid(false);
-  //   if (checkValue == false) {
-  //     //Check 버튼 확인
-  //     setIsLoading(false);
-  //     setIsValid(true);
-  //     setPolicyError('Check the Terms and Conditions');
-  //   } else if (
-  //     userEmail === '' ||
-  //     userName === '' ||
-  //     userFirstName === '' ||
-  //     userLastName === '' ||
-  //     userPassword === '' ||
-  //     userPassword2 === ''
-  //   ) {
-  //     //빈칸 확인
-  //     setPolicyError('');
-  //     setIsLoading(false);
-  //     setIsValid(true);
-  //     setErrorMessage('Check the Empty Field');
-  //   } else {
-  //     setPolicyError('');
-  //     setIsLoading(false);
-  //     setIsValid(true);
-
-  //     const result = await userApi.userSignUp(
-  //       userName,
-  //       userEmail,
-  //       userFirstName,
-  //       userLastName,
-  //       userPassword,
-  //       userPassword2
-  //     );
-  //     // console.log("result : ", result);
-  //     // 회원가입성공했을때 넘김
-  //     if (result.status == 400) {
-  //       setErrorMessage(result.data.response);
-  //     } else {
-  //       history.push('/signin');
-  //     }
-  //   }
-  // };
-
   //Redux를 활용한 signup 함수 재작성
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -159,14 +114,15 @@ const SignUp = (props) => {
       setIsValid(true);
 
       try {
+        const body = { userName,
+          userEmail,
+          userFirstName,
+          userLastName,
+          userPassword,
+          userPassword2}
         const result = await dispatch(
           AuthAction.userSignUp(
-            userName,
-            userEmail,
-            userFirstName,
-            userLastName,
-            userPassword,
-            userPassword2
+           body
           )
         );
 

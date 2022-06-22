@@ -34,7 +34,7 @@ const MoviesReducer = (state = initialState, action) => {
                 movieInfo: payload.data
             };
         default:
-            return state;
+            return {...state };
     }
 };
 

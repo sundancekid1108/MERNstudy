@@ -2,69 +2,55 @@ import api from '../axiosApi';
 import authHeader from '../authHeader';
 
 //회원가입
+
 export const userSignUp = (
-    username,
-    email,
-    firstname,
-    lastname,
-    password1,
-    password2
+  body
 ) => {
     return api
-        .post('/users/signup', {
-            username: username,
-            email: email,
-            firstname: firstname,
-            lastname: lastname,
-            password1: password1,
-            password2: password2
-        })
-        .then((response) => {
-            // console.log("response : ", response);
-            return response;
-        })
-        .catch((error) => {
-            // console.log("error : ", error);
-            // console.log("error!! : ", error.response);
+      .post('/users/signup', body)
+      .then((response) => {
+          // console.log("response : ", response);
+          return response;
+      })
+      .catch((error) => {
+          // console.log("error : ", error);
+          // console.log("error!! : ", error.response);
 
-            return error.response;
-        });
+          return error.response;
+      });
 };
 
+
 // 로그인
-export const userLogin = (email, password, body) => {
+export const userLogin = (body) => {
     return api
-        .post('/users/auth/login', {
-            email: email,
-            password: password
-        })
-        .then((response) => {
-            if (response.data.accessToken) {
-                //localStorage
-                localStorage.setItem(
-                    'token',
-                    JSON.stringify(response.data.accessToken)
-                );
+      .post('/users/auth/login', body)
+      .then((response) => {
+          if (response.data.accessToken) {
+              //localStorage
+              localStorage.setItem(
+                'token',
+                JSON.stringify(response.data.accessToken)
+              );
 
-                //session
-                sessionStorage.setItem(
-                    'token',
-                    JSON.stringify(response.data.accessToken)
-                );
+              //session
+              sessionStorage.setItem(
+                'token',
+                JSON.stringify(response.data.accessToken)
+              );
+              // localStorage.setItem('user', JSON.stringify(response.data));
+              // localStorage.setItem('isAdmin', JSON.stringify(response.data.isAdmin));
+          }
+          // console.log('userLogin success');
+          // console.log('response : ', response);
+          return response;
+      })
+      .catch((error) => {
+          console.log(error.status);
+          console.log('error!! : ', error);
 
-                // localStorage.setItem('user', JSON.stringify(response.data));
-                // localStorage.setItem('isAdmin', JSON.stringify(response.data.isAdmin));
-            }
-            // console.log('userLogin success');
-            // console.log('response : ', response);
-            return response;
-        })
-        .catch((error) => {
-            console.log(error.status);
-            console.log('error!! : ', error);
-
-            return error;
-        });
+          return error;
+      });
 };
 
 //facebook Auth Login
@@ -178,9 +164,10 @@ export const getUsersList = async() => {
         const res = await api.get('users/userlist', {
             headers: token
         });
-        console.log('res.data : ', res.data);
+        // console.log('res.data : ', res.data);
 
         const response = res.data;
+        // console.log("response", response)
         return response;
     } catch (error) {
         // console.log(error);

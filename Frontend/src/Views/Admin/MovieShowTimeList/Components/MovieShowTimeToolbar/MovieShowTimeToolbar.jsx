@@ -68,20 +68,20 @@ const MovieShowTimeToolbar = (props) => {
         <div className={rootClassName}>
             <div className={classes.row}>
                 <div>
-
+                    {selectedMovieShowTimes.length > 0 && (
+                      <IconButton
+                        className={classes.deleteButton}
+                        onClick={handleDeleteMovieShowTime}>
+                          <DeleteIcon />
+                      </IconButton>
+                    )}
 
 
                     {renderButton()}
 
-                    {selectedMovieShowTimes.length > 0 && (
-                        <IconButton
-                            className={classes.deleteButton}
-                            onClick={handleDeleteMovieShowTime}>
-                            <DeleteIcon />
-                        </IconButton>
-                    )}
+
                     <ResponsiveDialog
-                        id="Add_Movie"
+                        id="Add_MovieShowTime"
                         open={isOpenAddDialog}
                         handleClose={handleCreateDialog}
 

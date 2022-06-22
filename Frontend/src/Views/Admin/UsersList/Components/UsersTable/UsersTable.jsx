@@ -20,36 +20,33 @@ import styles from './Styles';
 
 const UsersTable = (props) => {
   // console.log('UserTable props :', props);
-  const { classes, className, users, onSelect } = props;
+  const { classes, className, users, handleSelect } = props;
   const rootClassName = classNames(classes.root, className);
 
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const handleSelectAll = (e) => {
-    console.log('handleselectall');
-    console.log(e.target.checked);
+
+  const handleSelectAll = e => {
     let allSelectedData;
     if (e.target.checked) {
-      allSelectedData = users.map((user) => user.username);
-      console.log('handleselectall data: ', allSelectedData);
+      allSelectedData = users.map((user) => user);
     } else {
       allSelectedData = [];
     }
-
     setSelectedUsers(allSelectedData);
-    onSelect(allSelectedData);
+    handleSelect(allSelectedData);
   };
 
-  const handleSelectOne = (e, username) => {
+  const handleSelectOne = (e, selectedUser) => {
     console.log('handleSelectOne');
 
-    const selectedIndex = selectedUsers.indexOf(username);
+    const selectedIndex = selectedUsers.findIndex(i => i._id == selectedUser._id)
     let selectedData = [];
 
     if (selectedIndex === -1) {
-      selectedData = selectedData.concat(selectedUsers, username);
+      selectedData = selectedData.concat(selectedUsers, selectedUser);
     } else if (selectedIndex === 0) {
       selectedData = selectedData.concat(selectedUsers.slice(1));
     } else if (selectedIndex === selectedUsers.length - 1) {
@@ -62,7 +59,7 @@ const UsersTable = (props) => {
     }
     setSelectedUsers(selectedData);
 
-    onSelect(selectedData);
+    handleSelect(selectedData);
   };
 
   const handleChangePage = (e, newPage) => {
@@ -76,6 +73,10 @@ const UsersTable = (props) => {
     // console.log('handleChangeRowsPerPage');
   };
 
+
+
+  console.log(selectedUsers.length, users.length)
+
   return (
     <>
       <Portlet className={rootClassName}>
@@ -85,7 +86,7 @@ const UsersTable = (props) => {
               <TableRow>
                 <TableCell align="left">
                   <Checkbox
-                    checked={selectedUsers.length === users.length}
+                   checked={selectedUsers.length === 0? false : selectedUsers.length === users.length ? true : false}
                     color="primary"
                     indeterminate={
                       selectedUsers.length > 0 &&
@@ -111,20 +112,20 @@ const UsersTable = (props) => {
                     className={classes.tableRow}
                     hover
                     key={user._id}
-                    selected={selectedUsers.indexOf(user.username) !== -1}>
+                    selected={selectedUsers.findIndex(i => i._id == user._id) !== -1}>
                     <TableCell className={classes.tableCell}>
                       <div className={classes.tableCellInner}>
                         <Checkbox
-                          checked={selectedUsers.indexOf(user.username) !== -1}
+                          checked={selectedUsers.findIndex(i => i._id == user._id) !== -1}
                           color="primary"
                           onChange={(event) =>
-                            handleSelectOne(event, user.username)
+                            handleSelectOne(event, user)
                           }
                           value="true"
                         />
                         <Avatar
                           className={classes.avatar}
-                          src={user.avatarUrl}
+                          src={user.profilePic}
                         />
                         <Typography
                           className={classes.nameText}
@@ -140,7 +141,7 @@ const UsersTable = (props) => {
                       {user.email}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      {moment(user.createdAt).format('DD/MM/YYYY')}
+                      {moment(user.createdAt).format('YYYY/MM/DD')}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -169,14 +170,14 @@ const UsersTable = (props) => {
 
 UsersTable.defaultProps = {
   users: [],
-  onSelect: () => { },
+  handleSelect: () => { },
   onShowDetails: () => { }
 };
 
 UsersTable.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
-  onSelect: PropTypes.func,
+  handleSelect: PropTypes.func,
   onShowDetails: PropTypes.func,
   users: PropTypes.array.isRequired
 };

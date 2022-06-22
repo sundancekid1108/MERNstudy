@@ -10,9 +10,11 @@ import {
 } from '../Types/Index';
 import * as userApi from '../../Api/UserApi/UserApi';
 
-export const userSignIn = (userEmail, userPassword) => async(dispatch) => {
+
+
+export const userSignIn = (body) => async(dispatch) => {
     try {
-        const result = await userApi.userLogin(userEmail, userPassword);
+        const result = await userApi.userLogin(body);
         const responseData = result;
         console.log('authaction userSignIn', responseData);
         if (responseData.status == 200) {
@@ -21,14 +23,14 @@ export const userSignIn = (userEmail, userPassword) => async(dispatch) => {
         } else {
             dispatch({ type: SIGN_IN_FAIL });
             dispatch(
-                setAlert('Login failed Check your Email and Password', 'error', 3000)
+              setAlert('Login failed Check your Email and Password', 'error', 3000)
             );
         }
         return responseData;
     } catch (error) {
         dispatch({ type: SIGN_IN_FAIL });
         dispatch(
-            setAlert('Login failed Check your Email and Password', 'error', 3000)
+          setAlert('Login failed Check your Email and Password', 'error', 3000)
         );
         return error;
     }
@@ -81,9 +83,10 @@ export const userGoogleAuthLogin = (e) => async(dispatch) => {
     }
 };
 
-export const userSignUp = (a, b, c, d, e, f) => async(dispatch) => {
+
+export const userSignUp = (body) => async(dispatch) => {
     try {
-        const result = await userApi.userSignUp(a, b, c, d, e, f);
+        const result = await userApi.userSignUp(body);
         const responseData = result;
         // console.log(responseData);
 
@@ -109,7 +112,7 @@ export const userLogOut = () => (dispatch) => {
     dispatch(setAlert('log out!', 'success', 3000));
 };
 
-// userinfo
+// userinfo(currentUser)
 export const getLoginUserInfo = () => async(dispatch) => {
     const result = await userApi.getUserInfo();
     const responseData = result;
