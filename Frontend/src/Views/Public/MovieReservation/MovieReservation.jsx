@@ -29,7 +29,7 @@ import * as MovieShowTimeAction from '../../../Store/Actions/MovieShowTimeAction
 import * as MovieReservationAction from '../../../Store/Actions/MovieReservationAction';
 import { useDispatch, useSelector } from 'react-redux';
 import ResponsiveDialog from '../../../Components/ResponsiveDialog/ResponsiveDialog'
-import SignInForm from '../../Admin/SignIn/Components/SignInForm/SignInForm'
+import SignInForm from '../SignIn/Components/SignInForm/SignInForm'
 
 import styles from './Styles';
 
@@ -40,7 +40,8 @@ const MovieReservation = (props) => {
   const nowTime = moment().format('YYYY-MM-DD');
   const dispatch = useDispatch();
 
-  const userInfo = useSelector((state) => state.auth.user); // 유저정보 Redux
+  const userInfo = useSelector((state) => state.auth.user);
+  const isLogin =  useSelector((state) => state.auth.isAuthenticated);
   const movieInfoTest = useSelector((state) => state.movies.movieInfo);
   const theatersList = useSelector((state) => state.theaters.theaters);
   const movieShowTimeList = useSelector((state) => state.movieShowTimes.movieShowTimes);
@@ -197,7 +198,7 @@ const MovieReservation = (props) => {
   const handleMovieReservation = () => {
     if (!userInfo) {
       history.push('/signin');
-    } else if (selectedSeatsList.length == 0) {
+    } else if (selectedSeatsList.length === 0) {
       console.log('choose seats first');
     } else {
       // console.log('handleMovieReservation');
@@ -268,6 +269,7 @@ const MovieReservation = (props) => {
 
   console.log("selectedSeatsList", selectedSeatsList)
   console.log("userInfo", userInfo)
+  console.log("isLogin", isLogin)
 
   return (
     <>
@@ -309,7 +311,8 @@ const MovieReservation = (props) => {
           // handleClose={() => setMustLogin(false)}
           // handleClose={() => handleDialog()}
           maxWidth="sm">
-          <SignInForm />
+
+          <SignInForm/>
         </ResponsiveDialog>
       </div>
     </>

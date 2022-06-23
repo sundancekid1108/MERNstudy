@@ -33,15 +33,7 @@ const SignInForm = (props) => {
   const facebook_app_id = process.env.REACT_APP_FACEBOOK_APP_ID;
   const google_app_id = process.env.REACT_APP_GOOGLE_AUTH_ID;
 
-  useEffect(() => {
-    //
-    if (state.isAuthenticated) {
-      return history.push('/');
-    } else {
-      history.push('/signin');
-    }
-  }, []);
-  //로그인 되있을때 SignIn 접근 차단
+
 
   const onChangeUserEmail = (e) => {
     const userEmail = e.target.value;
@@ -51,11 +43,6 @@ const SignInForm = (props) => {
   const onChangeUserPassword = (e) => {
     const userPassword = e.target.value;
     setUserPassword(userPassword);
-  };
-
-  //뒤로가기 처리
-  const handleBack = () => {
-    history.goBack();
   };
 
 
