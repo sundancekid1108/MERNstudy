@@ -19,9 +19,9 @@ import * as userApi from '../../../../../Api/UserApi/UserApi';
 
 import styles from './Styles';
 
-const AccountDetails = (props) => {
+const UpdateUserInfo = (props) => {
   const { user, classes, className, ...rest } = props;
-  console.log('AccountDetailsUser : ', user);
+  // console.log('UpdateUserInfoUser : ', user);
   const rootClassName = classNames(classes.root, className);
 
   const [userName, setUserName] = useState('');
@@ -36,16 +36,16 @@ const AccountDetails = (props) => {
   const [errorMessage, setErrorMessage] = useState('');
   const form = useRef();
 
-  // const setDefaultState = () => {
-  //   // setUserName(user.username);
-  //   // setUserFirstName(user.firstname);
-  //   // setUserLastName(user.lastname);
-  //   // setUserEmail(user.email);
-  //   // setUserPhoneNumber(user.phonenumber);
-  // };
-  // useEffect(() => {
-  //   setDefaultState();
-  // }, [user.username]);
+  const setDefaultState = () => {
+    // setUserName(user.userName);
+    // setUserFirstName(user.userFirstName);
+    // setUserLastName(user.userLastName);
+    // setUserEmail(user.userEmail);
+    // setUserPhoneNumber(user.phoneNumber);
+  };
+  useEffect(() => {
+    setDefaultState();
+  }, [user.username]);
 
   const onChangeUserName = (e) => {
     const data = e.target.value;
@@ -74,16 +74,36 @@ const AccountDetails = (props) => {
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
+    const body = {
+      username: userName,
+      email: userEmail,
+      firstname: userFirstName,
+      lastname: userLastName,
+      phonenumber: userPhoneNumber
+    }
+
+    for (const i in body) {
+      if (body[i] == '') {
+        delete body[i]
+      }
+    }
+
     const result = await userApi.updateUserInfo(
-      userName,
-      userEmail,
-      userFirstName,
-      userLastName,
-      userPhoneNumber,
-      userPassword
+      body
     );
-    console.log('Account detail result : ', result);
+
+    console.log("handleUpdateProfile Result", result)
+    if(result.status == 400){
+
+      setErrorMessage(result.data.response)
+    }  else if (result.status == 200) {
+      setErrorMessage(result.data.response)
+    }
+
+
   };
+
+
 
   return (
     <>
@@ -107,6 +127,9 @@ const AccountDetails = (props) => {
                 variant="outlined"
                 onChange={onChangeUserName}
               />
+            </div>
+            <div className={classes.field}>
+
 
               <TextField
                 className={classes.textField}
@@ -146,15 +169,7 @@ const AccountDetails = (props) => {
                 onChange={onChangeUserPhoneNumber}
               />
 
-              <TextField
-                className={classes.textField}
-                label="Password"
-                margin="dense"
-                type="password"
-                value={userPassword}
-                variant="outlined"
-                onChange={onChangeUserPassword}
-              />
+
             </div>
           </form>
         </PortletContent>
@@ -182,10 +197,10 @@ const AccountDetails = (props) => {
   );
 };
 
-AccountDetails.propTypes = {
+UpdateUserInfo.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(AccountDetails);
+export default withStyles(styles)(UpdateUserInfo);

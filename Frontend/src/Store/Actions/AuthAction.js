@@ -23,14 +23,14 @@ export const userSignIn = (body) => async(dispatch) => {
         } else {
             dispatch({ type: SIGN_IN_FAIL });
             dispatch(
-              setAlert('Login failed Check your Email and Password', 'error', 3000)
+                setAlert('Login failed Check your Email and Password', 'error', 3000)
             );
         }
         return responseData;
     } catch (error) {
         dispatch({ type: SIGN_IN_FAIL });
         dispatch(
-          setAlert('Login failed Check your Email and Password', 'error', 3000)
+            setAlert('Login failed Check your Email and Password', 'error', 3000)
         );
         return error;
     }

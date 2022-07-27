@@ -40,7 +40,7 @@ const SignIn = (props) => {
 
   useEffect(() => {
     //
-    if (state.isAuthenticated) {
+    if (state.isAuthenusticated) {
       return history.push('/');
     } else {
       history.push('/signin');
@@ -76,6 +76,7 @@ const SignIn = (props) => {
               </IconButton>
             </div>
             <div className={classes.contentBody}>
+
               <SignInForm redirect />
             </div>
           </Grid>

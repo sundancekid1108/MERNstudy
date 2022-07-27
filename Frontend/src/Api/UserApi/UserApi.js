@@ -3,54 +3,55 @@ import authHeader from '../authHeader';
 
 //회원가입
 
-export const userSignUp = (
-  body
-) => {
+export const userSignUp = (body) => {
     return api
-      .post('/users/signup', body)
-      .then((response) => {
-          // console.log("response : ", response);
-          return response;
-      })
-      .catch((error) => {
-          // console.log("error : ", error);
-          // console.log("error!! : ", error.response);
+        .post('/users/signup', body)
+        .then((response) => {
+            // console.log("response : ", response);
+            return response;
+        })
+        .catch((error) => {
+            // console.log("error : ", error);
+            // console.log("error!! : ", error.response);
 
-          return error.response;
-      });
+            return error.response;
+        });
 };
+
+
+
 
 
 // 로그인
 export const userLogin = (body) => {
     return api
-      .post('/users/auth/login', body)
-      .then((response) => {
-          if (response.data.accessToken) {
-              //localStorage
-              localStorage.setItem(
-                'token',
-                JSON.stringify(response.data.accessToken)
-              );
+        .post('/users/auth/login', body)
+        .then((response) => {
+            if (response.data.accessToken) {
+                //localStorage
+                localStorage.setItem(
+                    'token',
+                    JSON.stringify(response.data.accessToken)
+                );
 
-              //session
-              sessionStorage.setItem(
-                'token',
-                JSON.stringify(response.data.accessToken)
-              );
-              // localStorage.setItem('user', JSON.stringify(response.data));
-              // localStorage.setItem('isAdmin', JSON.stringify(response.data.isAdmin));
-          }
-          // console.log('userLogin success');
-          // console.log('response : ', response);
-          return response;
-      })
-      .catch((error) => {
-          console.log(error.status);
-          console.log('error!! : ', error);
+                //session
+                sessionStorage.setItem(
+                    'token',
+                    JSON.stringify(response.data.accessToken)
+                );
+                // localStorage.setItem('user', JSON.stringify(response.data));
+                // localStorage.setItem('isAdmin', JSON.stringify(response.data.isAdmin));
+            }
+            console.log('userLogin success');
+            console.log('response : ', response);
+            return response;
+        })
+        .catch((error) => {
+            console.log(error.status);
+            console.log('error!! : ', error);
 
-          return error;
-      });
+            return error.response;
+        });
 };
 
 //facebook Auth Login
@@ -108,33 +109,20 @@ export const userLogout = () => {
 };
 
 //유저 정보 수정
-export const updateUserInfo = async(
-    userName,
-    userEmail,
-    userFirstName,
-    userLastName,
-    userPhoneNumber,
-    userPassword
-) => {
-    // console.log("updateuserinfo");
+export const updateUserInfo = async(body) => {
+    // console.log('body', body);
     const token = authHeader();
     try {
-        const res = await api.patch(
-            '/users/updateuserinfo', {
-                username: userName,
-                email: userEmail,
-                firstname: userFirstName,
-                lastname: userLastName,
-                phonenumber: userPhoneNumber,
-                password: userPassword
-            }, { headers: token }
-        );
+        const res = await api.patch('/users/updateuserinfo', body, {
+            headers: token
+        });
 
         console.log('updateuserinfo res', res);
         return res;
     } catch (error) {
-        console.log(error);
-        return error;
+        // console.log('updateuserinfo error', error);
+        // console.log('updateuserinfo error', error.response);
+        return error.response;
     }
 };
 
@@ -147,12 +135,13 @@ export const getUserInfo = async() => {
             headers: token
         });
 
+        console.log(res)
         return res;
         // const response = res.data;
         // return response;
     } catch (error) {
         // console.log(error);
-        return error;
+        return error.response;
     }
 };
 
@@ -167,7 +156,7 @@ export const getUsersList = async() => {
         // console.log('res.data : ', res.data);
 
         const response = res.data;
-        // console.log("response", response)
+        console.log("response", response)
         return response;
     } catch (error) {
         // console.log(error);

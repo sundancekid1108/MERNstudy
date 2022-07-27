@@ -18,6 +18,7 @@ import RenderMovieInfo from './Components/RenderMovieInfo/RenderMovieInfo';
 import RenderSelectTheater from './Components/RenderSelectTheater/RenderSelectTheater';
 import RenderTheaterSeats from './Components/RenderTheaterSeats/RenderTheaterSeats';
 import RenderTicketing from './Components/RenderTicketing/RenderTicketing';
+import RenderInvitation from './Components/RenderInvitation/RenderInvitation';
 import moment from 'moment';
 import * as MovieApi from '../../../Api/MovieApi/MovieApi';
 import * as TheaterApi from '../../../Api/TheaterApi/TheaterApi';
@@ -287,6 +288,7 @@ const MovieReservation = (props) => {
                 handleSelectedMovieShowTime={handleSelectedMovieShowTime}
                 filteredMovieShowTimeList={filteredMovieShowTimeList}
               />
+
               <RenderTheaterSeats
                 selectedTheater={selectedTheater}
                 selectedMovieShowTime={selectedMovieShowTime}
@@ -295,14 +297,19 @@ const MovieReservation = (props) => {
                 handleUserSelectSeats={handleUserSelectSeats}
 
               />
-              <RenderTicketing
+
+
+              {selectedTheater && selectedMovieShowTime && (
+
+                <RenderTicketing
                 userInfo={userInfo}
                 selectedSeatsList={selectedSeatsList}
                 selectedTheater={selectedTheater}
                 seatsAvailable={seatsAvailable}
                 selectedMovieShowTime={selectedMovieShowTime}
                 handleMovieReservation={handleMovieReservation}
-              />
+              />)}
+
             </Grid>
           </Grid>
         </Container>

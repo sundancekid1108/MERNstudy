@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -21,9 +22,10 @@ import * as userApi from '../../Api/UserApi/UserApi';
 
 import styles from './Styles';
 
-const AccountDetails = (props) => {
+const UpdateUserInfo = (props) => {
   const { user, classes, className, ...rest } = props;
-  console.log('AccountDetailsUser : ', user);
+  console.log('UpdateUserInfoUser : ', user);
+  const userInfo = useSelector((state) => state.auth.user);
   const rootClassName = classNames(classes.root, className);
 
   const history = useHistory();
@@ -186,10 +188,10 @@ const AccountDetails = (props) => {
   );
 };
 
-AccountDetails.propTypes = {
+UpdateUserInfo.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(AccountDetails);
+export default withStyles(styles)(UpdateUserInfo);

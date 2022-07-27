@@ -1,11 +1,14 @@
 import dotenv from 'dotenv';
 import router from './router';
 import express from 'express';
+import fs from 'fs'
+import path from 'path'
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import multer from 'multer';
 import dbConnect from './Database/dbConfig';
 import session from 'express-session';
 import passport from 'passport';
@@ -16,6 +19,8 @@ dotenv.config();
 const app = express();
 
 const PORT = process.env.PORT || 3001;
+
+
 
 app.use(morgan('combined'));
 app.disable('x-powered-by');
@@ -64,6 +69,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(router);
+
 
 //Database Connect
 dbConnect();

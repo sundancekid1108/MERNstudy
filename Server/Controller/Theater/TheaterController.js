@@ -49,7 +49,7 @@ export const updateTheaterInfo = async(req, res) => {
     const isValidOperation = theaterUpdates.every((update) => allowedUpdates.includes(update));
 
     if (!isValidOperation) {
-        return res.status(400).json({ error: 'Invalid updates!' });
+        return res.status(400).json({ response: 'Invalid updates!' });
     }
 
     try {

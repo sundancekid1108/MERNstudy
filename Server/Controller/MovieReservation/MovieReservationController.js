@@ -55,7 +55,7 @@ export const updateMovieReservation = async(req, res) => {
     );
 
     if (!isValidOperation) {
-        return res.status(400).send({ error: 'update Fail' });
+        return res.status(400).json({ error: 'update Fail' });
     }
     try {
         const movieReservation = await MovieReservation.findById(movieReservationId);

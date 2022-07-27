@@ -7,8 +7,8 @@ export const getPostList = async(req, res) => {
     try {
         const posts = await Post.find({}, null, { sort: { _id: -1 } });
         res.json(posts).status(200);
-    } catch (e) {
-        console.log(e);
+    } catch (error) {
+        console.log(error);
         res.json({ response: 'getPostList Error' });
     }
 };
@@ -27,8 +27,8 @@ export const getPostDetail = async(req, res) => {
 
         const post = await Post.findById(req.params.id);
         res.json(post).status(200);
-    } catch (e) {
-        console.log(e);
+    } catch (error) {
+        console.log(error);
         res.json({ response: 'getPostDetail Error' }).status(500);
     }
 };
@@ -90,7 +90,7 @@ export const deletePost = async(req, res) => {
         }
 
         res.json({ response: 'delete Post successfully' }).status(200);
-    } catch (e) {
-        res.json(e);
+    } catch (error) {
+        res.json(error);
     }
 };

@@ -18,7 +18,8 @@ export const verifyToken = async(req, res, next) => {
                 response: 'Unauthorized! This token has a problem!',
             });
         } else {
-            req.decodedUser = decoded;
+            // console.log("decoded.user", decoded.user)
+            req.decodedUser = decoded.user;
             next();
             // console.log('req.decodedUser : ', req.decodedUser);
         }

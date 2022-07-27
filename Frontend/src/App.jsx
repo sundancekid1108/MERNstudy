@@ -32,7 +32,7 @@ const DashboardPage = lazy(() =>
 const UserList = lazy(() => import('./Views/Admin/UsersList/UserList'));
 const Account = lazy(() => import('./Views/Admin/Account/Account'));
 const Settings = lazy(() => import('./Views/Settings/Settings'));
-const UpdateAccount = lazy(() => import('./Views/UpdateAccount/UpdateAccount'));
+
 const MovieList = lazy(() => import('./Views/Admin/MovieList/MovieList'));
 const MovieInfo = lazy(() => import('./Views/Public/MovieInfo/MovieInfo'));
 const MovieReservation = lazy(() =>
@@ -104,11 +104,7 @@ const App = () => {
                   path="/admin/account"
                   component={Account}
                 />
-                <ProtectedRoute
-                  exact
-                  path="/admin/updateaccount"
-                  component={UpdateAccount}
-                />
+
                 <ProtectedRoute
                   exact
                   path="/admin/reservation"

@@ -13,12 +13,12 @@ export default (theme) => ({
         color: theme.palette.danger.main,
         alignText: 'center',
         marginBottom: theme.spacing(1),
-        marginTop: theme.spacing(2)
+        marginTop: theme.spacing(1)
     },
     textField: {
-        // width: '420px',
+        width: '420px',
         maxWidth: '100%',
-        marginRight: theme.spacing(3)
+        marginRight: theme.spacing(2)
     },
     portletFooter: {
         paddingLeft: theme.spacing(3),

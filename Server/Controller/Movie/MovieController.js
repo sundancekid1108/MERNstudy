@@ -76,7 +76,7 @@ export const updateMovieInfo = async(req, res) => {
         const isValidOperation = movieUpdates.every((update) => allowedUpdates.includes(update));
 
         if (!isValidOperation) {
-            return res.status(400).json({ error: 'Invalid updates!' });
+            return res.status(400).json({ response: 'Invalid updates!' });
         }
 
         try {

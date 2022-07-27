@@ -64,7 +64,7 @@ const Topbar = (props) => {
           <IconButton
             className={classes.notificationsButton}
             onClick={onChangeNotification}>
-            <Badge badgeContent={4} color="primary" variant="dot">
+            <Badge badgeContent={4} color="primary" variant="dot" overlap="rectangular">
               <NotificationsIcon />
             </Badge>
           </IconButton>

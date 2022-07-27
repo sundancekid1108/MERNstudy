@@ -25,16 +25,6 @@ const UserList = (props) => {
   }
 
 
-  // const getUsersList = async () => {
-  //   try {
-  //     const fetchedUsersList = await userApi.getUsersList();
-  //     const result = fetchedUsersList;
-  //     setUsers(result);
-  //   } catch (error) {
-  //     // console.log('error :', error);
-  //     setErrorMessage(error);
-  //   }
-  // };
 
   const handleSelectUser = (selectedUsers) => {
     setSelectedUsers(selectedUsers);
@@ -59,7 +49,6 @@ const UserList = (props) => {
   }, [selectedUsers]);
 
   const users = useSelector((state) => state.users.users)
-  const userTest = useSelector((state) => state.users.users)
   console.log("users", users)
   // console.log("userTest", userTest)
   console.log('selectedUsers', selectedUsers)

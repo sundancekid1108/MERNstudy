@@ -21,6 +21,8 @@ import styles from './Styles';
 const UsersTable = (props) => {
   // console.log('UserTable props :', props);
   const { classes, className, users, handleSelect } = props;
+
+  console.log("UserTable users", users)
   const rootClassName = classNames(classes.root, className);
 
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -86,7 +88,7 @@ const UsersTable = (props) => {
               <TableRow>
                 <TableCell align="left">
                   <Checkbox
-                   checked={selectedUsers.length === 0? false : selectedUsers.length === users.length ? true : false}
+                    checked={selectedUsers.length === 0 ? false : selectedUsers.length === users.length ? true : false}
                     color="primary"
                     indeterminate={
                       selectedUsers.length > 0 &&
