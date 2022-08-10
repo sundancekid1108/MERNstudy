@@ -19,31 +19,49 @@ import * as userApi from '../../../../../Api/UserApi/UserApi';
 
 import styles from './Styles';
 
-const UpdateUserInfo = (props) => {
+const UpdateUserProfileImg = (props) => {
     const { user, classes, className, ...rest } = props;
     const rootClassName = classNames(classes.root, className);
 
-    const [profilePicImg, setProfilePicImg] = useState('')
+    const [profileImg, setProfileImg] = useState(null)
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isValid, setIsValid] = useState(true);
 
-    const onChangeTest = (e) => {
+    const onChangeProfileImg = (e) => {
+        // console.log('e target file', e.target.files)
         const imgFile = e.target.files[0];
-        setProfilePicImg(imgFile)
-        console.log(profilePicImg)
+        setProfileImg(imgFile)
     }
 
-    const handleUpdateProfiePic = () => {
-        if (!profilePicImg) {
+    const handleUpdateProfieImg = async (e) => {
+        if (!profileImg) {
             console.log("No Image")
+            setErrorMessage("Select Profile Image")
         } else {
-            console.log("handleUpdateProfiePic", profilePicImg)
+
+            console.log("handleUpdateProfieImg", profileImg)
+            const formData = new FormData()
+            formData.append("file", profileImg)
+            // FormData의 key 확인
+            for (let key of formData.keys()) {
+                console.log("Key", key);
+            }
+
+            // FormData의 value 확인
+            // for (let value of formData.values()) {
+            //     console.log("Value", value);
+            // }
+
+            // const response = await userApi.updateProfileImg(formData)
+            const response = await userApi.updateUserInfo(formData)
+            console.log("response", response)
+            setErrorMessage(response.data.response)
         }
     }
 
-    const handleDeleteProfilePic = () => {
-        console.log("Delete ProfilePic")
+    const handleDeleteProfileImg = () => {
+        console.log("Delete Profile Image")
     }
 
     return (
@@ -58,7 +76,23 @@ const UpdateUserInfo = (props) => {
                 </PortletHeader>
                 <PortletContent noPadding>
                     <div className={classes.field}>
-                        <input type="file" name="file" onChange={onChangeTest} />
+                        <form encType='multipart/form-data'>
+                            <input type="file" name="file"
+                                className={classes.input}
+                                id="icon-button-file"
+                                accept="image/*"
+                                onChange={onChangeProfileImg}
+
+                            />
+
+                            <label htmlFor="icon-button-file">
+                                <Button variant="outlined" className={classes.button} component="span">
+                                    Upload
+                                </Button>
+                            </label>
+                            <span>{profileImg ? profileImg.name : 'No file selected'}</span>
+                        </form>
+
                     </div>
                 </PortletContent>
             </Portlet>
@@ -74,20 +108,18 @@ const UpdateUserInfo = (props) => {
                 ) : (
                     <>
                         <Button
-                            className={classes.buttonFooter}
-                            color="primary"
-                            variant="contained"
+                            variant="outlined" className={classes.button} component="span"
+
                             disabled={!isValid}
-                            onClick={handleUpdateProfiePic}
+                            onClick={handleUpdateProfieImg}
                         >
                             UPDATE PROFILE PICTURE
                         </Button>
                         <Button
-                            className={classes.buttonFooter}
-                            color="primary"
-                            variant="contained"
+                            variant="outlined" className={classes.button} component="span"
+
                             disabled={!isValid}
-                            onClick={handleUpdateProfiePic}
+                            onClick={handleDeleteProfileImg}
                         >
                             DELETE PROFILE PICTURE
                         </Button>
@@ -105,4 +137,4 @@ const UpdateUserInfo = (props) => {
 }
 
 
-export default withStyles(styles)(UpdateUserInfo);
+export default withStyles(styles)(UpdateUserProfileImg);

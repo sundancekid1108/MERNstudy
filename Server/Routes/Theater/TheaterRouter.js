@@ -6,6 +6,6 @@ const theaterRouter = express.Router();
 theaterRouter.post('/theaters', TheaterApi.createTheater);
 theaterRouter.get('/theaters', TheaterApi.getTheaterList);
 theaterRouter.get('/theaters/:id', TheaterApi.getTheaterInfo);
-theaterRouter.patch('/theaters/:id', TheaterApi.updateTheaterInfo);
+theaterRouter.post('/theaters/:id', TheaterApi.updateTheaterInfo);
 theaterRouter.delete('/theaters/:id', TheaterApi.deleteTheater);
 export default theaterRouter;

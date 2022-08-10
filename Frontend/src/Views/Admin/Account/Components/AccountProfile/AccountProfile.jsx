@@ -17,29 +17,31 @@ import AvatarIMG from '../../../../../Images/avatar.png';
 // Component styles
 import styles from './Styles';
 import { useHistory } from 'react-router-dom';
-import UpdateUserProfilePic from '../UpdateUserProfilePic/UpdateUserProfilePic';
+import UpdateUserProfileImg from '../UpdateUserProfileImg/UpdateUserProfileImg';
 import UpdateUserInfo from '../UpdateUserInfo/UpdateUserInfo';
 import UpdateUserPassword from '../UpdateUserPassword/UpdateUserPassword'
 
+import FileUpload from '../../../../../Components/FileUpload/FileUpload';
+
 
 const AccountProfile = (props) => {
-  const { user, classes, className, ...rest } = props;
+  const { user, classes, className } = props;
   const history = useHistory();
 
   // console.log('Account Profile user props', user);
   const rootClassName = classNames(classes.root, className);
 
   const [isOpenUpdateUserInfo, setIsOpenUpdateUserInfo] = useState(false);
-  const [isOpenUpdateUserProfilePic, setIsOpenUpdateUserProfilePic] = useState(false);
+  const [isOpenUpdateUserProfileImg, setIsOpenUpdateUserProfileImg] = useState(false);
   const [isOpenUpdateUserPassword, setIsOpenUpdateUserPassword] = useState(false);
   //popup dialog 열고 닫기
 
 
-  const handleUpdateUserProfilePic = () => {
-    if (isOpenUpdateUserProfilePic === false) {
-      setIsOpenUpdateUserProfilePic(true);
+  const handleUpdateUserProfileImg = () => {
+    if (isOpenUpdateUserProfileImg === false) {
+      setIsOpenUpdateUserProfileImg(true);
     } else {
-      setIsOpenUpdateUserProfilePic(false);
+      setIsOpenUpdateUserProfileImg(false);
 
     }
   }
@@ -62,16 +64,17 @@ const AccountProfile = (props) => {
 
     }
   }
+  const handleDeleteAccount = () => {
+    console.log("handleDeleteAccount")
+  }
 
   return (
     <>
-      <Portlet {...rest} className={rootClassName}>
+      <Portlet className={rootClassName}>
         <PortletContent>
           <div className={classes.details}>
             <div className={classes.info}>
-              <Typography variant="h2">
-                {user.userFirstName + ' ' + user.userLastName}
-              </Typography>
+              <Typography variant="h2">{user.name}</Typography>
               <Typography className={classes.emailText} variant="body1">
                 {user.userName}
               </Typography>
@@ -79,23 +82,25 @@ const AccountProfile = (props) => {
                 {user.userEmail}
               </Typography>
             </div>
-            <Avatar className={classes.avatar} src={AvatarIMG} />
+            <Avatar className={classes.avatar}
+              src={user.profileImg ? user.profileImg : AvatarIMG}
+            />
           </div>
         </PortletContent>
         <PortletFooter>
           <Button
             className={classes.uploadButton}
             color="primary"
-            onClick={handleUpdateUserProfilePic}
+            onClick={handleUpdateUserProfileImg}
             variant="text">
             Upload picture
           </Button>
 
           <ResponsiveDialog
-            open={isOpenUpdateUserProfilePic}
-            handleClose={handleUpdateUserProfilePic}
+            open={isOpenUpdateUserProfileImg}
+            handleClose={handleUpdateUserProfileImg}
           >
-            <UpdateUserProfilePic />
+            <UpdateUserProfileImg />
           </ResponsiveDialog>
 
           <Button
@@ -126,9 +131,12 @@ const AccountProfile = (props) => {
           </ResponsiveDialog>
           <Button
             className={classes.uploadButton}
+
+            onClick={handleDeleteAccount}
             color="primary"
             variant="text">
             DELETE ACCOUNT
+
           </Button>
         </PortletFooter>
       </Portlet>

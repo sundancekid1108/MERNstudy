@@ -93,10 +93,10 @@ const UpdateUserInfo = (props) => {
     );
 
     console.log("handleUpdateProfile Result", result)
-    if(result.status == 400){
+    if (result.status == 400) {
 
       setErrorMessage(result.data.response)
-    }  else if (result.status == 200) {
+    } else if (result.status == 200) {
       setErrorMessage(result.data.response)
     }
 

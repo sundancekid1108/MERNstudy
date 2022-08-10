@@ -1,6 +1,7 @@
 import express from 'express';
 import * as UserApi from '../../Controller/User/UserController';
 import * as AuthJwt from '../../Middleware/authJwt';
+import upload from '../../Middleware/Multer/Multer';
 const userRouter = express.Router();
 
 userRouter.get('/userinfo', AuthJwt.verifyToken, UserApi.getCurrentUserInfo);
@@ -17,7 +18,9 @@ userRouter.post('/auth/login', UserApi.postUserLogin);
 
 userRouter.get('/auth/login', AuthJwt.verifyToken);
 
-userRouter.patch('/updateuserinfo', AuthJwt.verifyToken, UserApi.updateUserInfo);
+userRouter.post('/updateuserinfo', AuthJwt.verifyToken,upload.single('file'), UserApi.updateUserInfo);
+
+userRouter.post('/updateprofileimg', AuthJwt.verifyToken,  upload.single('file'), UserApi.updateProfileImg)
 
 userRouter.delete('/deleteuser', AuthJwt.verifyToken, UserApi.deleteUserInfo);
 

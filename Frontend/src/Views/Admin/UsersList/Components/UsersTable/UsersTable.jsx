@@ -127,7 +127,7 @@ const UsersTable = (props) => {
                         />
                         <Avatar
                           className={classes.avatar}
-                          src={user.profilePic}
+                          src={user.profileImg}
                         />
                         <Typography
                           className={classes.nameText}

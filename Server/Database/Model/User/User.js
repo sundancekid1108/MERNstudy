@@ -10,7 +10,7 @@ const userSchema = new Schema({
         unique: true,
     },
 
-    profilePic: {
+    profileImg: {
         type: String,
         default: '',
     },

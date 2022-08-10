@@ -1,9 +1,25 @@
+import { v4 as uuidv4 } from 'uuid';
 const multer = require('multer');
+const path = require('path')
+const fs = require('fs')
+
+const id = uuidv4();
+// fs.readdir("./", (err, files) => {
+//     if (err) throw err;
+//     files.forEach((item) => {
+//         console.log(item);
+//     });
+//     console.log("readdir");
+// });
+
 
 const storage = multer.diskStorage({
-    destination: './uploads',
+    destination: './Upload/Data',
     filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`);
+        const ext = path.extname(file.originalname)
+        const basename = path.basename(file.originalname, ext)
+        const date = new Date()
+        cb(null, `${basename}-${id}-` + Date.now() + ext);
     },
 });
 
@@ -18,9 +34,13 @@ const upload = multer({
             cb(null, true);
         } else {
             cb(null, false);
-            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+            return cb(new Error('Only Image File( .png, .jpg and .jpeg) format allowed!'));
         }
     },
+    limits: { fileSize: 20 * 1024 * 1024 },
 });
 
+
 module.exports = upload;
+
+export default upload

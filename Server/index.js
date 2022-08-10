@@ -14,6 +14,8 @@ import session from 'express-session';
 import passport from 'passport';
 import './Middleware/Passport/passport';
 
+const upload = require('./Middleware/Multer/Multer')
+
 dotenv.config();
 
 const app = express();
@@ -24,6 +26,9 @@ const PORT = process.env.PORT || 3001;
 
 app.use(morgan('combined'));
 app.disable('x-powered-by');
+
+
+app.use('/Upload/Data', express.static(path.join(__dirname, './Upload/Data')));
 
 app.use(
     cors({
@@ -69,6 +74,22 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(router);
+
+//test~~~~~~~~~~~~~~~~~~~~~
+app.post('/profile', upload.single('file'), (req, res, next) => {
+    const url = req.protocol + '://' + req.get('host')
+    console.log(url)
+    console.log("uploadtest success")
+    const file = req.file
+    if (!file) {
+        const error = new Error('Please upload a file')
+        error.httpStatusCode = 400
+        return next(error)
+    }
+    res.send(file)
+})
+
+
 
 
 //Database Connect

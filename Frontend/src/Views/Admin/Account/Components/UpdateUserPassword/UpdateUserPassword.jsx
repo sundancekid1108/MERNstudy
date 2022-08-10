@@ -54,21 +54,6 @@ const UpdateUserPassword = (props) => {
                 setErrorMessage(result.data.response)
             }
         }
-        // if (userPassword.length < 6 || userPassword.length) {
-        //     setErrorMessage("Password must be at least 6 characters and maximum 30 characters")
-        // }
-        // if (userPassword !== userPassword2) {
-        //     setErrorMessage("wrong password")
-        // } else {
-        //     const body = { password: userPassword }
-        //     const result = await userApi.updateUserInfo(
-        //         body
-        //     );
-        //     console.log("result", result)
-        // }
-
-
-
     };
 
 
@@ -79,7 +64,7 @@ const UpdateUserPassword = (props) => {
                 <PortletHeader>
                     <PortletLabel
                         subtitle="The information can be updated"
-                        title="Profile"
+                        title="Password"
                     />
                 </PortletHeader>
                 <PortletContent noPadding>

@@ -30,7 +30,7 @@ export const createMovieShowTime = async(body) => {
 export const updateMovieShowTime = async(id, body) => {
     const token = authHeader();
     try {
-        const res = await api.patch('/movieshowtime/movieshowtime/' + id, body, {
+        const res = await api.post('/movieshowtime/movieshowtime/' + id, body, {
             headers: token
         });
         return res;

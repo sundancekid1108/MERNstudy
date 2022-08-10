@@ -45,7 +45,7 @@ export const getMovieList = async() => {
 export const updateMovieInfo = async(id, body) => {
     const token = authHeader();
     try {
-        const updateMovieData = await api.patch('/movies/movieinfo/' + id, body, {
+        const updateMovieData = await api.post('/movies/movieinfo/' + id, body, {
             headers: token
         });
         return updateMovieData;

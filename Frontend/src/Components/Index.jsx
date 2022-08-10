@@ -9,3 +9,4 @@ export { default as PortletToolbar } from './PortletToolbar/PortletToolbar';
 export { default as SearchInput } from './SearchInput/SearchInput';
 export { default as Status } from './Status/Status';
 export { default as ResponsiveDialog } from './ResponsiveDialog/ResponsiveDialog';
+export { default as FileUpload } from './FileUpload/FileUpload';

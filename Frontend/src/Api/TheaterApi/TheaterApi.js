@@ -46,7 +46,7 @@ export const updateTheaterInfo = async(id, body) => {
     console.log('updateTheaterInfobody', body);
     console.log(id);
     try {
-        const res = await api.patch('/theater/theaters/' + id, body, {
+        const res = await api.post('/theater/theaters/' + id, body, {
             headers: token
         });
         console.log('updateTheaterInfo res', res);
@@ -65,7 +65,7 @@ export const updateTheaterSeatsInfo = async(id, body) => {
     // };
     // console.log('updateTheaterInfobody', body);
     try {
-        const res = await api.patch('/theater/theaters/' + String(id), body, {
+        const res = await api.post('/theater/theaters/' + String(id), body, {
             headers: token
         });
 

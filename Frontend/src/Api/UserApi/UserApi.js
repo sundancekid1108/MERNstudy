@@ -1,8 +1,9 @@
 import api from '../axiosApi';
+import axios from 'axios';
 import authHeader from '../authHeader';
 
-//회원가입
 
+//회원가입
 export const userSignUp = (body) => {
     return api
         .post('/users/signup', body)
@@ -17,8 +18,6 @@ export const userSignUp = (body) => {
             return error.response;
         });
 };
-
-
 
 
 
@@ -113,7 +112,7 @@ export const updateUserInfo = async(body) => {
     // console.log('body', body);
     const token = authHeader();
     try {
-        const res = await api.patch('/users/updateuserinfo', body, {
+        const res = await api.post('/users/updateuserinfo', body, {
             headers: token
         });
 
@@ -126,6 +125,30 @@ export const updateUserInfo = async(body) => {
     }
 };
 
+//프로필이미지 수정(test)
+export const updateProfileImg = async(body) => {
+    console.log("updateProfileImg")
+    const token = authHeader();
+
+    //파일업로드 테스트
+    const fileApi = axios.create({
+        baseURL: 'http://localhost:3001/',
+        headers: token
+    });
+
+
+
+    try {
+        const res = await fileApi.post('/users/updateprofileimg', body, {
+            headers: token
+        })
+
+    } catch (error) {
+        console.log("updateProfileImg error", error)
+    }
+}
+
+
 //유저 정보 받아오기
 export const getUserInfo = async() => {
     const token = authHeader();
@@ -135,7 +158,7 @@ export const getUserInfo = async() => {
             headers: token
         });
 
-        console.log(res)
+        // console.log(res)
         return res;
         // const response = res.data;
         // return response;

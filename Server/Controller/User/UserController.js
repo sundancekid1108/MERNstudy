@@ -5,6 +5,8 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import upload from '../../Middleware/Multer/Multer';
+
 import * as AuthJwt from '../../Middleware/authJwt';
 dotenv.config();
 
@@ -47,7 +49,7 @@ export const getCurrentUserInfo = async(req, res) => {
         // console.log('currentuser : ', currentuser);
         return res
             .json({
-                profilePic: currentuser.profilePic,
+                profileImg: currentuser.profileImg,
                 phoneNumber: currentuser.phonenumber,
                 userId: currentuser.id,
                 userEmail: currentuser.email,
@@ -156,32 +158,77 @@ export const createUser = async(req, res) => {
             newUser
                 .save()
                 .then((result) => {
-                    return  res.status(200).json(result);
+                    return res.status(200).json(result);
                 })
                 .catch((error) => {
-                   return res.status(400).json(error);
+                    return res.status(400).json(error);
                 });
         });
     });
 };
 
+
+//updateProfileImg
+export const updateProfileImg = async(req, res) => {
+    console.log("updateProfileImg req", req)
+    console.log("req.file", req.file)
+    const file = req.file
+    if (!file) {
+        const error = new Error('Please upload a file')
+        error.httpStatusCode = 400
+        return next(error)
+    } else {
+        console.log('updateProfileImg success')
+        res.send(file)
+    }
+
+
+    // try {
+    //     return res.status(200).json({ response: "updateProfileImg" })
+    // } catch (err) {
+    //     return res.status(400).json(error);
+    // }
+
+}
+
+
+
 //user 수정
 export const updateUserInfo = async(req, res) => {
+    // console.log("req header", req.header)
+    // console.log("req body", req.body)
 
     const userId = req.decodedUser._id;
     // console.log("userId", userId)
-    // console.log(req.body)
     const body = req.body
-    try {
-        // console.log(body)
 
-        if(body.password1 && body.password2){
+
+    try {
+        if (req.file) {
+            const file = req.file
+                // console.log('updateProfileImg success')
+                // console.log(file)
+            const url = req.protocol + '://' + req.get('host') + '/' + file.path
+            console.log("url", url)
+            const user = await User.findByIdAndUpdate({ _id: userId }, {
+                profileImg: url,
+            }, { upsert: true })
+
+            return res.status(200).json({ response: "Update User Info" })
+
+            res.send(file)
+        } else {
+            return res.status(400).json({ response: "No Image File" });
+        }
+
+
+        if (body.password1 && body.password2) {
             const password1 = body.password1
             const password2 = body.password2
-            console.log(password1 , '&', password2)
+            console.log(password1, '&', password2)
             const { passwordErrors, passwordIsValid } = await validateSignInData.validatePassword(
-              password1,
-              password2
+                password1,
+                password2
             );
             if (!passwordIsValid) {
                 return res.status(400).json({ response: passwordErrors.password });
@@ -193,11 +240,11 @@ export const updateUserInfo = async(req, res) => {
                 const cryptPassword = await bcrypt.hash(password1, salt)
                 console.log("cryptPassword", cryptPassword)
 
-                const user = await User.findByIdAndUpdate({_id: userId},{
+                const user = await User.findByIdAndUpdate({ _id: userId }, {
                     password: cryptPassword
-                }, {upsert: true})
+                }, { upsert: true })
 
-                return res.status(200).json({response: "Update User Password Success"})
+                return res.status(200).json({ response: "Update User Password Success" })
 
             }
         }
@@ -218,15 +265,15 @@ export const updateUserInfo = async(req, res) => {
                     response: 'UserName is already existed',
                 });
             } else {
-                const user = await User.findByIdAndUpdate({_id: userId},{
+                const user = await User.findByIdAndUpdate({ _id: userId }, {
                     username: username,
-                }, {upsert: true})
+                }, { upsert: true })
 
-                return res.status(200).json({response: "Update User Info Success"})
+                return res.status(200).json({ response: "Update User Info Success" })
             }
         }
 
-        if(body.email){
+        if (body.email) {
             const email = body.email
 
             const duplicateEmail = await User.findOne({
@@ -244,55 +291,55 @@ export const updateUserInfo = async(req, res) => {
                     return res.status(400).json({ response: emailErrors.email });
                 }
 
-                const user = await User.findByIdAndUpdate({_id: userId},{
+                const user = await User.findByIdAndUpdate({ _id: userId }, {
                     email: email,
-                }, {upsert: true})
+                }, { upsert: true })
 
-                return res.status(200).json({response: "Update User Info Success"})
+                return res.status(200).json({ response: "Update User Info Success" })
             }
 
         }
 
-        if(body.firstname){
+        if (body.firstname) {
             const firstname = body.firstname
             const { userFirstNameErrors, userFirstNameIsValid } =
-              await validateSignInData.validateUserFirstName(firstname);
+            await validateSignInData.validateUserFirstName(firstname);
             if (!userFirstNameIsValid) {
                 return res.status(400).json({ response: userFirstNameErrors.firstname });
             } else {
-                const user = await User.findByIdAndUpdate({_id: userId},{
+                const user = await User.findByIdAndUpdate({ _id: userId }, {
                     firstname: firstname,
-                }, {upsert: true})
+                }, { upsert: true })
 
-                return res.status(200).json({response: "Update User Info Success"})
+                return res.status(200).json({ response: "Update User Info Success" })
             }
         }
 
-        if(body.lastname){
+        if (body.lastname) {
             const lastname = body.lastname
 
             const { userLastNameErrors, userLastNameIsValid } = await validateSignInData.validateUserLastName(
-              lastname
+                lastname
             );
             if (!userLastNameIsValid) {
                 return res.status(400).json({ response: userLastNameErrors.lastname });
             } else {
-                const user = await User.findByIdAndUpdate({_id: userId},{
+                const user = await User.findByIdAndUpdate({ _id: userId }, {
                     lastname: lastname,
-                }, {upsert: true})
+                }, { upsert: true })
 
-                return res.status(200).json({response: "Update User Info Success"})
+                return res.status(200).json({ response: "Update User Info Success" })
             }
         }
 
-        if(body.phonenumber){
+        if (body.phonenumber) {
             //핸드폰번호 validation 필요..
             const phonenumber = body.phonenumber
-            const user = await User.findByIdAndUpdate({_id: userId},{
+            const user = await User.findByIdAndUpdate({ _id: userId }, {
                 phonenumber: phonenumber,
-            }, {upsert: true})
+            }, { upsert: true })
 
-            return res.status(200).json({response: "Update User Info Success"})
+            return res.status(200).json({ response: "Update User Info Success" })
         }
 
 
@@ -305,37 +352,6 @@ export const updateUserInfo = async(req, res) => {
     }
 
 
-
-
-    // try {
-    //     const updates = Object.keys(req.body);
-    //     const allowedUpdates = [
-    //         'firstname',
-    //         'lastname',
-    //         'username',
-    //         'email',
-    //         'phonenumber',
-    //     ];
-    //
-    //     const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
-    //     if (!isValidOperation) {
-    //         return res.status(400).json({ response: 'Invalid updates!' });
-    //     }
-    //     try {
-    //         const user = await User.findById(userId);
-    //         updates.forEach((update) => (user[update] = req.body[update]));
-    //         await user.save();
-    //         if (!user) {
-    //             return res.status(404).json({ response: 'No User' });
-    //         } else {
-    //             return res.status(200).json(user);
-    //         }
-    //     } catch (error) {
-    //         res.status(400).json(error);
-    //     }
-    // } catch (err) {
-    //     res.status(500).json(err);
-    // }
 };
 
 //회원탈퇴
@@ -463,7 +479,7 @@ export const postUserLogin = async(req, res) => {
                     accessToken: null;
                 }
                 return res.status(200).json({
-                    profilePic: LoginSuccessUser.profilePic,
+                    profileImg: LoginSuccessUser.profileImg,
                     phoneNumber: LoginSuccessUser.phonenumber,
                     userId: LoginSuccessUser.id,
                     userEmail: LoginSuccessUser.email,
@@ -512,7 +528,7 @@ export const facebookAuthLogin = async(req, res) => {
                         accessToken: null;
                     }
                     return res.status(200).json({
-                        profilePic: existedUser.profilePic,
+                        profileImg: existedUser.profileImg,
                         phoneNumber: existedUser.phonenumber,
                         userId: existedUser.id,
                         userEmail: existedUser.email,
@@ -553,7 +569,7 @@ export const facebookAuthLogin = async(req, res) => {
                         accessToken: null;
                     }
                     return res.status(200).json({
-                        profilePic: facebookAuthUser.profilePic,
+                        profileImg: facebookAuthUser.profileImg,
                         phoneNumber: facebookAuthUser.phonenumber,
 
                         userId: facebookAuthUser.id,
@@ -605,7 +621,7 @@ export const googleAuthLogin = async(req, res) => {
                         accessToken: null;
                     }
                     return res.status(200).json({
-                        profilePic: existedUser.profilePic,
+                        profileImg: existedUser.profileImg,
                         phoneNumber: existedUser.phonenumber,
                         userId: existedUser.id,
                         userEmail: existedUser.email,
@@ -648,7 +664,7 @@ export const googleAuthLogin = async(req, res) => {
                         accessToken: null;
                     }
                     return res.status(200).json({
-                        profilePic: googleAuthUser.profilePic,
+                        profileImg: googleAuthUser.profileImg,
                         phoneNumber: googleAuthUser.phonenumber,
                         userId: googleAuthUser.id,
                         userEmail: googleAuthUser.email,

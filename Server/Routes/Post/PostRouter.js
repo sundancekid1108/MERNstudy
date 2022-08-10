@@ -8,7 +8,7 @@ postRouter.get('/getpostdetail/:id', PostApi.getPostDetail);
 
 postRouter.post('/createpost', PostApi.createPost);
 
-postRouter.patch('/updatepost/:id', PostApi.updatePost);
+postRouter.post('/updatepost/:id', PostApi.updatePost);
 
 postRouter.delete('/deletepost/:id', PostApi.deletePost);
 

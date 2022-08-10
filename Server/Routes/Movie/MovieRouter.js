@@ -7,6 +7,6 @@ const movieRouter = express.Router();
 movieRouter.post('/movies', AuthJwt.verifyToken, MovieApi.createMovie);
 movieRouter.get('/movielist', MovieApi.getMovieList);
 movieRouter.get('/movieinfo/:id', MovieApi.getMovieInfo);
-movieRouter.patch('/movieinfo/:id', AuthJwt.verifyToken, MovieApi.updateMovieInfo);
+movieRouter.post('/movieinfo/:id', AuthJwt.verifyToken, MovieApi.updateMovieInfo);
 movieRouter.delete('/movieinfo/:id', AuthJwt.verifyToken, MovieApi.deleteMovie);
 export default movieRouter;

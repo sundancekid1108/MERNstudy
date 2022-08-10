@@ -7,7 +7,7 @@ movieReservationRouter.post('/moviereservations', MovieReservationApi.createMovi
 
 movieReservationRouter.get('/moviereservations', MovieReservationApi.getMovieReservationList);
 movieReservationRouter.get('/moviereservations/:id', MovieReservationApi.getMovieReservationInfo);
-movieReservationRouter.patch('/moviereservations/:id', MovieReservationApi.updateMovieReservation);
+movieReservationRouter.post('/moviereservations/:id', MovieReservationApi.updateMovieReservation);
 movieReservationRouter.delete('/moviereservations/:id', MovieReservationApi.deleteMovieReservation);
 
 export default movieReservationRouter;
