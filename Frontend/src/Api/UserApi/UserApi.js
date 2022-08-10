@@ -148,6 +148,20 @@ export const updateProfileImg = async(body) => {
     }
 }
 
+//프로필 이미지 삭제
+export const deleteProfileImg = async(body) => {
+    const token = authHeader();
+    try {
+        const res = await api.delete('/users/deleteprofileimg', {
+            headers: token
+        });
+        console.log(res)
+
+    } catch (error) {
+        console.log("deleteProfileImg error", error)
+    }
+}
+
 
 //유저 정보 받아오기
 export const getUserInfo = async() => {

@@ -61,7 +61,7 @@ const UpdateUserProfileImg = (props) => {
     }
 
     const handleDeleteProfileImg = () => {
-        console.log("Delete Profile Image")
+        const response = userApi.deleteProfileImg()
     }
 
     return (

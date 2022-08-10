@@ -18,11 +18,13 @@ userRouter.post('/auth/login', UserApi.postUserLogin);
 
 userRouter.get('/auth/login', AuthJwt.verifyToken);
 
-userRouter.post('/updateuserinfo', AuthJwt.verifyToken,upload.single('file'), UserApi.updateUserInfo);
+userRouter.post('/updateuserinfo', AuthJwt.verifyToken, upload.single('file'), UserApi.updateUserInfo);
 
-userRouter.post('/updateprofileimg', AuthJwt.verifyToken,  upload.single('file'), UserApi.updateProfileImg)
+userRouter.post('/updateprofileimg', AuthJwt.verifyToken, upload.single('file'), UserApi.updateProfileImg)
 
 userRouter.delete('/deleteuser', AuthJwt.verifyToken, UserApi.deleteUserInfo);
+
+userRouter.delete('/deleteprofileimg', AuthJwt.verifyToken, UserApi.deleteProfileImg);
 
 userRouter.delete('/deleteuserbyid/:id', AuthJwt.verifyToken, UserApi.deleteUserById);
 

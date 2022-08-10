@@ -1,6 +1,9 @@
 import User from '../../Database/Model/User/User';
 import * as validateSignInData from '../../Middleware/Validation/signInValidation';
 import * as validateLogInData from '../../Middleware/Validation/loginValidation';
+// const path = require('path')
+// const fs = require('fs')
+import fs from 'fs'
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
@@ -353,6 +356,40 @@ export const updateUserInfo = async(req, res) => {
 
 
 };
+
+//이미지 삭제
+export const deleteProfileImg = async(req, res) => {
+    // console.log('req.decodedUser : ', req.decodedUser);
+    const userId = req.decodedUser._id
+        // console.log("deleteProfileImg")
+    try {
+
+        const currentuser = await User.findById(userId);
+        console.log('currentuser : ', currentuser);
+        if (currentuser.profileImg !== '') {
+            const data = currentuser.profileImg.split('/')
+            const imgName = data[5]
+            if (fs.existsSync('./Upload/Data/' + imgName)) {
+
+                // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
+                fs.unlinkSync('./Upload/Data/' + imgName);
+                const user = await User.findByIdAndUpdate({ _id: userId }, {
+                    profileImg: '',
+                }, { upsert: true })
+                return res.status(200).json({ response: "delete profile pic" })
+            } else {
+                return res.status(200).json({ response: "delete profile pic" })
+            }
+
+        } else {
+            console.log("delete img success")
+            return res.status(200).json({ response: "delete profile pic" })
+        }
+
+    } catch (error) {
+        return res.status(400).json(error)
+    }
+}
 
 //회원탈퇴
 export const deleteUserInfo = async(req, res) => {
