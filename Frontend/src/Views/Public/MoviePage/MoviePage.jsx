@@ -66,8 +66,7 @@ const MoviePage = (props) => {
 
 MoviePage.propTypes = {
   className: PropTypes.string,
-  classes: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(MoviePage);

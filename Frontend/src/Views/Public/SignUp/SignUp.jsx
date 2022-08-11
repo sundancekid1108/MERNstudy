@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import {
   Button,
@@ -20,7 +20,7 @@ const SignUp = (props) => {
   const { classes } = props;
   const form = useRef();
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
@@ -37,14 +37,14 @@ const SignUp = (props) => {
   const state = useSelector((state) => state.auth);
   useEffect(() => {
     if (state.isAuthenticated) {
-      return history.push('/');
+      navigate('/', { replace: false });
     } else {
-      history.push('/signup');
+      navigate('/signup');
     }
   }, []);
 
   const handleBack = () => {
-    history.goBack();
+    navigate(-1);
   };
 
   const onChangeUserEmail = (e) => {
@@ -114,15 +114,17 @@ const SignUp = (props) => {
       setIsValid(true);
 
       try {
-        const body = { userName,
+        const body = {
+          userName,
           userEmail,
           userFirstName,
           userLastName,
           userPassword,
-          userPassword2}
+          userPassword2
+        }
         const result = await dispatch(
           AuthAction.userSignUp(
-           body
+            body
           )
         );
 
@@ -130,7 +132,7 @@ const SignUp = (props) => {
         if (result.status !== 200) {
           setErrorMessage(result.data.response);
         } else {
-          history.push('/signin');
+          navigate('/signin', { replace: false });
         }
       } catch (error) {
         console.log(error);

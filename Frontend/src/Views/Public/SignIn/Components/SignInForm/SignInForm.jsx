@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import {
   Grid,
@@ -21,7 +21,7 @@ const SignInForm = (props) => {
   const { classes, user } = props;
   const state = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const form = useRef();
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
@@ -56,9 +56,9 @@ const SignInForm = (props) => {
       .then((response) => {
         console.log(response.data.isAdmin);
         if (response.data.isAdmin == true) {
-          history.push('/admin/dashboard');
+          navigate('/admin/dashboard', { replace: false });
         } else {
-          history.push('/');
+          navigate('/', { replace: false });
         }
       })
       .catch((error) => {
@@ -76,9 +76,9 @@ const SignInForm = (props) => {
       .then((response) => {
         console.log(response.data.isAdmin);
         if (response.data.isAdmin == true) {
-          history.push('/admin/dashboard');
+          navigate('/admin/dashboard', { replace: false });
         } else {
-          history.push('/');
+          navigate('/', { replace: false });
         }
       })
       .catch((error) => {
@@ -98,15 +98,15 @@ const SignInForm = (props) => {
    */
 
   const handleSignIn = () => {
-    const body ={userEmail, userPassword};
+    const body = { userEmail, userPassword };
 
     dispatch(AuthAction.userSignIn(body))
       .then((response) => {
         console.log(response.data.isAdmin);
         if (response.data.isAdmin === true) {
-          history.push('/admin/dashboard');
+          navigate('/admin/dashboard', { replace: false });
         } else {
-          history.push('/');
+          navigate('/', { replace: false });
         }
       })
       .catch((error) => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
@@ -28,7 +28,7 @@ const UpdateUserInfo = (props) => {
   const userInfo = useSelector((state) => state.auth.user);
   const rootClassName = classNames(classes.root, className);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [userName, setUserName] = useState('');
   const [userFirstName, setUserFirstName] = useState('');
@@ -89,7 +89,7 @@ const UpdateUserInfo = (props) => {
       userPassword
     );
     console.log('Account detail result : ', result);
-    history.push('/admin/account');
+    navigate('/admin/account');
   };
 
   return (

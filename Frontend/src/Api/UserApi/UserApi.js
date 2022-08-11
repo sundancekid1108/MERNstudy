@@ -119,8 +119,6 @@ export const updateUserInfo = async(body) => {
         console.log('updateuserinfo res', res);
         return res;
     } catch (error) {
-        // console.log('updateuserinfo error', error);
-        // console.log('updateuserinfo error', error.response);
         return error.response;
     }
 };

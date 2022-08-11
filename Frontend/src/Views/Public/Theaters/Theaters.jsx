@@ -52,8 +52,7 @@ const Theaters = (props) => {
 };
 
 Theaters.propTypes = {
-  className: PropTypes.string,
-  history: PropTypes.object.isRequired
+  className: PropTypes.string
 };
 
 export default withStyles(styles)(Theaters);

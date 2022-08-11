@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
 import Dashboard from '../../../Layouts/Dashboard/Dashboard';
@@ -15,7 +15,7 @@ const Account = (props) => {
   const { classes } = props;
   const userInfo = useSelector((state) => state.auth.user);
   const [user, setUser] = useState({});
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // const getUserInfo = () => {
   //

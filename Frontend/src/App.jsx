@@ -5,8 +5,8 @@ import {
   Route,
   HashRouter,
   BrowserRouter,
-  Switch,
-  useHistory
+  Routes,
+  useNavigate
 } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
@@ -54,7 +54,6 @@ const TheatersList = lazy(() =>
 );
 
 const App = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -69,64 +68,102 @@ const App = () => {
           <Alert />
           <Suspense fallback={<Loading />}>
             <BrowserRouter>
-              <Switch>
-                <Route exact path="/" component={MoviePage} />
-                <Route exact path="/movie/:id" component={MovieInfo} />
+              <Routes>
+                <Route exact path="/" element={<MoviePage />} />
+
+                <Route exact path="/movie/:id" element={<MovieInfo />} />
                 <Route
                   exact
                   path="/movie/moviereservation/:id"
-                  component={MovieReservation}
+                  element={<MovieReservation />}
                 />
                 <Route
                   exact
                   path="/movie/category/:category"
-                  component={MovieCategoryList}
+                  element={<MovieCategoryList />}
                 />
-                <Route exact path="/theaters" component={Theaters} />
-                <Route exact path="/feed" component={Feed} />
-                <Route exact path="/signin" component={SignIn} />
-                <Route exact path="/signup" component={SignUp} />
-                <Route exact path="/adminsignup" component={AdminSignUp} />
-                <Route exact path="/admin/movies" component={MovieList} />
+                <Route exact path="/theaters" element={<Theaters />} />
+                <Route exact path="/feed" element={<Feed />} />
+                <Route exact path="/signin" element={<SignIn />} />
+                <Route exact path="/signup" element={<SignUp />} />
+                <Route exact path="/adminsignup" element={<AdminSignUp />} />
+                <Route exact path="/admin/movies" element={<MovieList />} />
+
                 {/* 분리 */}
-                <ProtectedRoute
+                <Route
                   exact
                   path="/admin/userslist"
-                  component={UserList}
-                />
-                <ProtectedRoute
-                  exact
-                  path="/admin/dashboard"
-                  component={DashboardPage}
-                />
-                <ProtectedRoute
-                  exact
-                  path="/admin/account"
-                  component={Account}
+                  element={
+                    <ProtectedRoute>
+                      <UserList />
+                    </ProtectedRoute>
+                  }
                 />
 
-                <ProtectedRoute
+
+                <Route
+                  exact
+                  path="/admin/dashboard"
+                  element={<ProtectedRoute>
+                    <DashboardPage />
+                  </ProtectedRoute>
+                  }
+                >
+
+
+
+                </Route>
+
+
+                <Route
+                  exact
+                  path="/admin/account"
+                  element={
+                    <ProtectedRoute>
+                      <Account />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
                   exact
                   path="/admin/reservation"
-                  component={MovieReservationList}
+                  element={
+                    <ProtectedRoute>
+                      <MovieReservationList />
+                    </ProtectedRoute>
+                  }
                 />
-                <ProtectedRoute
+                <Route
                   exact
                   path="/admin/movieshowtimes"
-                  component={MovieShowTimeList}
+                  element={
+                    <ProtectedRoute>
+                      <MovieShowTimeList />
+                    </ProtectedRoute>
+                  }
                 />
-                <ProtectedRoute
+                <Route
                   exact
                   path="/admin/theaters"
-                  component={TheatersList}
+                  element={
+                    <ProtectedRoute>
+                      <TheatersList />
+                    </ProtectedRoute>
+
+                  }
                 />
-                <ProtectedRoute
+                <Route
                   exact
                   path="/admin/settings"
-                  component={Settings}
+                  element={
+                    <ProtectedRoute>
+                      <Settings />
+                    </ProtectedRoute>
+                  }
                 />
-                <Route path="*" component={NotFound} />
-              </Switch>
+                <Route path="*" element={<NotFound />} />
+              </Routes>
             </BrowserRouter>
           </Suspense>
         </MuiThemeProvider>

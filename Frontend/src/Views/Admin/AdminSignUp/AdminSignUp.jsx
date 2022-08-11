@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import {
   Button,
@@ -20,7 +20,7 @@ const AdminSignUp = (props) => {
   const { classes } = props;
 
   const form = useRef();
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [userEmail, setUserEmail] = useState('');
@@ -40,14 +40,14 @@ const AdminSignUp = (props) => {
   useEffect(() => {
     //
     if (state.isAuthenticated) {
-      return history.push('/');
+      navigate('/');
     } else {
-      history.push('/adminsignup');
+      navigate('/adminsignup');
     }
   }, []);
 
   const handleBack = () => {
-    history.goBack();
+    navigate(-1);
   };
 
   const onChangeUserEmail = (e) => {
@@ -132,7 +132,7 @@ const AdminSignUp = (props) => {
         if (result.status !== 200) {
           setErrorMessage(result.data.response);
         } else {
-          history.push('/signin');
+          navigate('/signin', { replace: false });
         }
       } catch (error) {
         console.log(error);

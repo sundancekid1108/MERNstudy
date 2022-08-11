@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import 'typeface-montserrat';
 
 import store from './Store/Index';
+
 ReactDOM.render(
   <Provider store={store}>
     <App />

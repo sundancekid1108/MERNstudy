@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import {
   Grid,
@@ -26,7 +26,7 @@ const SignIn = (props) => {
   const state = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const form = useRef();
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
@@ -41,9 +41,9 @@ const SignIn = (props) => {
   useEffect(() => {
     //
     if (state.isAuthenusticated) {
-      return history.push('/');
+      navigate('/', { replace: false });
     } else {
-      history.push('/signin');
+      navigate('/signin');
     }
   }, []);
   //로그인 되있을때 SignIn 접근 차단
@@ -53,7 +53,7 @@ const SignIn = (props) => {
 
   //뒤로가기 처리
   const handleBack = () => {
-    history.goBack();
+    navigate(-1);
   };
 
 
@@ -88,8 +88,7 @@ const SignIn = (props) => {
 
 SignIn.propTypes = {
   className: PropTypes.string,
-  classes: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(SignIn);

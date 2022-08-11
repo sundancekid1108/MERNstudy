@@ -11,12 +11,11 @@ import {
   PortletFooter,
   ResponsiveDialog
 } from '../../../../../Components/Index';
-// import { createBrowserHistory } from 'history';
 import AvatarIMG from '../../../../../Images/avatar.png';
 
 // Component styles
 import styles from './Styles';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import UpdateUserProfileImg from '../UpdateUserProfileImg/UpdateUserProfileImg';
 import UpdateUserInfo from '../UpdateUserInfo/UpdateUserInfo';
 import UpdateUserPassword from '../UpdateUserPassword/UpdateUserPassword'
@@ -26,7 +25,6 @@ import FileUpload from '../../../../../Components/FileUpload/FileUpload';
 
 const AccountProfile = (props) => {
   const { user, classes, className } = props;
-  const history = useHistory();
 
   // console.log('Account Profile user props', user);
   const rootClassName = classNames(classes.root, className);

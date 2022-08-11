@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Rating } from '@material-ui/lab';
@@ -36,13 +36,15 @@ import styles from './Styles';
 
 const MovieReservation = (props) => {
   const { classes } = props;
-  const history = useHistory();
-  const movieId = props.match.params.id;
+  const params= useParams()
+  console.log("params", params)
+  const navigate = useNavigate();
+  const movieId = params.id;
   const nowTime = moment().format('YYYY-MM-DD');
   const dispatch = useDispatch();
 
   const userInfo = useSelector((state) => state.auth.user);
-  const isLogin =  useSelector((state) => state.auth.isAuthenticated);
+  const isLogin = useSelector((state) => state.auth.isAuthenticated);
   const movieInfoTest = useSelector((state) => state.movies.movieInfo);
   const theatersList = useSelector((state) => state.theaters.theaters);
   const movieShowTimeList = useSelector((state) => state.movieShowTimes.movieShowTimes);
@@ -198,7 +200,7 @@ const MovieReservation = (props) => {
   // 극장 좌석 설정
   const handleMovieReservation = () => {
     if (!userInfo) {
-      history.push('/signin');
+      navigate('/signin', { replace: false });
     } else if (selectedSeatsList.length === 0) {
       console.log('choose seats first');
     } else {
@@ -302,13 +304,13 @@ const MovieReservation = (props) => {
               {selectedTheater && selectedMovieShowTime && (
 
                 <RenderTicketing
-                userInfo={userInfo}
-                selectedSeatsList={selectedSeatsList}
-                selectedTheater={selectedTheater}
-                seatsAvailable={seatsAvailable}
-                selectedMovieShowTime={selectedMovieShowTime}
-                handleMovieReservation={handleMovieReservation}
-              />)}
+                  userInfo={userInfo}
+                  selectedSeatsList={selectedSeatsList}
+                  selectedTheater={selectedTheater}
+                  seatsAvailable={seatsAvailable}
+                  selectedMovieShowTime={selectedMovieShowTime}
+                  handleMovieReservation={handleMovieReservation}
+                />)}
 
             </Grid>
           </Grid>
@@ -319,7 +321,7 @@ const MovieReservation = (props) => {
           // handleClose={() => handleDialog()}
           maxWidth="sm">
 
-          <SignInForm/>
+          <SignInForm />
         </ResponsiveDialog>
       </div>
     </>
@@ -328,8 +330,7 @@ const MovieReservation = (props) => {
 
 MovieReservation.propTypes = {
   className: PropTypes.string,
-  classes: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(MovieReservation);

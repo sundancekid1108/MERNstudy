@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Rating } from '@material-ui/lab';
@@ -27,6 +28,9 @@ const StyledRating = withStyles({
 
 const MovieBanner = (props) => {
   const { classes, movie, description } = props;
+  const params = useParams()
+  console.log(params)
+
   if (!movie) {
     return (
       <>
@@ -108,7 +112,7 @@ const MovieBanner = (props) => {
           <div className={classes.movieActions}>
             {description ? (
               <Link
-                to={`moviereservation/${movie._id}`}
+                to={`/movie/moviereservation/${movie._id}`}
                 style={{ textDecoration: 'none' }}>
                 <Button variant="contained" className={classes.button}>
                   Buy Tickets
@@ -117,7 +121,7 @@ const MovieBanner = (props) => {
               </Link>
             ) : (
               <Link
-                to={`movie/${movie._id}`}
+                to={`/movie/${movie._id}`}
                 style={{ textDecoration: 'none' }}>
                 <Button
                   className={classnames(classes.button, classes.learnMore)}>

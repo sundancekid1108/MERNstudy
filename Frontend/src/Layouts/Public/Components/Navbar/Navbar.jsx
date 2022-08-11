@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { withStyles, Button, Typography } from '@material-ui/core';
 import classnames from 'classnames';
@@ -11,7 +11,7 @@ import logoImg from '../../../../Images/logo.jpg';
 const Navbar = (props) => {
   const { classes } = props;
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const [scrollPosition, setScrollPositon] = useState(0);
@@ -21,13 +21,13 @@ const Navbar = (props) => {
 
   const onclickEvent = (e) => {
     e.preventDefault();
-    history.push('/signin');
+    navigate('/signin');
   };
 
   const handleLogOut = (e) => {
     dispatch(AuthAction.userLogOut());
 
-    history.push('/signin');
+    navigate('/signin', { replace: false });
   };
 
   const handleShowMenu = (e) => {

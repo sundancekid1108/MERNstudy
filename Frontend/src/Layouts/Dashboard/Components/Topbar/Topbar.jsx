@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, NavLink, useHistory } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Badge, Toolbar, IconButton, Typography } from '@material-ui/core';
@@ -21,23 +21,14 @@ const Topbar = (props) => {
     props;
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const auth = useSelector((state) => state.auth);
 
-  //Redux test
-
-  // const { user: currentUser } = useSelector((state) => state.auth);
-  // const handleLogOutTest = () => {
-  //   dispatch(userLogOut());
-  //   history.push('/signin');
-  // };
-  ///=======
 
   const handleLogOut = (e) => {
     dispatch(AuthAction.userLogOut());
-
-    history.push('/signin');
+    navigate('/signin');
   };
 
   const onChangeNotification = () => {

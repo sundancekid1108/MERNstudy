@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import {useParams} from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 
@@ -13,7 +14,10 @@ import * as MovieAction from '../../../Store/Actions/MovieAction';
 const MovieInfo = (props) => {
   const { classes } = props;
   const dispatch = useDispatch();
-  const movieId = props.match.params.id;
+
+  const params   = useParams() ;
+  const movieId = params.id
+
   const [movie, setMovie] = useState('');
 
   const getMovieInfo = async () => {
@@ -56,8 +60,7 @@ const MovieInfo = (props) => {
 
 MovieInfo.propTypes = {
   className: PropTypes.string,
-  classes: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(MovieInfo);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { withStyles, Grid, Typography } from '@material-ui/core';
 import Navbar from '../../../Layouts/Public/Components/Navbar/Navbar';
@@ -8,10 +9,13 @@ import * as MovieAction from '../../../Store/Actions/MovieAction';
 
 const MovieCategoryList = (props) => {
   const { classes } = props;
+  const params   = useParams() ;
+  console.log("params", params)
+  const category = params.category
   const dispatch = useDispatch();
   const movies = useSelector((state) => state.movies.movies);
   const latestMovies = useSelector((state) => state.movies.latestMovies);
-  const category = props.match.params.category;
+  // const category = props.match.params.category;
 
   const getMovieList = () => {
     dispatch(MovieAction.getMovieList());
