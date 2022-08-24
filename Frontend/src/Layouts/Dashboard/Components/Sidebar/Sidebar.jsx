@@ -41,7 +41,7 @@ const Sidebar = (props) => {
         <section className={classes.root}>
           <List component="div" disablePadding>
             <ListItem
-              activeClassName={classes.activeListItem}
+              activeclassname={classes.activeListItem}
               className={classes.listItem}
               component={NavLink}
               to="/admin/movies">
@@ -54,7 +54,7 @@ const Sidebar = (props) => {
               />
             </ListItem>
             <ListItem
-              activeClassName={classes.activeListItem}
+              activeclassname={classes.activeListItem}
               className={classes.listItem}
               component={NavLink}
               to="/feed">
@@ -67,7 +67,7 @@ const Sidebar = (props) => {
               />
             </ListItem>
             <ListItem
-              activeClassName={classes.activeListItem}
+              activeclassname={classes.activeListItem}
               className={classes.listItem}
               component={NavLink}
               to="/admin/dashboard">
@@ -79,8 +79,24 @@ const Sidebar = (props) => {
                 primary="Dashboard"
               />
             </ListItem>
+
             <ListItem
-              activeClassName={classes.activeListItem}
+              activeclassname={classes.activeListItem}
+              className={classes.listItem}
+              component={NavLink}
+              to="/admin/tmdbmovie">
+              <ListItemIcon className={classes.listItemIcon}>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText
+                classes={{ primary: classes.listItemText }}
+                primary="TMDB Moives"
+              />
+            </ListItem>
+
+
+            <ListItem
+              activeclassname={classes.activeListItem}
               className={classes.listItem}
               component={NavLink}
               to="/admin/theaters">
@@ -93,7 +109,7 @@ const Sidebar = (props) => {
               />
             </ListItem>
             <ListItem
-              activeClassName={classes.activeListItem}
+              activeclassname={classes.activeListItem}
               className={classes.listItem}
               component={NavLink}
               to="/admin/reservation">
@@ -106,7 +122,7 @@ const Sidebar = (props) => {
               />
             </ListItem>
             <ListItem
-              activeClassName={classes.activeListItem}
+              activeclassname={classes.activeListItem}
               className={classes.listItem}
               component={NavLink}
               to="/admin/movieshowtimes">
@@ -119,7 +135,7 @@ const Sidebar = (props) => {
               />
             </ListItem>
             <ListItem
-              activeClassName={classes.activeListItem}
+              activeclassname={classes.activeListItem}
               className={classes.listItem}
               component={NavLink}
               to="/admin/userslist">
@@ -133,7 +149,7 @@ const Sidebar = (props) => {
             </ListItem>
 
             <ListItem
-              activeClassName={classes.activeListItem}
+              activeclassname={classes.activeListItem}
               className={classes.listItem}
               component={NavLink}
               to="/admin/account">
@@ -146,7 +162,7 @@ const Sidebar = (props) => {
               />
             </ListItem>
             <ListItem
-              activeClassName={classes.activeListItem}
+              activeclassname={classes.activeListItem}
               className={classes.listItem}
               component={NavLink}
               to="/admin/settings">
@@ -188,7 +204,7 @@ const Sidebar = (props) => {
           <List component="div" disablePadding>
 
             <ListItem
-              activeClassName={classes.activeListItem}
+              activeclassname={classes.activeListItem}
               className={classes.listItem}
               component={NavLink}
               to="/feed">
@@ -207,7 +223,7 @@ const Sidebar = (props) => {
 
 
             <ListItem
-              activeClassName={classes.activeListItem}
+              activeclassname={classes.activeListItem}
               className={classes.listItem}
               component={NavLink}
               to="/admin/account">
@@ -220,7 +236,7 @@ const Sidebar = (props) => {
               />
             </ListItem>
             <ListItem
-              activeClassName={classes.activeListItem}
+              activeclassname={classes.activeListItem}
               className={classes.listItem}
               component={NavLink}
               to="/admin/settings">

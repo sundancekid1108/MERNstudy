@@ -38,7 +38,7 @@ const TheatersToolbar = (props) => {
         </div>
       </div>
       <ResponsiveDialog
-        id="Add-theater"
+        id="Add-TmdbMovie"
         open={isOpenDialog}
         handleClose={handleDialog}>
         <AddTheater />

@@ -48,6 +48,8 @@ const MovieCategoryList = lazy(() =>
   import('./Views/Public/MovieCategoryList/MovieCategoryList')
 );
 
+const TmdbMoviePage  = lazy(() => import('./Views/Admin/TmdbMoviePage/TmdbMoviePage'))
+
 const Theaters = lazy(() => import('./Views/Public/Theaters/Theaters'));
 const TheatersList = lazy(() =>
   import('./Views/Admin/TheatersList/TheatersList')
@@ -108,11 +110,18 @@ const App = () => {
                     <DashboardPage />
                   </ProtectedRoute>
                   }
-                >
+                />
 
+                <Route
+                  exact
+                  path="/admin/tmdbmovie"
+                  element={<ProtectedRoute>
+                    <TmdbMoviePage />
+                  </ProtectedRoute>
+                  }
+                />
 
-
-                </Route>
+\
 
 
                 <Route

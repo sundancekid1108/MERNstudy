@@ -30,11 +30,11 @@ const ResponsiveDialog = (props) => {
           <DialogContentText>{contentText}</DialogContentText>
           {children}
         </DialogContent>
-        <DialogActions>
+        {/* <DialogActions>
           <Button onClick={handleClose} color="primary" autoFocus>
             Done
           </Button>
-        </DialogActions>
+        </DialogActions> */}
       </Dialog>
     </>
   );

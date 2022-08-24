@@ -4,17 +4,11 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles, Grid, Button, TextField, Typography, MenuItem } from '@material-ui/core';
 
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from '@material-ui/pickers';
-import MomentUtils from '@date-io/moment';
-// import DateFnsUtils from '@date-io/date-fns';
-// import Portlet from '../../../../../Components/Portlet/Portlet';
-// import PortletHeader from '../../../../../Components/PortletHeader/PortletHeader';
-// import PortletLabel from '../../../../../Components/PortletLabel/PortletLabel';
-// import PortletContent from '../../../../../Components/PortletContent/PortletContent';
-// import PortletFooter from '../../../../../Components/PortletFooter/PortletFooter';
+
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 
 import {
   genreData,
@@ -325,36 +319,34 @@ const AddMovie = (props) => {
             />
           </div>
           <div className={classes.field}>
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-              <KeyboardDatePicker
-                className={classes.textField}
-                autoOk
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+
                 margin="normal"
                 id="release-date"
                 label="Release Date"
-                format="YYYY-MM-DD"
-                views={['year', 'month', 'date']}
+                inputFormat="yyyy-MM-dd"
+                inputVariant="outlined"
                 value={releaseDate}
                 variant="inline"
                 onChange={(data) => setReleaseDate(data)}
-                inputVariant="outlined"
+                renderInput={(params) => <TextField className={classes.textField}  {...params} />}
               />
-            </MuiPickersUtilsProvider>
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-              <KeyboardDatePicker
-                className={classes.textField}
-                autoOk
+
+              <DatePicker
+
                 margin="normal"
-                id="end-date"
+                id="End-date"
                 label="End Date"
-                format="YYYY-MM-DD"
-                views={['year', 'month', 'date']}
+                inputFormat="yyyy-MM-dd"
+                inputVariant="outlined"
                 value={endDate}
                 variant="inline"
                 onChange={(data) => setEndDate(data)}
-                inputVariant="outlined"
+                renderInput={(params) => <TextField className={classes.textField} {...params} />}
               />
-            </MuiPickersUtilsProvider>
+            </LocalizationProvider>
+
           </div>
           <Button
             className={classes.buttonFooter}

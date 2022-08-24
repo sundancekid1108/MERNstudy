@@ -4,12 +4,15 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles, Typography } from '@material-ui/core';
 import { Button, TextField, MenuItem } from '@material-ui/core';
-import {
-    MuiPickersUtilsProvider,
-    KeyboardTimePicker,
-    KeyboardDatePicker
-} from '@material-ui/pickers';
-import MomentUtils from '@date-io/moment';
+
+
+
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
+
+
 import * as MovieShowTimeApi from '../../../../../Api/MovieShowTimeApi/MovieShowTimeApi'
 import * as MovieShowTimeAction from '../../../../../Store/Actions/MovieShowTimeAction'
 import styles from './Styles';
@@ -168,23 +171,23 @@ const AddMovieShowTime = (props) => {
                 </Typography>
                 <form autoComplete="off" noValidate>
                     <div className={classes.field}>
-                        <MuiPickersUtilsProvider utils={MomentUtils}>
-                            <KeyboardTimePicker
-                                autoOk
-                                className={classes.textField}
-                                ampm={false}
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DatePicker
+
                                 margin="normal"
+                                id="start-date"
                                 label="Time"
+
                                 value={startAt}
                                 variant="inline"
                                 onChange={data =>
                                     setStartAt(data)
                                 }
-                                inputVariant="outlined"
-
-
+                                renderInput={(params) => <TextField className={classes.textField}  {...params} />}
                             />
-                        </MuiPickersUtilsProvider>
+
+                        </LocalizationProvider>
+
 
 
 
@@ -279,7 +282,47 @@ const AddMovieShowTime = (props) => {
                     </div>
 
                     <div className={classes.field}>
-                        <MuiPickersUtilsProvider utils={MomentUtils}>
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DatePicker
+
+                                margin="normal"
+                                id="start-date"
+                                label="Start Date"
+                                inputFormat="yyyy-MM-dd"
+                                inputVariant="outlined"
+                                minDate={new Date()}
+                                maxDate={getMaxDate()}
+                                value={startDate}
+                                variant="inline"
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date'
+                                }}
+                                onChange={(data) => setStartDate(data)}
+                                renderInput={(params) => <TextField className={classes.textField}  {...params} />}
+                            />
+
+                            <DatePicker
+
+                                margin="normal"
+                                id="End-date"
+                                label="End Date"
+                                inputFormat="yyyy-MM-dd"
+                                inputVariant="outlined"
+                                minDate={new Date(startDate)}
+                                maxDate={getMaxDate()}
+                                value={endDate}
+                                onChange={(data) => setEndDate(data)}
+
+                                variant="inline"
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date'
+                                }}
+                                renderInput={(params) => <TextField className={classes.textField} {...params} />}
+                            />
+                        </LocalizationProvider>
+
+
+                        {/* <MuiPickersUtilsProvider utils={MomentUtils}>
                             <KeyboardDatePicker
                                 autoOk
                                 className={classes.textField}
@@ -316,7 +359,7 @@ const AddMovieShowTime = (props) => {
                                     'aria-label': 'change date'
                                 }}
                             />
-                        </MuiPickersUtilsProvider>
+                        </MuiPickersUtilsProvider> */}
                     </div>
                 </form>
 

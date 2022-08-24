@@ -96,7 +96,7 @@ const MovieCarousel = (props) => {
           </Link>
         </div>
         <Slider {...settings} className={classes.slider}>
-          {movies.map((movie) => (
+          {movies((movie) => (
             <MovieCardTest key={movie._id} movie={movie} />
           ))}
         </Slider>
