@@ -10,6 +10,7 @@ import styles from './Styles';
 
 const TmdbMovieInfo = (props) => {
     const { classes, className, movie, tmdbMovieCast, tmdbMovieInfo } = props;
+    console.log(props)
     const rootClassName = classNames(classes.root, className);
     const tmdb_movie_info = tmdbMovieInfo
     const tmdb_movie_cast = tmdbMovieCast
@@ -38,9 +39,8 @@ const TmdbMovieInfo = (props) => {
 
         // getTmdbMovieCreditsInfoById(tmdb_movie_id)
         return () => { }
-
     }, [])
-    console.log(movieInfo)
+
 
     if (tmdb_movie_info && tmdb_movie_cast) {
         return (
@@ -84,6 +84,7 @@ const TmdbMovieInfo = (props) => {
                     >
                         Add Movie Info
                     </Button>
+
                     <Typography
                         className={classes.infoMessage}
                         color="primary"

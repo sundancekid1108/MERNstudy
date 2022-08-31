@@ -11,14 +11,21 @@ export const createMovie = async(req, res) => {
     if (isAdmin == false) {
         return res.status(400).json({ response: 'Unauthorized You are not Admin' });
     } else {
-        const movieData = new Movie(req.body);
-        console.log('createMovie MovieData :', movieData);
-        try {
-            await movieData.save();
-            return res.status(200).json(movieData);
-        } catch (error) {
-            return res.status(400).json(error);
+        console.log(req.body.id)
+        const data = await Movie.findOne({ id: req.body.id });
+        if (data === null) {
+            const movieData = new Movie(req.body);
+            // console.log('createMovie MovieData :', movieData);
+            try {
+                await movieData.save();
+                return res.status(200).json(movieData);
+            } catch (error) {
+                return res.status(400).json(error);
+            }
+        } else {
+            return res.status(400).json({ "respons": "Duplicate Movie" });
         }
+
     }
 };
 
@@ -26,14 +33,14 @@ export const createMovie = async(req, res) => {
 export const getMovieList = async(req, res) => {
     try {
         const movieList = await Movie.find({}, null, {
-            sort: {
-                _id: -1,
-            },
-        });
-        // console.log('movieList', movieList);
+                sort: {
+                    _id: -1,
+                },
+            })
+            // console.log('movieList', movieList);
         return res.json(movieList).status(200);
-    } catch (err) {
-        console.log(err);
+    } catch (error) {
+        console.log(error);
         return res.json({
             response: 'getMovieList Error',
         });
@@ -50,11 +57,13 @@ export const getMovieInfo = async(req, res) => {
     } catch (error) {
         return res.status(400).json(error);
     }
+
 };
 
 //updateMovieById(영화 정보 업데이트)
 export const updateMovieInfo = async(req, res) => {
     const isAdmin = req.decodedUser.isAdmin;
+    console.log(req.params)
     if (isAdmin == false) {
         return res.status(400).json({ response: 'Unauthorized You are not Admin' });
     } else {
@@ -62,15 +71,7 @@ export const updateMovieInfo = async(req, res) => {
         const movieUpdates = Object.keys(req.body);
 
         const allowedUpdates = [
-            'title',
-            'image',
-            'genre',
-            'language',
-            'duration',
-            'description',
-            'director',
-            'cast',
-            'releaseDate',
+            'startDate',
             'endDate',
         ];
         const isValidOperation = movieUpdates.every((update) => allowedUpdates.includes(update));

@@ -10,7 +10,7 @@ export const getMovieShowTimeList = async() => {
 
         return res;
     } catch (error) {
-        return error;
+        return error.response;
     }
 };
 
@@ -36,7 +36,7 @@ export const updateMovieShowTime = async(id, body) => {
         return res;
     } catch (error) {
         console.log('updateMovieShowTime Error: ', error);
-        return error;
+        return error.response;
     }
 };
 
@@ -49,6 +49,6 @@ export const deleteMovieShowTime = async(id) => {
 
         return res;
     } catch (error) {
-        return error;
+        return error.response;
     }
 };

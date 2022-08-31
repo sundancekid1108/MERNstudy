@@ -70,8 +70,8 @@ export const updatePost = async(req, res) => {
         }
 
         res.json(post).status(200);
-    } catch (err) {
-        res.json(err).status(500);
+    } catch (error) {
+        res.json(error).status(500);
     }
 };
 

@@ -135,7 +135,7 @@ const AddTheater = (props) => {
       return res;
     } catch (error) {
       setStatus('fail');
-      return error;
+      return error.response;
     }
   };
 

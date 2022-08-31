@@ -79,7 +79,7 @@ export const userFacebookAuthLogin = async(
         return res;
     } catch (error) {
         console.log('userFacebookAuthLogin error', error);
-        return error;
+        return error.response;
     }
 };
 
@@ -94,7 +94,7 @@ export const userGoogleAuthLogin = async(response) => {
         return res;
     } catch (error) {
         console.log('userGoogleAuthLogin error', error);
-        return error;
+        return error.response;
     }
 };
 
@@ -195,7 +195,7 @@ export const getUsersList = async() => {
         return response;
     } catch (error) {
         // console.log(error);
-        return error;
+        return error.response;
     }
 };
 
@@ -209,6 +209,6 @@ export const deleteUserInfoByAdmin = async(selectedUserId) => {
         console.log(res);
         return res;
     } catch (error) {
-        return error;
+        return error.response;
     }
 };

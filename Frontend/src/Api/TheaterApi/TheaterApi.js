@@ -8,9 +8,10 @@ export const getTheaterList = async() => {
             headers: token
         });
 
+        // console.log(res)
         return res;
     } catch (error) {
-        return error;
+        return error.response;
     }
 };
 
@@ -23,7 +24,7 @@ export const createTheater = async(body) => {
 
         return res;
     } catch (error) {
-        return error;
+        return error.response;
     }
 };
 
@@ -36,7 +37,7 @@ export const getTheaterInfo = async(id) => {
 
         return res;
     } catch (error) {
-        return error;
+        return error.response;
     }
 };
 
@@ -53,7 +54,7 @@ export const updateTheaterInfo = async(id, body) => {
         return res;
     } catch (error) {
         console.log('updateTheaterInfo error', error);
-        return error;
+        return error.response;
     }
 };
 
@@ -71,7 +72,7 @@ export const updateTheaterSeatsInfo = async(id, body) => {
 
         return res;
     } catch (error) {
-        return error;
+        return error.response;
     }
 };
 
@@ -84,6 +85,6 @@ export const deleteTheaterInfo = async(id) => {
         return res;
     } catch (error) {
         console.log('deleteTheaterInfo: ', error);
-        return error;
+        return error.response;
     }
 };

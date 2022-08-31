@@ -34,7 +34,7 @@ const PrevArrow = (props) => {
 
 const MovieCarousel = (props) => {
   const { classes, carouselClass, title, movies, to = '/' } = props;
-  // console.log('MovieCarousel movie', movies);
+  console.log('MovieCarousel movie', movies);
 
   const MAX_SLIDE = 3;
   const settings = {
@@ -96,7 +96,7 @@ const MovieCarousel = (props) => {
           </Link>
         </div>
         <Slider {...settings} className={classes.slider}>
-          {movies((movie) => (
+          {movies.map((movie) => (
             <MovieCardTest key={movie._id} movie={movie} />
           ))}
         </Slider>

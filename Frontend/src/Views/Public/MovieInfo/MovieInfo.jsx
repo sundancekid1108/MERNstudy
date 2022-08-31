@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {useParams} from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 
@@ -15,7 +15,7 @@ const MovieInfo = (props) => {
   const { classes } = props;
   const dispatch = useDispatch();
 
-  const params   = useParams() ;
+  const params = useParams();
   const movieId = params.id
 
   const [movie, setMovie] = useState('');

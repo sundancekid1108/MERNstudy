@@ -33,7 +33,7 @@ export const getUserList = async(req, res) => {
                 response: 'Not Admin Account',
             });
         }
-    } catch (err) {
+    } catch (error) {
         // console.log(err);
         res.json({
             response: 'getUserList Error',
@@ -64,8 +64,8 @@ export const getCurrentUserInfo = async(req, res) => {
             })
             .status(200);
 
-    } catch (err) {
-        console.log(err);
+    } catch (error) {
+        console.log(error);
         return res.status(400).json(err);
     }
 };
@@ -186,11 +186,7 @@ export const updateProfileImg = async(req, res) => {
     }
 
 
-    // try {
-    //     return res.status(200).json({ response: "updateProfileImg" })
-    // } catch (err) {
-    //     return res.status(400).json(error);
-    // }
+
 
 }
 
@@ -418,8 +414,8 @@ export const deleteUserInfo = async(req, res) => {
                 response: 'delete UserInfo successfully',
             })
             .status(200);
-    } catch (err) {
-        res.json(err);
+    } catch (error) {
+        res.json(error);
     }
 };
 
@@ -448,10 +444,10 @@ export const deleteUserById = async(req, res) => {
                 })
                 .status(200);
         } else {
-            res.json({ response: 'You Cant delete User Profiles' });
+            return res.json({ response: 'You Cant delete User Profiles' });
         }
-    } catch (err) {
-        res.json(err);
+    } catch (error) {
+        return res.json(error);
     }
 };
 

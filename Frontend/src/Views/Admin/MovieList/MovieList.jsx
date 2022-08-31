@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 import { CircularProgress, Grid, Typography } from '@material-ui/core';
 import { MovieToolBar, MovieCard } from './Components/Index';
 import * as MovieApi from '../../../Api/MovieApi/MovieApi';
+import *  as TmdbApi from '../../../Api/TmdbApi/TmdbApi';
+
 import * as MovieAction from '../../../Store/Actions/MovieAction';
 import { ResponsiveDialog } from '../../../Components/Index';
 import Dashboard from '../../../Layouts/Dashboard/Dashboard';
@@ -19,17 +21,30 @@ const MovieList = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [editDialog, setEditDialog] = useState(false);
   // const [movieList, setmovieList] = useState([]);
+  const [tmdbMovieList, setTmdbMovieList] = useState(null)
   const [editMovie, setEditMovie] = useState(null);
   const dispatch = useDispatch();
 
-  console.log('props movie info', movieInfo);
 
 
   const movieList = useSelector((state) => state.movies.movies);
   const movieInfoTest = useSelector((state) => state.movies.movieInfo);
 
+  const getTmdbMovieList = async () => {
+    try {
+      const response = await TmdbApi.getTmdbMovieList()
+      // console.log("getTmdbMovieList response", response)
+      if (response.status == 200) {
+        setTmdbMovieList(response.data)
+      }
+    } catch (error) {
+      console.log("getTmdbMovieList error", error)
+    }
+  }
+
   useEffect(() => {
     dispatch(MovieAction.getMovieList());
+    getTmdbMovieList()
   }, [movieList.length]);
 
   const getMovieList = () => {
@@ -66,9 +81,9 @@ const MovieList = (props) => {
 
 
 
-  console.log('editMovie', editMovie);
-  console.log('movieInfoTest', movieInfoTest);
-  console.log('movieInfo', movieInfo);
+  // console.log('editMovie', editMovie);
+  // console.log('movieInfoTest', movieInfoTest);
+  // console.log('movieInfo', movieInfo);
   if (!movieList) {
     return (
       <>
@@ -86,7 +101,7 @@ const MovieList = (props) => {
       <>
         <Dashboard title="Movie List">
           <div className={classes.root}>
-            <MovieToolBar />
+            <MovieToolBar tmdbMovieList={tmdbMovieList} />
           </div>
           <div className={classes.content}>
             <Grid container spacing={3}>
@@ -106,7 +121,7 @@ const MovieList = (props) => {
               id="Edit-movie"
               open={editDialog}
               handleClose={handleEditDialog}>
-              <AddMovie editmovie={editMovie} />
+              <AddMovie editMovie={editMovie} tmdbMovieList={tmdbMovieList} />
             </ResponsiveDialog>
           </div>
         </Dashboard>

@@ -28,6 +28,8 @@ const StyledRating = withStyles({
 
 const MovieBanner = (props) => {
   const { classes, movie, description } = props;
+  console.log("MovieBanner Props", props)
+  // console.log(movie.genres)
   const params = useParams()
   console.log(params)
 
@@ -45,24 +47,19 @@ const MovieBanner = (props) => {
             <header className={classes.movieHeader}>
               {description && (
                 <Box mb={3} display="flex" alignItems="center" flexWrap="wrap">
-                  <Typography
-                    className={classes.tag}
-                    variant="body1"
-                    color="inherit">
-                    {movie.genre}
-                  </Typography>
-                  <Typography
-                    className={classes.tag}
-                    variant="body1"
-                    color="inherit">
-                    {movie.genre}
-                  </Typography>
-                  <Typography
-                    className={classes.tag}
-                    variant="body1"
-                    color="inherit">
-                    {movie.genre}
-                  </Typography>
+                  {movie.genres.map((genre, id) => (
+                    <Typography
+                      className={classes.tag}
+                      key={genre.id}
+                      variant="body1"
+                      color="inherit">
+                      {genre.name}
+                    </Typography>
+                  ))}
+
+
+
+
                   <StyledRating
                     value={4}
                     readOnly
@@ -81,19 +78,20 @@ const MovieBanner = (props) => {
                 className={classes.descriptionText}
                 variant="body1"
                 color="inherit">
-                {textTruncate(movie.description, 450)}
+                {textTruncate(movie.overview, 450)}
               </Typography>
               <Typography
                 className={classes.director}
                 variant="h4"
                 color="inherit">
-                By: {movie.director}
+                By: {movie.crew.filter(({ job }) => job === "Director")[0].name}
+
               </Typography>
               <Typography
                 className={classes.duration}
                 variant="body1"
                 color="inherit">
-                {movie.duration} min
+                {movie.runtime} min
               </Typography>
               <Typography
                 className={classes.genre}
@@ -106,7 +104,7 @@ const MovieBanner = (props) => {
           <div
             className={classes.blurBackground}
             style={{
-              backgroundImage: `url(${movie.image})`
+              backgroundImage: `url(${"https://image.tmdb.org/t/p/original/" + movie.poster_path})`
             }}
           />
           <div className={classes.movieActions}>

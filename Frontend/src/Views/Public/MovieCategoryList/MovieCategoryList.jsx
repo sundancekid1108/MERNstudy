@@ -9,7 +9,7 @@ import * as MovieAction from '../../../Store/Actions/MovieAction';
 
 const MovieCategoryList = (props) => {
   const { classes } = props;
-  const params   = useParams() ;
+  const params = useParams();
   console.log("params", params)
   const category = params.category
   const dispatch = useDispatch();

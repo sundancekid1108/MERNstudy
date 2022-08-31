@@ -9,7 +9,7 @@ import styles from './Styles';
 
 const MovieToolBar = (props) => {
   // console.log('MovieToolBar props', props);
-  const { classes, className } = props;
+  const { classes, className, tmdbMovieList } = props;
   const rootClassName = classNames(classes.root, className);
   const [isOpenAddDialog, setIsOpenAddDialog] = useState(false);
 
@@ -43,7 +43,7 @@ const MovieToolBar = (props) => {
         id="Add_Movie"
         open={isOpenAddDialog}
         handleClose={handleCreateDialog}>
-        <AddMovie />
+        <AddMovie tmdbMovieList={tmdbMovieList} />
       </ResponsiveDialog>
     </>
   );

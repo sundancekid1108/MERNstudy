@@ -35,9 +35,12 @@ import SignInForm from '../SignIn/Components/SignInForm/SignInForm'
 import styles from './Styles';
 
 const MovieReservation = (props) => {
+
+
   const { classes } = props;
-  const params= useParams()
-  console.log("params", params)
+  const params = useParams()
+  // console.log("MovieReservation props", props)
+  // console.log("params.id", params.id)
   const navigate = useNavigate();
   const movieId = params.id;
   const nowTime = moment().format('YYYY-MM-DD');
@@ -81,6 +84,10 @@ const MovieReservation = (props) => {
       console.log('getMovieInfo', error);
     }
   };
+
+  const getMovieList = () => {
+    dispatch(MovieAction.getMovieList())
+  }
 
   const getMovieInfoTest = () => {
     dispatch(MovieAction.getMovieInfo(movieId));
@@ -262,6 +269,7 @@ const MovieReservation = (props) => {
 
   useEffect(() => {
     getMovieShowTimeList();
+    getMovieList();
     getMovieInfoTest()
     getMovieInfo();
     getTheaterList();
@@ -270,10 +278,10 @@ const MovieReservation = (props) => {
   }, []);
 
 
-  console.log("selectedSeatsList", selectedSeatsList)
-  console.log("userInfo", userInfo)
-  console.log("isLogin", isLogin)
-
+  // console.log("selectedSeatsList", selectedSeatsList)
+  // console.log("userInfo", userInfo)
+  // console.log("isLogin", isLogin)
+  // console.log("movieInfoTest", movieInfoTest)
   return (
     <>
       <div className={classes.root}>
@@ -291,26 +299,26 @@ const MovieReservation = (props) => {
                 filteredMovieShowTimeList={filteredMovieShowTimeList}
               />
 
-              <RenderTheaterSeats
-                selectedTheater={selectedTheater}
-                selectedMovieShowTime={selectedMovieShowTime}
-                selectedSeatsList={selectedSeatsList}
-                userInfo={userInfo}
-                handleUserSelectSeats={handleUserSelectSeats}
+              {/*<RenderTheaterSeats*/}
+              {/*  selectedTheater={selectedTheater}*/}
+              {/*  selectedMovieShowTime={selectedMovieShowTime}*/}
+              {/*  selectedSeatsList={selectedSeatsList}*/}
+              {/*  userInfo={userInfo}*/}
+              {/*  handleUserSelectSeats={handleUserSelectSeats}*/}
 
-              />
+              {/*/>*/}
 
 
-              {selectedTheater && selectedMovieShowTime && (
+              {/*{selectedTheater && selectedMovieShowTime && (*/}
 
-                <RenderTicketing
-                  userInfo={userInfo}
-                  selectedSeatsList={selectedSeatsList}
-                  selectedTheater={selectedTheater}
-                  seatsAvailable={seatsAvailable}
-                  selectedMovieShowTime={selectedMovieShowTime}
-                  handleMovieReservation={handleMovieReservation}
-                />)}
+              {/*  <RenderTicketing*/}
+              {/*    userInfo={userInfo}*/}
+              {/*    selectedSeatsList={selectedSeatsList}*/}
+              {/*    selectedTheater={selectedTheater}*/}
+              {/*    seatsAvailable={seatsAvailable}*/}
+              {/*    selectedMovieShowTime={selectedMovieShowTime}*/}
+              {/*    handleMovieReservation={handleMovieReservation}*/}
+              {/*  />)}*/}
 
             </Grid>
           </Grid>

@@ -11,6 +11,7 @@ import styles from './Styles';
 
 const MovieCardTest = (props) => {
   const { classes, movie } = props;
+  console.log("MovieCardTest props", props)
   return (
     <>
       <Link to={`movie/${movie._id}`} style={{ textDecoration: 'none' }}>
@@ -18,7 +19,7 @@ const MovieCardTest = (props) => {
           <CardActionArea>
             <CardMedia
               className={classes.media}
-              image={movie.image}
+              image={"https://image.tmdb.org/t/p/original/" + movie.poster_path}
               title={movie.title}
             />
             <CardContent>

@@ -25,7 +25,7 @@ export const getSearchTmdbMovie = async(query) => {
 
         return response
     } catch (error) {
-        return error
+        return error.response
     }
 }
 
@@ -38,7 +38,7 @@ export const getTmdbMovieInfoById = async(id) => {
         return response
 
     } catch (error) {
-        return error
+        return error.response
     }
 }
 
@@ -51,9 +51,22 @@ export const getTmdbMovieCreditsInfoById = async(id) => {
         return response
 
     } catch (error) {
-        return error
+        return error.response
     }
 
+}
+
+export const getTmdbMovieList = async() => {
+    const token = authHeader();
+    try {
+        const response = await api.get('/movies/tmdbmovielist/savetmdbmovielist', {
+            headers: token
+        })
+        return response
+
+    } catch (error) {
+        return error.response
+    }
 }
 
 export const createTmdbMovie = async(body) => {
@@ -63,6 +76,6 @@ export const createTmdbMovie = async(body) => {
         return response
     } catch (error) {
         console.log(error)
-        return error
+        return error.response
     }
 }

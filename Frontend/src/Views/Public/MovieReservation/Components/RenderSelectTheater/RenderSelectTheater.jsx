@@ -5,6 +5,7 @@ import styles from '../../Styles';
 
 const RenderSelectTheater = (props) => {
   const { classes, selectedTheater, handleSelectedTheater, handleSelectedMovieShowTime, selectedMovieShowTime, filteredTheatersList, filteredMovieShowTimeList, } = props;
+  console.log("RenderSelectTheater props", props)
 
   if (filteredTheatersList.length > 0) {
     return (

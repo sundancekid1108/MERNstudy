@@ -5,15 +5,12 @@ export const createMovie = async(body) => {
     const token = authHeader();
 
     try {
-        const res = await api.post('/movies/movies', body, { headers: token });
-
-        // console.log('createMovie res', res);
-        const movie = await res.json();
-        return movie;
+        const response = await api.post('/movies/movies', body, { headers: token });
+        return response
     } catch (error) {
-        // console.log(error);
+        // console.log("createMovie error.response", error.response);
         // const errorData = error.json();
-        return error;
+        return error.response;
     }
 };
 
@@ -25,7 +22,7 @@ export const getMovieInfo = async(id) => {
         });
         return data;
     } catch (error) {
-        return error;
+        return error.response;
     }
 };
 
@@ -38,7 +35,7 @@ export const getMovieList = async() => {
         return movieListData;
     } catch (error) {
         console.log('getMovieListError: ', error);
-        return error;
+        return error.response;
     }
 };
 
@@ -51,7 +48,7 @@ export const updateMovieInfo = async(id, body) => {
         return updateMovieData;
     } catch (error) {
         console.log('updateMovieInfo Error: ', error);
-        return error;
+        return error.response;
     }
 };
 
@@ -64,6 +61,6 @@ export const deleteMovie = async(id) => {
         return res;
     } catch (error) {
         console.log('getMovieListError: ', error);
-        return error;
+        return error.response;
     }
 };

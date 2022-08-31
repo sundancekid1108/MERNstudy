@@ -15,20 +15,20 @@ const MovieCard = (props) => {
     <>
       <Paper className={rootClassName}>
         <div className={classes.imageWrapper}>
-          <img alt="movie" className={classes.image} src={movie.image} />
+          <img alt="movie" className={classes.image} src={"https://image.tmdb.org/t/p/original/" + movie.poster_path} />
         </div>
         <div className={classes.details}>
           <Typography className={classes.title} variant="h4">
             {movie.title}
           </Typography>
           <Typography className={classes.description} variant="body1">
-            {movie.description}
+            {movie.overview}
           </Typography>
         </div>
         <div className={classes.stats}>
           <AccessTimeIcon className={classes.updateIcon} />
           <Typography className={classes.updateText} variant="body2">
-            {movie.duration} minutes
+            {movie.runtime} minutes
           </Typography>
         </div>
       </Paper>

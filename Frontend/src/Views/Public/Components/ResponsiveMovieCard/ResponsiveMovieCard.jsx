@@ -11,6 +11,9 @@ import styles from './Styles';
 const ResponsiveMovieCard = (props) => {
   const { classes, movie } = props;
 
+
+
+  // console.log("ResponsiveMovieCard props", props)
   return (
     <>
       <Link to={`/movie/${movie._id}`} style={{ textDecoration: 'none' }}>
@@ -27,20 +30,24 @@ const ResponsiveMovieCard = (props) => {
                 className={classes.director}
                 variant="h4"
                 color="inherit">
-                By: {movie.director}
+                By: {movie.crew.filter(({ job }) => job === "Director")[0].name}
               </Typography>
               <Typography
                 className={classes.duration}
                 variant="body1"
                 color="inherit">
-                {movie.duration} min
+                {movie.runtime} min
               </Typography>
-              <Typography
-                className={classes.genre}
-                variant="body1"
-                color="inherit">
-                {movie.genre}
-              </Typography>
+
+              {movie.genres.map((genre, id) => (
+                <Typography
+                  className={classes.genre}
+                  variant="body1"
+                  color="inherit">
+                  {genre.name}
+                </Typography>
+              ))}
+
             </header>
 
             <div className={classes.description}>
@@ -48,7 +55,7 @@ const ResponsiveMovieCard = (props) => {
                 className={classes.descriptionText}
                 variant="body1"
                 color="inherit">
-                {textTruncate(movie.description, 250)}
+                {textTruncate(movie.overview, 250)}
               </Typography>
             </div>
             <div className={classes.footer}>
@@ -66,7 +73,7 @@ const ResponsiveMovieCard = (props) => {
           <div
             className={classes.blurBackground}
             style={{
-              backgroundImage: `url(${movie.image})`
+              backgroundImage: `url(${"https://image.tmdb.org/t/p/original/" + movie.poster_path})`
             }}
           />
         </Paper>

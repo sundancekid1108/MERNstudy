@@ -32,7 +32,7 @@ export const userSignIn = (body) => async(dispatch) => {
         dispatch(
             setAlert('Login failed Check your Email and Password', 'error', 3000)
         );
-        return error;
+        return error.response;
     }
 };
 
@@ -60,7 +60,7 @@ export const userFacebookAuthLogin = (e) => async(dispatch) => {
     } catch (error) {
         dispatch({ type: SIGN_IN_FAIL });
         dispatch(setAlert('Facebook Auth Login Fail!!', 'error', 3000));
-        return error;
+        return error.response;
     }
 };
 
@@ -79,7 +79,7 @@ export const userGoogleAuthLogin = (e) => async(dispatch) => {
     } catch (error) {
         dispatch({ type: SIGN_IN_FAIL });
         dispatch(setAlert('Google Auth Login Fail!!', 'error', 3000));
-        return error;
+        return error.response;
     }
 };
 
@@ -101,7 +101,7 @@ export const userSignUp = (body) => async(dispatch) => {
     } catch (error) {
         dispatch({ type: SIGN_UP_FAIL });
         dispatch(setAlert('Sign up Fail', 'error', 3000));
-        return error;
+        return error.response;
     }
 };
 

@@ -11,6 +11,7 @@ export const getMovieList = () => async(dispatch) => {
         } else {
             dispatch(setAlert('Failed to get Movies List', 'error', 3000));
         }
+
     } catch (error) {
         dispatch(setAlert('Failed to get Movies List', 'error', 3000));
     }
@@ -33,7 +34,8 @@ export const getMovieInfo = (movieId) => async(dispatch) => {
 export const createMovie = (body) => async(dispatch) => {
     try {
         const result = await movieApi.createMovie(body);
-        console.log('result', result);
+        // console.log('result', result);
+        return result
         dispatch(setAlert('Create Movie Data', 'success', 3000));
     } catch (error) {
         dispatch(setAlert('Failed to Create Movie', 'error', 3000));

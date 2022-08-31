@@ -10,6 +10,8 @@ import { Button, TextField, MenuItem } from '@material-ui/core';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 
 
 
@@ -170,14 +172,17 @@ const AddMovieShowTime = (props) => {
                     {title}
                 </Typography>
                 <form autoComplete="off" noValidate>
+
                     <div className={classes.field}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DatePicker
-
+                            <TimePicker
+                                ampm={false}
                                 margin="normal"
-                                id="start-date"
+                                disableOpenPicker={true}
+                                // id="start-date"
                                 label="Time"
-
+                                className={classes.textField}
+                                helperText="Please specify the Time"
                                 value={startAt}
                                 variant="inline"
                                 onChange={data =>
@@ -187,11 +192,10 @@ const AddMovieShowTime = (props) => {
                             />
 
                         </LocalizationProvider>
-
-
-
-
                     </div>
+
+
+
                     <div className={classes.field}>
                         <TextField
                             fullWidth
@@ -284,7 +288,7 @@ const AddMovieShowTime = (props) => {
                     <div className={classes.field}>
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
-
+                                disableOpenPicker={true}
                                 margin="normal"
                                 id="start-date"
                                 label="Start Date"
@@ -302,7 +306,7 @@ const AddMovieShowTime = (props) => {
                             />
 
                             <DatePicker
-
+                                disableOpenPicker={true}
                                 margin="normal"
                                 id="End-date"
                                 label="End Date"
@@ -322,44 +326,6 @@ const AddMovieShowTime = (props) => {
                         </LocalizationProvider>
 
 
-                        {/* <MuiPickersUtilsProvider utils={MomentUtils}>
-                            <KeyboardDatePicker
-                                autoOk
-                                className={classes.textField}
-                                margin="normal"
-                                id="start-date"
-                                label="Start Date"
-                                format="YYYY-MM-DD"
-                                views={['year', 'month', 'date']}
-                                minDate={new Date()}
-                                maxDate={getMaxDate()}
-                                value={startDate}
-                                variant="inline"
-                                onChange={(data) => setStartDate(data)}
-                                inputVariant="outlined"
-
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date'
-                                }}
-                            />
-
-                            <KeyboardDatePicker
-                                className={classes.textField}
-                                inputVariant="outlined"
-                                margin="normal"
-                                id="end-date"
-                                label="End Date"
-                                format="YYYY-MM-DD"
-                                views={['year', 'month', 'date']}
-                                minDate={new Date(startDate)}
-                                maxDate={getMaxDate()}
-                                value={endDate}
-                                onChange={(data) => setEndDate(data)}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date'
-                                }}
-                            />
-                        </MuiPickersUtilsProvider> */}
                     </div>
                 </form>
 

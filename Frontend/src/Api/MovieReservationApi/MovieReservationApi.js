@@ -11,7 +11,7 @@ export const createMovieReservation = async(body) => {
         const reservationData = res.data;
         return reservationData;
     } catch (error) {
-        return error;
+        return error.response;
     }
 };
 
@@ -24,6 +24,6 @@ export const getMovieReservationList = async() => {
         const reservationData = res.data;
         return reservationData;
     } catch (error) {
-        return error;
+        return error.response;
     }
 };

@@ -22,10 +22,10 @@ const MoviesReducer = (state = initialState, action) => {
                 nowShowing: payload.data.filter(
                     (movie) =>
                     new Date(movie.endDate) >= new Date() &&
-                    new Date(movie.releaseDate) < new Date()
+                    new Date(movie.startDate) < new Date()
                 ),
                 comingSoon: payload.data.filter(
-                    (movie) => new Date(movie.releaseDate) > new Date()
+                    (movie) => new Date(movie.startDate) > new Date()
                 )
             };
         case GET_MOVIE_INFO:

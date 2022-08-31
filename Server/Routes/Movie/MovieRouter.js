@@ -13,9 +13,11 @@ movieRouter.delete('/movieinfo/:id', AuthJwt.verifyToken, MovieApi.deleteMovie);
 
 
 movieRouter.get('/tmdbmovielist', AuthJwt.verifyToken, TmdbMovieApi.tmdbGetUpcomingMovieList);
+movieRouter.get('/tmdbmovielist/savetmdbmovielist', AuthJwt.verifyToken, TmdbMovieApi.getTmdbMovieList);
 movieRouter.get('/tmdbmovielist/:query', AuthJwt.verifyToken, TmdbMovieApi.getTmdbSearchMovie);
 movieRouter.get('/tmdbmovieinfo/:id', AuthJwt.verifyToken, TmdbMovieApi.getTmdbMovieInfoById);
 movieRouter.get('/tmdbmoviecredits/:id', AuthJwt.verifyToken, TmdbMovieApi.getTmdbMovieCreditsInfoById);
+movieRouter.delete('/tmdbmovieinfo/:id', AuthJwt.verifyToken, TmdbMovieApi.deleteTmdbMovieInfo);
 movieRouter.post('/tmdbmovies', AuthJwt.verifyToken, TmdbMovieApi.createTmdbMovieInfo)
 
 export default movieRouter;

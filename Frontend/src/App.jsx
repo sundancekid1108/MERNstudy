@@ -16,6 +16,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from './Theme/Index';
 import Alert from './Layouts/Alert/Alert';
 import ProtectedRoute from './Routes/ProtectedRoute/ProtectedRoute';
+import * as MovieAction from './Store/Actions/MovieAction'
 import * as AuthAction from './Store/Actions/AuthAction';
 import store from './Store/Index';
 import Loading from './Components/Loading/Loading';
@@ -48,7 +49,7 @@ const MovieCategoryList = lazy(() =>
   import('./Views/Public/MovieCategoryList/MovieCategoryList')
 );
 
-const TmdbMoviePage  = lazy(() => import('./Views/Admin/TmdbMoviePage/TmdbMoviePage'))
+const TmdbMoviePage = lazy(() => import('./Views/Admin/TmdbMoviePage/TmdbMoviePage'))
 
 const Theaters = lazy(() => import('./Views/Public/Theaters/Theaters'));
 const TheatersList = lazy(() =>
@@ -60,6 +61,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(AuthAction.getLoginUserInfo());
+    dispatch(MovieAction.getMovieList())
   }, []);
 
   return (
@@ -121,7 +123,7 @@ const App = () => {
                   }
                 />
 
-\
+                \
 
 
                 <Route

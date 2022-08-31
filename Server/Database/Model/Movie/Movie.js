@@ -1,51 +1,86 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const movieSchema = new Schema({
-    title: {
-        type: String,
-        required: true,
-        trim: true,
-        lowercase: true,
+    adult: {
+        type: 'boolean',
     },
-    image: {
-        type: String,
-        required: true,
+
+    backdrop_path: {
+        type: 'string',
     },
-    language: {
-        type: String,
-        required: true,
-        trim: true,
-        lowercase: true,
-    },
-    genre: {
-        type: String,
-        required: true,
-        trim: true,
-        lowercase: true,
-    },
-    director: {
-        type: String,
-        required: true,
-        trim: true,
-        lowercase: true,
+    belongs_to_collection: {
+        type: mongoose.Schema.Types.Mixed
     },
     cast: {
-        type: String,
-        required: true,
-        trim: true,
-        lowercase: true,
+        type: mongoose.Schema.Types.Mixed
     },
-    description: {
-        type: String,
-        required: true,
-        trim: true,
-        lowercase: true,
+    crew: {
+        type: mongoose.Schema.Types.Mixed
     },
-    duration: {
-        type: Number,
-        required: true,
+    genres: {
+        type: mongoose.Schema.Types.Mixed
     },
-    releaseDate: {
+    homepage: {
+        type: 'string',
+    },
+    id: {
+        type: 'string',
+        unique: true,
+    },
+    imdb_id: {
+        type: 'string',
+        unique: true,
+    },
+    original_language: {
+        type: 'string',
+    },
+    original_title: {
+        type: 'string',
+    },
+    overview: {
+        type: mongoose.Schema.Types.Mixed
+    },
+    popularity: {
+        type: mongoose.Schema.Types.Mixed
+    },
+
+    poster_path: {
+        type: mongoose.Schema.Types.Mixed
+    },
+    production_companies: {
+        type: mongoose.Schema.Types.Mixed
+    },
+    production_countries: {
+        type: mongoose.Schema.Types.Mixed
+    },
+    release_date: {
+        type: mongoose.Schema.Types.Mixed
+    },
+    revenue: {
+        type: mongoose.Schema.Types.Mixed
+    },
+    runtime: {
+        type: mongoose.Schema.Types.Mixed
+    },
+    spoken_languages: {
+        type: mongoose.Schema.Types.Mixed
+    },
+    tagline: {
+        type: mongoose.Schema.Types.Mixed
+
+    },
+    title: {
+        type: mongoose.Schema.Types.Mixed
+    },
+    video: {
+        type: mongoose.Schema.Types.Mixed
+    },
+    vote_average: { type: mongoose.Schema.Types.Mixed },
+    vote_count: {
+        type: mongoose.Schema.Types.Mixed
+    },
+
+    startDate: {
         type: Date,
         required: true,
     },

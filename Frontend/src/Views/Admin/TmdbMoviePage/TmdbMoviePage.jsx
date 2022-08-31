@@ -137,10 +137,10 @@ const TmdbMoviePage = (props) => {
             ))}
           </Grid>
           <ResponsiveDialog
-            id="Edit-movie"
+            id="TMDB-movie"
             open={dialog}
             handleClose={handleDialong}>
-            <TmdbMovieInfo movie={tmdbMovie} />
+            <TmdbMovieInfo movie={tmdbMovie} tmdbMovieInfo={tmdbMovieInfo} tmdbMovieCast={tmdbMovieCast} />
           </ResponsiveDialog>
 
         </>
@@ -167,7 +167,7 @@ const TmdbMoviePage = (props) => {
           ))}
         </Grid>
         <ResponsiveDialog
-          id="Edit-movie"
+          id="TMDB-movie"
           open={dialog}
           handleClose={handleDialong}>
           <TmdbMovieInfo movie={tmdbMovie} tmdbMovieInfo={tmdbMovieInfo} tmdbMovieCast={tmdbMovieCast} />

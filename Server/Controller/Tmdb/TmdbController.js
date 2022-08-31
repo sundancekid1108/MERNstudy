@@ -57,6 +57,24 @@ export const getTmdbMovieInfoById = (req, res, body) => {
 }
 
 
+export const getTmdbMovieList = async(req, res) => {
+    try {
+        const movieList = await TmdbMovie.find({}, null, {
+            sort: {
+                _id: -1,
+            },
+        });
+        // console.log('movieList', movieList);
+        return res.json(movieList).status(200);
+    } catch (error) {
+        console.log(error);
+        return res.json({
+            response: 'getTmdbMovieList Error',
+        });
+    }
+}
+
+
 //감독 배우 확인
 export const getTmdbMovieCreditsInfoById = (req, res) => {
     console.log(req.params.id)
@@ -90,8 +108,29 @@ export const createTmdbMovieInfo = async(req, res) => {
         console.log(data)
         return res.status(400).json({ response: "Duplicate" })
     }
+}
 
-
-
-    return res.status(200).json(body)
+export const deleteTmdbMovieInfo = async(req, res) => {
+    const isAdmin = req.decodedUser.isAdmin;
+    if (isAdmin == false) {
+        return res.status(400).json({ response: 'Unauthorized You are not Admin' });
+    } else {
+        const tmdbMovieId = req.params.id;
+        try {
+            const movie = await TmdbMovie.findByIdAndDelete({ _id: tmdbMovieId });
+            if (!movie) {
+                return res
+                    .json({
+                        response: 'No Movie Data',
+                    })
+                    .status(404);
+            } else {
+                return res.status(200).json({
+                    response: 'delete Movie successfully',
+                });
+            }
+        } catch (error) {
+            return res.status(400).json(error);
+        }
+    }
 }
