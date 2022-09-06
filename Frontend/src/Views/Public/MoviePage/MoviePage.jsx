@@ -25,9 +25,10 @@ const MoviePage = (props) => {
     getMovieList();
   }, []);
 
-  console.log('movies', movies)
-  console.log('nowShowingMovies', nowShowingMovies);
-  console.log('comingSoonMovies', comingSoonMovies);
+  // console.log('movies', movies)
+  // console.log('nowShowingMovies', nowShowingMovies);
+  // console.log('comingSoonMovies', comingSoonMovies);
+
   if (!movies) {
     return (
       <>

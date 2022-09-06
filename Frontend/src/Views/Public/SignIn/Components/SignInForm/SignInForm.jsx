@@ -105,12 +105,15 @@ const SignInForm = (props) => {
         console.log(response.data.isAdmin);
         if (response.data.isAdmin === true) {
           navigate('/admin/dashboard', { replace: false });
-        } else {
+        } else if (response.data.isAdmin === false)
           navigate('/', { replace: false });
+        else {
+          navigate('/signin', { replace: false });
         }
       })
       .catch((error) => {
         setErrorMessage('Login failed, Check your Email and Password');
+        console.log("handleSignin Error")
       });
   };
 
@@ -189,7 +192,7 @@ const SignInForm = (props) => {
 
         <Typography className={classes.signUp} variant="body1">
           Don't have an account?{' '}
-          <Link className={classes.signUpUrl} to="/signup">
+          <Link to={'/signup'} className={classes.signUpUrl} >
             Sign up
           </Link>
         </Typography>

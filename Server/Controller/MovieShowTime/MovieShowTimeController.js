@@ -21,7 +21,7 @@ export const getMovieShowTimesList = async(req, res) => {
             sort: {
                 _id: -1,
             },
-        });
+        }).populate('movieId').populate('theaterId');
         return res.json(data).status(200);
     } catch (error) {
         return res.status(400).json(error);
@@ -33,7 +33,7 @@ export const getMovieShowTimeInfo = async(req, res) => {
     const id = req.params.id;
 
     try {
-        const data = await MovieShowTime.findById(id);
+        const data = await MovieShowTime.findById(id).populate('movieId').populate('theaterId');
         if (data) {
             return res.status(200).json(data);
         } else {
@@ -47,10 +47,15 @@ export const getMovieShowTimeInfo = async(req, res) => {
 //updateMovieShowTime(영화시간표수정)
 export const updateMovieShowTime = async(req, res) => {
     const id = req.params.id;
-    const updates = Object.keys(req.body);
+    const body = req.body
+    console.log(id)
+    console.log(body)
+    const updates = Object.keys(body);
     const allowedUpdates = [
         'movieId',
         'theaterId',
+        'seats',
+        'seatsAvailable',
         'startAt',
         'startDate',
         'endDate',
@@ -63,6 +68,7 @@ export const updateMovieShowTime = async(req, res) => {
 
     try {
         const movieShowTime = await MovieShowTime.findById(id);
+        console.log(movieShowTime)
         updates.forEach((update) => (movieShowTime[update] = req.body[update]));
         await movieShowTime.save();
 

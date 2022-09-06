@@ -25,7 +25,7 @@ const MovieShowTimeList = (props) => {
         dispatch(TheaterAction.getTheaterList());
     };
 
-    const getMovieShowTimeList = async () => {
+    const getMovieShowTimeList = () => {
         dispatch(MovieShowTimeAction.getMovieShowTimesList())
         // setMovieShowTimes(movieShowTimeList)
     }

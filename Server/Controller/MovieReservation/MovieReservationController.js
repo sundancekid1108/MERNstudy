@@ -7,7 +7,9 @@ const { ObjectId } = mongoose.Types;
 
 //createMovieReservation (영화티켓생성)
 export const createMovieReservation = async(req, res) => {
-    const movieReservationData = new MovieReservation(req.body);
+    const body = req.body;
+    // console.log(body)
+    const movieReservationData = new MovieReservation(body);
     try {
         await movieReservationData.save();
         return res.status(200).json(movieReservationData);
@@ -23,7 +25,7 @@ export const getMovieReservationList = async(req, res) => {
             sort: {
                 _id: -1,
             },
-        });
+        }).populate('movieId').populate('theaterId');
         return res.json(movieReservationList).status(200);
     } catch (error) {
         return res.json(error).status(400);
@@ -34,7 +36,8 @@ export const getMovieReservationList = async(req, res) => {
 export const getMovieReservationInfo = async(req, res) => {
     const movieReservationId = req.params.id;
     try {
-        const movieReservationInfo = await MovieReservation.findById(movieReservationId);
+        const movieReservationInfo = await MovieReservation.findById(movieReservationId).populate('movieId').populate('theaterId');
+        console.log(movieReservationInfo)
         if (movieReservationInfo) {
             return res.satus(200).json(movieReservationInfo);
         } else {

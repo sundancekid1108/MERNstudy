@@ -1,11 +1,25 @@
 import React from 'react';
-import { Grid, Box, TextField, MenuItem, Typography, withStyles } from '@material-ui/core';
+import { Grid, Box, TextField, MenuItem, Typography, withStyles, Select } from '@material-ui/core';
 import moment from 'moment';
 import styles from '../../Styles';
 
 const RenderSelectTheater = (props) => {
-  const { classes, selectedTheater, handleSelectedTheater, handleSelectedMovieShowTime, selectedMovieShowTime, filteredTheatersList, filteredMovieShowTimeList, } = props;
-  console.log("RenderSelectTheater props", props)
+  const { classes, selectedTheater, handleSelectedTheater, handleSelectedMovieShowTime, handleSelectedFilteredMovieShowTime, selectedMovieShowTime, movieShowTimeList } = props;
+  const theatersList = movieShowTimeList.map(theater => theater.theaterId)
+  const filteredTheatersList = theatersList.filter((arr, index, callback) => index === callback.findIndex(t => t._id === arr._id))
+
+
+
+  const filteredMovieShowTimeList = movieShowTimeList
+    .filter((movieShowTime) =>
+      selectedTheater ? selectedTheater._id === movieShowTime.theaterId._id : true
+    )
+    .map((movieShowTime) => movieShowTime)
+    .filter((value, index, self) => self.indexOf(value) === index)
+    .sort(
+      (a, b) => new Date('1970/01/01 ' + a) - new Date('1970/01/01 ' + b)
+    );
+
 
   if (filteredTheatersList.length > 0) {
     return (

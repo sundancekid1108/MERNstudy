@@ -3,7 +3,7 @@ import { withStyles, Box, Grid, Typography, Button } from '@material-ui/core';
 import styles from './Styles';
 
 const RenderTicketing = (props) => {
-  const { classes, userInfo, selectedSeatsList, selectedMovieShowTime, selectedTheater, seatsAvailable, handleMovieReservation } = props;
+  const { classes, userInfo, selectedSeatsList, selectedTheater, selectedMovieShowTime, seatsAvailable, handleMovieReservation } = props;
 
 
   return <>
@@ -45,7 +45,7 @@ const RenderTicketing = (props) => {
                 </Typography>
               ) : (
                 <Typography className={classes.bannerContent}>
-                  {selectedTheater.ticketPrice *
+                  {selectedMovieShowTime.theaterId.ticketPrice *
                     selectedSeatsList.length}{' '}
                   $
                 </Typography>
@@ -64,7 +64,7 @@ const RenderTicketing = (props) => {
           <Button
             color="inherit"
             fullWidth
-            disabled={seatsAvailable <= 0}
+            disabled={seatsAvailable <= 0 || selectedSeatsList.length <= 0}
             onClick={() => handleMovieReservation()}>
             Checkout
           </Button>

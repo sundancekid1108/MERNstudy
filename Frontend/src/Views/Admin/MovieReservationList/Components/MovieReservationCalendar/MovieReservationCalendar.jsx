@@ -13,12 +13,7 @@ const MovieReservationCalendar = (props) => {
       <FullCalendar
         initialView="dayGridMonth"
         plugins={[dayGridPlugin]}
-        events={[
-          { title: 'Movie Title 1', date: '2022-01-22' },
-          { title: 'Movie Title 1', date: '2022-01-22' },
-          { title: 'Movie Title 1', date: '2022-01-22' },
-          { title: 'Movie Title 1', date: '2022-01-22' }
-        ]}
+
       />
     </>
   );

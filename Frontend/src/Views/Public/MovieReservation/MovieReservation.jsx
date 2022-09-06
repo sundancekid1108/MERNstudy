@@ -18,7 +18,6 @@ import RenderMovieInfo from './Components/RenderMovieInfo/RenderMovieInfo';
 import RenderSelectTheater from './Components/RenderSelectTheater/RenderSelectTheater';
 import RenderTheaterSeats from './Components/RenderTheaterSeats/RenderTheaterSeats';
 import RenderTicketing from './Components/RenderTicketing/RenderTicketing';
-import RenderInvitation from './Components/RenderInvitation/RenderInvitation';
 import moment from 'moment';
 import * as MovieApi from '../../../Api/MovieApi/MovieApi';
 import * as TheaterApi from '../../../Api/TheaterApi/TheaterApi';
@@ -39,29 +38,42 @@ const MovieReservation = (props) => {
 
   const { classes } = props;
   const params = useParams()
-  // console.log("MovieReservation props", props)
-  // console.log("params.id", params.id)
   const navigate = useNavigate();
   const movieId = params.id;
   const nowTime = moment().format('YYYY-MM-DD');
   const dispatch = useDispatch();
 
   const userInfo = useSelector((state) => state.auth.user);
-  const isLogin = useSelector((state) => state.auth.isAuthenticated);
-  const movieInfoTest = useSelector((state) => state.movies.movieInfo);
-  const theatersList = useSelector((state) => state.theaters.theaters);
-  const movieShowTimeList = useSelector((state) => state.movieShowTimes.movieShowTimes);
-  const movieShowTimeListTest = movieShowTimeList.filter(i => i.movieId == movieId)
-  const filtertheaterIdTest = movieShowTimeListTest.map(i => i.theaterId).filter((value, index, self) => self.indexOf(value) === index)
-  const [movie, setMovie] = useState('');
-  const [theater, setTheater] = useState('');
+  const movieInfo = useSelector((state) => state.movies.movieInfo);
+
+
   const [theaterSeats, setTheaterSeats] = useState([]);
   const [selectedSeatsList, setSelectedSeatsList] = useState([]);
+
   const [selectedTheater, setSelectedTheater] = useState('');
   const [selectedMovieShowTime, setSelectedMovieShowTime] = useState('');
   const [seatsAvailable, setSeatsAvailable] = useState('');
+
+
+  const movieShowTimeList = useSelector((state) => state.movieShowTimes.movieShowTimes.filter(i => i.movieId._id == movieId));
+
+
+  const theatersList = movieShowTimeList.map(theater => theater.theaterId)
+  const filteredTheatersList = theatersList.filter((arr, index, callback) => index === callback.findIndex(t => t._id === arr._id))
+
   const [mustLogin, setMustLogin] = useState(false)
-  const [isOpenDialog, setIsOpenDialog] = useState(false);
+
+  const filteredMovieShowTimeList = movieShowTimeList
+    .filter((movieShowTime) =>
+      selectedTheater ? selectedTheater === movieShowTime.theaterId._id : true
+    )
+    .map((movieShowTime) => movieShowTime)
+    .filter((value, index, self) => self.indexOf(value) === index)
+    .sort(
+      (a, b) => new Date('1970/01/01 ' + a) - new Date('1970/01/01 ' + b)
+    );
+  // console.log("filteredMovieShowTimeList", filteredMovieShowTimeList)
+
 
   //popup dialog 열고 닫기
   const handleDialog = () => {
@@ -71,36 +83,13 @@ const MovieReservation = (props) => {
       setMustLogin(true)
     }
   };
-
-
-
-  //영화정보
-  const getMovieInfo = async () => {
-    try {
-      const res = await MovieApi.getMovieInfo(movieId);
-      const movieData = res.data;
-      setMovie(movieData);
-    } catch (error) {
-      console.log('getMovieInfo', error);
-    }
-  };
-
-  const getMovieList = () => {
-    dispatch(MovieAction.getMovieList())
-  }
-
-  const getMovieInfoTest = () => {
+  const getMovieInfo = () => {
     dispatch(MovieAction.getMovieInfo(movieId));
   }
 
 
-  //극장 리스트
-  const getTheaterList = () => {
-    dispatch(TheaterAction.getTheaterList());
-  };
-
   //극장별 영화 상영시간
-  const getMovieShowTimeList = async () => {
+  const getMovieShowTimeList = () => {
     dispatch(MovieShowTimeAction.getMovieShowTimesList());
 
   };
@@ -108,7 +97,9 @@ const MovieReservation = (props) => {
   //좌석 선택, 선택 좌석 개수 세기,  선택좌석 정보 저장
   const handleUserSelectSeats = (row, seat) => {
     //0 => 빈자리, 1=> 예매완료, 2=> 내가 선택
+
     const selectedSeats = theaterSeats[row][seat];
+
     const seatData = [row, seat];
     if (selectedSeats !== 1) {
       const newTheaterSeats = [...theaterSeats];
@@ -133,69 +124,68 @@ const MovieReservation = (props) => {
 
   //영화 예매 함수
   const createMovieReservation = async () => {
-    const startAt = selectedMovieShowTime.startAt;
-    const seats = selectedSeatsList;
-    const ticketPrice = selectedTheater.ticketPrice;
-    const totalPrice = selectedSeatsList.length * ticketPrice;
-    const movieId = movie._id;
-    const theaterId = selectedTheater._id;
+    const startAtData = selectedMovieShowTime.startAt;
+    const seatsData = selectedSeatsList;
+    const seatsAvailableData = seatsAvailable - selectedSeatsList.length
+    const ticketPriceData = selectedMovieShowTime.theaterId.ticketPrice
+    const totalPriceData = selectedSeatsList.length * selectedMovieShowTime.theaterId.ticketPrice
+    const movieIdData = selectedMovieShowTime.movieId._id;
+    const theaterIdData = selectedMovieShowTime.theaterId._id;
+    const userNameData = userInfo.userName
+    const userPhoneNumberData = userInfo.phoneNumber
 
-    const body = {
-      startAt,
-      seats,
-      ticketPrice,
-      totalPrice,
-      movieId,
-      theaterId
-    };
-
-    try {
-      const res = await MovieReservationApi.createMovieReservation(
-        body
-      );
-      console.log(res);
-    } catch (error) {
-      console.log('createMovieReservationError ', error);
-    }
-    updateTheaterSeatsData();
-  };
-
-  // 예매 후 예매 된 자리 매진 처리하는 극장 자리 정보 업데이트
-  const updateTheaterSeatsData = async () => {
-    const seats = theaterSeats.map((row) =>
+    const movieShowTimeId = selectedMovieShowTime._id
+    const updateTheaterSeatsData = theaterSeats.map((row) =>
       row.map((seat) => ([1, 2].includes(seat) ? 1 : 0))
     );
 
-    // const newSeats = theaterSeats.map((row) =>
-    //   row.map((seat) => ([1, 2].includes(seat) ? 1 : 0))
-    // );
 
-    // const totalBookedSeats = seats
-    //   .reduce((a, b) => a.concat(b))
-    //   .reduce((a, b) => a + b);
 
-    const reaservatinSeats = theaterSeats.map(row =>
-      row.map((seat, i) => (seat === 2 ? i : -1)).filter(seat => seat !== -1)
-    )
-      .map((seats, i) => (seats.length ? seats.map(seat => [i, seat]) : -1))
-      .filter(seat => seat !== -1)
-      .reduce((a, b) => a.concat(b));
+    const movieReservationBody = {
+      startAt: startAtData,
+      seats: seatsData,
+      ticketPrice: ticketPriceData,
+      totalPrice: totalPriceData,
+      movieId: movieIdData,
+      theaterId: theaterIdData,
+      username: userNameData,
+      phoneNumber: userPhoneNumberData
 
-    // console.log("seats", seats)
-    // console.log("totalBookedSeats", totalBookedSeats)
-    // console.log("reaservatinSeats", reaservatinSeats)
+    };
 
-    const theaterId = selectedTheater._id;
-    const seatsAvailable =
-      selectedTheater.seatsAvailable - selectedSeatsList.length;
 
-    const body = {
-      seats,
-      seatsAvailable
-    }
-    // console.log("body", body)
+    const updateMovieShowTimeBody = {
+      seats: updateTheaterSeatsData,
+      seatsAvailable: seatsAvailableData
+    };
+
+
+
+    console.log("movieReservationBody", movieReservationBody)
+    console.log("updateMovieShowTimeBody", updateMovieShowTimeBody)
+
+    //1. User MovieReservation 생성
     try {
-      const res = await TheaterApi.updateTheaterSeatsInfo(theaterId,
+      const res = await MovieReservationApi.createMovieReservation(
+        movieReservationBody
+      );
+      console.log(res)
+    } catch (error) {
+      console.log('createMovieReservationError ', error);
+    }
+
+
+    // //2. MovieShowTime seats, seatsAvailable 업데이트..
+    updateMovieShowTime(movieShowTimeId, updateMovieShowTimeBody)
+
+
+  };
+
+  // 예매 후 예매 된 자리 매진 처리하는 극장 자리 정보 업데이트
+  const updateMovieShowTime = async (movieShowTimeId, body) => {
+    try {
+      const res = await MovieShowTimeApi.updateMovieShowTime(
+        movieShowTimeId,
         body
       );
       console.log(res);
@@ -211,114 +201,105 @@ const MovieReservation = (props) => {
     } else if (selectedSeatsList.length === 0) {
       console.log('choose seats first');
     } else {
-      // console.log('handleMovieReservation');
+
       createMovieReservation();
       // updateTheaterSeatsData();
     }
   };
 
   const handleSelectedTheater = (e) => {
-    // console.log("filteredTheatersList", filteredTheatersList)
+
     const data = e.target.value;
-    setSelectedTheater(data);
-    setTheaterSeats(data.seats);
-    setSeatsAvailable(data.seatsAvailable);
+    setSelectedTheater(selectedTheater => data);
+    setSeatsAvailable('')
+    setSelectedSeatsList(selectedSeatsList => [])
+    setTheaterSeats(theaterSeats => [])
+
+
   };
 
   const handleSelectedMovieShowTime = (e) => {
+    setSelectedSeatsList(selectedSeatsList => [])
+    setTheaterSeats(theaterSeats => [])
+    setSeatsAvailable('')
     const data = e.target.value;
-    setSelectedMovieShowTime(data)
+    setSelectedMovieShowTime(selectedMovieShowTime => data)
+    // console.log("handleSelectedMovieShowTime Data", data)
+    setTheaterSeats(theaterSeats => data.seats)
+    setSeatsAvailable(data.seatsAvailable)
+    // setSelectedSeatsList(selectedSeatsList => [])
+
+
+
   }
 
-  //test
-  const onFiltertheater = () => {
-    const initialReturn = {
-      filteredTheatersList: [],
-      filteredMovieShowTimeList: []
-    };
+  const handleSelectedFilteredMovieShowTime = (data) => {
+    setFilteredMovieShowTime(data)
+  }
 
-    if (!movieShowTimeList || !theatersList) return initialReturn;
-
-    const movieShowTimeListTest = movieShowTimeList.filter(i => i.movieId == movieId)
-
-    const filteredTheatersId = movieShowTimeListTest.map(i => i.theaterId).filter((value, index, self) => self.indexOf(value) === index)
-
-    const filteredTheatersList = theatersList.filter((theater) =>
-      filteredTheatersId.includes(theater._id)
-    );
-
-
-    const filteredMovieShowTimeList = movieShowTimeList
-      .filter((movieShowTime) =>
-        selectedTheater ? selectedTheater._id === movieShowTime.theaterId : true
-      )
-      .map((movieShowTime) => movieShowTime)
-      .filter((value, index, self) => self.indexOf(value) === index)
-      .sort(
-        (a, b) => new Date('1970/01/01 ' + a) - new Date('1970/01/01 ' + b)
-      );
-
-    return {
-      ...initialReturn,
-      filteredTheatersList,
-      filteredMovieShowTimeList
-    };
-  };
-  const { filteredTheatersList, filteredMovieShowTimeList } =
-    onFiltertheater();
 
   useEffect(() => {
+    getMovieInfo()
     getMovieShowTimeList();
-    getMovieList();
-    getMovieInfoTest()
-    getMovieInfo();
-    getTheaterList();
     handleDialog()
-    return () => { };
+
+    return () => {
+
+    };
   }, []);
 
 
-  // console.log("selectedSeatsList", selectedSeatsList)
+
+  // console.log("filteredTheatersList", filteredTheatersList)
+  // console.log("movieShowTimeList", movieShowTimeList)
+  // console.log("selectedTheater", selectedTheater)
   // console.log("userInfo", userInfo)
-  // console.log("isLogin", isLogin)
-  // console.log("movieInfoTest", movieInfoTest)
+  // console.log("selectedMovieShowTime", selectedMovieShowTime)
+  // console.log("theaterSeats", theaterSeats)
+  // console.log("selectedSeatsList", selectedSeatsList)
+  // console.log("seatsAvailable", seatsAvailable)
+
   return (
     <>
       <div className={classes.root}>
         <Navbar />
         <Container maxWidth="xl" className={classes.container}>
           <Grid container spacing={2} style={{ height: '100%' }}>
-            <RenderMovieInfo movie={movieInfoTest} />
+            <RenderMovieInfo movie={movieInfo} />
             <Grid item lg={9} xs={12} md={12}>
+
+
               <RenderSelectTheater
-                filteredTheatersList={filteredTheatersList}
                 selectedTheater={selectedTheater}
-                selectedMovieShowTime={selectedMovieShowTime}
                 handleSelectedTheater={handleSelectedTheater}
                 handleSelectedMovieShowTime={handleSelectedMovieShowTime}
-                filteredMovieShowTimeList={filteredMovieShowTimeList}
+                handleSelectedFilteredMovieShowTime={handleSelectedFilteredMovieShowTime}
+                selectedMovieShowTime={selectedMovieShowTime}
+                movieShowTimeList={movieShowTimeList}
+
               />
 
-              {/*<RenderTheaterSeats*/}
-              {/*  selectedTheater={selectedTheater}*/}
-              {/*  selectedMovieShowTime={selectedMovieShowTime}*/}
-              {/*  selectedSeatsList={selectedSeatsList}*/}
-              {/*  userInfo={userInfo}*/}
-              {/*  handleUserSelectSeats={handleUserSelectSeats}*/}
+              {selectedTheater && selectedMovieShowTime && (
+                <RenderTheaterSeats
+                  selectedTheater={selectedTheater}
+                  selectedMovieShowTime={selectedMovieShowTime}
+                  selectedSeatsList={selectedSeatsList}
+                  userInfo={userInfo}
+                  handleUserSelectSeats={handleUserSelectSeats}
 
-              {/*/>*/}
+                />)}
 
+              {selectedTheater && selectedMovieShowTime && (
+                <RenderTicketing
+                  userInfo={userInfo}
+                  seatsAvailable={seatsAvailable}
+                  selectedSeatsList={selectedSeatsList}
+                  selectedTheater={selectedTheater}
+                  selectedMovieShowTime={selectedMovieShowTime}
+                  handleMovieReservation={handleMovieReservation}
+                />
+              )}
 
-              {/*{selectedTheater && selectedMovieShowTime && (*/}
-
-              {/*  <RenderTicketing*/}
-              {/*    userInfo={userInfo}*/}
-              {/*    selectedSeatsList={selectedSeatsList}*/}
-              {/*    selectedTheater={selectedTheater}*/}
-              {/*    seatsAvailable={seatsAvailable}*/}
-              {/*    selectedMovieShowTime={selectedMovieShowTime}*/}
-              {/*    handleMovieReservation={handleMovieReservation}*/}
-              {/*  />)}*/}
 
             </Grid>
           </Grid>

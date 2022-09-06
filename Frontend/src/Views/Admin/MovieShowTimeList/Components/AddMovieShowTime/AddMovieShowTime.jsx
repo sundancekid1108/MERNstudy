@@ -11,6 +11,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 
 
@@ -27,7 +28,7 @@ const AddMovieShowTime = (props) => {
         ...rest
     } = props;
 
-    console.log("selectedMovieShowtime", selectedMovieShowtime)
+    console.log("AddMovieShowTime", props)
     const [movieId, setMovieId] = useState('')
     const [theaterId, setTheaterId] = useState('')
     const [startAt, setStartAt] = useState(new Date())
@@ -47,12 +48,12 @@ const AddMovieShowTime = (props) => {
 
 
     const prevMovieShowTime = selectedMovieShowtime[0]
-    console.log("prevMovieShowTime", prevMovieShowTime)
+
     //이전 데이터들이 있을땐 이전 데이터 입력
     useEffect(() => {
-        if (prevMovieShowTime !== undefined) {
-            setMovieId(movieList.filter(x => x._id == prevMovieShowTime.movieId)[0]._id)
-            setTheaterId(theaterList.filter(x => x._id == prevMovieShowTime.theaterId)[0]._id)
+        if (prevMovieShowTime) {
+            setMovieId(movieList.filter(x => x._id == prevMovieShowTime.movieId._id)[0]._id)
+            setTheaterId(theaterList.filter(x => x._id == prevMovieShowTime.theaterId._id)[0]._id)
             setStartAt(prevMovieShowTime.startAt)
             setStartDate(prevMovieShowTime.startDate)
             setEndDate(prevMovieShowTime.endDate)
@@ -63,8 +64,14 @@ const AddMovieShowTime = (props) => {
 
 
     const handleAddMovieShowTime = async () => {
+        // console.log(theaterId)
+        const selectTheater = theaterList.filter(x => x._id == theaterId)
+        console.log("selectTheater", selectTheater[0])
+        const seats = selectTheater[0].seats
+        const seatsAvailable = selectTheater[0].seatsAvailable
+        // console.log(seats)
+        // console.log("date", startDate, endDate)
         if (
-
             movieId !== '' ||
             theaterId !== '' ||
             isImax !== '' ||
@@ -81,8 +88,12 @@ const AddMovieShowTime = (props) => {
                 is3d,
                 startAt,
                 startDate,
-                endDate
+                endDate,
+                seats,
+                seatsAvailable
             }
+
+            console.log(body)
             try {
                 const response = await dispatch(MovieShowTimeAction.createMovieShowTime(body))
                 return response
@@ -92,8 +103,6 @@ const AddMovieShowTime = (props) => {
         } else {
             console.log("handleAddMovieShowTime Fail")
         }
-
-
     }
 
     const handleUpdateMovieShowTime = async () => {
@@ -285,48 +294,53 @@ const AddMovieShowTime = (props) => {
                         </TextField>
                     </div>
 
-                    <div className={classes.field}>
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
-                            <DatePicker
-                                disableOpenPicker={true}
-                                margin="normal"
-                                id="start-date"
-                                label="Start Date"
-                                inputFormat="yyyy-MM-dd"
-                                inputVariant="outlined"
-                                minDate={new Date()}
-                                maxDate={getMaxDate()}
-                                value={startDate}
-                                variant="inline"
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date'
-                                }}
-                                onChange={(data) => setStartDate(data)}
-                                renderInput={(params) => <TextField className={classes.textField}  {...params} />}
-                            />
 
-                            <DatePicker
-                                disableOpenPicker={true}
-                                margin="normal"
-                                id="End-date"
-                                label="End Date"
-                                inputFormat="yyyy-MM-dd"
-                                inputVariant="outlined"
-                                minDate={new Date(startDate)}
-                                maxDate={getMaxDate()}
-                                value={endDate}
-                                onChange={(data) => setEndDate(data)}
+                    {(movieId && theaterId) &&
+                        <div className={classes.field}>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <DesktopDatePicker
+                                    className={classes.textField}
+                                    // disableOpenPicker={true}
+                                    margin="normal"
+                                    id="start-date"
+                                    label="Start Date"
+                                    inputFormat="yyyy-MM-dd"
+                                    inputVariant="outlined"
+                                    minDate={new Date()}
+                                    maxDate={getMaxDate()}
+                                    value={startDate}
+                                    variant="inline"
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date'
+                                    }}
+                                    onChange={(data) => setStartDate(data)}
+                                    renderInput={(params) => <TextField  {...params} />}
+                                />
 
-                                variant="inline"
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date'
-                                }}
-                                renderInput={(params) => <TextField className={classes.textField} {...params} />}
-                            />
-                        </LocalizationProvider>
+                                <DesktopDatePicker
+                                    className={classes.textField}
+                                    // disableOpenPicker={true}
+                                    margin="normal"
+                                    id="End-date"
+                                    label="End Date"
+                                    inputFormat="yyyy-MM-dd"
+                                    inputVariant="outlined"
+                                    minDate={new Date(startDate)}
+                                    maxDate={getMaxDate()}
+                                    value={endDate}
+                                    onChange={(data) => setEndDate(data)}
+
+                                    variant="inline"
+                                    KeyboardButtonProps={{
+                                        'aria-label': 'change date'
+                                    }}
+                                    renderInput={(params) => <TextField className={classes.textField}  {...params} />}
+                                />
+                            </LocalizationProvider>
 
 
-                    </div>
+                        </div>}
+
                 </form>
 
                 <Button

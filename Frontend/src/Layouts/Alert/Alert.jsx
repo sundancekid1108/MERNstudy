@@ -13,6 +13,7 @@ const Alert = (props) => {
       {alerts.length > 0 &&
         alerts.map((alert) => (
           <CustomizedSnackbar
+            key={alert.id}
             isOpen={true}
             vertical="top"
             horizontal="right"

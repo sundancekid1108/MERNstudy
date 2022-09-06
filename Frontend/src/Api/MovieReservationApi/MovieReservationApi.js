@@ -8,7 +8,7 @@ export const createMovieReservation = async(body) => {
         const res = await api.post('/moviereservation/moviereservations', body, {
             headers: token
         });
-        const reservationData = res.data;
+        const reservationData = res;
         return reservationData;
     } catch (error) {
         return error.response;

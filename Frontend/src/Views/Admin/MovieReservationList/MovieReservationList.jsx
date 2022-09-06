@@ -57,8 +57,10 @@ const MovieReservationList = (props) => {
 
   const movieList = useSelector((state) => state.movies.movies);
   const theaterList = useSelector((state) => state.theaters.theaters);
-  const movieReservationListTest = useSelector((state) => state.movieReservations.movieReservationList)
-  console.log(movieList, theaterList, movieReservationListTest);
+  const movieReservationListTest = useSelector((state) => state.movieReservations.movieReservatinList)
+  console.log(movieList, theaterList);
+  console.log(movieReservationListTest)
+  // console.log(state.movieReservations)
 
   if (isLoading) {
     return (
@@ -98,9 +100,9 @@ const MovieReservationList = (props) => {
                 MovieList={movieList}
                 TheaterList={theaterList}
               />
-              <MovieReservationCalendar
+              {/* <MovieReservationCalendar
                 MovieReservationList={movieReservationList}
-              />
+              /> */}
             </div>
           </div>
         </Dashboard>

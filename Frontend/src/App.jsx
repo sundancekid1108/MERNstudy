@@ -24,7 +24,7 @@ import Loading from './Components/Loading/Loading';
 const Feed = lazy(() => import('./Views/Feed/Feed'));
 const SignIn = lazy(() => import('./Views/Public/SignIn/SignIn'));
 const SignUp = lazy(() => import('./Views/Public/SignUp/SignUp'));
-const AdminSignUp = lazy(() => import('./Views/Admin/AdminSignUp/AdminSignUp'));
+// const AdminSignUp = lazy(() => import('./Views/Admin/AdminSignUp/AdminSignUp'));
 const MoviePage = lazy(() => import('./Views/Public/MoviePage/MoviePage'));
 const NotFound = lazy(() => import('./Views/NotFound/NotFound'));
 const DashboardPage = lazy(() =>
@@ -74,6 +74,8 @@ const App = () => {
             <BrowserRouter>
               <Routes>
                 <Route exact path="/" element={<MoviePage />} />
+                <Route exact path="/signin" element={<SignIn />} />
+                <Route exact path='/signup' element={<SignUp />} />
 
                 <Route exact path="/movie/:id" element={<MovieInfo />} />
                 <Route
@@ -88,10 +90,14 @@ const App = () => {
                 />
                 <Route exact path="/theaters" element={<Theaters />} />
                 <Route exact path="/feed" element={<Feed />} />
-                <Route exact path="/signin" element={<SignIn />} />
-                <Route exact path="/signup" element={<SignUp />} />
-                <Route exact path="/adminsignup" element={<AdminSignUp />} />
-                <Route exact path="/admin/movies" element={<MovieList />} />
+
+
+                {/* <Route exact path="/adminsignup" element={<AdminSignUp />} /> */}
+                <Route exact path="/admin/movies" element={
+                  <ProtectedRoute>
+                    <MovieList />
+                  </ProtectedRoute>
+                } />
 
                 {/* 분리 */}
                 <Route

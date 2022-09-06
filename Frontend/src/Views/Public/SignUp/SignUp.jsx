@@ -16,9 +16,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as AuthAction from '../../../Store/Actions/AuthAction';
 import styles from './Styles';
 
+
 const SignUp = (props) => {
   const { classes } = props;
   const form = useRef();
+
+
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -37,10 +40,11 @@ const SignUp = (props) => {
   const state = useSelector((state) => state.auth);
   useEffect(() => {
     if (state.isAuthenticated) {
-      navigate('/', { replace: false });
-    } else {
-      navigate('/signup');
+      return navigate('/', { replace: false });
     }
+    // else {
+    //   navigate('/signin');
+    // }
   }, []);
 
   const handleBack = () => {
@@ -85,7 +89,7 @@ const SignUp = (props) => {
     }
   };
 
-  //Redux를 활용한 signup 함수 재작성
+  // //Redux를 활용한 signup 함수 재작성
   const handleSignUp = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -146,6 +150,7 @@ const SignUp = (props) => {
         <Grid className={classes.grid} container>
           <Grid className={classes.bgWrapper} item lg={5}>
             <div className={classes.bg} />
+
           </Grid>
           <Grid className={classes.content} item lg={7} xs={12}>
             <div className={classes.content}>
@@ -165,6 +170,8 @@ const SignUp = (props) => {
                   <Typography className={classes.subtitle} variant="body1">
                     Use your Email to create new account
                   </Typography>
+
+
                   <div className={classes.fields}>
                     <TextField
                       className={classes.textField}
@@ -237,7 +244,7 @@ const SignUp = (props) => {
                         className={classes.policyText}
                         variant="body1">
                         I have read the &nbsp;
-                        <Link className={classes.policyUrl}>
+                        <Link to='/policy' className={classes.policyUrl}>
                           Terms and Conditions
                         </Link>
                         .

@@ -6,7 +6,7 @@ const movieReservationSchema = new Schema({
         // required: true,
     },
     startAt: {
-        type: String,
+        type: Date,
         // required: true,
         trim: true,
     },
@@ -36,7 +36,7 @@ const movieReservationSchema = new Schema({
         type: String,
         // required: true,
     },
-    phone: {
+    phonenumber: {
         type: String,
         // required: true,
     },

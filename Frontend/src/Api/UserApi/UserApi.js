@@ -5,52 +5,61 @@ import authHeader from '../authHeader';
 
 //회원가입
 export const userSignUp = (body) => {
-    return api
-        .post('/users/signup', body)
-        .then((response) => {
-            // console.log("response : ", response);
-            return response;
-        })
-        .catch((error) => {
-            // console.log("error : ", error);
-            // console.log("error!! : ", error.response);
+    try {
+        const response = api.post('/users/signup', body)
+        return response
 
-            return error.response;
-        });
+    } catch (error) {
+        // console.log("error : ", error);
+        // console.log("error!! : ", error.response);
+
+        return error.response;
+    }
+    // return api
+    //     .post('/users/signup', body)
+    //     .then((response) => {
+    //         // console.log("response : ", response);
+    //         return response;
+    //     })
+    //     .catch((error) => {
+    //         // console.log("error : ", error);
+    //         // console.log("error!! : ", error.response);
+
+    //         return error.response;
+    //     });
 };
 
 
 
 // 로그인
-export const userLogin = (body) => {
-    return api
-        .post('/users/auth/login', body)
-        .then((response) => {
-            if (response.data.accessToken) {
-                //localStorage
-                localStorage.setItem(
-                    'token',
-                    JSON.stringify(response.data.accessToken)
-                );
+export const userLogin = async(body) => {
 
-                //session
-                sessionStorage.setItem(
-                    'token',
-                    JSON.stringify(response.data.accessToken)
-                );
-                // localStorage.setItem('user', JSON.stringify(response.data));
-                // localStorage.setItem('isAdmin', JSON.stringify(response.data.isAdmin));
-            }
-            console.log('userLogin success');
-            console.log('response : ', response);
-            return response;
-        })
-        .catch((error) => {
-            console.log(error.status);
-            console.log('error!! : ', error);
+    try {
+        const response = await api.post('/users/auth/login', body)
+        if (response.data.accessToken) {
+            //localStorage
+            localStorage.setItem(
+                'token',
+                JSON.stringify(response.data.accessToken)
+            );
 
-            return error.response;
-        });
+            //session
+            sessionStorage.setItem(
+                'token',
+                JSON.stringify(response.data.accessToken)
+            );
+            // localStorage.setItem('user', JSON.stringify(response.data));
+            // localStorage.setItem('isAdmin', JSON.stringify(response.data.isAdmin));
+        }
+        // console.log('userLogin success');
+        // console.log('response : ', response);
+        return response;
+    } catch (error) {
+        // console.log(error.status);
+        // console.log('error!! : ', error);
+
+        return error.response;
+    }
 };
 
 //facebook Auth Login

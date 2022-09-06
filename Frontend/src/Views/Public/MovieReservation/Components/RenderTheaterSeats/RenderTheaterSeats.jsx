@@ -3,17 +3,21 @@ import { withStyles, Box, Grid, Typography } from '@material-ui/core';
 import styles from './Styles';
 
 const RenderTheaterSeats = (props) => {
-    const { classes, selectedTheater, selectedMovieShowTime, handleUserSelectSeats } = props;
+    const { classes, selectedTheater, selectedMovieShowTime, handleUserSelectSeats, movieShowTimeList, filteredMovieShowTime } = props;
 
+    // console.log("movieShowTimeList", movieShowTimeList)
     // console.log('selectedTheater', selectedTheater)
     // console.log("selectedMovieShowTime", selectedMovieShowTime)
+    // console.log("filteredMovieShowTime", filteredMovieShowTime)
+    // console.log("filteredMovieShowTime", filteredMovieShowTime[0].seats)
 
     const renderSelectTheaterSeats = () => {
         if (selectedTheater && selectedMovieShowTime) {
+
             return <>
                 <Box width={1} pt={15}>
 
-                    {selectedTheater.seats.map((seatRows, indexRow) => (
+                    {selectedMovieShowTime.seats.map((seatRows, indexRow) => (
                         <div key={indexRow} className={classes.row}>
                             {seatRows.map((seat, index) => (
                                 <Box
@@ -82,7 +86,8 @@ const RenderTheaterSeats = (props) => {
 
     }
     return <>
-        {renderSelectTheaterSeats()}</>
+        {renderSelectTheaterSeats()}
+    </>
 
 }
 

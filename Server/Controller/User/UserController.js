@@ -145,7 +145,7 @@ export const createUser = async(req, res) => {
         email: email,
         firstname: firstname,
         lastname: lastname,
-        password: password1,
+        password: password1
     });
 
     const saltRounds = 10;
@@ -156,7 +156,7 @@ export const createUser = async(req, res) => {
                 res.json(error);
             }
             newUser.password = hash;
-            // console.log(newUser);
+            console.log("newUser", newUser);
 
             newUser
                 .save()
@@ -164,7 +164,9 @@ export const createUser = async(req, res) => {
                     return res.status(200).json(result);
                 })
                 .catch((error) => {
+                    console.log("createUser error", error)
                     return res.status(400).json(error);
+
                 });
         });
     });
@@ -203,22 +205,22 @@ export const updateUserInfo = async(req, res) => {
 
 
     try {
-        if (req.file) {
-            const file = req.file
-                // console.log('updateProfileImg success')
-                // console.log(file)
-            const url = req.protocol + '://' + req.get('host') + '/' + file.path
-            console.log("url", url)
-            const user = await User.findByIdAndUpdate({ _id: userId }, {
-                profileImg: url,
-            }, { upsert: true })
+        // if (req.file) {
+        //     const file = req.file
+        //         // console.log('updateProfileImg success')
+        //         // console.log(file)
+        //     const url = req.protocol + '://' + req.get('host') + '/' + file.path
+        //     console.log("url", url)
+        //     const user = await User.findByIdAndUpdate({ _id: userId }, {
+        //         profileImg: url,
+        //     }, { upsert: true })
 
-            return res.status(200).json({ response: "Update User Info" })
+        //     return res.status(200).json({ response: "Update User Info" })
 
-            res.send(file)
-        } else {
-            return res.status(400).json({ response: "No Image File" });
-        }
+        //     res.send(file)
+        // } else {
+        //     return res.status(400).json({ response: "No Image File" });
+        // }
 
 
         if (body.password1 && body.password2) {
@@ -494,7 +496,7 @@ export const postUserLogin = async(req, res) => {
         const LoginSuccessUser = await await User.findOne({
             email,
         });
-        console.log(LoginSuccessUser);
+        console.log("LoginSuccessUser", LoginSuccessUser);
         const payload = {
             // userId: LoginSuccessUser.id,
             user: LoginSuccessUser,

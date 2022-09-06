@@ -134,19 +134,19 @@ const MovieShowTimeTable = (props) => {
                                         </div>
                                     </TableCell>
                                     <TableCell className={classes.tableCell}>
-                                        {movieShowTime.movieId}
+                                        {movieShowTime.movieId.title}
                                     </TableCell>
                                     <TableCell className={classes.tableCell}>
-                                        {movieShowTime.theaterId}
+                                        {movieShowTime.theaterId.theaterName}
                                     </TableCell>
                                     <TableCell className={classes.tableCell}>
-                                        {moment(movieShowTime.startDate).format('DD/MM/YYYY')}
+                                        {moment(movieShowTime.startDate).format('YYYY/DD/MM')}
                                     </TableCell>
                                     <TableCell className={classes.tableCell}>
-                                        {moment(movieShowTime.endDate).format('DD/MM/YYYY')}
+                                        {moment(movieShowTime.endDate).format('YYYY/DD/MM')}
                                     </TableCell>
                                     <TableCell className={classes.tableCell}>
-                                        {moment(movieShowTime.startAt).format('DD/MM/YYYY')}
+                                        {moment(movieShowTime.startAt).format('YYYY MM DD HH:mm')}
 
                                     </TableCell>
                                 </TableRow>

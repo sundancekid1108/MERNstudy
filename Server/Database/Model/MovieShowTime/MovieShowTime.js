@@ -13,6 +13,10 @@ const movieShowTimeSchema = new Schema({
         type: [Schema.Types.Mixed],
         required: true,
     },
+    seatsAvailable: {
+        type: Number,
+        required: true,
+    },
     isImax: {
         type: Boolean,
         required: true,

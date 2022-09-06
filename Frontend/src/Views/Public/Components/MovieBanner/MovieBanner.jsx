@@ -28,10 +28,11 @@ const StyledRating = withStyles({
 
 const MovieBanner = (props) => {
   const { classes, movie, description } = props;
-  console.log("MovieBanner Props", props)
-  // console.log(movie.genres)
   const params = useParams()
-  console.log(params)
+  // console.log("MovieBanner Props", props)
+  // console.log(movie.genres)
+
+  // console.log(params)
 
   if (!movie) {
     return (

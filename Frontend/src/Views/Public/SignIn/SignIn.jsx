@@ -38,13 +38,14 @@ const SignIn = (props) => {
   const facebook_app_id = process.env.REACT_APP_FACEBOOK_APP_ID;
   const google_app_id = process.env.REACT_APP_GOOGLE_AUTH_ID;
 
+
   useEffect(() => {
-    //
-    if (state.isAuthenusticated) {
-      navigate('/', { replace: false });
-    } else {
-      navigate('/signin');
+    if (state.isAuthenticated) {
+      return navigate('/', { replace: false });
     }
+    // else {
+    //   navigate('/signin');
+    // }
   }, []);
   //로그인 되있을때 SignIn 접근 차단
 
@@ -61,7 +62,6 @@ const SignIn = (props) => {
 
   return (
     <>
-
       <div className={classes.root}>
         <Grid className={classes.grid} container>
           <Grid className={classes.bgWrapper} item lg={5}>
