@@ -87,7 +87,7 @@ const MovieList = (props) => {
 
     else if (event.type === 'click') {
       console.log(keyword,)
-      const result = match(keyword, movieList, title)
+      const result = match(keyword, movieList, 'title')
 
       setSearchMovieResult(result)
       console.log(searchMovieResult)
@@ -111,7 +111,7 @@ const MovieList = (props) => {
 
 
   // console.log('editMovie', editMovie);
-  console.log("movieList", movieList)
+  // console.log("movieList", movieList)
   // console.log('movieInfo', movieInfo);
   if (!movieList) {
     return (

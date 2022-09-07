@@ -15,7 +15,7 @@ import { Portlet, PortletContent } from '../../../../../Components/Index';
 import styles from './Styles';
 
 const MovieReservationListTable = (props) => {
-  console.log(props);
+  // console.log(props);
   const { classes, className, MovieReservationList } =
     props;
   const rootClassName = classNames(classes.root, className);

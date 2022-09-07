@@ -7,7 +7,7 @@ import { SearchInput } from '../../../../../Components/Index';
 import styles from './Styles';
 
 const MovieReservationListToolbar = (props) => {
-  const { classes, className } = props;
+  const { classes, className, onChange, handleSearchMovieReservation, keyword } = props;
   const rootClassName = classNames(classes.root, className);
 
   return (
@@ -15,7 +15,12 @@ const MovieReservationListToolbar = (props) => {
       <div className={classes.row}>
         <SearchInput
           className={classes.searchInput}
-          placeholder="Search reservation"
+          placeholder="Search reservation by username"
+          onChange={onChange}
+          value={keyword}
+          onKeyPress={handleSearchMovieReservation}
+          onClick={handleSearchMovieReservation}
+          handleSearchMovieReservation={handleSearchMovieReservation}
         />
       </div>
     </div>

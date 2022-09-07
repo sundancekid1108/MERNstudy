@@ -20,7 +20,14 @@ const MovieReservationList = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [movieReservationList, setMovieReservationList] = useState([]);
+  const [searchMovieReservationResult, setSearchMovieReservationResult] = useState(null)
+
+  const [keyword, setKeyword] = useState('');
   const [limit, setLimit] = useState(10);
+
+  const onChange = (event) => {
+    setKeyword(event.target.value)
+  }
 
   const getMovieList = () => {
     dispatch(MovieAction.getMovieList());
@@ -44,6 +51,30 @@ const MovieReservationList = (props) => {
     }
   };
 
+
+  const handleSearchMovieReservation = (event) => {
+    const match = (term, array, key) => {
+      const reg = new RegExp(term.split('').join('.*'), 'i');
+      // console.log(reg)
+      return array.filter(item => item[key] && item[key].match(reg));
+    };
+
+    if (event.key === "Enter") {
+      console.log(keyword)
+      const result = match(keyword, movieReservationList, 'username')
+      setSearchMovieReservationResult(result)
+      console.log(searchMovieReservationResult)
+    }
+
+    else if (event.type === 'click') {
+      console.log(keyword)
+      const result = match(keyword, movieReservationList, 'username')
+
+      setSearchMovieReservationResult(result)
+      console.log(searchMovieReservationResult)
+    }
+  }
+
   useEffect(() => {
     setSignal(true);
     getMovieReservationList();
@@ -57,9 +88,10 @@ const MovieReservationList = (props) => {
 
   const movieList = useSelector((state) => state.movies.movies);
   const theaterList = useSelector((state) => state.theaters.theaters);
+  console.log('movieReservationList', movieReservationList)
   const movieReservationListTest = useSelector((state) => state.movieReservations.movieReservatinList)
-  console.log(movieList, theaterList);
-  console.log(movieReservationListTest)
+  // console.log(movieList, theaterList);
+  // console.log(movieReservationListTest)
   // console.log(state.movieReservations)
 
   if (isLoading) {
@@ -88,12 +120,35 @@ const MovieReservationList = (props) => {
         </Dashboard>
       </>
     );
-  } else {
+  }
+  else if (searchMovieReservationResult) {
     return (
       <>
         <Dashboard title="Movie Reservations List">
           <div className={classes.root}>
-            <MovieReservationListToolbar />
+            <MovieReservationListToolbar onChange={onChange} handleSearchMovieReservation={handleSearchMovieReservation} keyword={keyword} />
+            <div className={classes.content}>
+              <MovieReservationListTable
+                MovieReservationList={searchMovieReservationResult}
+                MovieList={movieList}
+                TheaterList={theaterList}
+              />
+              {/* <MovieReservationCalendar
+                MovieReservationList={movieReservationList}
+              /> */}
+            </div>
+          </div>
+        </Dashboard>
+      </>
+    );
+  }
+
+  else {
+    return (
+      <>
+        <Dashboard title="Movie Reservations List">
+          <div className={classes.root}>
+            <MovieReservationListToolbar onChange={onChange} handleSearchMovieReservation={handleSearchMovieReservation} keyword={keyword} />
             <div className={classes.content}>
               <MovieReservationListTable
                 MovieReservationList={movieReservationList}
