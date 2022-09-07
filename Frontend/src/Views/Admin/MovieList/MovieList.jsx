@@ -79,6 +79,9 @@ const MovieList = (props) => {
   };
 
 
+  const handleMovieSearch = () => {
+
+  }
 
 
   // console.log('editMovie', editMovie);

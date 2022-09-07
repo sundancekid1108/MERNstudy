@@ -10,7 +10,7 @@ import styles from './Styles';
 
 const TmdbMovieInfo = (props) => {
     const { classes, className, movie, tmdbMovieCast, tmdbMovieInfo } = props;
-    console.log(props)
+    // console.log(props)
     const rootClassName = classNames(classes.root, className);
     const tmdb_movie_info = tmdbMovieInfo
     const tmdb_movie_cast = tmdbMovieCast

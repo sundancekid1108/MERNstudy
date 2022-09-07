@@ -1,5 +1,6 @@
 export default (theme) => ({
     root: {
+        overflow: 'auto',
         paddingLeft: theme.spacing(3),
         paddingRight: theme.spacing(3),
         paddingTop: theme.spacing(2),

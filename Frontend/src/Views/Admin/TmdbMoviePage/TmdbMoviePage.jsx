@@ -60,17 +60,32 @@ const TmdbMoviePage = (props) => {
 
 
 
-  const handleTmdbMovieSearch = async () => {
-    // console.log('handleTmdbMovieSearch')
-    console.log("keyword", keyword)
-    try {
-      const response = await TmdbApi.getSearchTmdbMovie(keyword)
-      // console.log(response.data.results)
-      const data = response.data.results
-      setTmdbMovieSearchResult(data)
-    } catch (error) {
-      console.log(error)
+  const handleTmdbMovieSearch = async (event) => {
+
+    if (event.key === "Enter") {
+      try {
+        const response = await TmdbApi.getSearchTmdbMovie(keyword)
+        // console.log(response.data.results)
+        const data = response.data.results
+        setTmdbMovieSearchResult(data)
+      } catch (error) {
+        console.log(error)
+      }
     }
+
+    if (event.type === 'click') {
+      try {
+        const response = await TmdbApi.getSearchTmdbMovie(keyword)
+        // console.log(response.data.results)
+        const data = response.data.results
+        setTmdbMovieSearchResult(data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+
+
   }
 
   const getTmdbMovieInfoById = async (id) => {

@@ -17,7 +17,7 @@ const MoviesReducer = (state = initialState, action) => {
                 ...state,
                 movies: payload.data,
                 latestMovies: payload.data
-                    .sort((a, b) => Date.parse(b.releaseDate) - Date.parse(a.releaseDate))
+                    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
                     .slice(0, 5),
                 nowShowing: payload.data.filter(
                     (movie) =>

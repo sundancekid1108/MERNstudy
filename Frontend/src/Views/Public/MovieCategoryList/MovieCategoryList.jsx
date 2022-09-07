@@ -45,7 +45,7 @@ const MovieCategoryList = (props) => {
         <div className={classes.root}>
           <Navbar />
           <Grid container spacing={2}>
-            {!['nowShowing', 'comingSoon'].includes(category) ? (
+            {!['nowShowing', 'comingSoon', 'latestmovies'].includes(category) ? (
               <Grid item xs={12}>
                 <Typography
                   className={classes.title}

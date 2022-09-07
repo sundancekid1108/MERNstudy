@@ -9,13 +9,14 @@ import {
   TablePagination,
   withStyles
 } from '@material-ui/core';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Portlet, PortletContent } from '../../../../../Components/Index';
 import styles from './Styles';
 
 const MovieReservationListTable = (props) => {
   console.log(props);
-  const { classes, className, MovieReservationList, MovieList, TheaterList } =
+  const { classes, className, MovieReservationList } =
     props;
   const rootClassName = classNames(classes.root, className);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -61,18 +62,15 @@ const MovieReservationListTable = (props) => {
                   hover
                   key={movieReservation._id}>
                   <TableCell className={classes.tableCell}>
-                    {movieReservation.startAt}
+                    {moment(movieReservation.startAt).format('YYYY MM DD HH:mm')}
+
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {/* {movieReservation.movieId} */}
-                    {filterAttr(movieReservation.movieId, MovieList, 'title')}
+
+                    {movieReservation.movieId.title}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {filterAttr(
-                      movieReservation.theaterId,
-                      TheaterList,
-                      'theaterName'
-                    )}
+                    {movieReservation.theaterId.theaterName}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
                     {movieReservation.ticketPrice}
@@ -118,9 +116,7 @@ MovieReservationListTable.propTypes = {
   classes: PropTypes.object.isRequired,
   onSelect: PropTypes.func,
   onShowDetails: PropTypes.func,
-  MovieReservationList: PropTypes.array,
-  movies: PropTypes.array.isRequired,
-  theaters: PropTypes.array.isRequired
+  MovieReservationList: PropTypes.array
 };
 
 export default withStyles(styles)(MovieReservationListTable);

@@ -7,7 +7,7 @@ import { Search as SearchIcon } from '@material-ui/icons';
 import styles from './Styles';
 
 const SearchInput = (props) => {
-  const { classes, className, onChange, onClick, style, value, ...rest } = props;
+  const { classes, className, onChange, onClick, style, value, onKeyPress, ...rest } = props;
   const rootClassName = classNames(classes.root, className);
 
 
@@ -18,8 +18,10 @@ const SearchInput = (props) => {
         {...rest}
         className={classes.input}
         disableUnderline
+        onKeyPress={onKeyPress}
         value={value}
         onChange={onChange}
+
       />
     </div>
   );

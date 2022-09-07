@@ -22,6 +22,12 @@ const TmdbMovieToolBar = (props) => {
     }
   };
 
+  const onKeyPress = (event) => {
+    if (e.key === "Enter") {
+      console.log(e.target.value);
+    }
+  }
+
   return (<>
     <div className={rootClassName}>
       <div className={classes.row}>
@@ -30,6 +36,7 @@ const TmdbMovieToolBar = (props) => {
           placeholder="Search movie on TMDB"
           onChange={onChange}
           value={keyword}
+          onKeyPress={handleTmdbMovieSearch}
           onClick={handleTmdbMovieSearch}
           handleTmdbMovieSearch={handleTmdbMovieSearch}
         />
