@@ -23,12 +23,16 @@ const MovieList = (props) => {
   // const [movieList, setmovieList] = useState([]);
   const [tmdbMovieList, setTmdbMovieList] = useState(null)
   const [editMovie, setEditMovie] = useState(null);
+  const [searchMovieResult, setSearchMovieResult] = useState(null)
+
+  const [keyword, setKeyword] = useState('');
   const dispatch = useDispatch();
 
-
+  const onChange = (event) => {
+    setKeyword(event.target.value)
+  }
 
   const movieList = useSelector((state) => state.movies.movies);
-  const movieInfoTest = useSelector((state) => state.movies.movieInfo);
 
   const getTmdbMovieList = async () => {
     try {
@@ -65,6 +69,31 @@ const MovieList = (props) => {
     }
   };
 
+  const handleMovieSearch = (event) => {
+    const match = (term, array, key) => {
+      const reg = new RegExp(term.split('').join('.*'), 'i');
+      // console.log(reg)
+      return array.filter(item => item[key] && item[key].match(reg));
+    };
+
+
+    if (event.key === "Enter") {
+      console.log(keyword,)
+      const result = match(keyword, movieList, 'title')
+
+      setSearchMovieResult(result)
+      console.log(searchMovieResult)
+    }
+
+    else if (event.type === 'click') {
+      console.log(keyword,)
+      const result = match(keyword, movieList, title)
+
+      setSearchMovieResult(result)
+      console.log(searchMovieResult)
+    }
+  }
+
   // 무비리스트에서 수정하고자 하는 movie data를 어떻게 넘겼는지가 중요!
   const handleEditMovieInfo = (movie) => {
     // console.log('handleEditMovieInfo', movie);
@@ -79,20 +108,17 @@ const MovieList = (props) => {
   };
 
 
-  const handleMovieSearch = () => {
-
-  }
 
 
   // console.log('editMovie', editMovie);
-  // console.log('movieInfoTest', movieInfoTest);
+  console.log("movieList", movieList)
   // console.log('movieInfo', movieInfo);
   if (!movieList) {
     return (
       <>
         <Dashboard title="Movie List">
           <div className={classes.root}>
-            <MovieToolBar />
+            <MovieToolBar onChange={onChange} handleMovieSearch={handleMovieSearch} keyword={keyword} />
           </div>
 
           <Typography variant="h6">No movieList Data</Typography>
@@ -104,29 +130,52 @@ const MovieList = (props) => {
       <>
         <Dashboard title="Movie List">
           <div className={classes.root}>
-            <MovieToolBar tmdbMovieList={tmdbMovieList} />
+            <MovieToolBar onChange={onChange} handleMovieSearch={handleMovieSearch} keyword={keyword} />
           </div>
-          <div className={classes.content}>
-            <Grid container spacing={3}>
-              {movieList.map((movie) => (
-                <Grid
-                  item
-                  key={movie._id}
-                  lg={4}
-                  md={6}
-                  xs={12}
-                  onClick={() => handleEditMovieInfo(movie)}>
-                  <MovieCard movie={movie} />
-                </Grid>
-              ))}
-            </Grid>
-            <ResponsiveDialog
-              id="Edit-movie"
-              open={editDialog}
-              handleClose={handleEditDialog}>
-              <AddMovie editMovie={editMovie} tmdbMovieList={tmdbMovieList} />
-            </ResponsiveDialog>
-          </div>
+          {searchMovieResult ?
+            <div className={classes.content}>
+              <Grid container spacing={3}>
+                {searchMovieResult.map((movie) => (
+                  <Grid
+                    item
+                    key={movie._id}
+                    lg={4}
+                    md={6}
+                    xs={12}
+                    onClick={() => handleEditMovieInfo(movie)}>
+                    <MovieCard movie={movie} />
+                  </Grid>
+                ))}
+              </Grid>
+              <ResponsiveDialog
+                id="Edit-movie"
+                open={editDialog}
+                handleClose={handleEditDialog}>
+                <AddMovie editMovie={editMovie} tmdbMovieList={tmdbMovieList} />
+              </ResponsiveDialog>
+            </div>
+            : <div className={classes.content}>
+              <Grid container spacing={3}>
+                {movieList.map((movie) => (
+                  <Grid
+                    item
+                    key={movie._id}
+                    lg={4}
+                    md={6}
+                    xs={12}
+                    onClick={() => handleEditMovieInfo(movie)}>
+                    <MovieCard movie={movie} />
+                  </Grid>
+                ))}
+              </Grid>
+              <ResponsiveDialog
+                id="Edit-movie"
+                open={editDialog}
+                handleClose={handleEditDialog}>
+                <AddMovie editMovie={editMovie} tmdbMovieList={tmdbMovieList} />
+              </ResponsiveDialog>
+            </div>}
+
         </Dashboard>
       </>
     );

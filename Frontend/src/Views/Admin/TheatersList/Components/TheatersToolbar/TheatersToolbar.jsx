@@ -10,7 +10,7 @@ import styles from './Styles';
 import AddTheater from '../AddTheater/AddTheater';
 
 const TheatersToolbar = (props) => {
-  const { classes, className } = props;
+  const { classes, className, onChange, handleTheaterSearch, keyword } = props;
   const rootClassName = classNames(classes.root, className);
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const handleDialog = () => {
@@ -26,7 +26,12 @@ const TheatersToolbar = (props) => {
         <div className={classes.row}>
           <SearchInput
             className={classes.searchInput}
-            placeholder="Search Theater Info"
+            placeholder="Search Theater Info by Title"
+            onChange={onChange}
+            value={keyword}
+            onKeyPress={handleTheaterSearch}
+            onClick={handleTheaterSearch}
+            handletheatersearch={handleTheaterSearch}
           />
           <Button
             onClick={handleDialog}

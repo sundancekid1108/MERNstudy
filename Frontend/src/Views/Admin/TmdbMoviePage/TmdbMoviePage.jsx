@@ -71,9 +71,7 @@ const TmdbMoviePage = (props) => {
       } catch (error) {
         console.log(error)
       }
-    }
-
-    if (event.type === 'click') {
+    } else if (event.type === 'click') {
       try {
         const response = await TmdbApi.getSearchTmdbMovie(keyword)
         // console.log(response.data.results)

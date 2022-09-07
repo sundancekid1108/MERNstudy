@@ -45,11 +45,12 @@ const MovieReservationListTable = (props) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell align="left">Start At</TableCell>
+                <TableCell align="left">User Name</TableCell>
                 <TableCell align="left">Movie</TableCell>
                 <TableCell align="left">Theater</TableCell>
                 <TableCell align="left">Ticket Price</TableCell>
                 <TableCell align="left">Total Price</TableCell>
+                <TableCell align="left">Start At</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -62,7 +63,7 @@ const MovieReservationListTable = (props) => {
                   hover
                   key={movieReservation._id}>
                   <TableCell className={classes.tableCell}>
-                    {moment(movieReservation.startAt).format('YYYY MM DD HH:mm')}
+                    {movieReservation.username}
 
                   </TableCell>
                   <TableCell className={classes.tableCell}>
@@ -78,6 +79,11 @@ const MovieReservationListTable = (props) => {
                   <TableCell className={classes.tableCell}>
                     {movieReservation.totalPrice}
                   </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {moment(movieReservation.startAt).format('YYYY MM DD HH:mm')}
+
+                  </TableCell>
+
                 </TableRow>
               ))}
             </TableBody>

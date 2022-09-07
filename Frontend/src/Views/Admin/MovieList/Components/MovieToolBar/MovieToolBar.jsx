@@ -9,7 +9,7 @@ import styles from './Styles';
 
 const MovieToolBar = (props) => {
   // console.log('MovieToolBar props', props);
-  const { classes, className, tmdbMovieList } = props;
+  const { classes, className, tmdbMovieList, onChange, handleMovieSearch, keyword } = props;
   const rootClassName = classNames(classes.root, className);
   const [isOpenAddDialog, setIsOpenAddDialog] = useState(false);
 
@@ -28,7 +28,12 @@ const MovieToolBar = (props) => {
         <div className={classes.row}>
           <SearchInput
             className={classes.searchInput}
-            placeholder="Search movie"
+            placeholder="Search Movie Info by Title"
+            onChange={onChange}
+            value={keyword}
+            onKeyPress={handleMovieSearch}
+            onClick={handleMovieSearch}
+            handleMovieSearch={handleMovieSearch}
           />
           <Button
             onClick={handleCreateDialog}

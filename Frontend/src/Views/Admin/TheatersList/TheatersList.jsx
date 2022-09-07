@@ -15,18 +15,24 @@ const TheatersList = (props) => {
   const { classes } = props;
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  // const [theaters, setTheaters] = useState(null);
   const [editTheater, setEditTheater] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isOpenEditDialog, setIsOpenEditDialog] = useState(false);
 
-  // const results = useSelector((state) => state.theaters.theaters);
+  const [searchTheaterResult, setSearchTheaterResult] = useState(null)
+
+  const [keyword, setKeyword] = useState('');
+
   const theaters = useSelector((state) => state.theaters.theaters);
   useEffect(() => {
     dispatch(getTheaterList());
 
     // setTheaters(results);
   }, [theaters.length]);
+
+  const onChange = (event) => {
+    setKeyword(event.target.value)
+  }
 
   const handleEditDialog = (e) => {
     if (isOpenEditDialog == false) {
@@ -46,6 +52,33 @@ const TheatersList = (props) => {
     }
   };
 
+
+  const handleTheaterSearch = (event) => {
+
+    const match = (term, array, key) => {
+      const reg = new RegExp(term.split('').join('.*'), 'i');
+      console.log(reg)
+      return array.filter(item => item[key] && item[key].match(reg));
+    };
+
+
+    if (event.key === "Enter") {
+      const result = match(keyword, theaters, 'theaterName')
+
+      setSearchTheaterResult(result)
+      console.log(searchTheaterResult)
+    }
+
+    else if (event.type === 'click') {
+      const result = match(keyword, theaters, 'theaterName')
+
+      setSearchTheaterResult(result)
+      console.log(searchTheaterResult)
+    }
+  }
+
+  // console.log(theaters)
+
   const theaterRender = () => {
     if (isLoading) {
       return (
@@ -61,27 +94,47 @@ const TheatersList = (props) => {
           <Typography variant="h6">There are no Theaters available</Typography>
         </>
       );
+    } else if (searchTheaterResult) {
+      return (
+        <>
+          <div className={classes.content}>
+            <Grid container spacing={3}>
+              {searchTheaterResult.map((theater) => (
+                <Grid
+                  item
+                  key={theater._id}
+                  lg={4}
+                  md={6}
+                  xs={12}
+                  onClick={() => handleEditTheater(theater)}>
+                  <TheaterCard theater={theater} />
+                </Grid>
+              ))}
+            </Grid>
+          </div>
+        </>
+      );
+
     } else {
       return (
         <>
-          <>
-            <div className={classes.content}>
-              <Grid container spacing={3}>
-                {theaters.map((theater) => (
-                  <Grid
-                    item
-                    key={theater._id}
-                    lg={4}
-                    md={6}
-                    xs={12}
-                    onClick={() => handleEditTheater(theater)}>
-                    <TheaterCard theater={theater} />
-                  </Grid>
-                ))}
-              </Grid>
-            </div>
-          </>
+          <div className={classes.content}>
+            <Grid container spacing={3}>
+              {theaters.map((theater) => (
+                <Grid
+                  item
+                  key={theater._id}
+                  lg={4}
+                  md={6}
+                  xs={12}
+                  onClick={() => handleEditTheater(theater)}>
+                  <TheaterCard theater={theater} />
+                </Grid>
+              ))}
+            </Grid>
+          </div>
         </>
+
       );
     }
   };
@@ -90,7 +143,7 @@ const TheatersList = (props) => {
     <>
       <Dashboard title="Theaters">
         <div className={classes.root}>
-          <TheatersToolbar />
+          <TheatersToolbar onChange={onChange} handleTheaterSearch={handleTheaterSearch} keyword={keyword} />
           {theaterRender()}
           <ResponsiveDialog
             id="Edit-theater"
