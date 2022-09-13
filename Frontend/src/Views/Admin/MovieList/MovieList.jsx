@@ -11,6 +11,7 @@ import * as MovieApi from '../../../Api/MovieApi/MovieApi';
 import *  as TmdbApi from '../../../Api/TmdbApi/TmdbApi';
 
 import * as MovieAction from '../../../Store/Actions/MovieAction';
+import * as TmdbAction from '../../../Store/Actions/TmdbAction'
 import { ResponsiveDialog } from '../../../Components/Index';
 import Dashboard from '../../../Layouts/Dashboard/Dashboard';
 import AddMovie from './Components/AddMovie/AddMovie';
@@ -33,8 +34,10 @@ const MovieList = (props) => {
   }
 
   const movieList = useSelector((state) => state.movies.movies);
+  const tmdbMovieListTest = useSelector((state) => state.tmdbMovies.tmdbMovies);
 
   const getTmdbMovieList = async () => {
+    dispatch(TmdbAction.getTmdbMovieList());
     try {
       const response = await TmdbApi.getTmdbMovieList()
       // console.log("getTmdbMovieList response", response)
@@ -151,7 +154,7 @@ const MovieList = (props) => {
                 id="Edit-movie"
                 open={editDialog}
                 handleClose={handleEditDialog}>
-                <AddMovie editMovie={editMovie} tmdbMovieList={tmdbMovieList} />
+                <AddMovie editMovie={editMovie} tmdbMovieList={tmdbMovieList} tmdbMovieListTest={tmdbMovieListTest} />
               </ResponsiveDialog>
             </div>
             : <div className={classes.content}>
@@ -172,7 +175,7 @@ const MovieList = (props) => {
                 id="Edit-movie"
                 open={editDialog}
                 handleClose={handleEditDialog}>
-                <AddMovie editMovie={editMovie} tmdbMovieList={tmdbMovieList} />
+                <AddMovie editMovie={editMovie} tmdbMovieList={tmdbMovieList} tmdbMovieListTest={tmdbMovieListTest} />
               </ResponsiveDialog>
             </div>}
 

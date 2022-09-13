@@ -10,12 +10,14 @@ import {
 } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
+
+import './Assets/Scss/Index.scss'
+import 'typeface-montserrat';
 
 import theme from './Theme/Index';
 import Alert from './Layouts/Alert/Alert';
-import ProtectedRoute from './Routes/ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from './Route/ProtectedRoute/ProtectedRoute';
 import * as MovieAction from './Store/Actions/MovieAction'
 import * as AuthAction from './Store/Actions/AuthAction';
 import store from './Store/Index';
@@ -67,8 +69,7 @@ const App = () => {
   return (
     <>
       <Provider store={store}>
-        <MuiThemeProvider theme={theme}>
-          <CssBaseline />
+        <ThemeProvider theme={theme}>
           <Alert />
           <Suspense fallback={<Loading />}>
             <BrowserRouter>
@@ -129,7 +130,7 @@ const App = () => {
                   }
                 />
 
-                \
+
 
 
                 <Route
@@ -183,7 +184,7 @@ const App = () => {
               </Routes>
             </BrowserRouter>
           </Suspense>
-        </MuiThemeProvider>
+        </ThemeProvider>
       </Provider>
     </>
   );

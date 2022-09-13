@@ -44,13 +44,13 @@ export const getTheaterInfo = async(id) => {
 export const updateTheaterInfo = async(id, body) => {
     const token = authHeader();
 
-    console.log('updateTheaterInfobody', body);
-    console.log(id);
+    // console.log('updateTheaterInfobody', body);
+    // console.log(id);
     try {
         const res = await api.post('/theater/theaters/' + id, body, {
             headers: token
         });
-        console.log('updateTheaterInfo res', res);
+        // console.log('updateTheaterInfo res', res);
         return res;
     } catch (error) {
         console.log('updateTheaterInfo error', error);

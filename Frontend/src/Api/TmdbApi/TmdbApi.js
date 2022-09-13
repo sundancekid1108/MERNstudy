@@ -75,7 +75,7 @@ export const createTmdbMovie = async(body) => {
         const response = await api.post('/movies/tmdbmovies', body, { headers: token })
         return response
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         return error.response
     }
 }

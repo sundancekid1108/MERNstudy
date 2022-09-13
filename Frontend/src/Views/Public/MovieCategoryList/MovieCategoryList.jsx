@@ -61,7 +61,7 @@ const MovieCategoryList = (props) => {
                     className={classes.title}
                     variant="h2"
                     color="inherit">
-                    Movie List
+                    {category} List
                   </Typography>
                 </Grid>
                 <Grid

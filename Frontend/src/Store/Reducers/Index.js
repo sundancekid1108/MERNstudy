@@ -6,6 +6,7 @@ import TheaterReducer from './TheaterReducer';
 import MovieReservationReducer from './MovieReservationReducer';
 import MovieShowTimeReducer from './MovieShowTimeReducer';
 import UserReducer from './UserReducer';
+import TmdbReducer from './TmdbReducer'
 
 const alert = AlertReducer;
 const auth = AuthReducer;
@@ -14,6 +15,7 @@ const theaters = TheaterReducer;
 const movieReservations = MovieReservationReducer;
 const movieShowTimes = MovieShowTimeReducer;
 const users = UserReducer;
+const tmdbMovies = TmdbReducer
 
 export default combineReducers({
     alert,
@@ -22,5 +24,6 @@ export default combineReducers({
     theaters,
     movieReservations,
     movieShowTimes,
-    users
+    users,
+    tmdbMovies
 });

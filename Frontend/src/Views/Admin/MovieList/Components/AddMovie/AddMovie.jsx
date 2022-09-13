@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles, Grid, Button, TextField, Typography, MenuItem, Select } from '@material-ui/core';
 import * as  TmdbApi from '../../../../../Api/TmdbApi/TmdbApi'
-
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -17,10 +17,17 @@ import {
 import * as MovieAction from '../../../../../Store/Actions/MovieAction';
 
 import styles from './Styles';
+import { FormControlUnstyledContext } from '@mui/base';
 
 const AddMovie = (props) => {
-  const { classes, className, tmdbMovieList, editMovie } = props;
-  // console.log(props)
+  // const { classes, className, tmdbMovieList, editMovie } = props;
+  const { classes, className, editMovie } = props;
+  console.log("AddMovie props", props)
+
+  const tmdbMovieList = useSelector((state) => state.tmdbMovies.tmdbMovies);
+  const movieList = useSelector((state) => state.movies.movies);
+
+
 
   const rootClassName = classNames(classes.root, className);
   const form = useRef();
@@ -52,32 +59,38 @@ const AddMovie = (props) => {
     // const body = Object.assign({}, selectedMovie, { "startDate": startDate }, { "endDate": endDate })
     const data = tmdbMovieList.find((movie) => movie._id === selectedMovie._id)
     const body = Object.assign({}, data, { "startDate": startDate }, { "endDate": endDate })
-    // console.log(body)
 
-    try {
-      const response = await dispatch(
-        MovieAction.createMovie(
-          body
-
-        )
-      );
-      // console.log("handleCreateMovie response", response)
-
-      setStatus(true);
-      if (response.status === 400) {
-        setInfoMessage('Movie have not been saved, try again.');
-        return response;
-      }
-      setInfoMessage('Movie have been saved!');
-      dispatch(MovieAction.getMovieList());
-      // console.log(response);
-      return response;
-
-    } catch (error) {
-      setStatus(false);
+    if (!body._id) {
       setInfoMessage('Movie have not been saved, try again.');
-      console.log(error);
+    } else {
+      // console.log(body)
+      try {
+        const response = await dispatch(
+          MovieAction.createMovie(
+            body
+
+          )
+        );
+        // console.log("handleCreateMovie response", response)
+
+        setStatus(true);
+        if (response.status === 400) {
+          setInfoMessage('Movie have not been saved, try again.');
+          return response;
+        }
+        setInfoMessage('Movie have been saved!');
+        dispatch(MovieAction.getMovieList());
+        // console.log(response);
+        return response;
+
+      } catch (error) {
+        setStatus(false);
+        setInfoMessage('Movie have not been saved, try again.');
+        console.log(error);
+      }
     }
+
+
   };
 
   const handleUpdateMovie = async (e) => {
@@ -121,69 +134,83 @@ const AddMovie = (props) => {
   const submitAction = editMovie ? handleUpdateMovie : handleCreateMovie;
 
 
+  // console.log("Addmovie tmdbMovieList", tmdbMovieList)
+
   const renderForm = () => {
-    if (tmdbMovieList) {
-      if (editMovie) {
-        return (<>
-          <form autoComplete="off" noValidate ref={form}>
+    if (editMovie) {
+      return (<>
+        <form autoComplete="off" noValidate ref={form}>
+
+          <div className={classes.field}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DesktopDatePicker
+                className={classes.textField}
+                // disableOpenPicker={true}
+                margin="normal"
+                id="start-date"
+                label="Start Date"
+                inputFormat="yyyy-MM-dd"
+                inputVariant="outlined"
+                value={startDate}
+                variant="inline"
+                KeyboardButtonProps={{
+                  'aria-label': 'change date'
+                }}
+                onChange={(data) => setStartDate(data)}
+                renderInput={(params) => <TextField  {...params} />}
+              />
+
+              <DesktopDatePicker
+                className={classes.textField}
+                // disableOpenPicker={true}
+                margin="normal"
+                id="End-date"
+                label="End Date"
+                inputFormat="yyyy-MM-dd"
+                inputVariant="outlined"
+                value={endDate}
+                onChange={(data) => setEndDate(data)}
+
+                variant="inline"
+                KeyboardButtonProps={{
+                  'aria-label': 'change date'
+                }}
+                renderInput={(params) => <TextField className={classes.textField}  {...params} />}
+              />
+            </LocalizationProvider>
+          </div>
 
 
-            <div className={classes.field}>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DatePicker
-                  disableOpenPicker={true}
-                  margin="normal"
-                  id="release-date"
-                  label="Start Date"
-                  inputFormat="yyyy-MM-dd"
-                  inputVariant="outlined"
-                  value={startDate}
-                  variant="inline"
-                  onChange={(data) => setStartDate(data)}
-                  renderInput={(params) => <TextField className={classes.textField}  {...params} />}
-                />
 
-                <DatePicker
-                  disableOpenPicker={true}
-                  margin="normal"
-                  id="End-date"
-                  label="End Date"
-                  inputFormat="yyyy-MM-dd"
-                  inputVariant="outlined"
-                  value={endDate}
-                  variant="inline"
-                  onChange={(data) => setEndDate(data)}
-                  renderInput={(params) => <TextField className={classes.textField} {...params} />}
-                />
-              </LocalizationProvider>
 
-            </div>
+
+          <Button
+            className={classes.buttonFooter}
+            color="default"
+            variant="contained"
+            onClick={submitAction}>
+            {submitButton}
+          </Button>
+          {editMovie && (
             <Button
               className={classes.buttonFooter}
               color="default"
               variant="contained"
-              onClick={submitAction}>
-              {submitButton}
+              onClick={handleDeleteMovie}>
+              Delete Movie
             </Button>
-            {editMovie && (
-              <Button
-                className={classes.buttonFooter}
-                color="default"
-                variant="contained"
-                onClick={handleDeleteMovie}>
-                Delete Movie
-              </Button>
-            )}
-            <Typography
-              className={classes.infoMessage}
-              color="primary"
-              variant="caption">
-              {infoMessage}
-            </Typography>
+          )}
+          <Typography
+            className={classes.infoMessage}
+            color="primary"
+            variant="caption">
+            {infoMessage}
+          </Typography>
 
-          </form>
-        </>)
-      } else {
+        </form>
+      </>)
+    } else {
+      if (tmdbMovieList) {
         return <>
           <form autoComplete="off" noValidate ref={form}>
             <div className={classes.field}>
@@ -207,36 +234,53 @@ const AddMovie = (props) => {
 
             </div>
 
-            <div className={classes.field}>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DatePicker
-                  disableOpenPicker={true}
-                  margin="normal"
-                  id="release-date"
-                  label="Start Date"
-                  inputFormat="yyyy-MM-dd"
-                  inputVariant="outlined"
-                  value={startDate}
-                  variant="inline"
-                  onChange={(data) => setStartDate(data)}
-                  renderInput={(params) => <TextField className={classes.textField}  {...params} />}
-                />
+            {selectedMovie &&
+              <div className={classes.field}>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DesktopDatePicker
+                    className={classes.textField}
+                    // disableOpenPicker={true}
+                    margin="normal"
+                    id="start-date"
+                    label="Start Date"
+                    inputFormat="yyyy-MM-dd"
+                    inputVariant="outlined"
+                    // minDate={new Date()}
+                    // maxDate={getMaxDate()}
+                    value={startDate}
+                    variant="inline"
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date'
+                    }}
+                    onChange={(data) => setStartDate(data)}
+                    renderInput={(params) => <TextField  {...params} />}
+                  />
 
-                <DatePicker
-                  disableOpenPicker={true}
-                  margin="normal"
-                  id="End-date"
-                  label="End Date"
-                  inputFormat="yyyy-MM-dd"
-                  inputVariant="outlined"
-                  value={endDate}
-                  variant="inline"
-                  onChange={(data) => setEndDate(data)}
-                  renderInput={(params) => <TextField className={classes.textField} {...params} />}
-                />
-              </LocalizationProvider>
+                  <DesktopDatePicker
+                    className={classes.textField}
+                    // disableOpenPicker={true}
+                    margin="normal"
+                    id="End-date"
+                    label="End Date"
+                    inputFormat="yyyy-MM-dd"
+                    inputVariant="outlined"
+                    // minDate={new Date(startDate)}
+                    // maxDate={getMaxDate()}
+                    value={endDate}
+                    onChange={(data) => setEndDate(data)}
 
-            </div>
+                    variant="inline"
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date'
+                    }}
+                    renderInput={(params) => <TextField className={classes.textField}  {...params} />}
+                  />
+                </LocalizationProvider>
+              </div>
+            }
+
+
+
             <Button
               className={classes.buttonFooter}
               color="default"
@@ -262,16 +306,17 @@ const AddMovie = (props) => {
 
           </form>
         </>
+      } else {
+        return <>
+          <div className={classes.field}>
+            No TMDB Movie Data
+          </div>
+        </>
       }
-
-
-    } else {
-      return <>
-        <div className={classes.field}>
-          No TMDB Movie Data
-        </div>
-      </>
     }
+
+
+
   }
 
   return (

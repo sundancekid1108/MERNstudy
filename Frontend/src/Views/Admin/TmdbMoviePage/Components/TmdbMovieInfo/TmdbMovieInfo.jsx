@@ -22,11 +22,11 @@ const TmdbMovieInfo = (props) => {
         const body = movieInfo
         try {
             const result = await TmdbApi.createTmdbMovie(body)
-            console.log(result)
+            // console.log(result)
             if (result.status == 200) {
                 setInfoMessage("Add TMDB Movie Success")
             } else {
-                setInfoMessage("Failed check status")
+                setInfoMessage("Duplicate")
             }
         } catch (error) {
             return errror
