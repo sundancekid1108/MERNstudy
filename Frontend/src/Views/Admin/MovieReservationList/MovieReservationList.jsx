@@ -42,9 +42,12 @@ const MovieReservationList = (props) => {
   }
   const getMovieReservationList = async () => {
     try {
-      const data = await MovieReservationApi.getMovieReservationList();
+      const response = await MovieReservationApi.getMovieReservationList();
+      // console.log("getMovieReservationList response", response)
+      if (response.status === 200) {
+        setMovieReservationList(response.data);
+      }
 
-      setMovieReservationList(data);
     } catch (error) {
       console.log('getMovieReservationList error', error);
       setErrorMessage('Check the server connection');
@@ -88,82 +91,99 @@ const MovieReservationList = (props) => {
 
   const movieList = useSelector((state) => state.movies.movies);
   const theaterList = useSelector((state) => state.theaters.theaters);
-  console.log('movieReservationList', movieReservationList)
-  const movieReservationListTest = useSelector((state) => state.movieReservations.movieReservatinList)
+  const movieReservationListTest = useSelector((state) => state.movieReservations.movieReservations)
   // console.log(movieList, theaterList);
-  // console.log(movieReservationListTest)
+  // console.log("movieReservationListTest", movieReservationListTest)
   // console.log(state.movieReservations)
 
-  if (isLoading) {
-    return (
-      <>
-        <Dashboard title="Movie Reservations List">
+
+
+  const renderMovieReservationList = () => {
+    if (isLoading) {
+      return (
+        <>
+
           <div className={classes.progressWrapper}>
             <CircularProgress />
           </div>
-        </Dashboard>
-      </>
-    );
-  } else if (errorMessage) {
-    return (
-      <>
-        <Dashboard title="Movie Reservations List">
+
+        </>
+      );
+    } else if (errorMessage) {
+      return (
+        <>
+
           <Typography variant="h5">{errorMessage}</Typography>
-        </Dashboard>
-      </>
-    );
-  } else if (!movieReservationList) {
-    return (
-      <>
-        <Dashboard title="Movie Reservations List">
+
+        </>
+      );
+    } else if (!movieReservationList) {
+      return (
+        <>
+
           <Typography variant="h5">No Movie Reservation list </Typography>
-        </Dashboard>
-      </>
-    );
-  }
-  else if (searchMovieReservationResult) {
-    return (
-      <>
-        <Dashboard title="Movie Reservations List">
-          <div className={classes.root}>
-            <MovieReservationListToolbar onChange={onChange} handleSearchMovieReservation={handleSearchMovieReservation} keyword={keyword} />
-            <div className={classes.content}>
-              <MovieReservationListTable
-                MovieReservationList={searchMovieReservationResult}
-                MovieList={movieList}
-                TheaterList={theaterList}
-              />
-              {/* <MovieReservationCalendar
+
+        </>
+      );
+    }
+    else if (searchMovieReservationResult) {
+      return (
+        <>
+
+          <div className={classes.content}>
+            <MovieReservationListTable
+              MovieReservationList={searchMovieReservationResult}
+              MovieList={movieList}
+              TheaterList={theaterList}
+            />
+            {/* <MovieReservationCalendar
                 MovieReservationList={movieReservationList}
               /> */}
-            </div>
           </div>
-        </Dashboard>
-      </>
-    );
+
+        </>
+      );
+    }
+
+    else {
+      return (
+        <>
+          <div className={classes.content}>
+            <MovieReservationListTable
+              MovieReservationList={movieReservationList}
+              MovieList={movieList}
+              TheaterList={theaterList}
+            />
+            {/* <MovieReservationCalendar
+                MovieReservationList={movieReservationList}
+              /> */}
+          </div>
+
+        </>
+      );
+    }
   }
 
-  else {
-    return (
-      <>
-        <Dashboard title="Movie Reservations List">
-          <div className={classes.root}>
-            <MovieReservationListToolbar onChange={onChange} handleSearchMovieReservation={handleSearchMovieReservation} keyword={keyword} />
-            <div className={classes.content}>
-              <MovieReservationListTable
-                MovieReservationList={movieReservationList}
-                MovieList={movieList}
-                TheaterList={theaterList}
-              />
-              {/* <MovieReservationCalendar
-                MovieReservationList={movieReservationList}
-              /> */}
-            </div>
-          </div>
-        </Dashboard>
-      </>
-    );
+  const renderMovieReservationCalendar = () => {
+    return (<>
+      {/* <MovieReservationCalendar
+      // MovieReservationList={movieReservationList}
+      /> */}
+    </>)
   }
+
+
+  return <>
+    <Dashboard title="Movie Reservations List">
+      < div className={classes.root}>
+        <MovieReservationListToolbar onChange={onChange} handleSearchMovieReservation={handleSearchMovieReservation} keyword={keyword} />
+
+        {renderMovieReservationList()}
+        {/* {renderMovieReservationCalendar()} */}
+
+      </div>
+    </Dashboard>
+  </>
 };
 
 MovieReservationList.propTypes = {

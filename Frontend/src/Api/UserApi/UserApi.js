@@ -200,7 +200,7 @@ export const getUsersList = async() => {
         // console.log('res.data : ', res.data);
 
         const response = res.data;
-        console.log("response", response)
+        // console.log("response", response)
         return response;
     } catch (error) {
         // console.log(error);

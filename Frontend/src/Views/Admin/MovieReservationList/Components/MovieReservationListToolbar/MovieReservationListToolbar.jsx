@@ -20,7 +20,6 @@ const MovieReservationListToolbar = (props) => {
           value={keyword}
           onKeyPress={handleSearchMovieReservation}
           onClick={handleSearchMovieReservation}
-          handleSearchMovieReservation={handleSearchMovieReservation}
         />
       </div>
     </div>

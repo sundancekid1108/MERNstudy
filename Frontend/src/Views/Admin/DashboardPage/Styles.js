@@ -1,6 +1,6 @@
 export default (theme) => ({
     root: {
         textAlign: 'center',
-        paddingTop: theme.spacing(20)
+        padding: theme.spacing(4)
     }
 });

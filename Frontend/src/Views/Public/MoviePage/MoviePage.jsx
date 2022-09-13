@@ -6,7 +6,9 @@ import styles from './Styles';
 import PublicNavbar from '../../../Layouts/Public/Components/Navbar/Navbar';
 import MovieBanner from '../Components/MovieBanner/MovieBanner';
 import MovieCarousel from '../Components/MovieCarousel/MovieCarousel';
+import Footer from '../../../Layouts/Dashboard/Components/Footer/Footer'
 import * as MovieAction from '../../../Store/Actions/MovieAction';
+
 
 const MoviePage = (props) => {
   const { classes } = props;
@@ -61,6 +63,7 @@ const MoviePage = (props) => {
             movies={comingSoonMovies}
           />
         </div>
+        <Footer />
       </>
     );
   }

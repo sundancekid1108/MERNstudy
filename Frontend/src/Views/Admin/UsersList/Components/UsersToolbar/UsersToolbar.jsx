@@ -10,7 +10,7 @@ import AddUserInfo from '../AddUserInfo/AddUserInfo'
 import styles from './Styles';
 
 const UsersToolbar = (props) => {
-  const { classes, className, users, selectedUsers, deleteUser } = props;
+  const { classes, className, users, selectedUsers, deleteUser, handleUserSearch, onChange, keyword } = props;
   const rootClassName = classNames(classes.root, className);
   const [isOpenAddDialog, setIsOpenAddDialog] = useState(false);
   const [editUserInfo, setEditUserInfo] = useState(null)
@@ -54,12 +54,12 @@ const UsersToolbar = (props) => {
   const renderButton = () => {
     if (selectedUsers.length === 1) {
       return <Button color="primary" size="small" variant="outlined"
-                     onClick={() => handleEditUserInfo(selectedUsers)}> Edit</Button>
+        onClick={() => handleEditUserInfo(selectedUsers)}> Edit</Button>
     } else if (selectedUsers.length > 1) {
       return null
     } else {
       return <Button color="primary" size="small" variant="outlined"
-                     onClick={handleCreateUserInfo}> Add </Button>
+        onClick={handleCreateUserInfo}> Add </Button>
     }
   }
 
@@ -71,6 +71,10 @@ const UsersToolbar = (props) => {
           <SearchInput
             className={classes.searchInput}
             placeholder="Search user"
+            onChange={onChange}
+            value={keyword}
+            onKeyPress={handleUserSearch}
+            onClick={handleUserSearch}
           />
 
           <div>
@@ -88,7 +92,7 @@ const UsersToolbar = (props) => {
               handleClose={handleCreateDialog}
 
             >
-<AddUserInfo selectedUser={selectedUsers[0]} />
+              <AddUserInfo selectedUser={selectedUsers[0]} />
             </ResponsiveDialog >
           </div>
         </div>

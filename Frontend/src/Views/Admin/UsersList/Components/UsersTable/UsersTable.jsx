@@ -22,7 +22,6 @@ const UsersTable = (props) => {
   // console.log('UserTable props :', props);
   const { classes, className, users, handleSelect } = props;
 
-  console.log("UserTable users", users)
   const rootClassName = classNames(classes.root, className);
 
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -77,7 +76,7 @@ const UsersTable = (props) => {
 
 
 
-  console.log(selectedUsers.length, users.length)
+  // console.log(selectedUsers.length, users.length)
 
   return (
     <>

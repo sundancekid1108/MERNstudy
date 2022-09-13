@@ -21,8 +21,8 @@ export const getMovieReservationList = async() => {
         const res = await api.get('/moviereservation/moviereservations', {
             headers: token
         });
-        const reservationData = res.data;
-        return reservationData;
+
+        return res;
     } catch (error) {
         return error.response;
     }

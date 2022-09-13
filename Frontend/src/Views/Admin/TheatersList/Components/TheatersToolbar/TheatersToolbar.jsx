@@ -31,7 +31,7 @@ const TheatersToolbar = (props) => {
             value={keyword}
             onKeyPress={handleTheaterSearch}
             onClick={handleTheaterSearch}
-            handletheatersearch={handleTheaterSearch}
+          // handletheatersearch={handleTheaterSearch}
           />
           <Button
             onClick={handleDialog}

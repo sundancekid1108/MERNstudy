@@ -36,7 +36,7 @@ const Theaters = (props) => {
               xs={12}
               direction="column"
               alignItems="center"
-              justify="flex-start"
+              justifyContent="flex-start"
               spacing={2}>
               {theaters.map((theater) => (
                 <Grid key={theater._id} item xs={12} md={4} lg={3}>

@@ -16,13 +16,45 @@ const UserList = (props) => {
   // const [signal, setSignal] = useState(true);
   // const [users, setUsers] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const [searchUserResult, setSearchUserResult] = useState(null)
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [keyword, setKeyword] = useState('');
   const [limit, setLimit] = useState(10);
 
   const getUsersListTest = () => {
     dispatch(UserAction.getUserList())
   }
+
+  const onChange = (event) => {
+    setKeyword(event.target.value)
+  }
+
+  const handleUserSearch = (event) => {
+    const match = (term, array, key) => {
+      const reg = new RegExp(term.split('').join('.*'), 'i');
+      // console.log(reg)
+      return array.filter(item => item[key] && item[key].match(reg));
+    };
+
+
+    if (event.key === "Enter") {
+      console.log(keyword,)
+      const result = match(keyword, users, 'username')
+
+      setSearchUserResult(result)
+      console.log(searchUserResult)
+    }
+
+    else if (event.type === 'click') {
+      console.log(keyword,)
+      const result = match(keyword, users, 'username')
+
+      setSearchUserResult(result)
+      console.log(searchUserResult)
+    }
+  }
+
 
 
 
@@ -49,9 +81,21 @@ const UserList = (props) => {
   }, [selectedUsers]);
 
   const users = useSelector((state) => state.users.users)
-  console.log("users", users)
   // console.log("userTest", userTest)
-  console.log('selectedUsers', selectedUsers)
+  // console.log('selectedUsers', selectedUsers)
+
+  const renderUserTable = () => {
+    if (searchUserResult) {
+      return <>
+        <UsersTable handleSelect={handleSelectUser} users={searchUserResult} />
+      </>
+    } else if (users) {
+      <UsersTable handleSelect={handleSelectUser} users={users} />
+    } else {
+      <Typography variant="h6">There are no users</Typography>
+    }
+  }
+
   return (
     <>
       <Dashboard title="Users">
@@ -60,6 +104,7 @@ const UserList = (props) => {
             users={users}
             selectedUsers={selectedUsers}
             deleteUser={handleDeleteUsers}
+            onChange={onChange} handleUserSearch={handleUserSearch} keyword={keyword}
           />
           <div className={classes.content}>
             {/* loading */}
@@ -75,12 +120,8 @@ const UserList = (props) => {
               <Typography variant="h6">{errorMessage}</Typography>
             )}
 
-            {/* Userlist 랜더링 */}
-            {!users ? (
-              <Typography variant="h6">There are no users</Typography>
-            ) : (
-              <UsersTable handleSelect={handleSelectUser} users={users} />
-            )}
+
+            {renderUserTable()}
           </div>
         </div>
       </Dashboard>

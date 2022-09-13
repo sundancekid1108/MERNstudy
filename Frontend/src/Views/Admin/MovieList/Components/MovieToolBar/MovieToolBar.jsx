@@ -33,7 +33,7 @@ const MovieToolBar = (props) => {
             value={keyword}
             onKeyPress={handleMovieSearch}
             onClick={handleMovieSearch}
-            handleMovieSearch={handleMovieSearch}
+
           />
           <Button
             onClick={handleCreateDialog}

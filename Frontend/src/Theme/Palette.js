@@ -1,4 +1,4 @@
-import { red, blue, yellow, green } from '@material-ui/core/colors';
+import { red, blueGrey, blue, yellow, green } from '@material-ui/core/colors';
 const white = '#FFF';
 const black = '#000';
 
@@ -11,6 +11,11 @@ export default {
         contrastText: black,
         neutral: '#E4E7EB',
         muted: '#9EA0A4'
+    },
+    text: {
+        primary: blueGrey[900],
+        secondary: blueGrey[600],
+        link: blue[600]
     },
     default: {
         light: 'rgba(41, 150, 243, .1)',
