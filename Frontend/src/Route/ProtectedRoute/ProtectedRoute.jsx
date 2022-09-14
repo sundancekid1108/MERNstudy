@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const ProtectedRoute = ({ children }) => {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    console.log("ProtectedRoute childre", children)
     // return isAuthenticated ? children : <Navigate to='/' />
-    return isAuthenticated ? children : < Navigate to = '/signin' / >
+    return isAuthenticated ? children : < Navigate to='/signin' />
 }
 
 

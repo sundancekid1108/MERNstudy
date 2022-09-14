@@ -11,13 +11,15 @@ import {
 
 import { Provider } from 'react-redux';
 import { ThemeProvider } from '@material-ui/core/styles';
-
+import CssBaseline from '@material-ui/core/CssBaseline';
 import './Assets/Scss/Index.scss'
 import 'typeface-montserrat';
 
 import theme from './Theme/Index';
-import Alert from './Layouts/Alert/Alert';
+import Alert from './Components/Alert/Alert';
 import ProtectedRoute from './Route/ProtectedRoute/ProtectedRoute';
+import WithLayoutRoute from './Route/WithLayoutRoute/WithLayoutRoute'
+
 import * as MovieAction from './Store/Actions/MovieAction'
 import * as AuthAction from './Store/Actions/AuthAction';
 import store from './Store/Index';
@@ -70,6 +72,7 @@ const App = () => {
     <>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
+          <CssBaseline />
           <Alert />
           <Suspense fallback={<Loading />}>
             <BrowserRouter>

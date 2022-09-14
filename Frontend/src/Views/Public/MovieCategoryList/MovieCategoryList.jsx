@@ -10,7 +10,7 @@ import * as MovieAction from '../../../Store/Actions/MovieAction';
 const MovieCategoryList = (props) => {
   const { classes } = props;
   const params = useParams();
-  console.log("params", params)
+  // console.log("params", params)
   const category = params.category
   const dispatch = useDispatch();
   const movies = useSelector((state) => state.movies.movies);
