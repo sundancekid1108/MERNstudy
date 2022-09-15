@@ -13,7 +13,6 @@ import {
   TextField,
   MenuItem
 } from '@material-ui/core';
-import Navbar from '../../../Layouts/Public/Components/Navbar/Navbar';
 import RenderMovieInfo from './Components/RenderMovieInfo/RenderMovieInfo';
 import RenderSelectTheater from './Components/RenderSelectTheater/RenderSelectTheater';
 import RenderTheaterSeats from './Components/RenderTheaterSeats/RenderTheaterSeats';
@@ -262,7 +261,6 @@ const MovieReservation = (props) => {
   return (
     <>
       <div className={classes.root}>
-        {/* <Navbar /> */}
         <Container maxWidth="xl" className={classes.container}>
           <Grid container spacing={2} style={{ height: '100%' }}>
             <RenderMovieInfo movie={movieInfo} />

@@ -7,7 +7,6 @@ import { CircularProgress, Grid, Typography } from '@material-ui/core';
 import TmdbMovieCard from './Components/TmdbMovieCard/TmdbMovieCard';
 import TmdbMovieToolBar from './Components/TmdbMovieToolBar/TmdbMovieToolBar'
 import { ResponsiveDialog } from '../../../Components/Index';
-import Dashboard from '../../../Layouts/Dashboard/Dashboard';
 import * as  TmdbApi from '../../../Api/TmdbApi/TmdbApi'
 
 import styles from './Styles';

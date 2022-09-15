@@ -6,7 +6,6 @@ import { CircularProgress, Grid, Typography } from '@material-ui/core';
 import TheatersToolbar from './Components/TheatersToolbar/TheatersToolbar';
 import { ResponsiveDialog } from '../../../Components/Index';
 import styles from './Styles';
-import Dashboard from '../../../Layouts/Dashboard/Dashboard';
 import AddTheater from './Components/AddTheater/AddTheater';
 import TheaterCard from '../../Public/Components/TheaterCard/TheaterCard';
 import { getTheaterList } from '../../../Store/Actions/Index';

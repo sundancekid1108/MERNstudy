@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withStyles, CircularProgress, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import Dashboard from '../../../Layouts/Dashboard/Dashboard';
 import { UsersTable, UsersToolbar } from './Components/Index';
 import * as userApi from '../../../Api/UserApi/UserApi';
 import * as UserAction from '../../../Store/Actions/UserAction'

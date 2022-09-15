@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { withStyles, CircularProgress, Typography } from '@material-ui/core';
-import Dashboard from '../../Layouts/Dashboard/Dashboard';
 
 const styles = (theme) => ({
   root: {
@@ -12,7 +11,7 @@ const styles = (theme) => ({
 const Settings = () => {
   return (
     <>
-      <Dashboard title="Settings"></Dashboard>
+      <div>setting</div>
     </>
   );
 };

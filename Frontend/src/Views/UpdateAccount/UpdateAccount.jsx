@@ -17,7 +17,6 @@ import {
   PortletContent,
   PortletFooter
 } from '../../Components/Index';
-import Dashboard from '../../Layouts/Dashboard/Dashboard';
 import * as userApi from '../../Api/UserApi/UserApi';
 
 import styles from './Styles';

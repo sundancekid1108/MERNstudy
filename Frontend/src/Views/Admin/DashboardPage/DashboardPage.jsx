@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid, withStyles } from '@material-ui/core';
-import Dashboard from '../../../Layouts/Dashboard/Dashboard';
 import styles from './Styles';
 import LatestSalesPage from './Components/LatestSalesPage/LatestSalesPage'
 import TotalMoviePage from './Components/TotalMoviePage/TotalMoviePage';

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles, Grid, Typography, Container } from '@material-ui/core';
-import Navbar from '../../../Layouts/Public/Components/Navbar/Navbar';
 import TheaterCard from '../Components/TheaterCard/TheaterCard';
 import { getTheaterList } from '../../../Store/Actions/Index';
 import styles from './Styles';
@@ -19,7 +18,6 @@ const Theaters = (props) => {
   return (
     <>
       <div className={classes.root}>
-        {/* <Navbar /> */}
         <Container maxWidth="xl">
           <Grid container spacing={2}>
             <Grid item xs={12}>

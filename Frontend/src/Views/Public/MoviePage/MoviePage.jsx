@@ -3,10 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles, Typography, Box, Grid } from '@material-ui/core';
 import styles from './Styles';
-import PublicNavbar from '../../../Layouts/Public/Components/Navbar/Navbar';
 import MovieBanner from '../Components/MovieBanner/MovieBanner';
 import MovieCarousel from '../Components/MovieCarousel/MovieCarousel';
-import Footer from '../../../Layouts/Dashboard/Components/Footer/Footer'
 import * as MovieAction from '../../../Store/Actions/MovieAction';
 
 
@@ -35,7 +33,6 @@ const MoviePage = (props) => {
     return (
       <>
         <div className={classes.root}>
-          {/* <PublicNavbar /> */}
           <div className={classes.content}>
             <Typography variant="h1">There are no movies available</Typography>
           </div>
@@ -46,7 +43,6 @@ const MoviePage = (props) => {
     return (
       <>
         <div className={classes.root}>
-          {/* <PublicNavbar /> */}
           <MovieBanner movie={movies[0]} height="70vh" />
           <Box height={100} />
 

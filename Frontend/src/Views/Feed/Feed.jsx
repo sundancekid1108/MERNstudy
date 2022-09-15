@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { withStyles, CircularProgress, Typography } from '@material-ui/core';
-import Dashboard from '../../Layouts/Dashboard/Dashboard';
 import * as postApi from '../../Api/PostApi/PostApi';
 
 const styles = (theme) => ({
@@ -29,7 +28,7 @@ const Feed = () => {
 
   return (
     <>
-      <Dashboard title="Feed"></Dashboard>
+      <div>feed</div>
     </>
   );
 };

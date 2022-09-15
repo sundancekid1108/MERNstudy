@@ -13,7 +13,6 @@ import *  as TmdbApi from '../../../Api/TmdbApi/TmdbApi';
 import * as MovieAction from '../../../Store/Actions/MovieAction';
 import * as TmdbAction from '../../../Store/Actions/TmdbAction'
 import { ResponsiveDialog } from '../../../Components/Index';
-import Dashboard from '../../../Layouts/Dashboard/Dashboard';
 import AddMovie from './Components/AddMovie/AddMovie';
 import styles from './Styles';
 

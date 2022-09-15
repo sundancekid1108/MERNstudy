@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 
-import Navbar from '../../../Layouts/Public/Components/Navbar/Navbar';
 import styles from './Styles';
 
 import * as MovieApi from '../../../Api/MovieApi/MovieApi';
@@ -49,7 +48,6 @@ const MovieInfo = (props) => {
   return (
     <>
       <div className={classes.root}>
-        {/* <Navbar /> */}
         {movie && <MovieBanner movie={movie} description />}
       </div>
     </>

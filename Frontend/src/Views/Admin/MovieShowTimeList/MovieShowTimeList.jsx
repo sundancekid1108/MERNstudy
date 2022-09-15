@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles, CircularProgress, Typography } from '@material-ui/core';
 import { ResponsiveDialog } from '../../../Components/Index';
-import Dashboard from '../../../Layouts/Dashboard/Dashboard';
 import { MovieShowTimeTable, MovieShowTimeToolbar } from './Components/Index'
 import * as MovieAction from '../../../Store/Actions/MovieAction';
 import * as TheaterAction from '../../../Store/Actions/TheaterAction';

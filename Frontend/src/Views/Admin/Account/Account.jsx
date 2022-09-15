@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
-import Dashboard from '../../../Layouts/Dashboard/Dashboard';
 import AccountProfile from './Components/AccountProfile/AccountProfile'
 import * as userApi from '../../../Api/UserApi/UserApi';
 import styles from './Styles'
