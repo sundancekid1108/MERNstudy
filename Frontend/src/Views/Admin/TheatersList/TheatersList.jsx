@@ -141,18 +141,16 @@ const TheatersList = (props) => {
 
   return (
     <>
-      <Dashboard title="Theaters">
-        <div className={classes.root}>
-          <TheatersToolbar onChange={onChange} handleTheaterSearch={handleTheaterSearch} keyword={keyword} />
-          {theaterRender()}
-          <ResponsiveDialog
-            id="Edit-theater"
-            open={isOpenEditDialog}
-            handleClose={handleEditDialog}>
-            <AddTheater editTheater={editTheater} />
-          </ResponsiveDialog>
-        </div>
-      </Dashboard>
+      <div className={classes.root}>
+        <TheatersToolbar onChange={onChange} handleTheaterSearch={handleTheaterSearch} keyword={keyword} />
+        {theaterRender()}
+        <ResponsiveDialog
+          id="Edit-theater"
+          open={isOpenEditDialog}
+          handleClose={handleEditDialog}>
+          <AddTheater editTheater={editTheater} />
+        </ResponsiveDialog>
+      </div>
     </>
   );
 };

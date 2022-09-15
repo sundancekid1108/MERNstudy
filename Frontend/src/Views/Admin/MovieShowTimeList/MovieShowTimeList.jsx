@@ -72,17 +72,15 @@ const MovieShowTimeList = (props) => {
 
 
     return <>
-        <Dashboard title="Movie Showtimes">
-            <div className={classes.root}>
-                <MovieShowTimeToolbar
-                    movieShowTimes={movieShowTimes}
-                    selectedMovieShowTimes={selectedMovieShowTimes}
-                    deleteMovieShowtime={handleDeleteMovieShowTime}
-                />
-                <div className={classes.content}>{renderMovieShowTimes()}</div>
+        <div className={classes.root}>
+            <MovieShowTimeToolbar
+                movieShowTimes={movieShowTimes}
+                selectedMovieShowTimes={selectedMovieShowTimes}
+                deleteMovieShowtime={handleDeleteMovieShowTime}
+            />
+            <div className={classes.content}>{renderMovieShowTimes()}</div>
 
-            </div>
-        </Dashboard>
+        </div>
     </>
 }
 

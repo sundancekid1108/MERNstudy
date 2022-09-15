@@ -119,67 +119,63 @@ const MovieList = (props) => {
   if (!movieList) {
     return (
       <>
-        <Dashboard title="Movie List">
-          <div className={classes.root}>
-            <MovieToolBar onChange={onChange} handleMovieSearch={handleMovieSearch} keyword={keyword} />
-          </div>
+        <div className={classes.root}>
+          <MovieToolBar onChange={onChange} handleMovieSearch={handleMovieSearch} keyword={keyword} />
+        </div>
 
-          <Typography variant="h6">No movieList Data</Typography>
-        </Dashboard>
+        <Typography variant="h6">No movieList Data</Typography>
       </>
     );
   } else {
     return (
       <>
-        <Dashboard title="Movie List">
-          <div className={classes.root}>
-            <MovieToolBar onChange={onChange} handleMovieSearch={handleMovieSearch} keyword={keyword} />
+        <div className={classes.root}>
+          <MovieToolBar onChange={onChange} handleMovieSearch={handleMovieSearch} keyword={keyword} />
+        </div>
+        {searchMovieResult ?
+          <div className={classes.content}>
+            <Grid container spacing={3}>
+              {searchMovieResult.map((movie) => (
+                <Grid
+                  item
+                  key={movie._id}
+                  lg={4}
+                  md={6}
+                  xs={12}
+                  onClick={() => handleEditMovieInfo(movie)}>
+                  <MovieCard movie={movie} />
+                </Grid>
+              ))}
+            </Grid>
+            <ResponsiveDialog
+              id="Edit-movie"
+              open={editDialog}
+              handleClose={handleEditDialog}>
+              <AddMovie editMovie={editMovie} tmdbMovieList={tmdbMovieList} tmdbMovieListTest={tmdbMovieListTest} />
+            </ResponsiveDialog>
           </div>
-          {searchMovieResult ?
-            <div className={classes.content}>
-              <Grid container spacing={3}>
-                {searchMovieResult.map((movie) => (
-                  <Grid
-                    item
-                    key={movie._id}
-                    lg={4}
-                    md={6}
-                    xs={12}
-                    onClick={() => handleEditMovieInfo(movie)}>
-                    <MovieCard movie={movie} />
-                  </Grid>
-                ))}
-              </Grid>
-              <ResponsiveDialog
-                id="Edit-movie"
-                open={editDialog}
-                handleClose={handleEditDialog}>
-                <AddMovie editMovie={editMovie} tmdbMovieList={tmdbMovieList} tmdbMovieListTest={tmdbMovieListTest} />
-              </ResponsiveDialog>
-            </div>
-            : <div className={classes.content}>
-              <Grid container spacing={3}>
-                {movieList.map((movie) => (
-                  <Grid
-                    item
-                    key={movie._id}
-                    lg={4}
-                    md={6}
-                    xs={12}
-                    onClick={() => handleEditMovieInfo(movie)}>
-                    <MovieCard movie={movie} />
-                  </Grid>
-                ))}
-              </Grid>
-              <ResponsiveDialog
-                id="Edit-movie"
-                open={editDialog}
-                handleClose={handleEditDialog}>
-                <AddMovie editMovie={editMovie} tmdbMovieList={tmdbMovieList} tmdbMovieListTest={tmdbMovieListTest} />
-              </ResponsiveDialog>
-            </div>}
+          : <div className={classes.content}>
+            <Grid container spacing={3}>
+              {movieList.map((movie) => (
+                <Grid
+                  item
+                  key={movie._id}
+                  lg={4}
+                  md={6}
+                  xs={12}
+                  onClick={() => handleEditMovieInfo(movie)}>
+                  <MovieCard movie={movie} />
+                </Grid>
+              ))}
+            </Grid>
+            <ResponsiveDialog
+              id="Edit-movie"
+              open={editDialog}
+              handleClose={handleEditDialog}>
+              <AddMovie editMovie={editMovie} tmdbMovieList={tmdbMovieList} tmdbMovieListTest={tmdbMovieListTest} />
+            </ResponsiveDialog>
+          </div>}
 
-        </Dashboard>
       </>
     );
   }

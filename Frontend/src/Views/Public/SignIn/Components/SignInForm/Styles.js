@@ -10,6 +10,7 @@ export default (theme) => ({
         }
     },
     title: {
+        color: theme.palette.common.contrastText,
         marginTop: theme.spacing(3)
     },
     socialLogin: {

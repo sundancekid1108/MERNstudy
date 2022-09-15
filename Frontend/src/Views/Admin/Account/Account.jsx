@@ -38,18 +38,18 @@ const Account = (props) => {
 
   return (
     <>
-      <Dashboard title="My Account">
-        <div className={classes.root}>
-          <Grid container spacing={6}>
 
-            <Grid item xs="auto">
-              <AccountProfile user={userInfo} />
-            </Grid>
+      <div className={classes.root}>
+        <Grid container spacing={6}>
 
-
+          <Grid item xs="auto">
+            <AccountProfile user={userInfo} />
           </Grid>
-        </div>
-      </Dashboard>
+
+
+        </Grid>
+      </div>
+
     </>
   );
 };

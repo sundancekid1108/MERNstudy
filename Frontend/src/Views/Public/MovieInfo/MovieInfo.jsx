@@ -49,7 +49,7 @@ const MovieInfo = (props) => {
   return (
     <>
       <div className={classes.root}>
-        <Navbar />
+        {/* <Navbar /> */}
         {movie && <MovieBanner movie={movie} description />}
       </div>
     </>

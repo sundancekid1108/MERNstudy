@@ -43,7 +43,7 @@ const MovieCategoryList = (props) => {
     return (
       <>
         <div className={classes.root}>
-          <Navbar />
+          {/* <Navbar /> */}
           <Grid container spacing={2}>
             {!['nowShowing', 'comingSoon', 'latestmovies'].includes(category) ? (
               <Grid item xs={12}>

@@ -191,18 +191,16 @@ const TmdbMoviePage = (props) => {
 
   return (
     <>
-      <Dashboard title="TMDB Movie Page">
-        <div className={classes.root}>
+      <div className={classes.root}>
 
-          <TmdbMovieToolBar onChange={onChange} handleTmdbMovieSearch={handleTmdbMovieSearch} keyword={keyword} />
-          <div className={classes.content}>
-            {tmdbMovieListRender()}
-          </div>
-
+        <TmdbMovieToolBar onChange={onChange} handleTmdbMovieSearch={handleTmdbMovieSearch} keyword={keyword} />
+        <div className={classes.content}>
+          {tmdbMovieListRender()}
         </div>
 
+      </div>
 
-      </Dashboard>
+
     </>
   );
 

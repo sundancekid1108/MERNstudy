@@ -37,7 +37,7 @@ const DisplayMode = (props) => {
 
 DisplayMode.defaultProps = {
   mode: 'grid',
-  onChange: () => {}
+  onChange: () => { }
 };
 
 DisplayMode.propTypes = {

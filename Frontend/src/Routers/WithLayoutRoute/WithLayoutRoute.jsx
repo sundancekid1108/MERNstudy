@@ -3,18 +3,12 @@ import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const WithLayoutRoute = (props) => {
-  const { layout: Layout, component: Component, ...rest } = props;
+  const { layout: Layout, component: Component, children, ...rest } = props;
 
-  return (
-    <Route
-      {...rest}
-      render={(matchProps) => (
-        <Layout>
-          <Component {...matchProps} />{' '}
-        </Layout>
-      )}
-    />
-  );
+  console.log("WithLayoutRoute props", props)
+
+  return (<Layout>{children}</Layout>)
+
 };
 
 WithLayoutRoute.propTypes = {

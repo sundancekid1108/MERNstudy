@@ -19,7 +19,7 @@ const Theaters = (props) => {
   return (
     <>
       <div className={classes.root}>
-        <Navbar />
+        {/* <Navbar /> */}
         <Container maxWidth="xl">
           <Grid container spacing={2}>
             <Grid item xs={12}>

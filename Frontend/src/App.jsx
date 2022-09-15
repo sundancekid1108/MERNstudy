@@ -5,6 +5,7 @@ import {
   Route,
   HashRouter,
   BrowserRouter,
+
   Routes,
   useNavigate
 } from 'react-router-dom';
@@ -17,13 +18,16 @@ import 'typeface-montserrat';
 
 import theme from './Theme/Index';
 import Alert from './Components/Alert/Alert';
-import ProtectedRoute from './Route/ProtectedRoute/ProtectedRoute';
-import WithLayoutRoute from './Route/WithLayoutRoute/WithLayoutRoute'
+import ProtectedRoute from './Routers/ProtectedRoute/ProtectedRoute';
+import WithLayoutRoute from './Routers/WithLayoutRoute/WithLayoutRoute'
 
 import * as MovieAction from './Store/Actions/MovieAction'
 import * as AuthAction from './Store/Actions/AuthAction';
 import store from './Store/Index';
 import Loading from './Components/Loading/Loading';
+
+import AdminLayout from './Layouts/AdminLayout/AdminLayout';
+import UserLayout from './Layouts/UserLayout/UserLayout'
 
 const Feed = lazy(() => import('./Views/Feed/Feed'));
 const SignIn = lazy(() => import('./Views/Public/SignIn/SignIn'));
@@ -77,38 +81,62 @@ const App = () => {
           <Suspense fallback={<Loading />}>
             <BrowserRouter>
               <Routes>
-                <Route exact path="/" element={<MoviePage />} />
                 <Route exact path="/signin" element={<SignIn />} />
                 <Route exact path='/signup' element={<SignUp />} />
 
-                <Route exact path="/movie/:id" element={<MovieInfo />} />
+                <Route exact path="/" element={
+                  <WithLayoutRoute layout={UserLayout} >
+                    <MoviePage />
+                  </WithLayoutRoute>
+                } />
+
+
+                <Route exact path="/movie/:id" element={
+                  <WithLayoutRoute layout={UserLayout} >
+                    <MovieInfo />
+                  </WithLayoutRoute>
+                } />
                 <Route
                   exact
                   path="/movie/moviereservation/:id"
-                  element={<MovieReservation />}
+                  element={
+                    <WithLayoutRoute layout={UserLayout} >
+                      <MovieReservation />
+                    </WithLayoutRoute>
+                  }
                 />
                 <Route
                   exact
                   path="/movie/category/:category"
-                  element={<MovieCategoryList />}
+                  element={
+                    <WithLayoutRoute layout={UserLayout} >
+                      <MovieCategoryList />
+                    </WithLayoutRoute>
+                  }
                 />
-                <Route exact path="/theaters" element={<Theaters />} />
+                <Route exact path="/theaters" element={
+                  <WithLayoutRoute layout={UserLayout} >
+                    <Theaters />
+                  </WithLayoutRoute>
+                } />
                 <Route exact path="/feed" element={<Feed />} />
 
 
+                {/* 분리 */}
+
                 {/* <Route exact path="/adminsignup" element={<AdminSignUp />} /> */}
                 <Route exact path="/admin/movies" element={
-                  <ProtectedRoute>
+                  <ProtectedRoute layout={AdminLayout} >
                     <MovieList />
                   </ProtectedRoute>
                 } />
 
-                {/* 분리 */}
+
                 <Route
                   exact
                   path="/admin/userslist"
                   element={
-                    <ProtectedRoute>
+                    <ProtectedRoute layout={AdminLayout}   >
                       <UserList />
                     </ProtectedRoute>
                   }
@@ -118,7 +146,7 @@ const App = () => {
                 <Route
                   exact
                   path="/admin/dashboard"
-                  element={<ProtectedRoute>
+                  element={<ProtectedRoute layout={AdminLayout}  >
                     <DashboardPage />
                   </ProtectedRoute>
                   }
@@ -127,7 +155,7 @@ const App = () => {
                 <Route
                   exact
                   path="/admin/tmdbmovie"
-                  element={<ProtectedRoute>
+                  element={<ProtectedRoute layout={AdminLayout}   >
                     <TmdbMoviePage />
                   </ProtectedRoute>
                   }
@@ -140,7 +168,7 @@ const App = () => {
                   exact
                   path="/admin/account"
                   element={
-                    <ProtectedRoute>
+                    <ProtectedRoute layout={AdminLayout}  >
                       <Account />
                     </ProtectedRoute>
                   }
@@ -150,7 +178,7 @@ const App = () => {
                   exact
                   path="/admin/reservation"
                   element={
-                    <ProtectedRoute>
+                    <ProtectedRoute layout={AdminLayout} >
                       <MovieReservationList />
                     </ProtectedRoute>
                   }
@@ -159,7 +187,7 @@ const App = () => {
                   exact
                   path="/admin/movieshowtimes"
                   element={
-                    <ProtectedRoute>
+                    <ProtectedRoute layout={AdminLayout} >
                       <MovieShowTimeList />
                     </ProtectedRoute>
                   }
@@ -168,7 +196,7 @@ const App = () => {
                   exact
                   path="/admin/theaters"
                   element={
-                    <ProtectedRoute>
+                    <ProtectedRoute layout={AdminLayout} >
                       <TheatersList />
                     </ProtectedRoute>
 
@@ -178,7 +206,7 @@ const App = () => {
                   exact
                   path="/admin/settings"
                   element={
-                    <ProtectedRoute>
+                    <ProtectedRoute layout={AdminLayout} >
                       <Settings />
                     </ProtectedRoute>
                   }

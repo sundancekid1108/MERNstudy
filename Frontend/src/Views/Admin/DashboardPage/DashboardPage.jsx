@@ -60,30 +60,30 @@ const DashboardPage = (props) => {
 
   return (
     <>
-      <Dashboard title="Admin Dashboard">
-        <div className={classes.root}>
-          <Grid container spacing={4}>
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <TotalUserPage userList={userList} />
-            </Grid>
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <TotalTheaterPage theaterList={theaterList} />
-            </Grid>
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <TotalMoviePage movieList={movieList} />
-            </Grid>
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <TotalMovieReservationPage movieReservationsList={movieReservationsList} />
-            </Grid>
-            <Grid item lg={8} md={12} xl={9} xs={12}>
-              {/* <LatestSalesPage /> 
+
+      <div className={classes.root}>
+        <Grid container spacing={4}>
+          <Grid item lg={3} sm={6} xl={3} xs={12}>
+            <TotalUserPage userList={userList} />
+          </Grid>
+          <Grid item lg={3} sm={6} xl={3} xs={12}>
+            <TotalTheaterPage theaterList={theaterList} />
+          </Grid>
+          <Grid item lg={3} sm={6} xl={3} xs={12}>
+            <TotalMoviePage movieList={movieList} />
+          </Grid>
+          <Grid item lg={3} sm={6} xl={3} xs={12}>
+            <TotalMovieReservationPage movieReservationsList={movieReservationsList} />
+          </Grid>
+          <Grid item lg={8} md={12} xl={9} xs={12}>
+            {/* <LatestSalesPage /> 
                 추후 작업예정
               */}
-            </Grid>
-
           </Grid>
-        </div>
-      </Dashboard>
+
+        </Grid>
+      </div>
+
     </>
   );
 };

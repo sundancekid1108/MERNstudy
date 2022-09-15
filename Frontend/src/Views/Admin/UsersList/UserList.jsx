@@ -83,48 +83,30 @@ const UserList = (props) => {
   const users = useSelector((state) => state.users.users)
   // console.log("userTest", userTest)
   // console.log('selectedUsers', selectedUsers)
-
+  // console.log("searchUserResult", searchUserResult)
   const renderUserTable = () => {
-    if (searchUserResult) {
-      return <>
+    return (<>
+      {searchUserResult ? (
+
         <UsersTable handleSelect={handleSelectUser} users={searchUserResult} />
-      </>
-    } else if (users) {
-      <UsersTable handleSelect={handleSelectUser} users={users} />
-    } else {
-      <Typography variant="h6">There are no users</Typography>
-    }
+      ) : (users ? (<UsersTable handleSelect={handleSelectUser} users={users} />) : <Typography variant="h6">There are no users</Typography>)}
+    </>)
+
   }
 
   return (
     <>
-      <Dashboard title="Users">
-        <div className={classes.root}>
-          <UsersToolbar
-            users={users}
-            selectedUsers={selectedUsers}
-            deleteUser={handleDeleteUsers}
-            onChange={onChange} handleUserSearch={handleUserSearch} keyword={keyword}
-          />
-          <div className={classes.content}>
-            {/* loading */}
-            {isLoading ? (
-              <div className={classes.progressWrapper}>
-                <CircularProgress />
-              </div>
-            ) : (
-              <div />
-            )}
-            {/* Error */}
-            {errorMessage && (
-              <Typography variant="h6">{errorMessage}</Typography>
-            )}
-
-
-            {renderUserTable()}
-          </div>
+      <div className={classes.root}>
+        <UsersToolbar
+          users={users}
+          selectedUsers={selectedUsers}
+          deleteUser={handleDeleteUsers}
+          onChange={onChange} handleUserSearch={handleUserSearch} keyword={keyword}
+        />
+        <div className={classes.content}>
+          {renderUserTable()}
         </div>
-      </Dashboard>
+      </div>
     </>
   );
 };

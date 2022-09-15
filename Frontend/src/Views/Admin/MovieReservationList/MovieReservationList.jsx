@@ -174,15 +174,13 @@ const MovieReservationList = (props) => {
 
 
   return <>
-    <Dashboard title="Movie Reservations List">
-      < div className={classes.root}>
-        <MovieReservationListToolbar onChange={onChange} handleSearchMovieReservation={handleSearchMovieReservation} keyword={keyword} />
+    < div className={classes.root}>
+      <MovieReservationListToolbar onChange={onChange} handleSearchMovieReservation={handleSearchMovieReservation} keyword={keyword} />
 
-        {renderMovieReservationList()}
-        {/* {renderMovieReservationCalendar()} */}
+      {renderMovieReservationList()}
+      {/* {renderMovieReservationCalendar()} */}
 
-      </div>
-    </Dashboard>
+    </div>
   </>
 };
 

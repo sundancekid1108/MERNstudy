@@ -3,11 +3,22 @@ import { Route, Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = (props) => {
+    // const { children } = props
+    const {
+        layout: Layout,
+        component: Component,
+
+        children,
+        ...rest
+    } = props
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-    console.log("ProtectedRoute childre", children)
+    const user = useSelector((state) => state.auth.user);
+    // console.log("ProtectedRoute childre", children)
     // return isAuthenticated ? children : <Navigate to='/' />
-    return isAuthenticated ? children : < Navigate to='/signin' />
+
+    return isAuthenticated ? (user.isAdmin ? (<Layout>{children}</Layout>) : children) : < Navigate to='/signin' />
+    // return isAuthenticated ? children : < Navigate to='/signin' />
 }
 
 

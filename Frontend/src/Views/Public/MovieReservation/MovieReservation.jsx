@@ -262,7 +262,7 @@ const MovieReservation = (props) => {
   return (
     <>
       <div className={classes.root}>
-        <Navbar />
+        {/* <Navbar /> */}
         <Container maxWidth="xl" className={classes.container}>
           <Grid container spacing={2} style={{ height: '100%' }}>
             <RenderMovieInfo movie={movieInfo} />

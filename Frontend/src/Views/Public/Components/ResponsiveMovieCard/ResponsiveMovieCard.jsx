@@ -41,6 +41,7 @@ const ResponsiveMovieCard = (props) => {
 
               {movie.genres.map((genre, id) => (
                 <Typography
+                  key={id}
                   className={classes.genre}
                   variant="body1"
                   color="inherit">

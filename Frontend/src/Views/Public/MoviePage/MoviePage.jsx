@@ -35,7 +35,7 @@ const MoviePage = (props) => {
     return (
       <>
         <div className={classes.root}>
-          <PublicNavbar />
+          {/* <PublicNavbar /> */}
           <div className={classes.content}>
             <Typography variant="h1">There are no movies available</Typography>
           </div>
@@ -46,7 +46,7 @@ const MoviePage = (props) => {
     return (
       <>
         <div className={classes.root}>
-          <PublicNavbar />
+          {/* <PublicNavbar /> */}
           <MovieBanner movie={movies[0]} height="70vh" />
           <Box height={100} />
 
@@ -63,7 +63,7 @@ const MoviePage = (props) => {
             movies={comingSoonMovies}
           />
         </div>
-        <Footer />
+
       </>
     );
   }
