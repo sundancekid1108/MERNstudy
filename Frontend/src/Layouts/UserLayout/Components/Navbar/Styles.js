@@ -36,7 +36,10 @@ export default (theme) => ({
         letterSpacing: '1px',
         color: theme.palette.common.white
     },
+    navAccount: { marginLeft: 'auto', marginRight: theme.spacing(3) },
+    navMobile: { marginRight: theme.spacing(1) },
     navLinks: {
+        marginLeft: 'auto',
         display: 'flex'
     },
     navLink: {

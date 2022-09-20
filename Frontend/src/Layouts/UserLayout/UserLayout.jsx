@@ -10,7 +10,7 @@ import styles from './Styles';
 import { RestoreTwoTone } from '@material-ui/icons';
 
 const UserLayout = (props) => {
-    const { title, children, classes } = props;
+    const { title, children, classes, footerOn = true } = props;
 
     const [isOpen, setIsOpen] = useState(true);
 
@@ -28,7 +28,8 @@ const UserLayout = (props) => {
         <div className={classes.root}>
             <Navbar />
             {children}
-            {/* <Footer /> */}
+            {footerOn && (<Footer />)}
+
         </div>
     );
 };

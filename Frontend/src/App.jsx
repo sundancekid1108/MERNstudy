@@ -92,7 +92,10 @@ const App = () => {
 
 
                 <Route exact path="/movie/:id" element={
-                  <WithLayoutRoute layout={UserLayout} >
+                  <WithLayoutRoute
+
+                    layoutProps={{ footerOn: false }}
+                    layout={UserLayout} >
                     <MovieInfo />
                   </WithLayoutRoute>
                 } />
@@ -100,7 +103,9 @@ const App = () => {
                   exact
                   path="/movie/moviereservation/:id"
                   element={
-                    <WithLayoutRoute layout={UserLayout} >
+                    <WithLayoutRoute
+                      layoutProps={{ footerOn: false }}
+                      layout={UserLayout} >
                       <MovieReservation />
                     </WithLayoutRoute>
                   }

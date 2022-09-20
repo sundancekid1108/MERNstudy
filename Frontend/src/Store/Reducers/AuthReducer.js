@@ -29,12 +29,10 @@ const AuthReducer = (state = initialState, action) => {
             };
         case SIGN_IN_FAIL:
         case LOG_OUT:
+
             return {
                 ...state,
-                token: '',
-                isAuthenticated: false,
-                user: null,
-                loading: false
+                initialState
             };
         case GET_USER_INFO:
             return {

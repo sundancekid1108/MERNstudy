@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { withStyles, Button, Typography } from '@material-ui/core';
+import { Typography, List, ListItem, Button, withStyles } from '@material-ui/core';
 import classnames from 'classnames';
 import styles from './Styles';
 import { useDispatch, useSelector } from 'react-redux';
 import * as AuthAction from '../../../../Store/Actions/AuthAction';
+import UserPopover from './Components/UserPopover/UserPopover'
 import logoImg from '../../../../Images/logo.jpg';
 
 const Navbar = (props) => {
@@ -54,7 +55,7 @@ const Navbar = (props) => {
       <nav
         className={classnames({
           [classes.navbar]: true,
-          [classes.navbarColor]: scrollPosition > 100
+          [classes.navbarColor]: scrollPosition > 50
         })}>
         <Link className={classes.logoLink} to="/">
           <Typography className={classes.logo} variant="h2">
@@ -78,24 +79,59 @@ const Navbar = (props) => {
           <Link className={classes.navLink} to="/theaters">
             Theaters
           </Link>
-          {!isAuth && (
+          {/* {!isAuth && (
             <Link className={classes.navLink} to="/signin">
               Sign In
             </Link>
           )}
           {isAuth && (
             <>
-              {/* <Link className={classes.navLink} to="/admin/dashboard">
+              {user.isAdmin && (<Link className={classes.navLink} to="/admin/dashboard">
                 Dashboard
-              </Link> */}
+              </Link>)}
+
 
               <Link className={classes.navLink} onClick={handleLogOut} to="/">
                 Log Out
               </Link>
             </>
-          )}
+          )} */}
+
         </div>
-        <div className={classes.navBtn} onClick={handleShowMenu}>
+
+        <div className={classes.navAccount}>
+          <UserPopover logout={handleLogOut}>
+            <List component="nav">
+              {isAuth && (
+                user.isAdmin && (
+                  <ListItem>
+                    <Link className={classes.navLink} to="/admin/dashboard">
+                      Dashboard
+                    </Link>
+                  </ListItem>
+                )
+              )}
+
+              {isAuth ? (
+                <ListItem>
+                  <Link className={classes.navLink} onClick={handleLogOut} to="/">
+                    Logout
+                  </Link>
+                </ListItem>
+              ) : (
+                <ListItem>
+                  <Link className={classes.navLink} to="/signin">
+                    Login
+                  </Link>
+                </ListItem>
+              )}
+            </List>
+          </UserPopover>
+        </div>
+
+
+        {/* 햄버거 메뉴 */}
+        <div className={classes.navMobile} onClick={handleShowMenu}>
           <div className={classes.navIcon}>
             <div
               className={classnames(
@@ -127,13 +163,7 @@ const Navbar = (props) => {
                 Home
               </Link>
             </li>
-            {isAuth && (
-              <li className={classes.innerNavListItem}>
-                <Link className={classes.innerNavLink} to="/admin/dashboard">
-                  Dashboard
-                </Link>
-              </li>
-            )}
+
             <li className={classes.innerNavListItem}>
               <Link className={classes.innerNavLink} to="/movies">
                 Movies
@@ -146,16 +176,27 @@ const Navbar = (props) => {
                 </Link>
               </li>
             )}
-            {isAuth && (
-              <li className={classes.innerNavListItem}>
-                <Link
-                  className={classes.innerNavLink}
-                  onClick={handleLogOut}
-                  to="/">
-                  Logout
-                </Link>
-              </li>
-            )}
+            {/* {isAuth && (
+              <>
+                {user.isAdmin && (
+                  <li className={classes.innerNavListItem}>
+                    <Link className={classes.innerNavLink} to="/admin/dashboard">
+                      Dashboard
+                    </Link>
+                  </li>
+                )}
+
+                <li className={classes.innerNavListItem}>
+                  <Link
+                    className={classes.innerNavLink}
+                    onClick={handleLogOut}
+                    to="/">
+                    Logout
+                  </Link>
+                </li>
+              </>
+
+            )} */}
           </ul>
         </div>
       </div>
