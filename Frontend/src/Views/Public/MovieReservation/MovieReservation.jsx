@@ -131,6 +131,7 @@ const MovieReservation = (props) => {
     const movieIdData = selectedMovieShowTime.movieId._id;
     const theaterIdData = selectedMovieShowTime.theaterId._id;
     const userNameData = userInfo.userName
+    const userIdData = userInfo.userId
     const userPhoneNumberData = userInfo.phoneNumber
 
     const movieShowTimeId = selectedMovieShowTime._id
@@ -148,6 +149,7 @@ const MovieReservation = (props) => {
       movieId: movieIdData,
       theaterId: theaterIdData,
       username: userNameData,
+      userId: userIdData,
       phoneNumber: userPhoneNumberData
 
     };
@@ -164,6 +166,7 @@ const MovieReservation = (props) => {
     console.log("updateMovieShowTimeBody", updateMovieShowTimeBody)
 
     //1. User MovieReservation 생성
+
     try {
       const res = await MovieReservationApi.createMovieReservation(
         movieReservationBody

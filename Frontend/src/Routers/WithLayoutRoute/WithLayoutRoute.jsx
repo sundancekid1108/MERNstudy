@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const WithLayoutRoute = (props) => {
-  const { layout: Layout, component: Component, children, layoutProps, ...rest } = props;
+  const { layout: Layout, children, layoutProps, ...rest } = props;
 
   // console.log("WithLayoutRoute props", props)
 
@@ -12,7 +12,6 @@ const WithLayoutRoute = (props) => {
 };
 
 WithLayoutRoute.propTypes = {
-  component: PropTypes.any.isRequired,
   layout: PropTypes.any.isRequired,
   path: PropTypes.string
 };

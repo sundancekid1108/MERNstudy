@@ -36,6 +36,11 @@ const movieReservationSchema = new Schema({
         type: String,
         // required: true,
     },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
     phonenumber: {
         type: String,
         // required: true,

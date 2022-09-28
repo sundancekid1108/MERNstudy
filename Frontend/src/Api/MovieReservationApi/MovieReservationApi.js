@@ -27,3 +27,19 @@ export const getMovieReservationList = async() => {
         return error.response;
     }
 };
+
+
+
+export const getUsermovieReservationList = async(id) => {
+
+    const token = authHeader();
+    try {
+        const res = await api.get('/moviereservation/usermoviereservations' + '/' + id, {
+            headers: token
+        });
+
+        return res;
+    } catch (error) {
+        return error.response;
+    }
+}

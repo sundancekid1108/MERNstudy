@@ -90,10 +90,8 @@ const MovieReservationList = (props) => {
 
   const movieList = useSelector((state) => state.movies.movies);
   const theaterList = useSelector((state) => state.theaters.theaters);
-  const movieReservationListTest = useSelector((state) => state.movieReservations.movieReservations)
-  // console.log(movieList, theaterList);
-  // console.log("movieReservationListTest", movieReservationListTest)
-  // console.log(state.movieReservations)
+
+  console.log("movieReservationList", movieReservationList)
 
 
 

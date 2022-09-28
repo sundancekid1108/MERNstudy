@@ -8,17 +8,25 @@ const ProtectedRoute = (props) => {
     const {
         layout: Layout,
         component: Component,
-
         children,
         ...rest
     } = props
+
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const user = useSelector((state) => state.auth.user);
-    // console.log("ProtectedRoute childre", children)
-    // return isAuthenticated ? children : <Navigate to='/' />
+    const test = useSelector((state) => state.auth);
 
-    return isAuthenticated ? (user.isAdmin ? (<Layout>{children}</Layout>) : children) : < Navigate to='/signin' />
-    // return isAuthenticated ? children : < Navigate to='/signin' />
+    if (isAuthenticated) {
+        if (user.isAdmin) {
+            return (<Layout>{children}</Layout>)
+        } else {
+            return (<Layout>{children}</Layout>)
+        }
+    } else {
+        return < Navigate to='/signin' />
+    }
+
+
 }
 
 

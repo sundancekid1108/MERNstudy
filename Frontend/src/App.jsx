@@ -64,6 +64,8 @@ const TheatersList = lazy(() =>
   import('./Views/Admin/TheatersList/TheatersList')
 );
 
+const UserDashboard = lazy(() => import('./Views/Public/UserDashboard/UserDashboard'))
+
 const App = () => {
   const dispatch = useDispatch();
 
@@ -90,10 +92,15 @@ const App = () => {
                   </WithLayoutRoute>
                 } />
 
+                <Route exact path="/userdashboard" element={
+                  <WithLayoutRoute layout={UserLayout} >
+                    <UserDashboard />
+                  </WithLayoutRoute>
+                } />
+
 
                 <Route exact path="/movie/:id" element={
                   <WithLayoutRoute
-
                     layoutProps={{ footerOn: false }}
                     layout={UserLayout} >
                     <MovieInfo />
@@ -124,12 +131,19 @@ const App = () => {
                     <Theaters />
                   </WithLayoutRoute>
                 } />
+
                 <Route exact path="/feed" element={<Feed />} />
 
 
                 {/* 분리 */}
 
-                {/* <Route exact path="/adminsignup" element={<AdminSignUp />} /> */}
+                {/* <Route exact path="/userdashboard" element={
+                  <ProtectedRoute layout={UserLayout} >
+                    <UserDashboard />
+                  </ProtectedRoute>
+                } /> */}
+
+
                 <Route exact path="/admin/movies" element={
                   <ProtectedRoute layout={AdminLayout} >
                     <MovieList />

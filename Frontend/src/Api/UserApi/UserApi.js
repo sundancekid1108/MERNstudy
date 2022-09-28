@@ -15,18 +15,7 @@ export const userSignUp = (body) => {
 
         return error.response;
     }
-    // return api
-    //     .post('/users/signup', body)
-    //     .then((response) => {
-    //         // console.log("response : ", response);
-    //         return response;
-    //     })
-    //     .catch((error) => {
-    //         // console.log("error : ", error);
-    //         // console.log("error!! : ", error.response);
 
-    //         return error.response;
-    //     });
 };
 
 

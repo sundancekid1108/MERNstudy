@@ -38,7 +38,7 @@ const TmdbMovieToolBar = (props) => {
           value={keyword}
           onKeyPress={handleTmdbMovieSearch}
           onClick={handleTmdbMovieSearch}
-          handleTmdbMovieSearch={handleTmdbMovieSearch}
+
         />
         <Button
           onClick={handleDialog}

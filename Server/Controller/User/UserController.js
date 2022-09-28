@@ -43,7 +43,7 @@ export const getUserList = async(req, res) => {
 
 //현재 유저 정보 조회
 export const getCurrentUserInfo = async(req, res) => {
-    console.log(req.decodedUser)
+    // console.log(req.decodedUser)
     try {
         const userId = req.decodedUser._id;
 
@@ -392,7 +392,7 @@ export const deleteProfileImg = async(req, res) => {
 //회원탈퇴
 export const deleteUserInfo = async(req, res) => {
     try {
-        console.log('req.decodedUser : ', req.decodedUser);
+        // console.log('req.decodedUser : ', req.decodedUser);
 
         const userId = req.decodedUser._id;
         if (!ObjectId.isValid(userId)) {
@@ -496,7 +496,7 @@ export const postUserLogin = async(req, res) => {
         const LoginSuccessUser = await await User.findOne({
             email,
         });
-        console.log("LoginSuccessUser", LoginSuccessUser);
+        // console.log("LoginSuccessUser", LoginSuccessUser);
         const payload = {
             // userId: LoginSuccessUser.id,
             user: LoginSuccessUser,

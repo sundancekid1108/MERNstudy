@@ -30,10 +30,7 @@ const AuthReducer = (state = initialState, action) => {
         case SIGN_IN_FAIL:
         case LOG_OUT:
 
-            return {
-                ...state,
-                initialState
-            };
+            return initialState
         case GET_USER_INFO:
             return {
                 ...state,

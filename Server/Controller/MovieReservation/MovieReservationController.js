@@ -25,12 +25,30 @@ export const getMovieReservationList = async(req, res) => {
             sort: {
                 _id: -1,
             },
-        }).populate('movieId').populate('theaterId');
+        }).populate('movieId').populate('theaterId').populate('userId');
         return res.json(movieReservationList).status(200);
     } catch (error) {
         return res.json(error).status(400);
     }
 };
+
+
+
+export const getUserMovieReservationList = async(req, res) => {
+    const id = req.params.id;
+    console.log("getUserMovieReservationList id", id)
+    try {
+        const userMovieReservationList = await MovieReservation.find({
+            userId: id,
+        }).populate('movieId').populate('theaterId').populate('userId');
+        // console.log(userMovieReservationList)
+        return res.json(userMovieReservationList).status(200);
+    } catch (error) {
+        return res.status(400).json(error);
+    }
+    // 
+}
+
 
 //getMovieReservationInfo(영화티켓정보조회)
 export const getMovieReservationInfo = async(req, res) => {

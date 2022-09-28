@@ -103,9 +103,15 @@ const Navbar = (props) => {
           <UserPopover logout={handleLogOut}>
             <List component="nav">
               {isAuth && (
-                user.isAdmin && (
+                user.isAdmin ? (
                   <ListItem>
                     <Link className={classes.navLink} to="/admin/dashboard">
+                      Admin Dashboard
+                    </Link>
+                  </ListItem>
+                ) : (
+                  <ListItem>
+                    <Link className={classes.navLink} to="/userdashboard">
                       Dashboard
                     </Link>
                   </ListItem>
