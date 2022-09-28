@@ -92,11 +92,7 @@ const App = () => {
                   </WithLayoutRoute>
                 } />
 
-                <Route exact path="/userdashboard" element={
-                  <WithLayoutRoute layout={UserLayout} >
-                    <UserDashboard />
-                  </WithLayoutRoute>
-                } />
+
 
 
                 <Route exact path="/movie/:id" element={
@@ -135,13 +131,19 @@ const App = () => {
                 <Route exact path="/feed" element={<Feed />} />
 
 
+
+
                 {/* 분리 */}
 
-                {/* <Route exact path="/userdashboard" element={
-                  <ProtectedRoute layout={UserLayout} >
+              
+
+                <Route exact path="/userdashboard" element={
+                  <ProtectedRoute layout={UserLayout}>
+
                     <UserDashboard />
                   </ProtectedRoute>
-                } /> */}
+
+                } />
 
 
                 <Route exact path="/admin/movies" element={
