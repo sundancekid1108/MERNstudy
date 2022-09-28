@@ -37,16 +37,10 @@ const Account = (props) => {
 
   return (
     <>
-
       <div className={classes.root}>
-        <Grid container spacing={6}>
-
           <Grid item xs="auto">
             <AccountProfile user={userInfo} />
           </Grid>
-
-
-        </Grid>
       </div>
 
     </>

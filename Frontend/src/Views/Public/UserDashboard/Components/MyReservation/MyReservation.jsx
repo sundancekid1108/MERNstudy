@@ -88,12 +88,12 @@ const MyReservation = (props) => {
                           </TableRow>
                         )) }
                     </TableBody>
-                    {/* <TablePagination
+                    <TablePagination
                         backIconButtonProps={{
                             'aria-label': 'Previous Page'
                         }}
                         component="div"
-                        count={MovieReservationList.length}
+                        count={userMovieReservationList.length}
                         nextIconButtonProps={{
                             'aria-label': 'Next Page'
                         }}
@@ -102,7 +102,7 @@ const MyReservation = (props) => {
                         page={page}
                         rowsPerPage={rowsPerPage}
                         rowsPerPageOptions={[5, 10, 25]}
-                    /> */}
+                    />
                 </Table>
             </PortletContent>
         </Portlet>

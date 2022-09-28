@@ -26,13 +26,15 @@ export default (theme) => ({
         width: '100%',
         height: '100%',
         backgroundBlendMode: 'multiply',
-        background: 'linear-gradient(to right, rgba(0,0,0,.9) 50%, transparent 100%)',
+        background:
+          'linear-gradient(to right, rgba(0,0,0,.9) 25%, transparent 100%)',
         zIndex: 2,
         borderRadius: 10
     },
     movieHeader: {
         position: 'relative',
-        padding: theme.spacing(3)
+        padding: theme.spacing(3),
+        maxWidth: '60%'
     },
     tag: {
         padding: theme.spacing(0.3, 3),
