@@ -94,12 +94,7 @@ const MovieBanner = (props) => {
                 color="inherit">
                 {movie.runtime} min
               </Typography>
-              <Typography
-                className={classes.genre}
-                variant="body1"
-                color="inherit">
-                {movie.genre}
-              </Typography>
+
             </header>
           </div>
           <div

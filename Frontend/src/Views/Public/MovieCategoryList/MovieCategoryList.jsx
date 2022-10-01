@@ -40,7 +40,7 @@ const MovieCategoryList = (props) => {
   } else {
     return (
       <>
-        <div className={classes.root}>
+
           <Grid container spacing={2}>
             {!['nowShowing', 'comingSoon', 'latestmovies'].includes(category) ? (
               <Grid item xs={12}>
@@ -78,7 +78,6 @@ const MovieCategoryList = (props) => {
               </>
             )}
           </Grid>
-        </div>
       </>
     );
   }

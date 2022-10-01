@@ -88,22 +88,23 @@ const MyReservation = (props) => {
                           </TableRow>
                         )) }
                     </TableBody>
-                    <TablePagination
-                        backIconButtonProps={{
-                            'aria-label': 'Previous Page'
-                        }}
-                        component="div"
-                        count={userMovieReservationList.length}
-                        nextIconButtonProps={{
-                            'aria-label': 'Next Page'
-                        }}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
-                        page={page}
-                        rowsPerPage={rowsPerPage}
-                        rowsPerPageOptions={[5, 10, 25]}
-                    />
+
                 </Table>
+                <TablePagination
+                  backIconButtonProps={{
+                      'aria-label': 'Previous Page'
+                  }}
+                  component="div"
+                  count={userMovieReservationList.length}
+                  nextIconButtonProps={{
+                      'aria-label': 'Next Page'
+                  }}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  page={page}
+                  rowsPerPage={rowsPerPage}
+                  rowsPerPageOptions={[5, 10, 25]}
+                />
             </PortletContent>
         </Portlet>
     </>)
