@@ -1,1 +1,0 @@
-export const GET_TMDB_MOVIES_LIST = 'GET_TMDB_MOVIES_LIST';
