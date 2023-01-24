@@ -21,7 +21,7 @@ const ResponsiveDialog = (props) => {
       <Dialog
         fullScreen={fullScreen}
         fullWidth={true}
-        maxWidth="lg"
+        maxWidth="md"
         open={open}
         onClose={handleClose}
         aria-labelledby={id}>

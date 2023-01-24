@@ -454,7 +454,9 @@ export const deleteUserById = async(req, res) => {
 };
 
 //user 로그인
-export const postUserLogin = async(req, res) => {
+export const postUserSignIn = async (req, res) => {
+    console.log("postLogin req", req)
+    console.log("postLogin req.body", req.body)
     const email = req.body.userEmail;
     const password = req.body.userPassword;
     //Email 체크

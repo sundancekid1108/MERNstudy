@@ -12,11 +12,13 @@ import * as userApi from '../../Api/UserApi/UserApi';
 
 
 
-export const userSignIn = (body) => async(dispatch) => {
+export const userSignIn = (body) => async (dispatch) =>
+{
+    console.log("userSignIn body", body)
     try {
-        const result = await userApi.userLogin(body);
+        const result = await userApi.userSignIn(body);
         const responseData = result;
-        // console.log('authaction userSignIn', responseData);
+        console.log('authaction userSignIn', responseData);
         if (responseData.status == 200) {
             dispatch({ type: SIGN_IN_SUCCESS, payload: responseData.data });
             dispatch(setAlert('Login Success', 'success', 3000));

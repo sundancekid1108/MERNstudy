@@ -21,10 +21,12 @@ export const userSignUp = (body) => {
 
 
 // 로그인
-export const userLogin = async(body) => {
+export const userSignIn = async (body) => {
+    console.log("userSignIn body", body)
 
     try {
-        const response = await api.post('/users/auth/login', body)
+        const response = await api.post('/users/auth/signin', body)
+        console.log("userSignIn response", response)
         if (response.data.accessToken) {
             //localStorage
             localStorage.setItem(
@@ -40,7 +42,7 @@ export const userLogin = async(body) => {
             // localStorage.setItem('user', JSON.stringify(response.data));
             // localStorage.setItem('isAdmin', JSON.stringify(response.data.isAdmin));
         }
-        // console.log('userLogin success');
+        // console.log('userSignIn success');
         // console.log('response : ', response);
         return response;
     } catch (error) {

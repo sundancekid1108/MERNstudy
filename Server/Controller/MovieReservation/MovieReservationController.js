@@ -1,6 +1,7 @@
 import MovieReservation from '../../Database/Model/MovieReservation/MovieReservation';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import * as createQRcode from '../../Utils/CreateQRcode'
 dotenv.config();
 
 const { ObjectId } = mongoose.Types;
@@ -10,9 +11,12 @@ export const createMovieReservation = async(req, res) => {
     const body = req.body;
     // console.log(body)
     const movieReservationData = new MovieReservation(body);
+    const movieReservationQRCode = await createQRcode.createQR('http://localhost:3001/moviereservationqrcode/'+ movieReservationData._id)
+
     try {
         await movieReservationData.save();
-        return res.status(200).json(movieReservationData);
+        // return res.status(200).json(movieReservationData).send(movieReservationQRCode) ;
+        return res.status(200).send({movieReservationData, movieReservationQRCode})
     } catch (error) {
         return res.status(400).json(error);
     }
@@ -70,7 +74,7 @@ export const getMovieReservationInfo = async(req, res) => {
 export const updateMovieReservation = async(req, res) => {
     const movieReservationId = req.params.id;
     const movieReservationUpdates = Object.keys(req.body);
-    const allowedUpdates = ['startAt', 'is3d', 'isImax'];
+    const allowedUpdates = ['date', 'startAt',  'seats', 'ticketPrice', 'totalPrice', 'movieId',  'theaterId', 'phonenumber',  'checkin'  ];
     const isValidOperation = movieReservationUpdates.every((update) =>
         allowedUpdates.includes(update)
     );

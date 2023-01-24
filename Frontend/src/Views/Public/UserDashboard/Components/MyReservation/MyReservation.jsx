@@ -15,12 +15,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import Portlet from '../../../../../Components/Portlet/Portlet'
 import PortletContent from '../../../../../Components/PortletContent/PortletContent'
 // import * as MovieReservationAction from '../../../../Store/Actions/MovieReservationAction'
+import ResponsiveDialog from '../../../../../Components/ResponsiveDialog/ResponsiveDialog'
+import MyMovieTicket from '../MyMovieTicket/MyMovieTicket'
 import styles from './Styles';
 
 const MyReservation = (props) => {
     const { classes, className, userMovieReservationList } = props;
     console.log("myreservation props", props)
     const rootClassName = classNames(classes.root, className);
+    //Ticket Popup
+    const [isOpenAddDialog, setIsOpenAddDialog] = useState(false);
+
+
     const dispatch = useDispatch()
     const getUserMovieReservationList = () => {
         // dispatch(MovieReservationAction.getUserMovieReservationList())
@@ -28,6 +34,22 @@ const MyReservation = (props) => {
 
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(0);
+
+    //Ticket Popup
+    const handleCreateDialog = () => {
+        if (isOpenAddDialog === false) {
+            setIsOpenAddDialog(true);
+        } else {
+            setIsOpenAddDialog(false);
+        }
+    };
+
+    const handleMyReservation = () => {
+        
+        handleCreateDialog()
+        console.log("handleMyReservation" + isOpenAddDialog)
+    }
+
 
     const handleChangePage = (e, newPage) => {
         setPage(newPage);
@@ -64,8 +86,10 @@ const MyReservation = (props) => {
                         ).map((userMovieReservation) =>(
                           <TableRow
                             className={classes.tableRow}
-                            hover
+                                hover
+                                userMovieReservation={userMovieReservation}
                             key={userMovieReservation._id}
+                                onClick={handleMyReservation}
                           >
                               <TableCell className={classes.tableCell}>
                                   {userMovieReservation.movieId.title}
@@ -79,14 +103,23 @@ const MyReservation = (props) => {
 
                               </TableCell>
                               <TableCell className={classes.tableCell}>
-                              {userMovieReservation.ticketPrice}
-                          </TableCell>
+                                    {userMovieReservation.ticketPrice}
+                            </TableCell>
                               <TableCell className={classes.tableCell}>
                                   {userMovieReservation.totalPrice}
                               </TableCell>
+                                <ResponsiveDialog
+                                    id="Add_MovieShowTime"
+                                    open={isOpenAddDialog}
+                                    handleClose={handleCreateDialog}
 
+                                >
+                                    <MyMovieTicket
+                                        userMovieReservation={userMovieReservation} />
+                                </ResponsiveDialog>
                           </TableRow>
-                        )) }
+                        ))}
+                        
                     </TableBody>
 
                 </Table>

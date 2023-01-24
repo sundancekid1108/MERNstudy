@@ -65,6 +65,8 @@ const TheatersList = lazy(() =>
 );
 
 const UserDashboard = lazy(() => import('./Views/Public/UserDashboard/UserDashboard'))
+const MovieCheckIn  = lazy(() => import('./Views/Public/MovieCheckIn/MovieCheckIn'))
+
 
 const App = () => {
   const dispatch = useDispatch();
@@ -141,6 +143,14 @@ const App = () => {
                   <ProtectedRoute layout={UserLayout}>
 
                     <UserDashboard />
+                  </ProtectedRoute>
+
+                } />
+
+                <Route exact path="/moviecheckin/:moviereservationid" element={
+                  <ProtectedRoute layout={UserLayout}>
+
+                    <MovieCheckIn />
                   </ProtectedRoute>
 
                 } />

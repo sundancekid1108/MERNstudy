@@ -14,9 +14,9 @@ userRouter.post('/auth/facebooklogin', UserApi.facebookAuthLogin);
 
 userRouter.post('/auth/googlelogin', UserApi.googleAuthLogin);
 
-userRouter.post('/auth/login', UserApi.postUserLogin);
+userRouter.post('/auth/signin', UserApi.postUserSignIn);
 
-userRouter.get('/auth/login', AuthJwt.verifyToken);
+userRouter.get('/auth/signin', AuthJwt.verifyToken);
 
 userRouter.post('/updateuserinfo', AuthJwt.verifyToken, upload.single('file'), UserApi.updateUserInfo);
 

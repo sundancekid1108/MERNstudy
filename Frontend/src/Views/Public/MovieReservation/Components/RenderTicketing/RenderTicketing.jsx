@@ -10,9 +10,9 @@ const RenderTicketing = (props) => {
 
     <Box marginTop={2} bgcolor="rgb(18, 20, 24)">
       <Grid container>
-        <Grid item xs={10}>
+        <Grid item xs={8} md={10}>
           <Grid container spacing={3} style={{ padding: 20 }}>
-            <Grid item>
+            <Grid item className={classes.hideOnSmall}>
               <Typography className={classes.bannerTitle}>
                 Name
               </Typography>
@@ -55,7 +55,8 @@ const RenderTicketing = (props) => {
         </Grid>
         <Grid
           item
-          xs={2}
+          xs={4}
+          md={2}
           style={{
             color: 'rgb(120, 205, 4)',
             background: 'black',

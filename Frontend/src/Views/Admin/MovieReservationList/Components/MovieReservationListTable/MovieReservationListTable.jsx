@@ -38,6 +38,8 @@ const MovieReservationListTable = (props) => {
     return item ? item[attr] : `Not ${attr} Found`;
   };
 
+  // console.log(MovieReservationList[0].checkin)
+  // const testvalue = MovieReservationList[0].checkin
   return (
     <>
       <Portlet className={rootClassName}>
@@ -51,10 +53,11 @@ const MovieReservationListTable = (props) => {
                 <TableCell align="left">Ticket Price</TableCell>
                 <TableCell align="left">Total Price</TableCell>
                 <TableCell align="left">Start At</TableCell>
+                <TableCell align="left">Checkin</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {MovieReservationList.slice(
+              {MovieReservationList.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(
                 page * rowsPerPage,
                 (page + 1) * rowsPerPage
               ).map((movieReservation) => (
@@ -79,10 +82,16 @@ const MovieReservationListTable = (props) => {
                   <TableCell className={classes.tableCell}>
                     {movieReservation.totalPrice}
                   </TableCell>
+
                   <TableCell className={classes.tableCell}>
                     {moment(movieReservation.startAt).format('YYYY MM DD HH:mm')}
 
                   </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {movieReservation.checkin ? "Yes" : "No" }
+
+                  </TableCell>
+                  
 
                 </TableRow>
               ))}

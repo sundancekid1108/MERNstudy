@@ -99,9 +99,11 @@ const SignInForm = (props) => {
 
   const handleSignIn = () => {
     const body = { userEmail, userPassword };
+    console.log("handleSignIn body", body)
 
     dispatch(AuthAction.userSignIn(body))
       .then((response) => {
+        console.log(response)
         console.log(response.data.isAdmin);
         if (response.data.isAdmin === true) {
           navigate('/admin/dashboard', { replace: false });
@@ -127,7 +129,7 @@ const SignInForm = (props) => {
 
         <div className={classes.socialLogin}>
           <FacebookLogin
-            buttonStyle={{ width: '100%' }}
+            buttonStyle={{ width: '100%', height: 60 }}
             autoLoad={false}
             cookie={false}
             appId={facebook_app_id}
@@ -143,6 +145,16 @@ const SignInForm = (props) => {
             onClick={handleGoogleAuthLogin}
             onSuccess={googleAuthSuccess}
             onFailure={googleAuthFailure}
+            fullWidth
+            style={{
+              borderRadius: 0,
+              background: '#fff',
+              color: '#de5246',
+              marginBottom: 10,
+              height: 60,
+              fontSize: 'calc(.27548vw + 12.71074px)',
+              fontWeight: 700
+            }}
           />
         </div>
 

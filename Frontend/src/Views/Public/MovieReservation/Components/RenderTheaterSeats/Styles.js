@@ -15,7 +15,27 @@ export default (theme) => ({
             background: 'rgb(120, 205, 4)'
         }
     },
+    seatInfoContainer: {
+        width: '50%',
+        margin: 'auto',
+        display: 'flex',
+        alignItems: 'center',
+        textAlign: 'center',
+        color: '#eee'
+    },
+
+    seatInfo: { marginRight: theme.spacing(2) },
+
+    seatInfoLabel: {
+        marginRight: theme.spacing(1),
+        display: 'inline-block',
+        width: 10,
+        height: 10
+    },
+
     [theme.breakpoints.down('sm')]: {
-        seat: { padding: theme.spacing(0.8), margin: theme.spacing(0.5) }
+        seat: { padding: theme.spacing(1.2), margin: theme.spacing(0.5) },
+        seatInfoContainer: { width: '100%', display: 'block' },
+        seatInfo: { marginTop: theme.spacing(2) }
     }
 });

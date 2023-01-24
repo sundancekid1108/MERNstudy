@@ -9,5 +9,10 @@ export default (theme) => ({
         fontSize: theme.spacing(2),
         textTransform: 'capitalize',
         color: theme.palette.common.white
+    },
+    [theme.breakpoints.down('sm')]: {
+        hideOnSmall: {
+            display: 'none'
+        }
     }
 });

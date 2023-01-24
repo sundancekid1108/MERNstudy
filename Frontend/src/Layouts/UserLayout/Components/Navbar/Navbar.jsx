@@ -79,23 +79,24 @@ const Navbar = (props) => {
           <Link className={classes.navLink} to="/theaters">
             Theaters
           </Link>
-          {/* {!isAuth && (
-            <Link className={classes.navLink} to="/signin">
-              Sign In
-            </Link>
-          )}
+
           {isAuth && (
-            <>
-              {user.isAdmin && (<Link className={classes.navLink} to="/admin/dashboard">
-                Dashboard
-              </Link>)}
+            user.isAdmin ? (
+
+                <Link className={classes.navLink} to="/admin/dashboard">
+                  Admin Dashboard
+                </Link>
+
+            ) : (
+
+                <Link className={classes.navLink} to="/userdashboard">
+                  Dashboard
+                </Link>
+
+            )
+          )}
 
 
-              <Link className={classes.navLink} onClick={handleLogOut} to="/">
-                Log Out
-              </Link>
-            </>
-          )} */}
 
         </div>
 
